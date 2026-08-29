@@ -1,0 +1,11 @@
+<script lang="ts">
+	import { Label } from '#lib/bedrock/ui/label';
+	import { Slider } from '#lib/bedrock/ui/slider';
+
+	let value = $state(47);
+</script>
+
+<div class="grid max-w-sm gap-2">
+	<Label>Depth {value}m</Label>
+	<Slider type="single" bind:value min={8} max={92} />
+</div>
