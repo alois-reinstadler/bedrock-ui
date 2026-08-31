@@ -8,10 +8,16 @@
 	import ThemeToggle from '#lib/site/ThemeToggle.svelte';
 	import { getComponent } from '#lib/site/registry';
 
+	type Crumb = {
+		href: '/docs' | '/docs/installation' | '/docs/components' | null;
+		label: string;
+		current: boolean;
+	};
+
 	let { children } = $props();
 
 	let path = $derived(page.url.pathname);
-	let crumbs = $derived.by(() => {
+	let crumbs = $derived.by<Crumb[]>(() => {
 		if (path === '/docs') {
 			return [{ href: '/docs', label: 'Docs', current: true }];
 		}
@@ -34,7 +40,7 @@
 				{ href: '/docs', label: 'Docs', current: false },
 				{ href: '/docs/components', label: 'Components', current: false },
 				{
-					href: path,
+					href: null,
 					label: component?.title ?? match[1],
 					current: true
 				}
@@ -56,7 +62,7 @@
 						<Breadcrumb.Item>
 							{#if crumb.current}
 								<Breadcrumb.Page>{crumb.label}</Breadcrumb.Page>
-							{:else}
+							{:else if crumb.href}
 								<Breadcrumb.Link href={resolve(crumb.href)}>{crumb.label}</Breadcrumb.Link>
 							{/if}
 						</Breadcrumb.Item>

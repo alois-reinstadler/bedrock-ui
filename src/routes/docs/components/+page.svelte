@@ -21,19 +21,18 @@
 	<p class="font-mono text-xs tracking-wide text-muted-foreground uppercase">Docs</p>
 	<h1 class="mt-2 text-3xl font-medium tracking-tight">Components</h1>
 	<p class="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
-		{components.length} primitives. Open a page for the import path and, where it exists, a live
-		example.
+		{components.length} primitives. Open a page for the import path and, where it exists, a live example.
 	</p>
 
 	<div class="mt-10 space-y-10">
 		{#each groups as group (group.id)}
 			<section>
 				<h2 class="text-sm font-medium tracking-tight">{group.label}</h2>
-				<ul class="mt-3 divide-y ring-1 ring-foreground/10 rounded-xl overflow-hidden">
+				<ul class="mt-3 divide-y overflow-hidden rounded-xl ring-1 ring-foreground/10">
 					{#each components.filter((item) => item.category === group.id) as component (component.slug)}
 						<li>
 							<a
-								href={resolve(`/docs/components/${component.slug}`)}
+								href={resolve('/docs/components/[slug]', { slug: component.slug })}
 								class="flex items-center justify-between gap-4 px-4 py-3 hover:bg-muted/60"
 							>
 								<span>

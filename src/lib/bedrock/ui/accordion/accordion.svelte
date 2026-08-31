@@ -6,7 +6,11 @@
 	import Accordion from '#lib/shadcn/ui/accordion/accordion.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Accordion> = $props();
+	let {
+		ref = $bindable(null),
+		value = $bindable(),
+		...restProps
+	}: ComponentProps<typeof Accordion> = $props();
 </script>
 
-<Accordion {...props} />
+<Accordion bind:ref bind:value={value as never} {...restProps} />

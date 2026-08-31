@@ -6,7 +6,11 @@
 	import Switch from '#lib/shadcn/ui/switch/switch.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Switch> = $props();
+	let {
+		ref = $bindable(null),
+		checked = $bindable(false),
+		...restProps
+	}: ComponentProps<typeof Switch> = $props();
 </script>
 
-<Switch {...props} />
+<Switch bind:ref bind:checked {...restProps} />

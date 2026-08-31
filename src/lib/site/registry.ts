@@ -1,6 +1,6 @@
 export type DocsNavItem = {
 	title: string;
-	href: string;
+	href: '/docs' | '/docs/installation' | '/docs/components';
 };
 
 export type ComponentDoc = {

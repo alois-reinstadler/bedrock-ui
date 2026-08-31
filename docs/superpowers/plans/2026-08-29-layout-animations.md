@@ -1,290 +1,305 @@
-# Layout Animations Implementation Plan
-
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement remaining tasks after reviewing this plan and the POC. Steps use checkbox (`- [ ]`) syntax for tracking.
->
-> **Status:** Architecture locked for review. A working POC already lives at `src/lib/bedrock/motion/*` and `src/routes/demo/ui/+page.svelte`. Remaining tasks below are the production-hardening work, not a rewrite of the approach unless review rejects it.
-
-**Goal:** Give Bedrock a Framer Motion–style layout animation primitive so elements interpolate size and position when layout changes (flex/grid packing, reorders, shared-element morphs), instead of jumping.
-
-**Architecture:** Custom FLIP engine (First / Last / Invert / Play) scoped by a `LayoutGroup` component, applied to nodes with a Svelte 5 `{@attach layout()}` attachment. Previous untransformed layout boxes are cached per node; after DOM mutations the engine measures the new layout, inverts with `transform`, and plays with the Web Animations API. Shared elements use a short-lived `layoutId` snapshot transferred from the departing node to the arriving node.
-
-**Tech Stack:** Svelte 5.56 attachments + `createContext`, Web Animations API, CSS `linear()` spring sampling, Tailwind v4 tokens already in `src/routes/layout.css`. No new runtime dependencies.
-
-## Global Constraints
-
-- Svelte 5 runes only. `{@attach}` over `use:` actions. No `on:` / `export let` / stores for this feature.
-- Animate `transform` and `opacity` only. Never animate `top`, `left`, `width`, or `height` in the engine.
-- Honor `prefers-reduced-motion: reduce` by skipping playback and committing the new layout immediately.
-- Do not take a Motion+ dependency. `animateLayout` from `motion-plus` is paid early access and is not acceptable for this design system.
-- Do not use React `framer-motion`. This is a SvelteKit app.
-- Public imports go through `#lib/bedrock/motion`. shadcn files stay untouched.
-- Layout attachments must be created in component `<script>` (stable function identity), not as fresh `{@attach layout()}` calls that would re-bind on unrelated state.
-- Nested `layout()` on both parent and child in the same group is out of scope for v1 (projection tree). POC demos must not nest layout nodes.
-
----
-
-## Problem statement
-
-Framer Motion’s `layout` / `layoutId` do three things Svelte does not:
-
-1. **In-tree layout:** when an element’s box moves or resizes because of siblings, flex/grid, or class changes, interpolate from the old box to the new box.
-2. **Shared layout:** when one node unmounts and another mounts with the same id, morph between those boxes (the sliding pill, the card-to-detail).
-3. **Unanimatable CSS:** interpolate the visual result of values CSS cannot tween (`justify-content: start` → `end`, grid column span, wrapping).
-
-Svelte’s `animate:flip` only runs on keyed `{#each}` reorders of immediate children. It does not animate size, shared elements, or flex/grid packing caused by filter/insert/class changes.
-
-That gap is the product.
-
-## Approaches considered
-
-### A. Svelte `animate:flip` only
-
-Insufficient. Reorder-only, list-only, position-only. Rejected as the system primitive. Still useful as a fallback for trivial lists, but not the Bedrock API.
-
-### B. View Transitions API (`document.startViewTransition` + `view-transition-name`)
-
-Native shared-element morphs, including size. Excellent for **route** transitions (SvelteKit `onNavigate`). Weak as the in-app layout primitive: playback is not interruptible in the Framer sense, spring control is limited, same-document VT still needs every state mutation wrapped in `startViewTransition` + `tick()`, and Firefox support lags. Keep as a **phase 2 companion** for page transitions, not as the component API.
-
-### C. Motion+ `animateLayout`
-
-This is the closest upstream equivalent (`data-layout`, `data-layout-id`, wrap DOM updates). It is Motion+ (paid, early access) and requires wrapping updates. Rejected for an OSS-facing design system.
-
-### D. Custom FLIP + WAAPI + `{@attach}` (recommended, implemented in POC)
-
-Matches Framer’s mental model, zero new deps, interruptible, group-scoped, works for class-driven flex/grid changes via MutationObserver. Hard parts (projection tree, inverse scale of children, border-radius correction) are explicit follow-ups rather than blockers for a useful v1.
-
-### E. Hybrid later
-
-FLIP for in-tree component layout. View Transitions for navigations. Do not mix both on the same node in the same frame.
-
-**Recommendation:** D for the Bedrock primitive. B as a later kit-level navigation helper. Reviewers should object here if they want VT as the only engine.
-
-## Why FLIP, precisely
-
-CSS cannot interpolate layout. FLIP fakes it:
-
-1. **First** — last committed layout box (viewport coordinates, **untransformed**). If an animation is in flight, use the current **visual** box (`getBoundingClientRect()`, which includes the invert transform) so the motion is interruptible.
-2. **Last** — after the DOM change, clear `transform`, measure `getBoundingClientRect()`, restore.
-3. **Invert** — `translate(dx, dy) scale(sx, sy)` with `transform-origin: 0 0` so the node looks like it is still at First.
-4. **Play** — WAAPI from that invert to `transform: none`.
-
-Critical detail: MutationObserver fires **after** the jump. You cannot use the post-mutation visual rect as First; it is already Last. First must be the cached `lastLayout` from the previous commit. This is the bug almost every naive FLIP port hits.
-
-Scroll must update `lastLayout` **without** playing, otherwise scrolling looks like a layout animation.
-
-Self-inflicted `style` mutations from setting `transform` must not re-enter the observer (use an `applying` flag).
-
-## Public API (v1)
-
-```svelte
-<script lang="ts">
-	import { LayoutGroup, layout } from '#lib/bedrock/motion';
-
-	const item = layout();
-	const pill = layout({ id: 'active-pill', type: 'position' });
-</script>
-
-<LayoutGroup class="flex gap-2">
-	<button {@attach pill}>…</button>
-	{#each items as entry (entry.id)}
-		<article {@attach item}>{entry.label}</article>
-	{/each}
-</LayoutGroup>
-```
-
-| Export | Kind | Role |
-| --- | --- | --- |
-| `LayoutGroup` | component | Sets context, observes a real DOM root, must be the layout container (flex/grid parent), not `display: contents` |
-| `layout(options?)` | attachment factory | Call **once in `<script>`**. Same function can be attached to many elements |
-| `LayoutOptions.id` | `string` | Shared-element key (`layoutId`) |
-| `LayoutOptions.type` | `'both' \| 'position' \| 'size'` | `position` avoids text stretch; default `both` |
-
-`setContext` cannot run inside an attachment (attachments run in effects). That is why the group is a component, not `{@attach layoutGroup()}`.
-
-## File map
-
-| File | Responsibility |
-| --- | --- |
-| `src/lib/bedrock/motion/layout-math.ts` | Pure invert math, significance epsilon, spring `linear()` sampler |
-| `src/lib/bedrock/motion/layout-math.test.ts` | Node vitest for math |
-| `src/lib/bedrock/motion/layout.svelte.ts` | Group engine, observers, shared snapshot map, WAAPI playback |
-| `src/lib/bedrock/motion/layout-group.svelte` | Context provider + observed root |
-| `src/lib/bedrock/motion/index.ts` | Public barrel |
-| `src/routes/demo/ui/+page.svelte` | Interactive POC: pill, filter/shuffle, justify-content, expand |
-| `src/routes/demo/+page.svelte` | Link to `/demo/ui` |
-
-## Algorithm (engine)
-
-On `layout()` register:
-
-1. Measure untransformed box → `lastLayout`.
-2. If `options.id` has a snapshot younger than 120ms, play First=snapshot → Last=`lastLayout`, then delete snapshot.
-3. Return cleanup that writes a snapshot (visual rect) when `id` is set, removes the node, and schedules a flush so siblings can pack.
-
-On group flush (rAF, coalesced):
-
-1. Abort if `prefers-reduced-motion`.
-2. For each node: `from = inFlight ? visualRect : lastLayout`.
-3. Cancel WAAPI, clear transform, measure `to`, restore transform.
-4. If delta below epsilon, set `lastLayout = to` and skip.
-5. Apply type constraints (`position` forces scale 1, `size` forces translate 0).
-6. `element.animate([{ transform: invert }, { transform: 'none' }], { duration, easing: springLinear, fill: 'both' })` with origin `0 0`.
-7. On finish, cancel and clear inline transform. `lastLayout = to`.
-
-Observers on the group root: `childList`, `subtree`, `attributes` filtered to `class` and `style`. ResizeObserver on the root. Window `scroll` (capture, passive) refreshes `lastLayout` only.
-
-## Known v1 limitations (review these, do not “fix” them in the POC)
-
-1. **No projection tree.** Parent+child both with `layout()` will double-apply transforms. Forbidden in v1.
-2. **Scale distorts text and border-radius.** Use `type: 'position'` on text-heavy nodes. Inverse-scale of children is phase 2.
-3. **No crossfade** when two shared-id nodes exist at once. Snapshot transfer only (depart then arrive).
-4. **No `layoutScroll` compensation** beyond resetting `lastLayout` on scroll.
-5. **Hover-only CSS layout** (pure stylesheet, no class/DOM mutation) will not flush. Class changes will.
-6. **Spring is a sampled `linear()` curve**, not a running solver, so it cannot retarget with conserved velocity the way Framer’s spring does. Interrupt still looks correct because First becomes the visual box.
-7. **Measuring with transform stripped costs layout.** Fine under ~50 nodes per group. Virtualize or split groups after that.
-
-## POC scenes (acceptance)
-
-Route: `/demo/ui`. Manual, not screenshot-only.
-
-1. **Shared pill** — `layout({ id })` indicator slides between tabs. Click every tab; interrupt mid-slide by clicking another tab.
-2. **Filter + shuffle** — keyed cards pack with `type: 'position'`. Filter to a subset, shuffle, restore. Cards must not jump.
-3. **Unanimatable CSS** — toggle `justify-content` start/end/center on a flex row. Items must travel, not teleport.
-4. **Size** — one tile expands (`type: 'both'`). Color block, not a paragraph of text (avoids selling scale-distortion as quality).
-
-Also verify: OS reduced-motion kills playback; scroll does not fling nodes.
-
-## Testing strategy
-
-- **Unit (done in POC):** invert signs, epsilon, `position`/`size` constraints, spring string shape (`src/lib/bedrock/motion/layout-math.test.ts`). Run: `pnpm exec vitest run src/lib/bedrock/motion/layout-math.test.ts --project server`.
-- **Component (phase 2):** browser vitest that mounts `LayoutGroup`, changes a class, asserts `getAnimations().length > 0` then settles to identity transform.
-- **E2E (phase 2):** Playwright on `/demo/ui` clicking tab 1→3 and asserting the pill’s `getBoundingClientRect().left` interpolated (sample two rAF timestamps). Reduced-motion context.
-
-Do not assert exact pixel springs; assert monotonic travel and final box.
-
-## Accessibility and performance
-
-- Reduced motion: no invert, no WAAPI.
-- Sliding pill is visual only; the tab `button` keeps accessible name and `aria-selected`.
-- Do not set `will-change` permanently. Optional during play, clear on finish.
-- Grain/blur must not be applied to the animating nodes.
-
-## Out of scope
-
-Page transitions, AnimatePresence-style enter/exit (use Svelte `transition:`), drag-to-reorder physics, SVG layout, canvas, Motion+ integration.
-
----
-
-### Task 1: Review gate (human / reviewer AI)
-
-**Files:**
-- Read: `docs/superpowers/plans/2026-08-29-layout-animations.md`
-- Read: `src/lib/bedrock/motion/layout.svelte.ts`
-- Read: `src/routes/demo/ui/+page.svelte`
-
-**Interfaces:**
-- Consumes: nothing
-- Produces: written verdict: approve D, reject in favor of B/C, or approve D with listed deltas
-
-- [ ] **Step 1: Run the POC**
-
-Run: `pnpm dev` and open `/demo/ui`. Exercise all four scenes plus reduced motion.
-
-Expected: pill, packing, justify, and expand all interpolate; interrupting the pill does not jump.
-
-- [ ] **Step 2: Write the verdict**
-
-Answer the review questions in the section below. If rejecting the engine, stop; do not implement Tasks 2–4.
-
-- [ ] **Step 3: Commit is not required unless the user asks**
-
----
-
-### Task 2: Inverse scale (production text)
-
-**Files:**
-- Modify: `src/lib/bedrock/motion/layout.svelte.ts`
-- Test: `src/lib/bedrock/motion/layout-math.test.ts`
-
-**Interfaces:**
-- Consumes: `invertTransform(from, to)` → `{ dx, dy, sx, sy }`
-- Produces: child corrector `inverseScale(parent: { sx: number; sy: number })` → `{ sx: 1/parent.sx, sy: 1/parent.sy }` applied to direct children marked `layout({ type: 'position' })` or an explicit `layoutChild` attach
-
-- [ ] **Step 1: Write the failing test**
-
-```ts
-import { describe, expect, it } from 'vitest';
-import { inverseScale } from './layout-math.js';
-
-describe('inverseScale', () => {
-	it('cancels parent scale', () => {
-		expect(inverseScale({ sx: 2, sy: 0.5 })).toEqual({ sx: 0.5, sy: 2 });
-	});
-});
-```
-
-- [ ] **Step 2: Run test to verify it fails**
-
-Run: `pnpm exec vitest run src/lib/bedrock/motion/layout-math.test.ts --project server`
-
-Expected: FAIL, `inverseScale` is not exported.
-
-- [ ] **Step 3: Implement inverse scale on registered descendants during parent play**
-
-Apply the inverse on children for the same WAAPI duration/easing. Skip if parent `type === 'position'`.
-
-- [ ] **Step 4: Re-run tests and the expand scene with a text label inside the tile**
-
-Expected: PASS; label does not stretch.
-
----
-
-### Task 3: Browser test for flush
-
-**Files:**
-- Create: `src/lib/bedrock/motion/layout.svelte.test.ts`
-
-**Interfaces:**
-- Consumes: `LayoutGroup`, `layout()`
-- Produces: browser vitest covering MutationObserver flush
-
-- [ ] **Step 1: Write a failing browser test** that toggles a flex class and expects a non-none transform while playing.
-
-- [ ] **Step 2: Run** `pnpm exec vitest run src/lib/bedrock/motion/layout.svelte.test.ts --project client`
-
-Expected: FAIL until the test harness mounts correctly.
-
-- [ ] **Step 3: Fix harness / timing (`tick` + `requestAnimationFrame`) until the test passes without flakes.**
-
----
-
-### Task 4: Projection tree (only if nested layout is required)
-
-**Files:**
-- Modify: `src/lib/bedrock/motion/layout.svelte.ts`
-
-**Interfaces:**
-- Consumes: parent `LayoutNode`
-- Produces: child First/Last measured in parent local space so parent scale does not double-move children
-
-- [ ] **Step 1: Add a nested-layout fixture to `/demo/ui` that is currently forbidden.**
-
-- [ ] **Step 2: Implement parent-relative deltas. Reject the task if still broken after one attempt and keep the v1 nesting ban.**
-
----
-
-## Review questions (another AI must answer)
-
-1. Is custom FLIP the right v1 primitive versus View Transitions-only? Why?
-2. Is forbidding nested layout acceptable for a design system, or must projection land before any Bedrock component uses this?
-3. Should `layout()` outside `LayoutGroup` no-op, throw, or auto-create a document-scoped group?
-4. Is 120ms the right shared-id snapshot window for Svelte’s mount/unmount ordering?
-5. Should springs stay as `linear()` samples or move to a per-frame solver for retargeting?
-6. Any security/perf issue with MutationObserver on `style` + `class` at subtree scope?
-7. Does the POC demonstrate enough of Framer’s `layout`/`layoutId` to commit to this API shape?
-
-## Self-review
-
-- Spec coverage: in-tree layout, shared id, unanimously CSS, reduced motion, scroll, API, limitations, tests, POC — each has a section or task.
-- No TBD/placeholder implementation steps in remaining tasks.
-- Types: `LayoutOptions`, `LayoutBox`, `invertTransform` are named consistently across plan and code.
+# Layout motion implementation and hardening plan
+
+> **Status:** The custom FLIP direction is accepted and the first M1 hardening pass is implemented.
+> The fourteen-scene motion lab and dedicated browser fixtures now exercise the core contract, but
+> the remaining production-exit gaps below are still explicit. The normative public behavior lives in
+> [`docs/bedrock/motion-contract.md`](../../bedrock/motion-contract.md).
+
+## Goal and decision
+
+Bedrock will use a custom FLIP engine for component-level layout motion. It covers discrete
+position and size changes that CSS cannot interpolate, including flex/grid packing, keyed
+reorders, and a logical element that unmounts and remounts elsewhere.
+
+The architectural split is:
+
+- `layout()` for discrete layout jumps, packing, reorders, shared elements, and size changes.
+- `reveal` for reflow-driven vertical presence, such as accordions and validation messages.
+- `autoSize` for a persistent wrapping shell that must interpolate intrinsic block size without
+  scaling its descendants.
+- `appear` and `vanish` for insertion and removal. `vanish` leaves normal flow immediately so
+  remaining `layout()` nodes can pack while the removed node fades in place.
+- `drawer` for horizontal reflow-driven presence.
+- `Swap` for keyed content replacement without a temporary shell sized to both the entering and
+  exiting copies.
+
+View Transitions remain a possible later route-navigation companion. They are not the Bedrock
+component primitive and must not run on the same node as FLIP in the same update. Motion+ and
+Framer Motion remain out of scope.
+
+## Current implementation record
+
+This section describes the code as it exists on 2026-08-30. It is evidence, not a claim that all
+behavior is already production-ready.
+
+### Public surface
+
+The barrel at `src/lib/bedrock/motion/index.ts` exports:
+
+| Export                           | Kind               | Current role                                                                |
+| -------------------------------- | ------------------ | --------------------------------------------------------------------------- |
+| `LayoutGroup`                    | Svelte component   | Renders a real `div`, owns one engine, and observes that root.              |
+| `layout(options?)`               | attachment factory | Registers one or more elements with the nearest ancestor group.             |
+| `Swap`                           | Svelte component   | Keyed label/content replacement with an out-of-flow exiting copy.           |
+| `autoSize`                       | attachment factory | Real-height interpolation for a bounded persistent wrapping shell.          |
+| `reveal`                         | transition         | Animates opacity and vertical box metrics so siblings follow native reflow. |
+| `appear`                         | transition         | Fades/clips inserted content without scaling text or icons.                 |
+| `vanish`                         | transition         | Pins removed content with physical `left`/`top`, then fades/clips it.       |
+| `drawer`                         | transition         | Animates opacity, width, and horizontal padding for rails/drawers.          |
+| `motionPresets`, `motionEasings` | tokens             | Shared semantic durations, curves, and spring parameters.                   |
+
+`layout()` accepts `id`, `type: 'both' | 'position' | 'size'`, and a `transition` containing
+`duration` plus spring stiffness, damping, and mass. Attachment factories are expected to have
+stable identity: create them once in component script and reuse them.
+
+### Group discovery and scheduling
+
+`LayoutGroup` registers its rendered root in a module-level `WeakMap`. A `layout()` attachment
+walks DOM ancestors to find the nearest registered root. This replaces the Svelte-context design
+in the original proof-of-concept plan because attachment effects cannot establish context.
+
+Attachment ordering is accommodated by performing the first group lookup in a microtask after the
+Svelte commit, with animation-frame retries only when no group is found. If the retry window
+expires, the implementation logs a warning and leaves the element unregistered.
+
+The group observes descendant child/attribute changes with one `MutationObserver`; one
+`ResizeObserver` covers the root and registered nodes. Relevant changes are coalesced into a
+pre-paint `requestAnimationFrame`. Transition, resize, and capture-phase scroll events refresh the
+baseline without making FLIP chase continuously changing geometry.
+
+The scheduler degrades sustained frame-rate flush density or accumulated flush cost. It emits one
+deduplicated development warning per episode, converts suppressed animation requests to baseline
+synchronization, and resets history after 120 ms of quiet. Unlike the original 24-in-100-ms guard,
+this policy is reachable on ordinary 60 Hz displays.
+
+Initial node registration is deferred only to a microtask. This lets nested group roots from the
+same Svelte commit bind before ancestor lookup while ensuring a newly mounted shared owner joins the
+pre-paint flush instead of flashing once at its destination.
+
+### FLIP and interruption
+
+Boxes are stored relative to the `LayoutGroup` root. During a flush the engine:
+
+1. Derives the current visual box from the active WAAPI clock and sampled progress, without parsing
+   computed transform matrices. It captures all clocks before canceling any inherited ancestor
+   effect.
+2. Suspends engine projections in one write phase, then measures the root and connected nodes in one
+   read phase. Unchanged, unrelated projections restore the same WAAPI objects and phase.
+3. Computes the position/scale inverse, constrained by the requested layout type and corrected
+   relative to an animated layout ancestor when nested.
+4. Generates spring progress samples and bakes them into WAAPI transform keyframes over the token
+   duration with linear playback.
+5. Cancels replaced animations and starts from the last visible box, so a discrete update can
+   retarget without jumping.
+6. Cancels completed animations so no inline transform remains.
+
+The spring is sampled, not a live per-frame solver. Stiffness, damping, and mass define the sampled
+shape; the semantic token duration normalizes it to wall-clock playback. Retargeting preserves
+visual position but does not conserve spring velocity. Unrelated baseline work preserves the
+original animation and therefore its existing velocity.
+
+Fresh, unnested position-only jobs serialize the cached samples into a CSS `linear(...)` easing and
+send two transform keyframes to WAAPI. Nested, size-corrected, and interrupted jobs retain explicit
+sampled keyframes. Engine-owned effects use `onfinish`; only a child borrowing an ancestor timeline
+needs a shared `finished` promise.
+
+Invalid public duration/spring values fall back to the Astryx-aligned layout preset. Exceptions and
+missing WAAPI/observer APIs retain final static layout instead of wedging the group.
+
+### Size correction
+
+Size FLIP is implemented. When the inverse contains scale, a direct child matching
+`:scope > [data-layout-invert]` receives reciprocal scale keyframes. The outer keyframes also
+correct a uniform pixel border radius and set a temporary keyframed stacking order. This means
+inverse scale is no longer future work. Axis-aligned nested layout nodes use affine ancestor-relative
+projection; layout nodes inside a `data-layout-invert` correction boundary remain unsupported and
+produce a development warning.
+
+Nested nodes may use distinct semantic transitions. Child correction keyframes extend through the
+slowest animated ancestor they depend on, and identity-local children borrow (but never cancel) the
+nearest ancestor's WAAPI time source for interruption and cleanup.
+
+### Shared layouts
+
+Shared snapshots live inside one group. A committed node with `id` publishes its group-relative
+visual box when it departs, and the latest unresolved owner may consume it during a flush for up to
+480 ms. Owner/generation metadata and painted-flush provenance prevent a new target from consuming
+its own geometry, an old teardown from overwriting a current hand-off, or a never-painted owner from
+publishing geometry. Browser-component tests cover both attachment lifecycle orderings, a
+never-painted triple handoff, and expiry precedence.
+
+Cross-group transfer is not implemented. Simultaneously mounted duplicate ids have no defined
+crossfade or ownership behavior and are not supported. The shared registry is a transient transfer
+cache, not persistent application state.
+
+### Presence and reduced motion
+
+`reveal` deliberately animates height, paddings, margins, and border widths. This is the exception
+to the transform-only FLIP rule: continuous native reflow is the desired behavior for a small
+presence region, while `layout()` handles discrete jumps.
+
+`appear`, `vanish`, `drawer`, and `Swap` are Svelte transitions; `autoSize` is a measured attachment
+for persistent intrinsic-height changes. The shared SSR-safe policy resolves all presence
+delays/durations, auto-sizing, and FLIP playback to immediate final state under reduced motion.
+
+`Swap` defaults to a complementary opacity crossfade with no blank interval. Its optional
+`slide-up` effect coordinates shorter opposing travel and complementary opacity for single-line
+content, keeping the clipped viewport populated while animating `top`, not transforms. A resizing
+control projects only its persistent background surface. Stable drawer content is composed as a fixed-width inner surface inside the clipped,
+width-animating shell so text does not wrap and unwrap during the transition. The shell's opacity
+gate derives from the same bidirectional progress as its width, preserving rapid reversal without
+an independently restarting content timeline. Its flex sibling follows the real-width reflow
+natively rather than adding discrete FLIP projection to the same axis.
+
+`vanish` keeps physical coordinates in a stable local containing block and now emits captured
+border-box dimensions with `box-sizing: border-box`. RTL, vertical writing, and unchanged
+axis-aligned transformed ancestors work in that invariant. Fixed/sticky exits and an interposed
+scroll container warn and remain outside v1.
+
+### SSR, hydration, and scrolling
+
+On the server, `layout()` and `autoSize` return before registration when `requestAnimationFrame` is
+unavailable. The first client registration establishes the baseline; attachment ordering uses an
+initial microtask and bounded frame retries. Node SSR rendering and production prerender/hydration
+tests verify static markup and zero initial `Element.animate()` calls. Missing WAAPI and observers
+degrade to synchronized static layout without retaining fictional projection geometry.
+
+Group-relative coordinates prevent document scroll or movement of an outside ancestor from
+changing a node's coordinates relative to its group. Capture-phase scroll handling refreshes the
+baseline without playback while preserving unchanged in-flight WAAPI animations. An internal
+scroller wins over a same-frame layout mutation and settles immediately. Browser-component tests
+cover document-scroll preservation, nested-scroll retargeting, and this same-frame collision.
+
+## Motion lab: fourteen interaction classes
+
+Route: `/demo/ui`. The lab is an exploratory integration fixture, not product component markup.
+
+| #   | Scene            | Behavior exercised                                                                                                        |
+| --- | ---------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 01  | Shared pill      | One persistent node changes box and is interrupted mid-flight. Despite the historical title, it does not use a shared id. |
+| 02  | Pack and shuffle | Position-only FLIP for persistent cards; committed-geometry exits and delayed fade-through entry for replacements.        |
+| 03  | Unanimatable CSS | `justify-content` jumps become visual travel.                                                                             |
+| 04  | Size             | Position/size FLIP plus `data-layout-invert` content counter-scale.                                                       |
+| 05  | Accordion        | `reveal` drives vertical presence and native sibling reflow.                                                              |
+| 06  | Stack            | `appear`/`vanish` plus packing of persistent siblings.                                                                    |
+| 07  | Search morph     | Continuous width plus delayed crisp content; no reciprocal text scaling.                                                  |
+| 08  | Row mark         | A remounted highlight transfers through a shared id before the first paint.                                               |
+| 09  | Card to stage    | Shared surface plus always-readable position-only code/name identities; stage-exclusive copy fades separately.            |
+| 10  | Density          | Grid column-count change with stable card identity.                                                                       |
+| 11  | Wrap             | Chip packing plus `autoSize` interpolation of the persistent wrapping shell.                                              |
+| 12  | Rail             | Bidirectional `drawer` reflow with a fixed-width surface and same-clock opacity gate.                                     |
+| 13  | Content swap     | A background-only shell projection surrounds crisp, opacity-only `Swap` content without readable overlap.                 |
+| 14  | Validation       | `reveal` for error/success messages and native form reflow.                                                               |
+
+The lab currently uses raw elements and English fixture copy. After semantic foundations exist, its
+controls, text, and stacks should be composed from Bedrock primitives so the route becomes a design
+system integration test. Canonical component-owned strings remain English even though product UI
+defaults to `de-AT`.
+
+## Current verification evidence
+
+- Manual Chrome review exercised every scene, rapid interruption, reduced motion, cleanup,
+  console/network state, and recorded before/after evidence.
+- On 2026-08-30, the full Vitest suite passes 57 tests across seven files. Seventeen
+  browser-component cases cover flush, WAAPI-clock interruption, unrelated-flush preservation,
+  mixed-duration nested projection, both shared-id orderings plus provenance/expiry, reduced
+  motion, scrolling collisions, diagnostics, and unmount cleanup.
+- The initial project-wide `pnpm check` baseline contained 100 errors across 41 files. The M0
+  stabilization pass resolved the import, parser, typed-route and bindable-prop causes; `pnpm
+check`, the 30-test Vitest suite and the Playwright end-to-end test now pass. The previously
+  reported cached-attachment issue remains non-reproducible. Full evidence lives in the [M0
+  verification baseline](../../bedrock/verification-baseline.md).
+- Three Playwright scenarios pass, including the fourteen-scene integration case and deterministic
+  50/100-node stress measurements. Each stress flush produces exactly N animations and N+1 geometry
+  reads, then settles with no active animation residue.
+
+## M1 hardening plan
+
+### 1. Stabilize the baseline
+
+- [x] Inventory every `pnpm check` failure by owning area and root cause.
+- [x] Re-run the reported `/demo/ui` cached shared-attachment error; it is absent from the current
+      checkpoint, so no code change is required unless it recurs.
+- [x] Resolve project-wide failures until `pnpm check` exits successfully; do not hide new failures
+      behind a broad exclusion.
+- [x] Keep the existing motion math/token tests green.
+
+### 2. Lock the public contract
+
+- [x] Verify that `layout()` outside `LayoutGroup` becomes a no-op with one English development
+      warning after its bounded hydration/attachment-order retry; it must not throw in production.
+- [x] Keep shared ids group-scoped, give snapshots owner/generation identity, and warn on duplicate
+      live owners in development.
+- [x] Support axis-aligned nested projection with ancestor-relative affine correction; warn when a
+      nested attachment crosses a content-correction boundary.
+- [x] Keep 480 ms as the shared transfer lifetime based on mount/unmount and expiry-precedence tests. Keep
+      the constant documented and tested rather than relying on timing folklore.
+- [x] Confirm that sampled springs and visual-position retargeting are sufficient for v1. A live
+      solver is not required unless user testing exposes the lack of velocity continuity.
+- [x] Harden the preserved Astryx-aligned semantic token vocabulary needed by consumers; avoid
+      arbitrary CSS-property APIs and require recorded fixture evidence before changing seed values.
+
+### 3. Complete motion preferences and platform behavior
+
+- [x] Make `layout`, `reveal`, `autoSize`, `appear`, `vanish`, `drawer`, and `Swap` honor reduced
+      motion.
+- [x] Define reduced motion as immediate final layout with no spatial interpolation or delayed
+      removal; preserve semantics and focus.
+- [x] Verify SSR and hydration: no server DOM access, no initial-load FLIP, and no hydration warning.
+- [x] Refresh layout baselines without playback on document and nested-container scrolling.
+- [x] Replace `vanish`'s physical positioning assumption or document a logical RTL-safe strategy;
+      verify positioned ancestors and nested scrollers.
+
+### 4. Establish browser coverage
+
+- [x] Layout flush: mutate a class and observe a non-identity in-flight transform, then identity at
+      rest.
+- [x] Interruption: retarget mid-flight, verify no visual jump, final box, and no residual animation.
+- [x] Shared transfer: cover teardown-before-mount and mount-before-teardown inside one group.
+- [x] Reduced motion: verify every public primitive settles without playback.
+- [x] Scroll: cover document scroll, an outside scrolling ancestor, and a scrolling container
+      inside the group.
+- [x] Removal/insertion: cover packing with `appear`/`vanish` and reflow with `reveal`.
+- [x] Continuous layout: verify repeated CSS/style-driven targets do not accumulate FLIP springs or
+      leave residue.
+- [x] SSR/hydration: hydrate a group and ensure the initial geometry is only a baseline.
+
+Do not assert exact spring pixels. Assert continuity, direction where relevant, final geometry, and
+the absence of residual animations.
+
+### 5. Set performance limits
+
+- [x] Treat roughly 30 attached nodes as the normal target, 50 as a tested upper boundary, and 100
+      as characterization.
+- [x] Build a 50-node normal fixture and a 100-node stress fixture that record flush measurements,
+      forced-layout cost, and dropped/throttled work.
+- [ ] Define budgets against representative CI and target browsers before publishing hard
+      millisecond claims.
+- [x] When sustained density or measured flush cost trips the guard, issue a deduplicated English
+      development warning that names the group and explains that animation was suppressed.
+- [x] A throttled group must still perform a non-animated baseline sync for the latest state. It
+      must not remain stale until an unrelated mutation.
+- [ ] Virtualize large collections or split independent regions into groups. Do not observe the
+      document root as an implicit global group.
+
+## Production exit gate
+
+M1 is complete only when:
+
+- [x] `pnpm check` and current unit tests pass.
+- [x] All browser cases above pass in the configured browser project without timing flakes.
+- [x] The reduced-motion behavior is consistent across every public primitive.
+- [x] Scroll and RTL/logical-position behavior match the motion contract.
+- [x] The 50/100-node fixture has documented results and the flush guard warns and recovers.
+- [x] The public barrel, semantic tokens, examples, and contract agree.
+- [x] `/demo/ui` loads without console or network errors and all fourteen scenes settle without
+      residual animations after interruption.
+
+## Explicit deferrals
+
+- Rotation/skew/perspective projection and layout descendants inside correction boundaries.
+- Drag/reorder physics, SVG and canvas layout motion.
+- Cross-group shared elements and simultaneous-owner crossfades.
+- Route transitions and View Transitions integration.
+- General-purpose animation props or a Motion+ compatibility layer.
+- Product components beyond replacing the lab's raw controls after Bedrock foundations exist.

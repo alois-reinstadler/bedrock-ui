@@ -6,7 +6,11 @@
 	import Slider from '#lib/shadcn/ui/slider/slider.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Slider> = $props();
+	let {
+		ref = $bindable(null),
+		value = $bindable(),
+		...restProps
+	}: ComponentProps<typeof Slider> = $props();
 </script>
 
-<Slider {...props} />
+<Slider bind:ref bind:value={value as never} {...restProps} />

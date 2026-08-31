@@ -12,8 +12,7 @@
 		if (!needle) return components;
 		return components.filter(
 			(component) =>
-				component.title.toLowerCase().includes(needle) ||
-				component.slug.includes(needle)
+				component.title.toLowerCase().includes(needle) || component.slug.includes(needle)
 		);
 	});
 </script>
@@ -23,7 +22,11 @@
 		<a href={resolve('/')} class="flex h-8 items-center px-2 text-sm">
 			<Logo />
 		</a>
-		<Sidebar.Input bind:value={query} placeholder="Find a component" aria-label="Find a component" />
+		<Sidebar.Input
+			bind:value={query}
+			placeholder="Find a component"
+			aria-label="Find a component"
+		/>
 	</Sidebar.Header>
 	<Sidebar.Content>
 		<Sidebar.Group>
@@ -32,9 +35,7 @@
 				<Sidebar.Menu>
 					{#each gettingStarted as item (item.href)}
 						<Sidebar.MenuItem>
-							<Sidebar.MenuButton
-								isActive={path === item.href}
-							>
+							<Sidebar.MenuButton isActive={path === item.href}>
 								{#snippet child({ props })}
 									<a href={resolve(item.href)} {...props}>{item.title}</a>
 								{/snippet}
@@ -50,11 +51,9 @@
 				<Sidebar.Menu>
 					{#each filtered as component (component.slug)}
 						<Sidebar.MenuItem>
-							<Sidebar.MenuButton
-								isActive={path === `/docs/components/${component.slug}`}
-							>
+							<Sidebar.MenuButton isActive={path === `/docs/components/${component.slug}`}>
 								{#snippet child({ props })}
-									<a href={resolve(`/docs/components/${component.slug}`)} {...props}
+									<a href={resolve('/docs/components/[slug]', { slug: component.slug })} {...props}
 										>{component.title}</a
 									>
 								{/snippet}

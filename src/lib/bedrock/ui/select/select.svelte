@@ -6,7 +6,11 @@
 	import Select from '#lib/shadcn/ui/select/select.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Select> = $props();
+	let {
+		open = $bindable(false),
+		value = $bindable(),
+		...restProps
+	}: ComponentProps<typeof Select> = $props();
 </script>
 
-<Select {...props} />
+<Select bind:open bind:value={value as never} {...restProps} />

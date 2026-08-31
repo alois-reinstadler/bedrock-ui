@@ -1,5 +1,13 @@
 <script lang="ts">
 	import CodeBlock from '#lib/site/CodeBlock.svelte';
+
+	const buttonExample = [
+		'<script lang="ts">',
+		"  import { Button } from '#lib/bedrock/ui/button';",
+		'<' + '/script>',
+		'',
+		'<Button>Save</Button>'
+	].join('\n');
 </script>
 
 <svelte:head>
@@ -21,29 +29,22 @@
 			<p class="mt-1 mb-3 text-sm text-muted-foreground">
 				Point at the Bedrock entry, not the generated shadcn folder.
 			</p>
-			<CodeBlock
-				label="Svelte"
-				code={`<script lang="ts">
-  import { Button } from '#lib/bedrock/ui/button';
-</script>
-
-<Button>Save</Button>`}
-			/>
+			<CodeBlock label="Svelte" code={buttonExample} />
 		</li>
 		<li>
 			<p class="text-sm font-medium">2. Tokens are already loaded</p>
 			<p class="mt-1 text-sm leading-relaxed text-muted-foreground">
-				<code class="font-mono text-foreground">src/routes/layout.css</code> defines the color, radius,
-				and type scale. Instrument Sans is the UI font. Dark mode is the
+				<code class="font-mono text-foreground">src/routes/layout.css</code> defines the color,
+				radius, and type scale. Instrument Sans is the UI font. Dark mode is the
 				<code class="font-mono text-foreground">.dark</code> class, toggled by mode-watcher.
 			</p>
 		</li>
 		<li>
 			<p class="text-sm font-medium">3. Change the source</p>
 			<p class="mt-1 text-sm leading-relaxed text-muted-foreground">
-				Edit files under <code class="font-mono text-foreground">src/lib/bedrock</code> or the wrapped
-				primitives in <code class="font-mono text-foreground">src/lib/shadcn</code>. App imports stay
-				stable.
+				Edit files under <code class="font-mono text-foreground">src/lib/bedrock</code> or the
+				wrapped primitives in <code class="font-mono text-foreground">src/lib/shadcn</code>. App
+				imports stay stable.
 			</p>
 		</li>
 	</ol>

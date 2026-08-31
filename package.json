@@ -3,8 +3,9 @@
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
+	"packageManager": "pnpm@11.24.0",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "NODE_ENV=development vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -12,9 +13,9 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"test:unit": "vitest",
-		"test": "npm run test:unit -- --run && npm run test:e2e",
-		"test:e2e": "playwright install && playwright test"
+		"test:unit": "NODE_ENV=test vitest",
+		"test": "pnpm run test:unit -- --run && pnpm run test:e2e",
+		"test:e2e": "playwright install chromium && playwright test"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
@@ -63,8 +64,11 @@
 	"imports": {
 		"#lib": "./src/lib/index.js",
 		"#lib/utils.js": "./src/lib/utils.ts",
+		"#lib/bedrock/ui/*": "./src/lib/bedrock/ui/*/index.ts",
 		"#lib/components/ui/*": "./src/lib/shadcn/ui/*",
 		"#lib/hooks/*": "./src/lib/shadcn/hooks/*",
+		"#lib/site/examples": "./src/lib/site/examples.ts",
+		"#lib/site/registry": "./src/lib/site/registry.ts",
 		"#lib/*": "./src/lib/*"
 	}
 }

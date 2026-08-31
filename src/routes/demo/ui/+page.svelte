@@ -1,13 +1,26 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { untrack } from 'svelte';
+	import { onDestroy, tick, untrack } from 'svelte';
 	import type { Attachment } from 'svelte/attachments';
-	import { fade } from 'svelte/transition';
+	import CheckIcon from '@lucide/svelte/icons/check';
+	import LoaderCircleIcon from '@lucide/svelte/icons/loader-circle';
 	import PlusIcon from '@lucide/svelte/icons/plus';
 	import SearchIcon from '@lucide/svelte/icons/search';
 	import ShuffleIcon from '@lucide/svelte/icons/shuffle';
+	import UploadIcon from '@lucide/svelte/icons/upload';
 	import XIcon from '@lucide/svelte/icons/x';
-	import { LayoutGroup, layout } from '#lib/bedrock/motion';
+	import {
+		LayoutGroup,
+		Swap,
+		appear,
+		autoSize,
+		drawer,
+		layout,
+		motionEasings,
+		motionPresets,
+		reveal,
+		vanish
+	} from '#lib/bedrock/motion/index.js';
 	import Scene from './scene.svelte';
 
 	type Region = 'west' | 'north' | 'island';
@@ -42,7 +55,7 @@
 		{
 			id: 'nest',
 			q: 'Can I nest layout nodes?',
-			a: 'Not in v1. Parent and child would both invert, and the child would travel twice.'
+			a: 'Yes for axis-aligned layout. The child removes its parent projection so inherited movement is applied once. Keep corrected content wrappers separate from nested layout nodes.'
 		}
 	];
 	const notices = [
@@ -74,24 +87,36 @@
 	);
 	const featuredStation = $derived(stations.find((station) => station.id === featured) ?? null);
 
-	const pill = layout();
-	const chip = layout({ type: 'position' });
-	const pack = layout({ type: 'position' });
-	const tile = layout();
-	const faqRow = layout({ type: 'position' });
-	const toastCard = layout({ type: 'position' });
-	const searchShell = layout();
-	const rowMark = layout({ id: 'row-mark' });
-	const densityCard = layout({ type: 'position' });
-	const tagChip = layout({ type: 'position' });
-	const railPane = layout();
+	const layoutTransition = motionPresets.layout;
+	const selectionTransition = {
+		duration: motionPresets.state.duration,
+		spring: motionPresets.swap.spring
+	};
+	const searchTransitionDuration = `${motionPresets.overlay.duration}ms`;
+	const searchTransitionTiming = `cubic-bezier(${motionPresets.drawer.easing.join(', ')})`;
+	const pill = layout({ transition: layoutTransition });
+	const chip = layout({ type: 'position', transition: layoutTransition });
+	const pack = layout({ type: 'position', transition: layoutTransition });
+	const tile = layout({ transition: layoutTransition });
+	const toastCard = layout({ type: 'position', transition: layoutTransition });
+	const rowMark = layout({ id: 'row-mark', transition: selectionTransition });
+	const densityCard = layout({ type: 'position', transition: layoutTransition });
+	const tagChip = layout({ type: 'position', transition: layoutTransition });
+	const stackShell = autoSize({ duration: motionPresets.reveal.duration });
+	const densityShell = autoSize({ duration: motionPresets.layout.duration });
+	const wrapShell = autoSize({ duration: motionPresets.reveal.duration });
+	const uploadShell = layout({ transition: layoutTransition });
+	// Attachment caching is not render state.
+	// eslint-disable-next-line svelte/prefer-svelte-reactivity
 	const sharedLayouts = new Map<string, Attachment<HTMLElement>>();
 
-	function shared(id: string) {
-		let attachment = sharedLayouts.get(id);
+	function shared(id: string, type: 'both' | 'position' = 'both') {
+		const cacheKey = `${type}:${id}`;
+		let attachment = sharedLayouts.get(cacheKey);
 		if (!attachment) {
-			attachment = layout({ id });
-			sharedLayouts.set(id, attachment);
+			const created = layout({ id, type, transition: layoutTransition });
+			sharedLayouts.set(cacheKey, created);
+			attachment = created;
 		}
 		return attachment;
 	}
@@ -121,12 +146,23 @@
 
 	const trackPill: Attachment<HTMLElement> = (el) => {
 		if (typeof requestAnimationFrame === 'undefined') return;
-		const frame = requestAnimationFrame(() => {
+		let frame = 0;
+		const update = () => {
 			const active = el.querySelector<HTMLButtonElement>('[aria-pressed="true"]');
 			if (!active) return;
 			untrack(() => setPillBox(active.offsetLeft, active.offsetWidth));
-		});
-		return () => cancelAnimationFrame(frame);
+		};
+		const scheduleUpdate = () => {
+			cancelAnimationFrame(frame);
+			frame = requestAnimationFrame(update);
+		};
+		const observer = new ResizeObserver(scheduleUpdate);
+		observer.observe(el);
+		scheduleUpdate();
+		return () => {
+			cancelAnimationFrame(frame);
+			observer.disconnect();
+		};
 	};
 
 	function toggleTag(tag: string) {
@@ -144,6 +180,70 @@
 
 	function dismissToast(id: number) {
 		toasts = toasts.filter((toast) => toast.id !== id);
+	}
+
+	async function showFeatured(id: string) {
+		featured = id;
+		await tick();
+		document.querySelector<HTMLButtonElement>('#motion-feature-stage')?.focus({
+			preventScroll: true
+		});
+	}
+
+	async function closeFeatured() {
+		const id = featured;
+		featured = null;
+		await tick();
+		if (!id) return;
+		document.querySelector<HTMLButtonElement>(`#motion-feature-card-${id}`)?.focus({
+			preventScroll: true
+		});
+	}
+
+	type UploadState = 'idle' | 'busy' | 'done';
+	let uploadState = $state<UploadState>('idle');
+	let uploadEffect = $state<'fade' | 'slide-up'>('slide-up');
+	let uploadTimer = 0;
+
+	function startUpload() {
+		if (uploadState !== 'idle') return;
+		uploadState = 'busy';
+		clearTimeout(uploadTimer);
+		uploadTimer = window.setTimeout(() => {
+			uploadState = 'done';
+			uploadTimer = window.setTimeout(() => (uploadState = 'idle'), 1600);
+		}, 1800);
+	}
+
+	onDestroy(() => clearTimeout(uploadTimer));
+
+	const uploadStatusMessage = $derived(
+		uploadState === 'busy'
+			? 'Uploading manifest.'
+			: uploadState === 'done'
+				? 'Manifest uploaded.'
+				: 'Ready to upload manifest.'
+	);
+
+	let callsign = $state('');
+	let callsignError = $state<string | null>(null);
+	let callsignOk = $state(false);
+
+	function checkCallsign(event: SubmitEvent) {
+		event.preventDefault();
+		const value = callsign.trim().toUpperCase();
+		if (!value) {
+			callsignError = 'Enter a callsign before filing.';
+			callsignOk = false;
+			return;
+		}
+		if (!/^[A-Z]{2,3}\d{1,4}[A-Z]?$/.test(value)) {
+			callsignError = 'Two or three letters, then the flight number — like SAS4012.';
+			callsignOk = false;
+			return;
+		}
+		callsignError = null;
+		callsignOk = true;
 	}
 </script>
 
@@ -210,7 +310,7 @@
 				title="Pack and shuffle"
 				hint="Filter and reorder. Remaining cards keep their ink."
 			>
-				<div class="flex flex-wrap items-center gap-2">
+				<div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter by region">
 					{#each regions as item (item)}
 						<button
 							type="button"
@@ -218,6 +318,7 @@
 								'rounded-full px-3 py-1.5 text-xs font-medium capitalize',
 								region === item ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground'
 							]}
+							aria-pressed={region === item}
 							onclick={() => (region = item)}
 						>
 							{item}
@@ -232,9 +333,23 @@
 						Shuffle
 					</button>
 				</div>
-				<LayoutGroup class="grid grid-cols-2 gap-2 sm:grid-cols-3">
+				<LayoutGroup class="relative grid grid-cols-2 gap-2 sm:grid-cols-3">
 					{#each visible as station (station.id)}
-						<article {@attach pack} class="rounded-2xl bg-muted/80 px-4 py-5">
+						<article
+							{@attach pack}
+							class="rounded-2xl bg-muted/80 px-4 py-5"
+							in:appear={{
+								delay: motionPresets.exit.duration,
+								duration: motionPresets.enter.duration,
+								easing: motionEasings.enter,
+								start: 0.98
+							}}
+							out:vanish={{
+								duration: motionPresets.exit.duration,
+								easing: motionEasings.exit,
+								end: 0.98
+							}}
+						>
 							<p class="font-mono text-[0.7rem] tracking-widest uppercase">{station.code}</p>
 							<p class="mt-2 text-lg tracking-tight">{station.name}</p>
 							<p class="mt-1 text-xs text-muted-foreground capitalize">{station.region}</p>
@@ -248,7 +363,7 @@
 				title="Unanimatable CSS"
 				hint="justify-content cannot tween. The boxes still travel."
 			>
-				<div class="flex gap-2">
+				<div class="flex gap-2" role="group" aria-label="Align callsigns">
 					{#each aligns as item (item)}
 						<button
 							type="button"
@@ -256,6 +371,7 @@
 								'rounded-full px-3 py-1.5 text-xs font-medium capitalize',
 								align === item ? 'bg-foreground text-background' : 'bg-muted text-muted-foreground'
 							]}
+							aria-pressed={align === item}
 							onclick={() => (align = item)}
 						>
 							{item}
@@ -297,6 +413,7 @@
 									? 'col-span-2 min-h-48 bg-foreground text-background md:row-span-2'
 									: 'min-h-28 bg-muted'
 							]}
+							aria-pressed={expanded === station.id}
 							onclick={() => (expanded = expanded === station.id ? null : station.id)}
 						>
 							<span data-layout-invert class="flex h-full flex-col justify-between p-4">
@@ -312,41 +429,47 @@
 			<Scene
 				index="05"
 				title="Accordion"
-				hint="Siblings slide. Height uses a 0fr / 1fr grid, not scaleY."
+				hint="Height is a presence transition. Siblings follow the reflow natively — no layout() here at all."
 			>
-				<LayoutGroup class="flex flex-col gap-2">
+				<div class="flex flex-col gap-2">
 					{#each faqs as item (item.id)}
-						<article {@attach faqRow} class="overflow-hidden rounded-2xl bg-muted/80">
+						<article class="overflow-hidden rounded-2xl bg-muted/80">
 							<button
 								type="button"
 								class="flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-medium"
 								aria-expanded={openFaq === item.id}
+								aria-controls={`motion-faq-${item.id}`}
 								onclick={() => (openFaq = openFaq === item.id ? null : item.id)}
 							>
 								{item.q}
-								<span class="font-mono text-xs text-muted-foreground"
+								<span class="font-mono text-xs text-muted-foreground" aria-hidden="true"
 									>{openFaq === item.id ? '–' : '+'}</span
 								>
 							</button>
-							<div
-								class="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
-								style:grid-template-rows={openFaq === item.id ? '1fr' : '0fr'}
-							>
-								<p
-									class="min-h-0 overflow-hidden px-4 text-sm leading-relaxed text-muted-foreground"
+							{#if openFaq === item.id}
+								<div
+									id={`motion-faq-${item.id}`}
+									in:reveal={{
+										duration: motionPresets.reveal.duration,
+										easing: motionEasings.enter
+									}}
+									out:reveal={{
+										duration: motionPresets.reveal.duration,
+										easing: motionEasings.enter
+									}}
 								>
-									<span class="block pb-4">{item.a}</span>
-								</p>
-							</div>
+									<p class="px-4 pb-4 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
+								</div>
+							{/if}
 						</article>
 					{/each}
-				</LayoutGroup>
+				</div>
 			</Scene>
 
 			<Scene
 				index="06"
 				title="Stack"
-				hint="Enter with fade. The rest of the stack packs with layout."
+				hint="Notices enter and pack while the stack grows at its natural height."
 			>
 				<button
 					type="button"
@@ -356,65 +479,93 @@
 					<PlusIcon class="size-3.5" />
 					Post notice
 				</button>
-				<LayoutGroup class="flex min-h-48 flex-col gap-2">
-					{#each toasts as toast (toast.id)}
-						<article
-							{@attach toastCard}
-							class="flex items-start justify-between gap-3 rounded-2xl bg-muted/80 px-4 py-3"
-							transition:fade={{ duration: 200 }}
-						>
-							<div>
-								<p class="font-mono text-[0.7rem] tracking-widest uppercase">{toast.gate}</p>
-								<p class="mt-1 text-sm">{toast.body}</p>
-							</div>
-							<button
-								type="button"
-								class="rounded-full p-1 text-muted-foreground hover:text-foreground"
-								aria-label="Dismiss notice"
-								onclick={() => dismissToast(toast.id)}
+				<div id="motion-stack-shell" {@attach stackShell} class="overflow-hidden">
+					<LayoutGroup
+						class="relative flex flex-col gap-2"
+						role="log"
+						aria-label="Live notices"
+						aria-live="polite"
+						aria-relevant="additions"
+					>
+						{#each toasts as toast (toast.id)}
+							<article
+								{@attach toastCard}
+								class="flex items-start justify-between gap-3 rounded-2xl bg-muted/80 px-4 py-3"
+								in:appear={{
+									duration: motionPresets.enter.duration,
+									easing: motionEasings.enter,
+									start: 0.98
+								}}
+								out:vanish={{
+									duration: motionPresets.exit.duration,
+									easing: motionEasings.exit,
+									end: 0.98
+								}}
 							>
-								<XIcon class="size-3.5" />
-							</button>
-						</article>
-					{:else}
-						<p class="px-1 py-8 text-sm text-muted-foreground">No live notices.</p>
-					{/each}
-				</LayoutGroup>
+								<div>
+									<p class="font-mono text-[0.7rem] tracking-widest uppercase">{toast.gate}</p>
+									<p class="mt-1 text-sm">{toast.body}</p>
+								</div>
+								<button
+									type="button"
+									class="rounded-full p-1 text-muted-foreground hover:text-foreground"
+									aria-label={`Dismiss notice for gate ${toast.gate}`}
+									onclick={() => dismissToast(toast.id)}
+								>
+									<XIcon class="size-3.5" />
+								</button>
+							</article>
+						{:else}
+							<p class="px-1 py-4 text-sm text-muted-foreground">No live notices.</p>
+						{/each}
+					</LayoutGroup>
+				</div>
 			</Scene>
 
-			<Scene index="07" title="Search morph" hint="One shell. Icon island to field.">
-				<LayoutGroup class="flex min-h-14 items-center">
+			<Scene index="07" title="Search morph" hint="A continuous shell keeps its content crisp.">
+				<div class="flex min-h-14 items-center">
 					<div
-						{@attach searchShell}
-						class={[
-							'flex items-center overflow-hidden rounded-full bg-muted',
-							searching ? 'w-full max-w-md gap-2 px-3 py-2' : 'size-11 justify-center'
-						]}
+						class="motion-search-shell h-11 max-w-full overflow-hidden rounded-full bg-muted"
+						style:width={searching ? 'min(28rem, 100%)' : '2.75rem'}
+						style:--motion-search-duration={searchTransitionDuration}
+						style:--motion-search-timing={searchTransitionTiming}
 					>
-						<button
-							type="button"
-							class="grid size-7 place-items-center rounded-full"
-							aria-label={searching ? 'Close search' : 'Open search'}
-							onclick={() => {
-								searching = !searching;
-								if (!searching) query = '';
-							}}
-						>
+						<span class="flex h-11 w-[28rem] max-w-full items-center gap-2 px-2">
+							<button
+								type="button"
+								class="grid size-7 shrink-0 place-items-center rounded-full"
+								aria-label={searching ? 'Close search' : 'Open search'}
+								aria-expanded={searching}
+								aria-controls="motion-search-field"
+								onclick={() => {
+									searching = !searching;
+									if (!searching) query = '';
+								}}
+							>
+								{#if searching}
+									<XIcon class="size-3.5" />
+								{:else}
+									<SearchIcon class="size-3.5" />
+								{/if}
+							</button>
 							{#if searching}
-								<XIcon class="size-3.5" />
-							{:else}
-								<SearchIcon class="size-3.5" />
+								<input
+									id="motion-search-field"
+									class="min-w-0 flex-1 rounded-sm bg-transparent text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
+									aria-label="Search stands, gates, or flights"
+									placeholder="Stand, gate, or flight"
+									bind:value={query}
+									in:appear={{
+										delay: motionPresets.state.duration,
+										duration: motionPresets.enter.duration,
+										easing: motionEasings.enter,
+										start: 1
+									}}
+								/>
 							{/if}
-						</button>
-						{#if searching}
-							<input
-								class="min-w-0 flex-1 bg-transparent text-sm outline-none"
-								placeholder="Stand, gate, or flight"
-								bind:value={query}
-							/>
-						{/if}
+						</span>
 					</div>
-				</LayoutGroup>
+				</div>
 			</Scene>
 
 			<Scene
@@ -427,10 +578,12 @@
 						<button
 							type="button"
 							class="relative flex items-center justify-between px-4 py-3 text-left text-sm"
+							aria-pressed={selectedRow === station.id}
 							onclick={() => (selectedRow = station.id)}
 						>
 							{#if selectedRow === station.id}
-								<span {@attach rowMark} class="absolute inset-0 bg-background"></span>
+								<span {@attach rowMark} class="absolute inset-0 bg-background" aria-hidden="true"
+								></span>
 							{/if}
 							<span class="relative font-medium">{station.name}</span>
 							<span class="relative font-mono text-[0.7rem] tracking-widest text-muted-foreground"
@@ -444,23 +597,33 @@
 			<Scene
 				index="09"
 				title="Card to stage"
-				hint="Shared id on the tile and the overlay. Neighbors keep their seats."
+				hint="Surface and identity text transfer independently. Neighbors keep their seats."
 			>
 				<LayoutGroup class="relative min-h-56">
-					<div class="grid grid-cols-3 gap-2">
+					<div class="grid grid-cols-3 gap-2" inert={featuredStation !== null}>
 						{#each stations.slice(0, 3) as station (station.id)}
 							{#if featured !== station.id}
 								<button
+									id={`motion-feature-card-${station.id}`}
 									type="button"
-									{@attach shared(station.id)}
-									class="min-h-28 overflow-hidden rounded-[1.6rem] bg-muted p-4 text-left"
-									onclick={() => (featured = station.id)}
+									class="relative min-h-28 rounded-[1.6rem] p-4 text-left"
+									onclick={() => showFeatured(station.id)}
 								>
-									<span data-layout-invert class="flex h-full flex-col justify-between">
-										<span class="font-mono text-[0.7rem] tracking-widest uppercase"
+									<span
+										{@attach shared(station.id)}
+										class="absolute inset-0 rounded-[1.6rem] bg-muted"
+										aria-hidden="true"
+									></span>
+									<span class="relative z-10 flex h-full flex-col justify-between">
+										<span
+											{@attach shared(`station-code-${station.id}`, 'position')}
+											class="w-fit font-mono text-[0.7rem] tracking-widest uppercase"
 											>{station.code}</span
 										>
-										<span class="text-lg tracking-tight">{station.name}</span>
+										<span
+											{@attach shared(`station-name-${station.id}`, 'position')}
+											class="w-fit text-lg tracking-tight">{station.name}</span
+										>
 									</span>
 								</button>
 							{:else}
@@ -470,18 +633,37 @@
 					</div>
 					{#if featuredStation}
 						<button
+							id="motion-feature-stage"
 							type="button"
-							{@attach shared(featuredStation.id)}
-							class="absolute inset-0 z-10 flex min-h-56 w-full flex-col justify-between overflow-hidden rounded-[1.6rem] bg-foreground p-4 text-left text-background"
-							onclick={() => (featured = null)}
+							class="absolute inset-0 z-10 flex min-h-56 w-full flex-col justify-between overflow-hidden rounded-[1.6rem] p-4 text-left text-background"
+							aria-label={`Close details for ${featuredStation.name}`}
+							onclick={closeFeatured}
 						>
-							<span data-layout-invert class="flex h-full flex-col justify-between">
-								<span class="font-mono text-[0.7rem] tracking-widest uppercase"
+							<span
+								{@attach shared(featuredStation.id)}
+								class="absolute inset-0 rounded-[1.6rem] bg-foreground"
+								aria-hidden="true"
+							></span>
+							<span class="relative z-10 flex h-full flex-col justify-between">
+								<span
+									{@attach shared(`station-code-${featuredStation.id}`, 'position')}
+									class="w-fit font-mono text-[0.7rem] tracking-widest uppercase"
 									>{featuredStation.code}</span
 								>
 								<span>
-									<span class="block text-3xl tracking-tight">{featuredStation.name}</span>
-									<span class="mt-2 block text-sm text-background/70">Click to fold back</span>
+									<span
+										{@attach shared(`station-name-${featuredStation.id}`, 'position')}
+										class="block w-fit text-lg tracking-tight">{featuredStation.name}</span
+									>
+									<span
+										class="mt-2 block text-sm text-background/70"
+										in:appear={{
+											delay: motionPresets.state.duration,
+											duration: motionPresets.enter.duration,
+											easing: motionEasings.enter,
+											start: 1
+										}}>Click to fold back</span
+									>
 								</span>
 							</span>
 						</button>
@@ -489,22 +671,33 @@
 				</LayoutGroup>
 			</Scene>
 
-			<Scene index="10" title="Density" hint="Two columns or three. Cards keep identity.">
+			<Scene
+				index="10"
+				title="Density"
+				hint="Cards keep identity while the grid settles into its new natural height."
+			>
 				<button
 					type="button"
 					class="w-fit rounded-full bg-muted px-3 py-1.5 text-xs font-medium"
+					aria-pressed={dense}
+					aria-controls="motion-density-grid"
 					onclick={() => (dense = !dense)}
 				>
 					{dense ? 'Open grid' : 'Dense grid'}
 				</button>
-				<LayoutGroup class={['grid gap-2', dense ? 'grid-cols-3' : 'grid-cols-2']}>
-					{#each stations as station (station.id)}
-						<article {@attach densityCard} class="rounded-2xl bg-muted/80 px-3 py-4">
-							<p class="font-mono text-[0.65rem] tracking-widest uppercase">{station.code}</p>
-							<p class="mt-1 text-sm tracking-tight">{station.name}</p>
-						</article>
-					{/each}
-				</LayoutGroup>
+				<div id="motion-density-shell" {@attach densityShell} class="overflow-hidden">
+					<LayoutGroup
+						id="motion-density-grid"
+						class={['grid gap-2', dense ? 'grid-cols-3' : 'grid-cols-2']}
+					>
+						{#each stations as station (station.id)}
+							<article {@attach densityCard} class="rounded-2xl bg-muted/80 px-3 py-4">
+								<p class="font-mono text-[0.65rem] tracking-widest uppercase">{station.code}</p>
+								<p class="mt-1 text-sm tracking-tight">{station.name}</p>
+							</article>
+						{/each}
+					</LayoutGroup>
+				</div>
 			</Scene>
 
 			<Scene
@@ -512,7 +705,7 @@
 				title="Wrap"
 				hint="Chips reflow onto the next line. Each tag keeps its node."
 			>
-				<div class="flex flex-wrap gap-2">
+				<div class="flex flex-wrap gap-2" role="group" aria-label="Active procedures">
 					{#each procedures as tag (tag)}
 						<button
 							type="button"
@@ -522,45 +715,209 @@
 									? 'bg-foreground text-background'
 									: 'bg-muted text-muted-foreground'
 							]}
+							aria-pressed={activeTags.includes(tag)}
 							onclick={() => toggleTag(tag)}
 						>
 							{tag}
 						</button>
 					{/each}
 				</div>
-				<LayoutGroup class="flex max-w-sm flex-wrap gap-2 rounded-[1.6rem] bg-muted/50 p-3">
-					{#each activeTags as tag (tag)}
-						<span
-							{@attach tagChip}
-							class="rounded-full bg-background px-3 py-1.5 text-xs font-medium"
-						>
-							{tag}
-						</span>
-					{/each}
-				</LayoutGroup>
+				<div
+					{@attach wrapShell}
+					class="box-border max-w-sm overflow-hidden rounded-[1.6rem] bg-muted/50 p-3"
+				>
+					<LayoutGroup class="relative flex flex-wrap gap-2">
+						{#each activeTags as tag (tag)}
+							<span
+								{@attach tagChip}
+								in:appear={{
+									duration: motionPresets.enter.duration,
+									easing: motionEasings.enter,
+									start: 0.98
+								}}
+								out:vanish={{
+									duration: motionPresets.exit.duration,
+									easing: motionEasings.exit,
+									end: 0.98
+								}}
+								class="rounded-full bg-background px-3 py-1.5 text-xs font-medium"
+							>
+								{tag}
+							</span>
+						{/each}
+					</LayoutGroup>
+				</div>
 			</Scene>
 
 			<Scene index="12" title="Rail" hint="The main pane grows into the vacated column.">
 				<button
 					type="button"
 					class="w-fit rounded-full bg-muted px-3 py-1.5 text-xs font-medium"
+					aria-expanded={railOpen}
+					aria-controls="motion-stand-rail"
 					onclick={() => (railOpen = !railOpen)}
 				>
 					{railOpen ? 'Stow rail' : 'Show rail'}
 				</button>
 				<LayoutGroup class="flex min-h-48 overflow-hidden rounded-[1.6rem]">
 					{#if railOpen}
-						<aside class="w-40 shrink-0 bg-muted p-4">
-							<p class="font-mono text-[0.7rem] tracking-widest uppercase">Stands</p>
-							<p class="mt-3 text-sm leading-relaxed text-muted-foreground">B12, B14, T3</p>
+						<aside
+							id="motion-stand-rail"
+							class="w-40 shrink-0 bg-muted p-4"
+							aria-label="Stands"
+							transition:drawer
+						>
+							<div class="w-32 shrink-0">
+								<p class="font-mono text-[0.7rem] tracking-widest uppercase">Stands</p>
+								<p class="mt-3 text-sm leading-relaxed text-muted-foreground">B12, B14, T3</p>
+							</div>
 						</aside>
 					{/if}
-					<div {@attach railPane} class="flex flex-1 flex-col justify-between bg-muted/40 p-5">
+					<div class="flex flex-1 flex-col justify-between bg-muted/40 p-5">
 						<p class="font-mono text-[0.7rem] tracking-widest uppercase">Ground</p>
 						<p class="text-lg tracking-tight">Pushback window is open on Bravo.</p>
 					</div>
 				</LayoutGroup>
 			</Scene>
+
+			<Scene
+				index="13"
+				title="Content swap"
+				hint="Swap can fade through or roll crisp single-line content upward; the shell still sees one clean resize."
+			>
+				<div class="flex gap-1" role="group" aria-label="Swap-Effekt">
+					{#each [['fade', 'Überblenden'], ['slide-up', 'Nach oben']] as option (option[0])}
+						<button
+							type="button"
+							class="rounded-full bg-muted px-3 py-1.5 text-xs font-medium aria-pressed:bg-foreground aria-pressed:text-background"
+							aria-pressed={uploadEffect === option[0]}
+							onclick={() => (uploadEffect = option[0] as 'fade' | 'slide-up')}
+						>
+							{option[1]}
+						</button>
+					{/each}
+				</div>
+				<LayoutGroup class="flex min-h-14 items-center">
+					<button
+						type="button"
+						class="relative rounded-full text-sm font-medium text-background"
+						aria-disabled={uploadState !== 'idle'}
+						aria-label="Upload manifest"
+						aria-describedby="motion-upload-status"
+						aria-busy={uploadState === 'busy'}
+						onclick={startUpload}
+					>
+						<span
+							{@attach uploadShell}
+							class="pointer-events-none absolute inset-0 rounded-full bg-foreground"
+							aria-hidden="true"
+						></span>
+						<span
+							class="relative z-10 flex items-center justify-center px-5 py-2.5"
+							aria-hidden="true"
+						>
+							<Swap key={uploadState} effect={uploadEffect} class="whitespace-nowrap">
+								{#if uploadState === 'idle'}
+									<UploadIcon class="size-4" />
+									Upload manifest
+								{:else if uploadState === 'busy'}
+									<LoaderCircleIcon class="size-4 animate-spin motion-reduce:animate-none" />
+									Uploading…
+								{:else}
+									<CheckIcon class="size-4" />
+									Done
+								{/if}
+							</Swap>
+						</span>
+					</button>
+					<span id="motion-upload-status" class="sr-only" role="status">
+						{uploadStatusMessage}
+					</span>
+				</LayoutGroup>
+			</Scene>
+
+			<Scene
+				index="14"
+				title="Validation"
+				hint="Errors reveal with height, so the button below rides the reflow. No layout() needed."
+			>
+				<form class="flex max-w-sm flex-col gap-2" novalidate onsubmit={checkCallsign}>
+					<label class="text-xs font-medium text-muted-foreground" for="callsign">Callsign</label>
+					<input
+						id="callsign"
+						class={[
+							'rounded-xl border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+							callsignError ? 'border-red-500/60' : 'border-border focus:border-foreground/40'
+						]}
+						placeholder="SAS4012"
+						aria-invalid={Boolean(callsignError)}
+						aria-describedby={callsignError
+							? 'callsign-error'
+							: callsignOk
+								? 'callsign-success'
+								: undefined}
+						bind:value={callsign}
+						oninput={() => {
+							callsignError = null;
+							callsignOk = false;
+						}}
+					/>
+					{#if callsignError}
+						<p
+							id="callsign-error"
+							in:reveal={{
+								duration: motionPresets.reveal.duration,
+								easing: motionEasings.enter
+							}}
+							out:reveal={{
+								duration: motionPresets.exit.duration,
+								easing: motionEasings.exit
+							}}
+							class="text-xs text-red-500"
+							role="alert"
+						>
+							{callsignError}
+						</p>
+					{/if}
+					{#if callsignOk}
+						<p
+							id="callsign-success"
+							in:reveal={{
+								duration: motionPresets.reveal.duration,
+								easing: motionEasings.enter
+							}}
+							out:reveal={{
+								duration: motionPresets.exit.duration,
+								easing: motionEasings.exit
+							}}
+							class="text-xs text-emerald-600"
+							role="status"
+						>
+							Callsign accepted. Squawk assigned on file.
+						</p>
+					{/if}
+					<button
+						type="submit"
+						class="mt-1 w-fit rounded-full bg-foreground px-4 py-2 text-xs font-medium text-background"
+					>
+						File plan
+					</button>
+				</form>
+			</Scene>
 		</main>
 	</div>
 </div>
+
+<style>
+	.motion-search-shell {
+		transition-property: width;
+		transition-duration: var(--motion-search-duration);
+		transition-timing-function: var(--motion-search-timing);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.motion-search-shell {
+			transition-duration: 0ms;
+		}
+	}
+</style>
