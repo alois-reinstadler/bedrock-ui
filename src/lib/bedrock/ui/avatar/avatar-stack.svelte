@@ -15,7 +15,7 @@
 	import Group from '#lib/shadcn/ui/avatar/avatar-group.svelte';
 	import Image from '#lib/shadcn/ui/avatar/avatar-image.svelte';
 	import Root from '#lib/shadcn/ui/avatar/avatar.svelte';
-	import { Swap } from '#lib/bedrock/motion/index.js';
+	import { Swap, autoSize, motionPresets } from '#lib/bedrock/motion/index.js';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -60,6 +60,10 @@
 		clearTimeout(closeTimer);
 		closeTimer = setTimeout(() => (active = null), 150);
 	}
+
+	// Same shell pattern as the demo's async upload button: autoSize animates
+	// the card between intrinsic sizes while Swap crossfades the content.
+	const cardShell = autoSize({ duration: motionPresets.swap.duration, axis: 'both' });
 
 	const triggerClasses =
 		'rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none';
@@ -118,6 +122,7 @@
 	</Group>
 	{#if active !== null}
 		<div
+			{@attach cardShell}
 			data-slot="avatar-stack-card"
 			role="status"
 			class="bedrock-avatar-card absolute bottom-full z-50 mb-2 w-max rounded-lg border border-border bg-popover p-2 text-popover-foreground shadow-md"

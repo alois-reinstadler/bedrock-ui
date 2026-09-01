@@ -5,11 +5,14 @@
 		caption?: string;
 		/** Defaults to `pdf` when `src` ends in ".pdf", otherwise `image`. */
 		type?: 'image' | 'pdf';
+		/** Filename suggested when downloading; derived from src/alt otherwise. */
+		downloadName?: string;
 	};
 </script>
 
 <script lang="ts">
 	import ChevronLeftIcon from '@lucide/svelte/icons/chevron-left';
+	import DownloadIcon from '@lucide/svelte/icons/download';
 	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
 	import XIcon from '@lucide/svelte/icons/x';
 	import { Dialog as DialogPrimitive } from 'bits-ui';
@@ -32,6 +35,7 @@
 		class?: string;
 		/** Overrides for the built-in (German) UI strings. */
 		labels?: Partial<{
+			download: string;
 			close: string;
 			previous: string;
 			next: string;
@@ -42,6 +46,7 @@
 	} = $props();
 
 	const defaultLabels = {
+		download: 'Herunterladen',
 		close: 'Schließen',
 		previous: 'Vorheriges Bild',
 		next: 'Nächstes Bild',
@@ -54,6 +59,26 @@
 	const kind = $derived(
 		current?.type ?? (current?.src.toLowerCase().endsWith('.pdf') ? 'pdf' : 'image')
 	);
+
+	function suggestedName(item: LightboxItem): string {
+		if (item.downloadName) return item.downloadName;
+		if (item.src.startsWith('data:')) {
+			const mime = item.src.slice(5, item.src.indexOf(item.src.includes(';') ? ';' : ','));
+			const extension = mime.includes('svg') ? 'svg' : (mime.split('/')[1] ?? 'bin');
+			return `${item.alt.replaceAll(/[^\w-]+/g, '-').toLowerCase() || 'datei'}.${extension}`;
+		}
+		return item.src.split('/').pop()?.split('?')[0] || item.alt;
+	}
+
+	function downloadCurrent() {
+		if (!current) return;
+		const anchor = document.createElement('a');
+		anchor.href = current.src;
+		anchor.download = suggestedName(current);
+		document.body.appendChild(anchor);
+		anchor.click();
+		anchor.remove();
+	}
 
 	function onContentClick(event: MouseEvent) {
 		// Clicks on the empty stage (outside image/PDF and controls) dismiss.
@@ -107,19 +132,24 @@
 			</DialogPrimitive.Title>
 			{#if current}
 				<Swap key={current.src} effect="fade">
-					{#if kind === 'pdf'}
-						<PdfViewer
-							src={current.src}
-							aria-label={current.alt}
-							class="h-[80dvh] w-[min(90vw,56rem)] rounded-lg shadow-2xl"
-						/>
-					{:else}
-						<img
-							src={current.src}
-							alt={current.alt}
-							class="max-h-[80dvh] max-w-full rounded-lg object-contain shadow-2xl"
-						/>
-					{/if}
+					<div
+						data-slot="lightbox-stage"
+						class="flex h-[80dvh] w-[min(92vw,56rem)] items-center justify-center"
+					>
+						{#if kind === 'pdf'}
+							<PdfViewer
+								src={current.src}
+								aria-label={current.alt}
+								class="h-full w-full rounded-lg shadow-2xl"
+							/>
+						{:else}
+							<img
+								src={current.src}
+								alt={current.alt}
+								class="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+							/>
+						{/if}
+					</div>
 				</Swap>
 				<div class="flex items-center gap-3 text-sm text-white/90">
 					{#if current.caption}
@@ -150,12 +180,14 @@
 					<ChevronRightIcon class="size-5" />
 				</button>
 			{/if}
-			<DialogPrimitive.Close
-				aria-label={l.close}
-				class={cn(navButton, 'absolute top-3 right-3 md:top-6 md:right-6')}
-			>
-				<XIcon class="size-5" />
-			</DialogPrimitive.Close>
+			<div class="absolute top-3 right-3 flex items-center gap-2 md:top-6 md:right-6">
+				<button type="button" aria-label={l.download} class={navButton} onclick={downloadCurrent}>
+					<DownloadIcon class="size-5" />
+				</button>
+				<DialogPrimitive.Close aria-label={l.close} class={navButton}>
+					<XIcon class="size-5" />
+				</DialogPrimitive.Close>
+			</div>
 		</DialogPrimitive.Content>
 	</DialogPrimitive.Portal>
 </DialogPrimitive.Root>

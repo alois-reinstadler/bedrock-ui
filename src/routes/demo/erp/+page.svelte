@@ -176,11 +176,27 @@
 	];
 
 	const lightboxLabels = {
+		download: 'Download',
 		close: 'Close',
 		previous: 'Previous attachment',
 		next: 'Next attachment',
 		counter: (current: number, total: number) => `${current} of ${total}`
 	};
+
+	function downloadAttachment(item: LightboxItem) {
+		const anchor = document.createElement('a');
+		anchor.href = item.src;
+		anchor.download = item.src.startsWith('data:')
+			? `${item.alt.replaceAll(/[^\w-]+/g, '-').toLowerCase()}.svg`
+			: (item.src.split('/').pop() ?? item.alt);
+		document.body.appendChild(anchor);
+		anchor.click();
+		anchor.remove();
+	}
+
+	function downloadAllAttachments() {
+		for (const item of attachments) downloadAttachment(item);
+	}
 
 	type Message = { id: number; role: 'user' | 'assistant'; text: string; at: Date };
 	let messages = $state<Message[]>([
@@ -361,7 +377,13 @@
 					</OverflowList>
 				</div>
 
-				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Attachments</h2>
+				<div class="mt-4 flex items-center justify-between">
+					<h2 class="text-sm font-medium text-muted-foreground">Attachments</h2>
+					<Button size="sm" variant="ghost" onclick={downloadAllAttachments}>
+						<DownloadIcon />
+						Download all ({attachments.length})
+					</Button>
+				</div>
 				<div class="flex items-center gap-2">
 					{#each attachments as attachment, index (attachment.src)}
 						{@const isPdf = attachment.src.toLowerCase().endsWith('.pdf')}

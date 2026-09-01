@@ -5,13 +5,17 @@ import { motionPresets } from './tokens.js';
 export type AutoSizeOptions = {
 	duration?: number;
 	easing?: string;
+	/** `block` animates height only; `both` also animates width. @default 'block' */
+	axis?: 'block' | 'both';
 };
+
+type Size = { height: number; width: number };
 
 const DEFAULT_EASING = `cubic-bezier(${motionPresets.drawer.easing.join(', ')})`;
 
-/** Animate a persistent shell between intrinsic block sizes without projecting
- * or scaling its descendants. This deliberately uses real height reflow, like
- * `reveal`, and is intended for small wrapping/content regions. */
+/** Animate a persistent shell between intrinsic sizes without projecting or
+ * scaling its descendants. This deliberately uses real reflow, like `reveal`,
+ * and is intended for small wrapping/content regions. */
 export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement> {
 	return (element) => {
 		if (typeof requestAnimationFrame === 'undefined') return;
@@ -19,7 +23,23 @@ export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement>
 		let animation: Animation | null = null;
 		let frame = 0;
 		let disposed = false;
-		let committedHeight = element.getBoundingClientRect().height;
+		const axis = options.axis ?? 'block';
+		const measure = (): Size => {
+			const box = element.getBoundingClientRect();
+			return { height: box.height, width: box.width };
+		};
+		const delta = (a: Size, b: Size) =>
+			Math.max(Math.abs(a.height - b.height), axis === 'both' ? Math.abs(a.width - b.width) : 0);
+		const frameOf = (size: Size): Keyframe => {
+			const keyframe: Keyframe = {
+				height: `${size.height}px`,
+				overflow: 'hidden',
+				boxSizing: 'border-box'
+			};
+			if (axis === 'both') keyframe.width = `${size.width}px`;
+			return keyframe;
+		};
+		let committed = measure();
 		const duration = options.duration ?? motionPresets.reveal.duration;
 		const easing = options.easing ?? DEFAULT_EASING;
 
@@ -33,7 +53,7 @@ export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement>
 			frame = 0;
 			if (disposed || !element.isConnected) return;
 			const active = animation;
-			const from = active ? element.getBoundingClientRect().height : committedHeight;
+			const from = active ? measure() : committed;
 			const activeTime = active?.currentTime;
 			const activeState = active?.playState;
 			if (active) {
@@ -41,8 +61,8 @@ export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement>
 				active.cancel();
 				animation = null;
 			}
-			const to = element.getBoundingClientRect().height;
-			if (active && Math.abs(to - committedHeight) < 0.5) {
+			const to = measure();
+			if (active && delta(to, committed) < 0.5) {
 				animation = active;
 				active.currentTime = activeTime ?? null;
 				active.onfinish = finish;
@@ -50,22 +70,20 @@ export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement>
 				else active.play();
 				return;
 			}
-			committedHeight = to;
+			committed = to;
 			const resolvedDuration = resolveMotionDuration(duration);
 			if (
 				resolvedDuration === 0 ||
-				Math.abs(from - to) < 0.5 ||
+				delta(from, to) < 0.5 ||
 				typeof element.animate !== 'function'
 			) {
 				return;
 			}
-			animation = element.animate(
-				[
-					{ height: `${from}px`, overflow: 'hidden', boxSizing: 'border-box' },
-					{ height: `${to}px`, overflow: 'hidden', boxSizing: 'border-box' }
-				],
-				{ duration: resolvedDuration, easing, fill: 'both' }
-			);
+			animation = element.animate([frameOf(from), frameOf(to)], {
+				duration: resolvedDuration,
+				easing,
+				fill: 'both'
+			});
 			animation.onfinish = finish;
 		};
 
@@ -100,7 +118,7 @@ export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement>
 		const onMotionPreferenceChange = (event: MediaQueryListEvent) => {
 			if (!event.matches) return;
 			if (animation) finish();
-			committedHeight = element.getBoundingClientRect().height;
+			committed = measure();
 		};
 		motionQuery?.addEventListener?.('change', onMotionPreferenceChange);
 
