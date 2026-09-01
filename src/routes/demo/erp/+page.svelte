@@ -2,7 +2,9 @@
 	import DownloadIcon from '@lucide/svelte/icons/download';
 	import ImageIcon from '@lucide/svelte/icons/image';
 	import InfoIcon from '@lucide/svelte/icons/info';
+	import PlusIcon from '@lucide/svelte/icons/plus';
 	import TriangleAlertIcon from '@lucide/svelte/icons/triangle-alert';
+	import * as AlertDialog from '#lib/bedrock/ui/alert-dialog';
 	import { AvatarStack, type AvatarStackItem } from '#lib/bedrock/ui/avatar';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import * as Banner from '#lib/bedrock/ui/banner';
@@ -12,8 +14,10 @@
 	import { DataTable, type DataTableColumn, type DataTableView } from '#lib/bedrock/ui/data-table';
 	import { Lightbox, type LightboxItem } from '#lib/bedrock/ui/lightbox';
 	import { OverflowList } from '#lib/bedrock/ui/overflow-list';
+	import { StatusDot } from '#lib/bedrock/ui/status-dot';
 	import { Thumbnail } from '#lib/bedrock/ui/thumbnail';
 	import { Timestamp } from '#lib/bedrock/ui/timestamp';
+	import * as Tooltip from '#lib/bedrock/ui/tooltip';
 
 	type Order = {
 		id: string;
@@ -36,14 +40,16 @@
 	];
 	const statuses: Order['status'][] = ['offen', 'bestätigt', 'geliefert', 'storniert'];
 
-	const orders: Order[] = Array.from({ length: 37 }, (_, index) => ({
-		id: `ord-${index + 1}`,
-		number: `AU-2026-${String(1041 + index).padStart(4, '0')}`,
-		customer: customers[(index * 5) % customers.length],
-		status: statuses[(index * 3) % statuses.length],
-		createdAt: new Date(Date.now() - index * 5_400_000),
-		net: Math.round((index * 137.35 + 240) * 100) / 100
-	}));
+	let orders = $state<Order[]>(
+		Array.from({ length: 37 }, (_, index) => ({
+			id: `ord-${index + 1}`,
+			number: `AU-2026-${String(1041 + index).padStart(4, '0')}`,
+			customer: customers[(index * 5) % customers.length],
+			status: statuses[(index * 3) % statuses.length],
+			createdAt: new Date(Date.now() - index * 5_400_000),
+			net: Math.round((index * 137.35 + 240) * 100) / 100
+		}))
+	);
 
 	const statusBadge = {
 		offen: 'secondary',
@@ -78,6 +84,11 @@
 			'Archivieren:',
 			rows.map((row) => row.number)
 		);
+	}
+
+	function cancelRows(rows: Order[]) {
+		const ids = new Set(rows.map((row) => row.id));
+		orders = orders.map((order) => (ids.has(order.id) ? { ...order, status: 'storniert' } : order));
 	}
 
 	let showBanner = $state(true);
@@ -195,11 +206,29 @@
 	{/if}
 
 	<div class="mx-auto flex max-w-5xl flex-col gap-12 px-4 py-10 md:px-8">
-		<header>
-			<p class="mb-2 text-[10px] font-medium tracking-[0.22em] text-muted-foreground uppercase">
-				Bedrock ERP
-			</p>
-			<h1 class="font-heading text-3xl tracking-tight">ERP-Primitive</h1>
+		<header class="flex flex-wrap items-end justify-between gap-4">
+			<div>
+				<p class="mb-2 text-[10px] font-medium tracking-[0.22em] text-muted-foreground uppercase">
+					Bedrock ERP
+				</p>
+				<h1 class="font-heading text-3xl tracking-tight">ERP-Primitive</h1>
+				<p class="mt-1 text-sm text-muted-foreground">
+					Aufträge, Lieferungen und Belege — Bedrock-Komponenten im Verbund.
+				</p>
+			</div>
+			<Tooltip.Provider>
+				<Tooltip.Root>
+					<Tooltip.Trigger>
+						{#snippet child({ props })}
+							<Button {...props}>
+								<PlusIcon />
+								Neuer Auftrag
+							</Button>
+						{/snippet}
+					</Tooltip.Trigger>
+					<Tooltip.Content>Legt einen neuen Auftrag an</Tooltip.Content>
+				</Tooltip.Root>
+			</Tooltip.Provider>
 		</header>
 
 		<section class="flex flex-col gap-3">
@@ -216,6 +245,29 @@
 			>
 				{#snippet actions(rows: Order[])}
 					<Button size="sm" variant="outline" onclick={() => archiveRows(rows)}>Archivieren</Button>
+					<AlertDialog.Root>
+						<AlertDialog.Trigger>
+							{#snippet child({ props })}
+								<Button {...props} size="sm" variant="destructive">Stornieren</Button>
+							{/snippet}
+						</AlertDialog.Trigger>
+						<AlertDialog.Content>
+							<AlertDialog.Header>
+								<AlertDialog.Title>
+									{rows.length}
+									{rows.length === 1 ? 'Auftrag' : 'Aufträge'} stornieren?
+								</AlertDialog.Title>
+								<AlertDialog.Description>
+									Die Stornierung wird sofort gebucht und in den Ansichten sichtbar. Diese Aktion
+									kann nicht rückgängig gemacht werden.
+								</AlertDialog.Description>
+							</AlertDialog.Header>
+							<AlertDialog.Footer>
+								<AlertDialog.Cancel>Abbrechen</AlertDialog.Cancel>
+								<AlertDialog.Action onclick={() => cancelRows(rows)}>Stornieren</AlertDialog.Action>
+							</AlertDialog.Footer>
+						</AlertDialog.Content>
+					</AlertDialog.Root>
 				{/snippet}
 				{#snippet exportActions(rows: Order[])}
 					<Button size="sm" variant="outline" onclick={() => exportRows(rows)}>
@@ -255,6 +307,22 @@
 
 				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Zuständige</h2>
 				<AvatarStack items={team} max={4} />
+
+				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Systemstatus</h2>
+				<ul class="flex flex-col gap-1.5 text-sm">
+					<li class="flex items-center gap-2">
+						<StatusDot status="success" /> Buchhaltung betriebsbereit
+					</li>
+					<li class="flex items-center gap-2">
+						<StatusDot status="info" pulse /> Lagerbestand wird synchronisiert
+					</li>
+					<li class="flex items-center gap-2">
+						<StatusDot status="warning" /> Wartungsfenster geplant
+					</li>
+					<li class="flex items-center gap-2">
+						<StatusDot status="destructive" /> Zoll-Schnittstelle gestört
+					</li>
+				</ul>
 
 				<h2 class="mt-4 text-sm font-medium text-muted-foreground">
 					Merkmale (Container schmal ziehen)
