@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DownloadIcon from '@lucide/svelte/icons/download';
+	import FileTextIcon from '@lucide/svelte/icons/file-text';
 	import ImageIcon from '@lucide/svelte/icons/image';
 	import InfoIcon from '@lucide/svelte/icons/info';
 	import PlusIcon from '@lucide/svelte/icons/plus';
@@ -10,7 +11,7 @@
 	import * as Banner from '#lib/bedrock/ui/banner';
 	import { Button } from '#lib/bedrock/ui/button';
 	import * as Chat from '#lib/bedrock/ui/chat';
-	import * as Combobox from '#lib/bedrock/ui/combobox';
+	import { Combobox } from '#lib/bedrock/ui/combobox';
 	import { DataTable, type DataTableColumn, type DataTableView } from '#lib/bedrock/ui/data-table';
 	import { Lightbox, type LightboxItem } from '#lib/bedrock/ui/lightbox';
 	import { OverflowList } from '#lib/bedrock/ui/overflow-list';
@@ -93,12 +94,7 @@
 
 	let showBanner = $state(true);
 	let selectedCustomer = $state<string>('');
-	let customerQuery = $state('');
-	const filteredCustomers = $derived(
-		customerQuery.trim().length === 0
-			? customers
-			: customers.filter((name) => name.toLowerCase().includes(customerQuery.toLowerCase()))
-	);
+	const customerItems = customers.map((name) => ({ value: name, label: name }));
 
 	const team: AvatarStackItem[] = [
 		{ fallback: 'AR' },
@@ -137,7 +133,8 @@
 			alt: 'Wiegeschein',
 			caption: 'Wiegeschein vom 29.08.2026'
 		},
-		{ src: placeholderImage('Foto Anlieferung', 140), alt: 'Foto der Anlieferung' }
+		{ src: placeholderImage('Foto Anlieferung', 140), alt: 'Foto der Anlieferung' },
+		{ src: '/demo/beleg.pdf', alt: 'Rechnung RE-2026-0815 (PDF)', caption: 'Rechnung RE-2026-0815' }
 	];
 
 	type Message = { id: number; role: 'user' | 'assistant'; text: string; at: Date };
@@ -282,26 +279,12 @@
 		<section class="grid gap-8 md:grid-cols-2">
 			<div class="flex flex-col gap-3">
 				<h2 class="text-sm font-medium text-muted-foreground">Combobox</h2>
-				<Combobox.Root
-					type="single"
+				<Combobox
+					items={customerItems}
 					bind:value={selectedCustomer}
-					onOpenChange={(open) => {
-						if (!open) customerQuery = '';
-					}}
-				>
-					<Combobox.Input
-						placeholder="Kunde wählen…"
-						aria-label="Kunde"
-						oninput={(event) => (customerQuery = event.currentTarget.value)}
-					/>
-					<Combobox.Content>
-						{#each filteredCustomers as name (name)}
-							<Combobox.Item value={name} label={name} />
-						{:else}
-							<Combobox.Empty />
-						{/each}
-					</Combobox.Content>
-				</Combobox.Root>
+					placeholder="Kunde wählen…"
+					searchPlaceholder="Kunde suchen…"
+				/>
 				{#if selectedCustomer}
 					<p class="text-sm text-muted-foreground">Ausgewählt: {selectedCustomer}</p>
 				{/if}
@@ -339,9 +322,10 @@
 				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Anhänge</h2>
 				<div class="flex items-center gap-2">
 					{#each attachments as attachment, index (attachment.src)}
+						{@const isPdf = attachment.src.toLowerCase().endsWith('.pdf')}
 						<Lightbox items={attachments} {index}>
-							<Thumbnail src={attachment.src} alt={attachment.alt} size="lg">
-								<ImageIcon />
+							<Thumbnail src={isPdf ? undefined : attachment.src} alt={attachment.alt} size="lg">
+								{#if isPdf}<FileTextIcon />{:else}<ImageIcon />{/if}
 							</Thumbnail>
 						</Lightbox>
 					{/each}

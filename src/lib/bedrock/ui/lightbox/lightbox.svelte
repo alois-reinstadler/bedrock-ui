@@ -3,6 +3,8 @@
 		src: string;
 		alt: string;
 		caption?: string;
+		/** Defaults to `pdf` when `src` ends in ".pdf", otherwise `image`. */
+		type?: 'image' | 'pdf';
 	};
 </script>
 
@@ -32,6 +34,14 @@
 
 	const count = $derived(items.length);
 	const current = $derived(items[Math.min(Math.max(index, 0), Math.max(count - 1, 0))]);
+	const kind = $derived(
+		current?.type ?? (current?.src.toLowerCase().endsWith('.pdf') ? 'pdf' : 'image')
+	);
+
+	function onContentClick(event: MouseEvent) {
+		// Clicks on the empty stage (outside image/PDF and controls) dismiss.
+		if (event.target === event.currentTarget) open = false;
+	}
 
 	function previous() {
 		if (count === 0) return;
@@ -72,6 +82,7 @@
 		<DialogPrimitive.Content
 			data-slot="lightbox-content"
 			{onkeydown}
+			onclick={onContentClick}
 			class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-3 p-4 motion-overlay outline-none md:p-10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95"
 		>
 			<DialogPrimitive.Title class="sr-only">
@@ -79,11 +90,19 @@
 			</DialogPrimitive.Title>
 			{#if current}
 				<Swap key={current.src} effect="fade">
-					<img
-						src={current.src}
-						alt={current.alt}
-						class="max-h-[80dvh] max-w-full rounded-lg object-contain shadow-2xl"
-					/>
+					{#if kind === 'pdf'}
+						<iframe
+							src={current.src}
+							title={current.alt}
+							class="h-[80dvh] w-[min(90vw,56rem)] rounded-lg bg-white shadow-2xl"
+						></iframe>
+					{:else}
+						<img
+							src={current.src}
+							alt={current.alt}
+							class="max-h-[80dvh] max-w-full rounded-lg object-contain shadow-2xl"
+						/>
+					{/if}
 				</Swap>
 				<div class="flex items-center gap-3 text-sm text-white/90">
 					{#if current.caption}
