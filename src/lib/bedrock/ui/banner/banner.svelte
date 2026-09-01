@@ -2,7 +2,7 @@
 	import { type VariantProps, tv } from 'tailwind-variants';
 
 	export const bannerVariants = tv({
-		base: "flex w-full items-center gap-3 border-b px-4 py-2.5 text-sm *:[svg]:shrink-0 *:[svg:not([class*='size-'])]:size-4",
+		base: "bedrock-banner flex w-full items-center gap-3 border-b px-4 py-2.5 text-sm *:[svg]:shrink-0 *:[svg:not([class*='size-'])]:size-4",
 		variants: {
 			variant: {
 				info: 'border-border bg-muted text-foreground',
@@ -42,3 +42,18 @@
 >
 	{@render children?.()}
 </div>
+
+<style>
+	.bedrock-banner {
+		transition:
+			translate var(--motion-enter) var(--motion-ease-enter),
+			opacity var(--motion-enter) var(--motion-ease-enter);
+	}
+
+	@starting-style {
+		.bedrock-banner {
+			translate: 0 -0.5rem;
+			opacity: 0;
+		}
+	}
+</style>

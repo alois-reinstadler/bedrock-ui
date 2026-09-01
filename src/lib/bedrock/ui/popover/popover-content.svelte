@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import PopoverContent from '#lib/shadcn/ui/popover/popover-content.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof PopoverContent> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof PopoverContent> = $props();
 </script>
 
-<PopoverContent {...props} />
+<PopoverContent class={cn('motion-popover', className)} {...restProps} />

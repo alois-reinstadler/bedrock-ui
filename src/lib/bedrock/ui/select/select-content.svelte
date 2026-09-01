@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import SelectContent from '#lib/shadcn/ui/select/select-content.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SelectContent> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof SelectContent> = $props();
 </script>
 
-<SelectContent {...props} />
+<SelectContent class={cn('motion-popover', className)} {...restProps} />

@@ -2,6 +2,7 @@
 @import 'tw-animate-css';
 @import 'shadcn-svelte/tailwind.css';
 @import '@fontsource-variable/instrument-sans';
+@import '../lib/bedrock/motion/tokens.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -143,5 +144,107 @@
 		width: max(100%, 2.75rem);
 		height: max(100%, 2.75rem);
 		translate: -50% -50%;
+	}
+}
+
+@utility motion-press {
+	transition-property: transform, opacity;
+	transition-duration: var(--motion-press);
+	transition-timing-function: var(--motion-ease-enter);
+}
+
+@utility motion-state {
+	transition-property: color, background-color, border-color, opacity, box-shadow;
+	transition-duration: var(--motion-state);
+	transition-timing-function: var(--motion-ease-enter);
+}
+
+@utility motion-overlay {
+	transition-property: opacity, transform, display, overlay;
+	transition-duration: var(--motion-overlay);
+	transition-timing-function: var(--motion-ease-enter);
+	transition-behavior: allow-discrete;
+	animation-duration: var(--motion-overlay);
+	animation-timing-function: var(--motion-ease-enter);
+
+	&[data-state='closed'],
+	&[data-closed] {
+		transition-duration: var(--motion-exit);
+		transition-timing-function: var(--motion-ease-exit);
+		animation-duration: var(--motion-exit);
+		animation-timing-function: var(--motion-ease-exit);
+	}
+}
+
+@utility motion-popover {
+	transform-origin: var(
+		--bits-dropdown-menu-content-transform-origin,
+		var(
+			--bits-context-menu-content-transform-origin,
+			var(
+				--bits-select-content-transform-origin,
+				var(
+					--bits-popover-content-transform-origin,
+					var(
+						--bits-hover-card-content-transform-origin,
+						var(--bits-combobox-content-transform-origin, center)
+					)
+				)
+			)
+		)
+	);
+	transition-property: opacity, transform, display, overlay;
+	transition-duration: var(--motion-popover-enter);
+	transition-timing-function: var(--motion-ease-enter);
+	transition-behavior: allow-discrete;
+	animation-duration: var(--motion-popover-enter);
+	animation-timing-function: var(--motion-ease-enter);
+
+	&[data-state='closed'],
+	&[data-closed] {
+		transition-duration: var(--motion-popover-exit);
+		transition-timing-function: var(--motion-ease-exit);
+		animation-duration: var(--motion-popover-exit);
+		animation-timing-function: var(--motion-ease-exit);
+	}
+}
+
+@utility motion-hint {
+	transform-origin: var(--bits-tooltip-content-transform-origin, center);
+	transition-property: opacity, transform, display, overlay;
+	transition-duration: var(--motion-hint-enter);
+	transition-timing-function: var(--motion-ease-enter);
+	transition-behavior: allow-discrete;
+	animation-duration: var(--motion-hint-enter);
+	animation-timing-function: var(--motion-ease-enter);
+
+	&[data-state='closed'],
+	&[data-closed] {
+		transition-duration: 0.01ms;
+		animation-duration: 0.01ms;
+	}
+}
+
+@utility motion-reveal {
+	interpolate-size: allow-keywords;
+	transition-property: height, block-size, opacity;
+	transition-duration: var(--motion-reveal);
+	transition-timing-function: var(--motion-ease-enter);
+}
+
+@utility motion-drawer {
+	transition-property: opacity, transform, display, overlay;
+	transition-duration: var(--motion-overlay);
+	transition-timing-function: var(--motion-ease-drawer);
+	transition-behavior: allow-discrete;
+	animation-duration: var(--motion-overlay);
+	animation-timing-function: var(--motion-ease-drawer);
+
+	&[data-state='closed'],
+	&[data-closed] {
+		transition-duration: var(--motion-exit);
+		transition-timing-function: var(--motion-ease-drawer);
+		animation-duration: var(--motion-exit);
+		animation-timing-function: var(--motion-ease-drawer);
 	}
 }

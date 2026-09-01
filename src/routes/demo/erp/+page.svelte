@@ -9,10 +9,9 @@
 	import { Button } from '#lib/bedrock/ui/button';
 	import * as Chat from '#lib/bedrock/ui/chat';
 	import * as Combobox from '#lib/bedrock/ui/combobox';
-	import { DataTable, type DataTableColumn } from '#lib/bedrock/ui/data-table';
+	import { DataTable, type DataTableColumn, type DataTableView } from '#lib/bedrock/ui/data-table';
 	import { Lightbox, type LightboxItem } from '#lib/bedrock/ui/lightbox';
 	import { OverflowList } from '#lib/bedrock/ui/overflow-list';
-	import { StatusDot, type StatusDotStatus } from '#lib/bedrock/ui/status-dot';
 	import { Thumbnail } from '#lib/bedrock/ui/thumbnail';
 	import { Timestamp } from '#lib/bedrock/ui/timestamp';
 
@@ -46,20 +45,40 @@
 		net: Math.round((index * 137.35 + 240) * 100) / 100
 	}));
 
-	const statusDot: Record<Order['status'], StatusDotStatus> = {
-		offen: 'info',
-		bestätigt: 'warning',
-		geliefert: 'success',
+	const statusBadge = {
+		offen: 'secondary',
+		bestätigt: 'outline',
+		geliefert: 'default',
 		storniert: 'destructive'
-	};
+	} as const;
+
+	const views: DataTableView<Order>[] = [
+		{ key: 'offen', label: 'Offen', filter: (row) => row.status === 'offen' },
+		{ key: 'bestätigt', label: 'Bestätigt', filter: (row) => row.status === 'bestätigt' },
+		{ key: 'geliefert', label: 'Geliefert', filter: (row) => row.status === 'geliefert' },
+		{ key: 'storniert', label: 'Storniert', filter: (row) => row.status === 'storniert' },
+		{ key: 'leer', label: 'Ohne Treffer', filter: () => false }
+	];
 
 	const columns: DataTableColumn<Order>[] = $derived([
-		{ key: 'number', header: 'Auftrag', hideable: false },
+		{ key: 'number', header: 'Auftrag', type: 'id', hideable: false },
 		{ key: 'customer', header: 'Kunde' },
-		{ key: 'status', header: 'Status', cell: statusCell },
+		{
+			key: 'status',
+			header: 'Status',
+			type: 'badge',
+			badgeVariant: (value) => statusBadge[value as Order['status']]
+		},
 		{ key: 'createdAt', header: 'Angelegt', cell: createdCell },
 		{ key: 'net', header: 'Netto', type: 'currency' }
 	]);
+
+	function archiveRows(rows: Order[]) {
+		console.info(
+			'Archivieren:',
+			rows.map((row) => row.number)
+		);
+	}
 
 	let showBanner = $state(true);
 	let selectedCustomer = $state<string>('');
@@ -153,13 +172,6 @@
 	}
 </script>
 
-{#snippet statusCell(order: Order)}
-	<span class="inline-flex items-center gap-1.5">
-		<StatusDot status={statusDot[order.status]} />
-		<span class="capitalize">{order.status}</span>
-	</span>
-{/snippet}
-
 {#snippet createdCell(order: Order)}
 	<Timestamp date={order.createdAt} class="text-muted-foreground" />
 {/snippet}
@@ -199,8 +211,13 @@
 				searchable
 				pageSize={10}
 				caption="Auftragsliste"
+				{views}
+				groupable={['customer']}
 			>
 				{#snippet actions(rows: Order[])}
+					<Button size="sm" variant="outline" onclick={() => archiveRows(rows)}>Archivieren</Button>
+				{/snippet}
+				{#snippet exportActions(rows: Order[])}
 					<Button size="sm" variant="outline" onclick={() => exportRows(rows)}>
 						<DownloadIcon />
 						Exportieren

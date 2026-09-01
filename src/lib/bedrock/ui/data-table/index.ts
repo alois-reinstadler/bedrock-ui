@@ -1,7 +1,13 @@
 import Root from './data-table.svelte';
 
-export { formatCellValue } from './formatters.js';
-export type { DataTableColumn, DataTableColumnType } from './types.js';
+export { formatCellValue, formatCurrencyParts } from './formatters.js';
+export type { CurrencyParts } from './formatters.js';
+export type {
+	DataTableColumn,
+	DataTableColumnType,
+	DataTableDensity,
+	DataTableView
+} from './types.js';
 
 export {
 	Root,

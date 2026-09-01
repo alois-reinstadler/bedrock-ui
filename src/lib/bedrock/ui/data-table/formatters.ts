@@ -17,7 +17,23 @@ function currencyFormat(currency: string): Intl.NumberFormat {
 	return format;
 }
 
-export type DataTableColumnType = 'text' | 'number' | 'currency' | 'date' | 'datetime';
+export type DataTableColumnType =
+	'text' | 'number' | 'currency' | 'date' | 'datetime' | 'id' | 'badge';
+
+export type CurrencyParts = { amount: string; currency: string };
+
+export function formatCurrencyParts(value: unknown, currency = 'EUR'): CurrencyParts | null {
+	if (value == null || value === '') return null;
+	if (typeof value !== 'number') return { amount: String(value), currency };
+	const parts = currencyFormat(currency).formatToParts(value);
+	return {
+		amount: parts
+			.filter((part) => part.type !== 'currency' && part.type !== 'literal')
+			.map((part) => part.value)
+			.join(''),
+		currency
+	};
+}
 
 function toDate(value: unknown): Date | null {
 	if (value instanceof Date) return value;
@@ -40,6 +56,9 @@ export function formatCellValue(
 			return typeof value === 'number' ? numberFormat.format(value) : String(value);
 		case 'currency':
 			return typeof value === 'number' ? currencyFormat(currency).format(value) : String(value);
+		case 'id':
+		case 'badge':
+			return String(value);
 		case 'date': {
 			const date = toDate(value);
 			return date ? dateFormat.format(date) : String(value);

@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import DialogOverlay from '#lib/shadcn/ui/dialog/dialog-overlay.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DialogOverlay> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof DialogOverlay> = $props();
 </script>
 
-<DialogOverlay {...props} />
+<DialogOverlay class={cn('motion-overlay', className)} {...restProps} />

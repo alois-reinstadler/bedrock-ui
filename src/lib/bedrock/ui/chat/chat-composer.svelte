@@ -1,5 +1,7 @@
 <script lang="ts">
 	import ArrowUpIcon from '@lucide/svelte/icons/arrow-up';
+	import { Button } from '#lib/bedrock/ui/button';
+	import TextareaPrimitive from '#lib/shadcn/ui/textarea/textarea.svelte';
 	import { cn } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
@@ -43,7 +45,7 @@
 <form
 	data-slot="chat-composer"
 	class={cn(
-		'flex items-end gap-2 rounded-xl border border-input bg-background p-2 shadow-xs transition-colors focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50',
+		'flex items-end gap-2 rounded-xl border border-input bg-background p-2 shadow-xs motion-state focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50',
 		className
 	)}
 	onsubmit={(event) => {
@@ -52,24 +54,25 @@
 	}}
 	{...restProps}
 >
-	<textarea
-		bind:this={textarea}
+	<TextareaPrimitive
+		bind:ref={textarea}
 		bind:value
 		{placeholder}
 		{disabled}
 		{onkeydown}
 		rows={1}
 		aria-label={placeholder}
-		class="[field-sizing:content] max-h-40 min-h-8 flex-1 resize-none bg-transparent px-2 py-1.5 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-	></textarea>
+		class="[field-sizing:content] max-h-40 min-h-8 flex-1 resize-none border-0 bg-transparent px-2 py-1.5 text-sm shadow-none outline-none placeholder:text-muted-foreground focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50"
+	/>
 	{@render actions?.()}
-	<button
+	<Button
 		type="submit"
+		size="icon-sm"
 		aria-label="Senden"
 		disabled={disabled || value.trim().length === 0}
 		data-slot="chat-send-button"
-		class="tap-target inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-opacity hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-40"
+		class="tap-target shrink-0 rounded-full motion-press motion-state"
 	>
 		<ArrowUpIcon class="size-4" />
-	</button>
+	</Button>
 </form>

@@ -17,6 +17,8 @@ export const motionPresets = {
 	exit: { duration: 175, easing: [0.3, 0, 0.6, 0.6] },
 	reveal: { duration: 310 },
 	overlay: { duration: 410 },
+	popover: { enter: 200, exit: 150 },
+	hint: { enter: 140, exit: 100 },
 	move: { easing: [0.77, 0, 0.175, 1] },
 	drawer: { easing: [0.32, 0.72, 0, 1] },
 	layout: {

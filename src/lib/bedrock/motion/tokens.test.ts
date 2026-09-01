@@ -9,6 +9,8 @@ describe('Astryx motion presets', () => {
 		expect(motionPresets.exit.duration).toBe(175);
 		expect(motionPresets.reveal.duration).toBe(310);
 		expect(motionPresets.overlay.duration).toBe(410);
+		expect(motionPresets.popover).toEqual({ enter: 200, exit: 150 });
+		expect(motionPresets.hint).toEqual({ enter: 140, exit: 100 });
 	});
 
 	it('pins layout and swap spring physics', () => {

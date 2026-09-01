@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import ContextMenuContent from '#lib/shadcn/ui/context-menu/context-menu-content.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ContextMenuContent> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof ContextMenuContent> = $props();
 </script>
 
-<ContextMenuContent {...props} />
+<ContextMenuContent class={cn('motion-popover', className)} {...restProps} />

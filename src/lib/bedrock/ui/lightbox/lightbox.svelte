@@ -11,6 +11,7 @@
 	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
 	import XIcon from '@lucide/svelte/icons/x';
 	import { Dialog as DialogPrimitive } from 'bits-ui';
+	import { Swap } from '#lib/bedrock/motion/index.js';
 	import { cn } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
 
@@ -66,24 +67,24 @@
 	<DialogPrimitive.Portal>
 		<DialogPrimitive.Overlay
 			data-slot="lightbox-overlay"
-			class="fixed inset-0 isolate z-50 bg-black/80 duration-100 supports-backdrop-filter:backdrop-blur-sm data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0"
+			class="fixed inset-0 isolate z-50 bg-black/80 motion-overlay supports-backdrop-filter:backdrop-blur-sm data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0"
 		/>
 		<DialogPrimitive.Content
 			data-slot="lightbox-content"
 			{onkeydown}
-			class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-3 p-4 duration-150 outline-none md:p-10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95"
+			class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-3 p-4 motion-overlay outline-none md:p-10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95"
 		>
 			<DialogPrimitive.Title class="sr-only">
 				{current?.alt ?? 'Bildansicht'}
 			</DialogPrimitive.Title>
 			{#if current}
-				{#key current.src}
+				<Swap key={current.src} effect="fade">
 					<img
 						src={current.src}
 						alt={current.alt}
 						class="max-h-[80dvh] max-w-full rounded-lg object-contain shadow-2xl"
 					/>
-				{/key}
+				</Swap>
 				<div class="flex items-center gap-3 text-sm text-white/90">
 					{#if current.caption}
 						<span data-slot="lightbox-caption">{current.caption}</span>

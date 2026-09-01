@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import AlertDialogContent from '#lib/shadcn/ui/alert-dialog/alert-dialog-content.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AlertDialogContent> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof AlertDialogContent> = $props();
 </script>
 
-<AlertDialogContent {...props} />
+<AlertDialogContent class={cn('motion-overlay', className)} {...restProps} />

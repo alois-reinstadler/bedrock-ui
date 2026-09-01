@@ -22,7 +22,7 @@
 	data-slot="chat-message"
 	data-role={role}
 	class={cn(
-		'group/chat-message flex w-full flex-col gap-1',
+		'bedrock-chat-message group/chat-message flex w-full flex-col gap-1',
 		role === 'user' ? 'items-end' : 'items-start',
 		className
 	)}
@@ -30,3 +30,18 @@
 >
 	{@render children?.()}
 </div>
+
+<style>
+	.bedrock-chat-message {
+		transition:
+			translate var(--motion-enter) var(--motion-ease-enter),
+			opacity var(--motion-enter) var(--motion-ease-enter);
+	}
+
+	@starting-style {
+		.bedrock-chat-message {
+			translate: 0 0.4rem;
+			opacity: 0;
+		}
+	}
+</style>

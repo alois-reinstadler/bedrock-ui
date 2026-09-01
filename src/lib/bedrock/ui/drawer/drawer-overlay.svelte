@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import DrawerOverlay from '#lib/shadcn/ui/drawer/drawer-overlay.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DrawerOverlay> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof DrawerOverlay> = $props();
 </script>
 
-<DrawerOverlay {...props} />
+<DrawerOverlay class={cn('motion-overlay', className)} {...restProps} />

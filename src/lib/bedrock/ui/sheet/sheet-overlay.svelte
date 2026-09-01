@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import SheetOverlay from '#lib/shadcn/ui/sheet/sheet-overlay.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SheetOverlay> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof SheetOverlay> = $props();
 </script>
 
-<SheetOverlay {...props} />
+<SheetOverlay class={cn('motion-overlay', className)} {...restProps} />

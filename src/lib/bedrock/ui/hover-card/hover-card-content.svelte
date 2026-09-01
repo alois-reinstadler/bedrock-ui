@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import HoverCardContent from '#lib/shadcn/ui/hover-card/hover-card-content.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof HoverCardContent> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof HoverCardContent> = $props();
 </script>
 
-<HoverCardContent {...props} />
+<HoverCardContent class={cn('motion-popover', className)} {...restProps} />

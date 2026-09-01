@@ -1,0 +1,35 @@
+:root {
+	--motion-press: 130ms;
+	--motion-state: 175ms;
+	--motion-enter: 230ms;
+	--motion-exit: 175ms;
+	--motion-reveal: 310ms;
+	--motion-overlay: 410ms;
+	--motion-popover-enter: 200ms;
+	--motion-popover-exit: 150ms;
+	--motion-hint-enter: 140ms;
+	--motion-hint-exit: 100ms;
+	--motion-layout: 500ms;
+	--motion-swap: 400ms;
+	--motion-ease-enter: cubic-bezier(0.23, 1, 0.32, 1);
+	--motion-ease-exit: cubic-bezier(0.3, 0, 0.6, 0.6);
+	--motion-ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+	--motion-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--motion-press: 0.01ms;
+		--motion-state: 0.01ms;
+		--motion-enter: 0.01ms;
+		--motion-exit: 0.01ms;
+		--motion-reveal: 0.01ms;
+		--motion-overlay: 0.01ms;
+		--motion-popover-enter: 0.01ms;
+		--motion-popover-exit: 0.01ms;
+		--motion-hint-enter: 0.01ms;
+		--motion-hint-exit: 0.01ms;
+		--motion-layout: 0.01ms;
+		--motion-swap: 0.01ms;
+	}
+}

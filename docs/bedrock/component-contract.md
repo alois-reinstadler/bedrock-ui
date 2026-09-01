@@ -6,6 +6,16 @@
 
 Every Bedrock component, from `Text` to `DataTable`, has one authoritative structured contract written before implementation. The contract drives its API, examples, documentation, accessibility behavior, and tests. Generated code or a working demo is not a substitute for a completed contract.
 
+## Binding architecture principles
+
+1. **Components over primitives.** Use an existing component for everything it covers before reaching for raw HTML. Bedrock implementations compose the frozen shadcn layer or bits-ui primitives; demos, documentation, and product surfaces compose Bedrock components.
+2. **Dense data renders as rows.** Records belong in edge-to-edge `Table`, `List`, or `Item` structures with dividers. `Card` is reserved for widgets, galleries, and settings groups; it must not wrap record lists.
+3. **Input state is controlled.** Every new Bedrock input surface exposes its value plus a change callback or a bindable value. A component must not hide mutable form state from its consumer.
+
+### Where motion hurts
+
+The following high-frequency interactions are immediate: table row hover, list-item highlights, keyboard highlight traversal, table sorting/filtering/pagination/grouping/view changes, dragging, scrolling, streaming text, live-data refreshes, and frequently updating progress. Motion must never delay the next interaction; reduced motion commits the same final state immediately.
+
 Use the template below in the component's canonical documentation. Delete instructional prompts only after answering them. Write `Not applicable — <reason>` rather than silently omitting a section.
 
 ## Maturity ladder

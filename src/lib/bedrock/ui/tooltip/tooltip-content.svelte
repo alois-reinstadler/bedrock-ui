@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import TooltipContent from '#lib/shadcn/ui/tooltip/tooltip-content.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof TooltipContent> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof TooltipContent> = $props();
 </script>
 
-<TooltipContent {...props} />
+<TooltipContent class={cn('motion-hint', className)} {...restProps} />
