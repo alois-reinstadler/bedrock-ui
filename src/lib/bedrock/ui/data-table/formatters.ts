@@ -1,13 +1,45 @@
+// Intl constructors are expensive and tables render many cells; cache every
+// formatter by locale (and currency) for the lifetime of the module.
+const numberFormats = new Map<string, Intl.NumberFormat>();
+const dateFormats = new Map<string, Intl.DateTimeFormat>();
+const dateTimeFormats = new Map<string, Intl.DateTimeFormat>();
 const currencyFormats = new Map<string, Intl.NumberFormat>();
 
-function currencyFormat(currency: string, locale: string): Intl.NumberFormat {
-	const key = `${locale}:${currency}`;
-	let format = currencyFormats.get(key);
+function cached<T>(cache: Map<string, T>, key: string, create: () => T): T {
+	let format = cache.get(key);
 	if (!format) {
-		format = new Intl.NumberFormat(locale, { style: 'currency', currency });
-		currencyFormats.set(key, format);
+		format = create();
+		cache.set(key, format);
 	}
 	return format;
+}
+
+function numberFormat(locale: string): Intl.NumberFormat {
+	return cached(numberFormats, locale, () => new Intl.NumberFormat(locale));
+}
+
+function dateFormat(locale: string): Intl.DateTimeFormat {
+	return cached(
+		dateFormats,
+		locale,
+		() => new Intl.DateTimeFormat(locale, { dateStyle: 'medium' })
+	);
+}
+
+function dateTimeFormat(locale: string): Intl.DateTimeFormat {
+	return cached(
+		dateTimeFormats,
+		locale,
+		() => new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' })
+	);
+}
+
+function currencyFormat(currency: string, locale: string): Intl.NumberFormat {
+	return cached(
+		currencyFormats,
+		`${locale}:${currency}`,
+		() => new Intl.NumberFormat(locale, { style: 'currency', currency })
+	);
 }
 
 export type DataTableColumnType =
@@ -51,9 +83,7 @@ export function formatCellValue(
 	if (value == null || value === '') return '–';
 	switch (type) {
 		case 'number':
-			return typeof value === 'number'
-				? new Intl.NumberFormat(locale).format(value)
-				: String(value);
+			return typeof value === 'number' ? numberFormat(locale).format(value) : String(value);
 		case 'currency':
 			return typeof value === 'number'
 				? currencyFormat(currency, locale).format(value)
@@ -63,15 +93,11 @@ export function formatCellValue(
 			return String(value);
 		case 'date': {
 			const date = toDate(value);
-			return date
-				? new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(date)
-				: String(value);
+			return date ? dateFormat(locale).format(date) : String(value);
 		}
 		case 'datetime': {
 			const date = toDate(value);
-			return date
-				? new Intl.DateTimeFormat(locale, { dateStyle: 'medium', timeStyle: 'short' }).format(date)
-				: String(value);
+			return date ? dateTimeFormat(locale).format(date) : String(value);
 		}
 		default:
 			return String(value);

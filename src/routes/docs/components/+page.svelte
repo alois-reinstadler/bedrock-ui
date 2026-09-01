@@ -4,7 +4,9 @@
 	import { components } from '#lib/site/registry';
 
 	const groups = [
+		{ id: 'content', label: 'Content' },
 		{ id: 'form', label: 'Form' },
+		{ id: 'data', label: 'Data' },
 		{ id: 'layout', label: 'Layout' },
 		{ id: 'overlay', label: 'Overlay' },
 		{ id: 'display', label: 'Display' },

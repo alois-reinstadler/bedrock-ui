@@ -7,7 +7,7 @@ export type ComponentDoc = {
 	slug: string;
 	title: string;
 	description: string;
-	category: 'form' | 'layout' | 'overlay' | 'display' | 'navigation';
+	category: 'form' | 'layout' | 'overlay' | 'display' | 'navigation' | 'content' | 'data';
 };
 
 export const gettingStarted: DocsNavItem[] = [
@@ -346,8 +346,136 @@ export const components: ComponentDoc[] = [
 		title: 'Tooltip',
 		description: 'A short hint on hover or focus.',
 		category: 'overlay'
+	},
+	{
+		slug: 'banner',
+		title: 'Banner',
+		description: 'App- or page-level notice with an optional close action.',
+		category: 'display'
+	},
+	{
+		slug: 'chat',
+		title: 'Chat',
+		description: 'Message list, bubbles, metadata, and composer for conversations.',
+		category: 'display'
+	},
+	{
+		slug: 'combobox',
+		title: 'Combobox',
+		description: 'A searchable, data-driven single select.',
+		category: 'form'
+	},
+	{
+		slug: 'data-table',
+		title: 'Data Table',
+		description: 'Sortable, filterable records with selection, views, and grouping.',
+		category: 'data'
+	},
+	{
+		slug: 'lightbox',
+		title: 'Lightbox',
+		description: 'Full-screen viewer for images and documents.',
+		category: 'overlay'
+	},
+	{
+		slug: 'overflow-list',
+		title: 'Overflow List',
+		description: 'Shows what fits and collapses the rest behind a count.',
+		category: 'layout'
+	},
+	{
+		slug: 'pdf-viewer',
+		title: 'PDF Viewer',
+		description: 'Renders PDF documents in the page.',
+		category: 'display'
+	},
+	{
+		slug: 'status-dot',
+		title: 'Status Dot',
+		description: 'Record state at a glance.',
+		category: 'display'
+	},
+	{
+		slug: 'thumbnail',
+		title: 'Thumbnail',
+		description: 'A small preview for images and files.',
+		category: 'display'
+	},
+	{
+		slug: 'timestamp',
+		title: 'Timestamp',
+		description: 'Relative or absolute time via Intl, kept current.',
+		category: 'display'
+	},
+	{
+		slug: 'visually-hidden',
+		title: 'Visually Hidden',
+		description: 'Screen-reader-only content.',
+		category: 'display'
+	},
+	{
+		slug: 'icon',
+		title: 'Icon',
+		description: 'Semantic icon names resolved through the global registry.',
+		category: 'display'
+	},
+	{
+		slug: 'icon-button',
+		title: 'Icon Button',
+		description: 'An accessible icon-only button with a required label.',
+		category: 'form'
+	},
+	{
+		slug: 'field-status',
+		title: 'Field Status',
+		description: 'Info, success, warning, or error feedback for a field.',
+		category: 'form'
+	},
+	{
+		slug: 'token',
+		title: 'Token',
+		description: 'An interactive entity chip: removable, clickable, or linked.',
+		category: 'display'
+	},
+	{
+		slug: 'text',
+		title: 'Text',
+		description: 'Semantic body, label, supporting, code, and display text.',
+		category: 'content'
+	},
+	{
+		slug: 'heading',
+		title: 'Heading',
+		description: 'Document headings with separable visual scale.',
+		category: 'content'
+	},
+	{
+		slug: 'link',
+		title: 'Link',
+		description: 'Inline and standalone links, with external-link handling.',
+		category: 'content'
+	},
+	{
+		slug: 'list',
+		title: 'List',
+		description: 'Content lists with markers, numbering, or dividers.',
+		category: 'content'
+	},
+	{
+		slug: 'blockquote',
+		title: 'Blockquote',
+		description: 'A quotation with accessible attribution.',
+		category: 'content'
+	},
+	{
+		slug: 'citation',
+		title: 'Citation',
+		description: 'Inline source references for AI responses and articles.',
+		category: 'content'
 	}
 ];
+
+components.sort((a, b) => a.title.localeCompare(b.title));
 
 const bySlug = new Map(components.map((component) => [component.slug, component]));
 
