@@ -6,7 +6,7 @@
 	let {
 		ref = $bindable(null),
 		class: className,
-		'aria-label': ariaLabel = 'Schließen',
+		'aria-label': ariaLabel = 'Close',
 		...restProps
 	}: WithElementRef<HTMLButtonAttributes, HTMLButtonElement> = $props();
 </script>

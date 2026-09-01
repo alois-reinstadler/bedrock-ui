@@ -8,9 +8,12 @@
 	let {
 		ref = $bindable(null),
 		class: className,
+		scrollDownLabel = 'Scroll to bottom',
 		children,
 		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
+	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		scrollDownLabel?: string;
+	} = $props();
 
 	let viewport = $state<HTMLDivElement | null>(null);
 	let content = $state<HTMLDivElement | null>(null);
@@ -57,7 +60,7 @@
 	{#if !stuck}
 		<button
 			type="button"
-			aria-label="Nach unten scrollen"
+			aria-label={scrollDownLabel}
 			class="tap-target absolute bottom-3 left-1/2 z-10 inline-flex size-8 -translate-x-1/2 items-center justify-center rounded-full bg-background text-foreground shadow-md ring-1 ring-foreground/10 hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
 			onclick={() => scrollToBottom()}
 		>

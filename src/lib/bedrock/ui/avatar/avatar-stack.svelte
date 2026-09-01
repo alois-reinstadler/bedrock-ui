@@ -24,7 +24,7 @@
 		class: className,
 		items,
 		max = 4,
-		moreLabel = (count: number) => `${count} weitere anzeigen`,
+		moreLabel = (count: number) => `Show ${count} more`,
 		...restProps
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
 		items: AvatarStackItem[];

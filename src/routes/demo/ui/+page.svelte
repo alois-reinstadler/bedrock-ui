@@ -785,8 +785,8 @@
 				title="Content swap"
 				hint="Swap can fade through or roll crisp single-line content upward; the shell still sees one clean resize."
 			>
-				<div class="flex gap-1" role="group" aria-label="Swap-Effekt">
-					{#each [['fade', 'Überblenden'], ['slide-up', 'Nach oben']] as option (option[0])}
+				<div class="flex gap-1" role="group" aria-label="Swap effect">
+					{#each [['fade', 'Fade'], ['slide-up', 'Slide up']] as option (option[0])}
 						<button
 							type="button"
 							class="rounded-full bg-muted px-3 py-1.5 text-xs font-medium aria-pressed:bg-foreground aria-pressed:text-background"

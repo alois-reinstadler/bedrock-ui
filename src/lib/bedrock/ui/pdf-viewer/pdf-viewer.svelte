@@ -6,7 +6,7 @@
 		ref = $bindable(null),
 		class: className,
 		src,
-		errorText = 'PDF konnte nicht geladen werden.',
+		errorText = 'Could not load PDF.',
 		...restProps
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
 		src: string;

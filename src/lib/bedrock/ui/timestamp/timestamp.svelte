@@ -12,11 +12,11 @@
 		class: className,
 		date,
 		mode = 'auto',
-		locale = 'de-AT',
+		locale = 'en-US',
 		...restProps
 	}: WithElementRef<HTMLTimeAttributes, HTMLTimeElement> & {
 		date: Date | string | number;
-		/** `relative` = "vor 5 Minuten", `absolute` = "31.08.2026, 14:05",
+		/** `relative` = "5 minutes ago", `absolute` = "Aug 31, 2026, 2:05 PM",
 		 * `auto` = relative within seven days, absolute beyond. */
 		mode?: 'auto' | 'relative' | 'absolute';
 		locale?: string;

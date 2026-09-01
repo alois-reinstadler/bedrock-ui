@@ -41,29 +41,29 @@
 	const ALL_VIEW_KEY = '__bedrock_all__';
 
 	const defaultLabels = {
-		all: 'Alle',
-		views: 'Ansichten',
-		searchPlaceholder: 'Suchen…',
-		searchAria: 'Tabelle durchsuchen',
-		group: 'Gruppieren',
-		groupNone: 'Keine',
-		columns: 'Spalten',
-		selected: 'ausgewählt',
-		clearSelection: 'Auswahl aufheben',
-		selectAll: 'Alle Zeilen auswählen',
-		selectRow: 'Zeile auswählen',
-		selectGroup: 'Gruppe auswählen',
-		noResults: 'Keine Ergebnisse.',
-		showAll: 'Alle anzeigen',
-		entries: (shown: number, total: number) => `${shown} von ${total} Einträgen`,
-		rowsPerPage: 'Zeilen pro Seite',
-		pageOf: (page: number, pages: number) => `Seite ${page} von ${pages}`,
-		firstPage: 'Erste Seite',
-		previousPage: 'Vorherige Seite',
-		nextPage: 'Nächste Seite',
-		lastPage: 'Letzte Seite',
-		reorderHint: 'Spalte ziehen oder mit Alt+Pfeiltasten verschieben',
-		reorderAria: (header: string) => `${header} — mit Alt+Pfeiltasten verschieben`
+		all: 'All',
+		views: 'Views',
+		searchPlaceholder: 'Search…',
+		searchAria: 'Search table',
+		group: 'Group by',
+		groupNone: 'None',
+		columns: 'Columns',
+		selected: 'selected',
+		clearSelection: 'Clear selection',
+		selectAll: 'Select all rows',
+		selectRow: 'Select row',
+		selectGroup: 'Select group',
+		noResults: 'No results.',
+		showAll: 'Show all',
+		entries: (shown: number, total: number) => `${shown} of ${total} entries`,
+		rowsPerPage: 'Rows per page',
+		pageOf: (page: number, pages: number) => `Page ${page} of ${pages}`,
+		firstPage: 'First page',
+		previousPage: 'Previous page',
+		nextPage: 'Next page',
+		lastPage: 'Last page',
+		reorderHint: 'Drag the column or move it with Alt+Arrow keys',
+		reorderAria: (header: string) => `${header} — move with Alt+Arrow keys`
 	};
 
 	export type DataTableLabels = Partial<typeof defaultLabels>;
@@ -115,6 +115,7 @@
 		reorderable = false,
 		columnOrder = $bindable(),
 		labels: labelOverrides = {},
+		locale = 'en-US',
 		empty,
 		onRowClick
 	}: {
@@ -134,8 +135,10 @@
 		reorderable?: boolean;
 		/** Current column order (ids); bindable so apps can persist the layout. */
 		columnOrder?: string[];
-		/** Overrides for the built-in (German) UI strings. */
+		/** Overrides for the built-in UI strings. */
 		labels?: DataTableLabels;
+		/** Locale used for number, currency, date, and time formatting. */
+		locale?: string;
 		empty?: Snippet;
 		onRowClick?: (row: TData) => void;
 	} = $props();
@@ -590,13 +593,19 @@
 											value
 										)}{:else if spec?.type === 'badge'}<Badge
 											variant={spec.badgeVariant?.(value, row.original)}
-											>{formatCellValue(value, 'badge')}</Badge
+											>{formatCellValue(value, 'badge', undefined, locale)}</Badge
 										>{:else if spec?.type === 'currency'}{@const currency = formatCurrencyParts(
 											value,
-											spec.currency
+											spec.currency,
+											locale
 										)}{#if currency}<span class="tabular-nums">{currency.amount}</span>
 											<span class="ml-1 text-xs text-muted-foreground">{currency.currency}</span
-											>{:else}–{/if}{:else}{formatCellValue(value, spec?.type, spec?.currency)}{/if}
+											>{:else}–{/if}{:else}{formatCellValue(
+											value,
+											spec?.type,
+											spec?.currency,
+											locale
+										)}{/if}
 								</Table.Cell>
 							{/each}
 						</Table.Row>

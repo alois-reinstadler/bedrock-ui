@@ -8,6 +8,18 @@
 		/** Filename suggested when downloading; derived from src/alt otherwise. */
 		downloadName?: string;
 	};
+
+	const defaultLabels = {
+		download: 'Download',
+		close: 'Close',
+		previous: 'Previous image',
+		next: 'Next image',
+		counter: (current: number, total: number) => `${current} of ${total}`,
+		imageView: 'Image view',
+		fileFallbackName: 'file'
+	};
+
+	export type LightboxLabels = Partial<typeof defaultLabels>;
 </script>
 
 <script lang="ts">
@@ -33,25 +45,12 @@
 		index?: number;
 		items: LightboxItem[];
 		class?: string;
-		/** Overrides for the built-in (German) UI strings. */
-		labels?: Partial<{
-			download: string;
-			close: string;
-			previous: string;
-			next: string;
-			counter: (current: number, total: number) => string;
-		}>;
+		/** Overrides for the built-in UI strings. */
+		labels?: LightboxLabels;
 		/** Trigger content; rendered inside a `Dialog.Trigger`. */
 		children?: Snippet;
 	} = $props();
 
-	const defaultLabels = {
-		download: 'Herunterladen',
-		close: 'Schließen',
-		previous: 'Vorheriges Bild',
-		next: 'Nächstes Bild',
-		counter: (current: number, total: number) => `${current} von ${total}`
-	};
 	const l = $derived({ ...defaultLabels, ...labelOverrides });
 
 	const count = $derived(items.length);
@@ -65,7 +64,7 @@
 		if (item.src.startsWith('data:')) {
 			const mime = item.src.slice(5, item.src.indexOf(item.src.includes(';') ? ';' : ','));
 			const extension = mime.includes('svg') ? 'svg' : (mime.split('/')[1] ?? 'bin');
-			return `${item.alt.replaceAll(/[^\w-]+/g, '-').toLowerCase() || 'datei'}.${extension}`;
+			return `${item.alt.replaceAll(/[^\w-]+/g, '-').toLowerCase() || l.fileFallbackName}.${extension}`;
 		}
 		return item.src.split('/').pop()?.split('?')[0] || item.alt;
 	}
@@ -128,7 +127,7 @@
 			class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-3 p-4 motion-overlay outline-none md:p-10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95"
 		>
 			<DialogPrimitive.Title class="sr-only">
-				{current?.alt ?? 'Bildansicht'}
+				{current?.alt ?? l.imageView}
 			</DialogPrimitive.Title>
 			{#if current}
 				<Swap key={current.src} effect="fade">

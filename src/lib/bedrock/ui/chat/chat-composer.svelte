@@ -9,9 +9,9 @@
 	let {
 		value = $bindable(''),
 		class: className,
-		placeholder = 'Nachricht schreiben…',
+		placeholder = 'Write a message…',
 		disabled = false,
-		sendLabel = 'Senden',
+		sendLabel = 'Send',
 		onSend,
 		actions,
 		...restProps

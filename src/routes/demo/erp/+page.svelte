@@ -72,30 +72,31 @@
 		{ key: 'empty', label: 'No matches', filter: () => false }
 	];
 
+	// This demo shows German localization through explicit label and locale overrides.
 	const tableLabels: DataTableLabels = {
-		all: 'All',
-		views: 'Views',
-		searchPlaceholder: 'Search…',
-		searchAria: 'Search table',
-		group: 'Group by',
-		groupNone: 'None',
-		columns: 'Columns',
-		selected: 'selected',
-		clearSelection: 'Clear selection',
-		selectAll: 'Select all rows',
-		selectRow: 'Select row',
-		selectGroup: 'Select group',
-		noResults: 'No results.',
-		showAll: 'Show all',
-		entries: (shown, total) => `${shown} of ${total} entries`,
-		rowsPerPage: 'Rows per page',
-		pageOf: (page, pages) => `Page ${page} of ${pages}`,
-		firstPage: 'First page',
-		previousPage: 'Previous page',
-		nextPage: 'Next page',
-		lastPage: 'Last page',
-		reorderHint: 'Drag the column or move it with Alt+arrow keys',
-		reorderAria: (header) => `${header} — move with Alt+arrow keys`
+		all: 'Alle',
+		views: 'Ansichten',
+		searchPlaceholder: 'Suchen…',
+		searchAria: 'Tabelle durchsuchen',
+		group: 'Gruppieren',
+		groupNone: 'Keine',
+		columns: 'Spalten',
+		selected: 'ausgewählt',
+		clearSelection: 'Auswahl aufheben',
+		selectAll: 'Alle Zeilen auswählen',
+		selectRow: 'Zeile auswählen',
+		selectGroup: 'Gruppe auswählen',
+		noResults: 'Keine Ergebnisse.',
+		showAll: 'Alle anzeigen',
+		entries: (shown, total) => `${shown} von ${total} Einträgen`,
+		rowsPerPage: 'Zeilen pro Seite',
+		pageOf: (page, pages) => `Seite ${page} von ${pages}`,
+		firstPage: 'Erste Seite',
+		previousPage: 'Vorherige Seite',
+		nextPage: 'Nächste Seite',
+		lastPage: 'Letzte Seite',
+		reorderHint: 'Spalte ziehen oder mit Alt+Pfeiltasten verschieben',
+		reorderAria: (header) => `${header} — mit Alt+Pfeiltasten verschieben`
 	};
 
 	const columns: DataTableColumn<Order>[] = $derived([
@@ -176,11 +177,13 @@
 	];
 
 	const lightboxLabels = {
-		download: 'Download',
-		close: 'Close',
-		previous: 'Previous attachment',
-		next: 'Next attachment',
-		counter: (current: number, total: number) => `${current} of ${total}`
+		download: 'Herunterladen',
+		close: 'Schließen',
+		previous: 'Vorheriger Anhang',
+		next: 'Nächster Anhang',
+		counter: (current: number, total: number) => `${current} von ${total}`,
+		imageView: 'Bildansicht',
+		fileFallbackName: 'datei'
 	};
 
 	function downloadAttachment(item: LightboxItem) {
@@ -235,7 +238,7 @@
 </script>
 
 {#snippet createdCell(order: Order)}
-	<Timestamp date={order.createdAt} locale="en" class="text-muted-foreground" />
+	<Timestamp date={order.createdAt} locale="de-AT" class="text-muted-foreground" />
 {/snippet}
 
 <svelte:head>
@@ -252,7 +255,7 @@
 					Saturday, September 6, 22:00–24:00 — postings are paused during this time.
 				</span>
 			</Banner.Content>
-			<Banner.Close aria-label="Close" onclick={() => (showBanner = false)} />
+			<Banner.Close aria-label="Schließen" onclick={() => (showBanner = false)} />
 		</Banner.Root>
 	{/if}
 
@@ -295,6 +298,7 @@
 				groupable={['customer']}
 				reorderable
 				labels={tableLabels}
+				locale="de-AT"
 			>
 				{#snippet actions(rows: Order[])}
 					<Button size="sm" variant="outline" onclick={() => archiveRows(rows)}>Archive</Button>
@@ -339,16 +343,16 @@
 				<Combobox
 					items={customerItems}
 					bind:value={selectedCustomer}
-					placeholder="Select customer…"
-					searchPlaceholder="Search customers…"
-					emptyText="No results."
+					placeholder="Kunde auswählen…"
+					searchPlaceholder="Kunden suchen…"
+					emptyText="Keine Ergebnisse."
 				/>
 				{#if selectedCustomer}
 					<p class="text-sm text-muted-foreground">Selected: {selectedCustomer}</p>
 				{/if}
 
 				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Assignees</h2>
-				<AvatarStack items={team} max={4} moreLabel={(count) => `Show ${count} more`} />
+				<AvatarStack items={team} max={4} moreLabel={(count) => `${count} weitere anzeigen`} />
 
 				<h2 class="mt-4 text-sm font-medium text-muted-foreground">System status</h2>
 				<ul class="flex flex-col gap-1.5 text-sm">
@@ -370,7 +374,7 @@
 					Tags (drag the container narrower)
 				</h2>
 				<div class="resize-x overflow-hidden rounded-lg border border-dashed border-border p-3">
-					<OverflowList items={tags} moreLabel={(count) => `Show ${count} more tags`}>
+					<OverflowList items={tags} moreLabel={(count) => `${count} weitere Einträge anzeigen`}>
 						{#snippet item(tag)}
 							<Badge variant="secondary">{tag}</Badge>
 						{/snippet}
@@ -399,19 +403,23 @@
 			<div class="flex flex-col gap-3">
 				<h2 class="text-sm font-medium text-muted-foreground">Chat</h2>
 				<Chat.Root class="h-96 rounded-lg border border-border">
-					<Chat.MessageList>
+					<Chat.MessageList scrollDownLabel="Nach unten scrollen">
 						<Chat.SystemMessage>Today</Chat.SystemMessage>
 						{#each messages as message (message.id)}
 							<Chat.Message role={message.role}>
 								<Chat.MessageBubble>{message.text}</Chat.MessageBubble>
 								<Chat.MessageMetadata>
-									<Timestamp date={message.at} locale="en" />
+									<Timestamp date={message.at} locale="de-AT" />
 								</Chat.MessageMetadata>
 							</Chat.Message>
 						{/each}
 					</Chat.MessageList>
 					<div class="p-3 pt-0">
-						<Chat.Composer onSend={sendMessage} placeholder="Write a message…" sendLabel="Send" />
+						<Chat.Composer
+							onSend={sendMessage}
+							placeholder="Nachricht schreiben…"
+							sendLabel="Senden"
+						/>
 					</div>
 				</Chat.Root>
 

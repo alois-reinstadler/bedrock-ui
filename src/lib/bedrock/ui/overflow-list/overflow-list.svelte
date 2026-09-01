@@ -10,7 +10,7 @@
 		items,
 		item,
 		overflow,
-		moreLabel = (count: number) => `${count} weitere Einträge anzeigen`,
+		moreLabel = (count: number) => `Show ${count} more items`,
 		...restProps
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
 		items: T[];

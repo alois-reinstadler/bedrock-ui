@@ -20,9 +20,9 @@
 		value = $bindable(''),
 		open = $bindable(false),
 		items,
-		placeholder = 'Auswählen…',
-		searchPlaceholder = 'Suchen…',
-		emptyText = 'Keine Ergebnisse.',
+		placeholder = 'Select…',
+		searchPlaceholder = 'Search…',
+		emptyText = 'No results.',
 		disabled = false,
 		class: className,
 		onValueChange
