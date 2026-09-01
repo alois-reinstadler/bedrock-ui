@@ -27,7 +27,7 @@ describe('DataTable v2 shell', () => {
 
 	it('renders identifier, badge, and split currency cells', async () => {
 		const view = await render(Fixture);
-		expect(view.container.querySelector('.font-mono')?.textContent).toContain('A-1');
+		expect(view.container.querySelector('.font-code')?.textContent).toContain('A-1');
 		expect(view.container.querySelector('[data-slot="badge"]')?.textContent).toContain('offen');
 		expect(view.container.textContent).toContain('EUR');
 	});

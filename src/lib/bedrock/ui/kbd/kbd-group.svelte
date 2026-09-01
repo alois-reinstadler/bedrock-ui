@@ -4,9 +4,10 @@
 
 <script lang="ts">
 	import KbdGroup from '#lib/shadcn/ui/kbd/kbd-group.svelte';
+	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof KbdGroup> = $props();
+	let { class: className, ...restProps }: ComponentProps<typeof KbdGroup> = $props();
 </script>
 
-<KbdGroup {...props} />
+<KbdGroup class={cn('font-code', className)} {...restProps} />

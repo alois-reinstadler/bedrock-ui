@@ -584,7 +584,7 @@
 									class={cn(
 										alignmentClass(column.id),
 										row.depth > 0 && column.id === visibleColumns[0]?.id && 'pl-8',
-										spec?.type === 'id' && 'font-mono text-xs',
+										spec?.type === 'id' && 'font-code text-xs',
 										spec?.class
 									)}
 								>
