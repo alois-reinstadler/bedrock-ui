@@ -242,6 +242,7 @@
 				caption="Auftragsliste"
 				{views}
 				groupable={['customer']}
+				reorderable
 			>
 				{#snippet actions(rows: Order[])}
 					<Button size="sm" variant="outline" onclick={() => archiveRows(rows)}>Archivieren</Button>
