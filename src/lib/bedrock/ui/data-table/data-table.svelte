@@ -210,6 +210,30 @@
 		activeViewKey = key;
 		table.setPageIndex(0);
 	}
+
+	// One indicator slides between tabs instead of each tab toggling its own.
+	let tablistEl = $state<HTMLDivElement | null>(null);
+	let tabIndicator = $state({ x: 0, width: 0 });
+
+	function measureTabIndicator() {
+		const activeTab = tablistEl?.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]');
+		if (!activeTab) return;
+		tabIndicator = { x: activeTab.offsetLeft + 8, width: Math.max(activeTab.offsetWidth - 16, 0) };
+	}
+
+	$effect(() => {
+		void activeViewKey;
+		void views;
+		void viewCounts;
+		measureTabIndicator();
+	});
+
+	$effect(() => {
+		if (!tablistEl) return;
+		const observer = new ResizeObserver(() => measureTabIndicator());
+		observer.observe(tablistEl);
+		return () => observer.disconnect();
+	});
 	const isGrouped = $derived(grouping.length > 0);
 
 	function setGrouping(key: string) {
@@ -340,20 +364,28 @@
 <div data-slot="data-table" class={cn('flex w-full flex-col gap-3', className)}>
 	{#if views?.length}
 		<div
-			class="flex items-center gap-1 overflow-x-auto border-b border-border"
+			bind:this={tablistEl}
+			class="relative flex items-center gap-1 overflow-x-auto border-b border-border"
 			role="tablist"
 			aria-label={l.views}
 		>
+			<span
+				aria-hidden="true"
+				class={cn(
+					'bedrock-tab-indicator absolute bottom-0 h-0.5 rounded-full bg-primary',
+					tabIndicator.width === 0 && 'opacity-0'
+				)}
+				style:left="{tabIndicator.x}px"
+				style:width="{tabIndicator.width}px"
+			></span>
 			<button
 				type="button"
 				role="tab"
 				aria-selected={activeViewKey === ALL_VIEW_KEY}
 				tabindex={activeViewKey === ALL_VIEW_KEY ? 0 : -1}
 				class={cn(
-					'relative min-h-11 shrink-0 px-3 text-sm font-medium after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-					activeViewKey === ALL_VIEW_KEY
-						? 'text-foreground after:opacity-100'
-						: 'text-muted-foreground after:opacity-0'
+					'min-h-11 shrink-0 px-3 text-sm font-medium focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+					activeViewKey === ALL_VIEW_KEY ? 'text-foreground' : 'text-muted-foreground'
 				)}
 				onclick={() => selectView(ALL_VIEW_KEY)}
 				onkeydown={(event: KeyboardEvent) => onTabKeydown(event, 0)}
@@ -368,10 +400,8 @@
 					aria-selected={activeViewKey === view.key}
 					tabindex={activeViewKey === view.key ? 0 : -1}
 					class={cn(
-						'relative min-h-11 shrink-0 px-3 text-sm font-medium after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-						activeViewKey === view.key
-							? 'text-foreground after:opacity-100'
-							: 'text-muted-foreground after:opacity-0',
+						'min-h-11 shrink-0 px-3 text-sm font-medium focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+						activeViewKey === view.key ? 'text-foreground' : 'text-muted-foreground',
 						count === 0 && 'opacity-50'
 					)}
 					onclick={() => selectView(view.key)}
@@ -658,6 +688,12 @@
 </div>
 
 <style>
+	.bedrock-tab-indicator {
+		transition:
+			left var(--motion-enter) var(--motion-ease-move),
+			width var(--motion-enter) var(--motion-ease-move);
+	}
+
 	.bedrock-selection-bar {
 		transition:
 			translate var(--motion-enter) var(--motion-ease-enter),

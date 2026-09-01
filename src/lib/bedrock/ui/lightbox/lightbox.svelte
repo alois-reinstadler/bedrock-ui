@@ -14,6 +14,7 @@
 	import XIcon from '@lucide/svelte/icons/x';
 	import { Dialog as DialogPrimitive } from 'bits-ui';
 	import { Swap } from '#lib/bedrock/motion/index.js';
+	import { PdfViewer } from '#lib/bedrock/ui/pdf-viewer';
 	import { cn } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
 
@@ -107,11 +108,11 @@
 			{#if current}
 				<Swap key={current.src} effect="fade">
 					{#if kind === 'pdf'}
-						<iframe
+						<PdfViewer
 							src={current.src}
-							title={current.alt}
-							class="h-[80dvh] w-[min(90vw,56rem)] rounded-lg bg-white shadow-2xl"
-						></iframe>
+							aria-label={current.alt}
+							class="h-[80dvh] w-[min(90vw,56rem)] rounded-lg shadow-2xl"
+						/>
 					{:else}
 						<img
 							src={current.src}
