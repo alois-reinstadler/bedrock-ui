@@ -82,7 +82,8 @@
 			})}{#each segments as segment, index (`${segment.part}-${index}`)}<TimeField.Segment
 						part={segment.part}
 						class="rounded px-0.5 tabular-nums outline-none focus:bg-accent focus:text-accent-foreground"
-					/>{/each}{/snippet}
+						>{segment.value}</TimeField.Segment
+					>{/each}{/snippet}
 		</TimeField.Input>
 		{#if clearable && value}<button
 				type="button"

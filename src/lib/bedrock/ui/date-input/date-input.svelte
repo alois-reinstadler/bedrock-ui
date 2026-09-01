@@ -83,7 +83,8 @@
 				{#each segments as segment, index (`${segment.part}-${index}`)}<DatePicker.Segment
 						part={segment.part}
 						class="rounded px-0.5 tabular-nums outline-none focus:bg-accent focus:text-accent-foreground"
-					/>{/each}
+						>{segment.value}</DatePicker.Segment
+					>{/each}
 			{/snippet}
 		</DatePicker.Input>
 		{#if clearable && value}<button

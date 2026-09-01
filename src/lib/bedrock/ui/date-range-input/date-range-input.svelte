@@ -86,7 +86,8 @@
 			})}{#each segments as segment, index (`${segment.part}-${index}`)}<DateRangePicker.Segment
 						part={segment.part}
 						class="rounded px-0.5 tabular-nums outline-none focus:bg-accent focus:text-accent-foreground"
-					/>{/each}{/snippet}
+						>{segment.value}</DateRangePicker.Segment
+					>{/each}{/snippet}
 		</DateRangePicker.Input><span aria-hidden="true" class="text-muted-foreground">–</span>
 		<DateRangePicker.Input type="end" class="flex min-w-0 flex-1 items-center pr-2">
 			{#snippet children({
@@ -94,7 +95,8 @@
 			})}{#each segments as segment, index (`${segment.part}-${index}`)}<DateRangePicker.Segment
 						part={segment.part}
 						class="rounded px-0.5 tabular-nums outline-none focus:bg-accent focus:text-accent-foreground"
-					/>{/each}{/snippet}
+						>{segment.value}</DateRangePicker.Segment
+					>{/each}{/snippet}
 		</DateRangePicker.Input>
 		{#if clearable && value}<button
 				type="button"
