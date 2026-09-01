@@ -22,15 +22,31 @@
 		index = $bindable(0),
 		items,
 		class: className,
+		labels: labelOverrides = {},
 		children
 	}: {
 		open?: boolean;
 		index?: number;
 		items: LightboxItem[];
 		class?: string;
+		/** Overrides for the built-in (German) UI strings. */
+		labels?: Partial<{
+			close: string;
+			previous: string;
+			next: string;
+			counter: (current: number, total: number) => string;
+		}>;
 		/** Trigger content; rendered inside a `Dialog.Trigger`. */
 		children?: Snippet;
 	} = $props();
+
+	const defaultLabels = {
+		close: 'Schließen',
+		previous: 'Vorheriges Bild',
+		next: 'Nächstes Bild',
+		counter: (current: number, total: number) => `${current} von ${total}`
+	};
+	const l = $derived({ ...defaultLabels, ...labelOverrides });
 
 	const count = $derived(items.length);
 	const current = $derived(items[Math.min(Math.max(index, 0), Math.max(count - 1, 0))]);
@@ -110,7 +126,7 @@
 					{/if}
 					{#if count > 1}
 						<span data-slot="lightbox-counter" class="text-white/60 tabular-nums">
-							{index + 1} von {count}
+							{l.counter(index + 1, count)}
 						</span>
 					{/if}
 				</div>
@@ -118,7 +134,7 @@
 			{#if count > 1}
 				<button
 					type="button"
-					aria-label="Vorheriges Bild"
+					aria-label={l.previous}
 					class={cn(navButton, 'absolute top-1/2 left-3 -translate-y-1/2 md:left-6')}
 					onclick={previous}
 				>
@@ -126,7 +142,7 @@
 				</button>
 				<button
 					type="button"
-					aria-label="Nächstes Bild"
+					aria-label={l.next}
 					class={cn(navButton, 'absolute top-1/2 right-3 -translate-y-1/2 md:right-6')}
 					onclick={next}
 				>
@@ -134,7 +150,7 @@
 				</button>
 			{/if}
 			<DialogPrimitive.Close
-				aria-label="Schließen"
+				aria-label={l.close}
 				class={cn(navButton, 'absolute top-3 right-3 md:top-6 md:right-6')}
 			>
 				<XIcon class="size-5" />

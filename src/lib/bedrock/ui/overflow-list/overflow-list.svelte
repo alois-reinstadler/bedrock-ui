@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-	import * as HoverCard from '#lib/bedrock/ui/hover-card';
+	import { Preview } from '#lib/bedrock/ui/hover-card';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
@@ -10,12 +10,15 @@
 		items,
 		item,
 		overflow,
+		moreLabel = (count: number) => `${count} weitere Einträge anzeigen`,
 		...restProps
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & {
 		items: T[];
 		item: Snippet<[T, number]>;
 		/** Custom "+n" affordance (e.g. a dropdown trigger); receives the hidden items. */
 		overflow?: Snippet<[T[]]>;
+		/** Accessible label for the default "+n" indicator. */
+		moreLabel?: (count: number) => string;
 	} = $props();
 
 	let rail = $state<HTMLDivElement | null>(null);
@@ -85,32 +88,21 @@
 			{#if overflow}
 				{@render overflow(hiddenItems)}
 			{:else}
-				<HoverCard.Root openDelay={200} closeDelay={100}>
-					<HoverCard.Trigger>
-						{#snippet child({ props })}
-							<button
-								{...props}
-								type="button"
-								aria-label="{hiddenItems.length} weitere Einträge anzeigen"
-								class="inline-flex cursor-default items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-							>
-								+{hiddenItems.length}
-							</button>
-						{/snippet}
-					</HoverCard.Trigger>
-					<HoverCard.Content
-						data-slot="overflow-list-hidden"
-						class="w-auto max-w-72"
-						align="end"
-						sideOffset={6}
-					>
-						<div class="flex flex-wrap items-center gap-1.5">
-							{#each hiddenItems as entry, hiddenIndex (hiddenIndex)}
-								{@render item(entry, clampedCount + hiddenIndex)}
-							{/each}
-						</div>
-					</HoverCard.Content>
-				</HoverCard.Root>
+				<Preview align="end">
+					{#snippet trigger({ props })}
+						<button
+							{...props}
+							type="button"
+							aria-label={moreLabel(hiddenItems.length)}
+							class="inline-flex cursor-default items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+						>
+							+{hiddenItems.length}
+						</button>
+					{/snippet}
+					{#each hiddenItems as entry, hiddenIndex (hiddenIndex)}
+						{@render item(entry, clampedCount + hiddenIndex)}
+					{/each}
+				</Preview>
 			{/if}
 		</span>
 	{/if}

@@ -50,8 +50,11 @@ day, keyboard-first operators, dense data.
 
 - Destructive actions (delete, cancel document, void posting) always go
   through `AlertDialog` — never a plain click, never only Undo.
-- Bulk actions state their scope in the control ("3 ausgewählt" next to the
-  actions), not only in the result.
+- **Action scope is stated exactly once.** Selection-scoped (bulk) actions
+  live in the floating selection bar, whose count IS the scope — the verbs
+  next to it never repeat it (no "Delete (37) · Export (37)"). View-scoped
+  actions (export what you see) sit in the toolbar and carry their count in
+  the label ("Export (37)"), because nothing nearby states it.
 - Immediate-by-default motion policy applies (see motion system plan): grids,
   keyboard traversal, and live data never animate.
 

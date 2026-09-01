@@ -11,6 +11,7 @@
 		class: className,
 		placeholder = 'Nachricht schreiben…',
 		disabled = false,
+		sendLabel = 'Senden',
 		onSend,
 		actions,
 		...restProps
@@ -18,12 +19,15 @@
 		value?: string;
 		placeholder?: string;
 		disabled?: boolean;
+		/** Accessible label for the send button. */
+		sendLabel?: string;
 		/** Called with the trimmed message; the composer clears afterwards. */
 		onSend?: (message: string) => void;
 		/** Extra controls rendered left of the send button (attachments etc.). */
 		actions?: Snippet;
 	} = $props();
 
+	const uid = $props.id();
 	let textarea = $state<HTMLTextAreaElement | null>(null);
 
 	function submit() {
@@ -57,6 +61,8 @@
 	<TextareaPrimitive
 		bind:ref={textarea}
 		bind:value
+		id="{uid}-message"
+		name="message"
 		{placeholder}
 		{disabled}
 		{onkeydown}
@@ -68,7 +74,7 @@
 	<Button
 		type="submit"
 		size="icon-sm"
-		aria-label="Senden"
+		aria-label={sendLabel}
 		disabled={disabled || value.trim().length === 0}
 		data-slot="chat-send-button"
 		class="tap-target shrink-0 rounded-full motion-press motion-state"

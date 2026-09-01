@@ -10,8 +10,6 @@ export type DataTableView<TData> = {
 	filter: (row: TData) => boolean;
 };
 
-export type DataTableDensity = 'compact' | 'comfortable';
-
 export type DataTableColumn<TData> = {
 	/** Column id; doubles as the property accessor when `accessor` is absent. */
 	key: string;

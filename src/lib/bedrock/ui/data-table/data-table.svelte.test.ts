@@ -24,14 +24,23 @@ describe('DataTable v2 shell', () => {
 		expect(view.container.textContent).toContain('Keine Ergebnisse.');
 	});
 
-	it('renders identifier, badge, split currency, and local density controls', async () => {
+	it('renders identifier, badge, and split currency cells', async () => {
 		const view = await render(Fixture);
 		expect(view.container.querySelector('.font-mono')?.textContent).toContain('A-1');
 		expect(view.container.querySelector('[data-slot="badge"]')?.textContent).toContain('offen');
 		expect(view.container.textContent).toContain('EUR');
-		const comfortable = button(view.container, 'Komfortabel');
-		comfortable.click();
+	});
+
+	it('offers a show-all CTA on empty views and roving tabindex on tabs', async () => {
+		const view = await render(Fixture);
+		button(view.container, 'Leer').click();
 		await Promise.resolve();
-		expect(comfortable.getAttribute('aria-pressed')).toBe('true');
+		const cta = button(view.container, 'Alle anzeigen');
+		expect(cta.textContent).toContain('3');
+		const tabs = [...view.container.querySelectorAll('[role="tab"]')];
+		expect(tabs.filter((tab) => tab.getAttribute('tabindex') === '0')).toHaveLength(1);
+		cta.click();
+		await Promise.resolve();
+		expect(view.container.textContent).toContain('A-1');
 	});
 });

@@ -12,7 +12,12 @@
 	import { Button } from '#lib/bedrock/ui/button';
 	import * as Chat from '#lib/bedrock/ui/chat';
 	import { Combobox } from '#lib/bedrock/ui/combobox';
-	import { DataTable, type DataTableColumn, type DataTableView } from '#lib/bedrock/ui/data-table';
+	import {
+		DataTable,
+		type DataTableColumn,
+		type DataTableLabels,
+		type DataTableView
+	} from '#lib/bedrock/ui/data-table';
 	import { Lightbox, type LightboxItem } from '#lib/bedrock/ui/lightbox';
 	import { OverflowList } from '#lib/bedrock/ui/overflow-list';
 	import { StatusDot } from '#lib/bedrock/ui/status-dot';
@@ -24,7 +29,7 @@
 		id: string;
 		number: string;
 		customer: string;
-		status: 'offen' | 'bestätigt' | 'geliefert' | 'storniert';
+		status: 'open' | 'confirmed' | 'delivered' | 'cancelled';
 		createdAt: Date;
 		net: number;
 	};
@@ -39,12 +44,12 @@
 		'Gasthof Post',
 		'Holzbau Wieser'
 	];
-	const statuses: Order['status'][] = ['offen', 'bestätigt', 'geliefert', 'storniert'];
+	const statuses: Order['status'][] = ['open', 'confirmed', 'delivered', 'cancelled'];
 
 	let orders = $state<Order[]>(
 		Array.from({ length: 37 }, (_, index) => ({
 			id: `ord-${index + 1}`,
-			number: `AU-2026-${String(1041 + index).padStart(4, '0')}`,
+			number: `PO-2026-${String(1041 + index).padStart(4, '0')}`,
 			customer: customers[(index * 5) % customers.length],
 			status: statuses[(index * 3) % statuses.length],
 			createdAt: new Date(Date.now() - index * 5_400_000),
@@ -53,43 +58,76 @@
 	);
 
 	const statusBadge = {
-		offen: 'secondary',
-		bestätigt: 'outline',
-		geliefert: 'default',
-		storniert: 'destructive'
+		open: 'secondary',
+		confirmed: 'outline',
+		delivered: 'default',
+		cancelled: 'destructive'
 	} as const;
 
 	const views: DataTableView<Order>[] = [
-		{ key: 'offen', label: 'Offen', filter: (row) => row.status === 'offen' },
-		{ key: 'bestätigt', label: 'Bestätigt', filter: (row) => row.status === 'bestätigt' },
-		{ key: 'geliefert', label: 'Geliefert', filter: (row) => row.status === 'geliefert' },
-		{ key: 'storniert', label: 'Storniert', filter: (row) => row.status === 'storniert' },
-		{ key: 'leer', label: 'Ohne Treffer', filter: () => false }
+		{ key: 'open', label: 'Open', filter: (row) => row.status === 'open' },
+		{ key: 'confirmed', label: 'Confirmed', filter: (row) => row.status === 'confirmed' },
+		{ key: 'delivered', label: 'Delivered', filter: (row) => row.status === 'delivered' },
+		{ key: 'cancelled', label: 'Cancelled', filter: (row) => row.status === 'cancelled' },
+		{ key: 'empty', label: 'No matches', filter: () => false }
 	];
 
+	const tableLabels: DataTableLabels = {
+		all: 'All',
+		views: 'Views',
+		searchPlaceholder: 'Search…',
+		searchAria: 'Search table',
+		group: 'Group by',
+		groupNone: 'None',
+		columns: 'Columns',
+		selected: 'selected',
+		clearSelection: 'Clear selection',
+		selectAll: 'Select all rows',
+		selectRow: 'Select row',
+		selectGroup: 'Select group',
+		noResults: 'No results.',
+		showAll: 'Show all',
+		entries: (shown, total) => `${shown} of ${total} entries`,
+		rowsPerPage: 'Rows per page',
+		pageOf: (page, pages) => `Page ${page} of ${pages}`,
+		firstPage: 'First page',
+		previousPage: 'Previous page',
+		nextPage: 'Next page',
+		lastPage: 'Last page',
+		reorderHint: 'Drag the column or move it with Alt+arrow keys',
+		reorderAria: (header) => `${header} — move with Alt+arrow keys`
+	};
+
 	const columns: DataTableColumn<Order>[] = $derived([
-		{ key: 'number', header: 'Auftrag', type: 'id', hideable: false },
-		{ key: 'customer', header: 'Kunde' },
+		{ key: 'number', header: 'Order', type: 'id', hideable: false },
+		{ key: 'customer', header: 'Customer' },
 		{
 			key: 'status',
 			header: 'Status',
 			type: 'badge',
 			badgeVariant: (value) => statusBadge[value as Order['status']]
 		},
-		{ key: 'createdAt', header: 'Angelegt', cell: createdCell },
-		{ key: 'net', header: 'Netto', type: 'currency' }
+		{ key: 'createdAt', header: 'Created', cell: createdCell },
+		{ key: 'net', header: 'Net', type: 'currency' }
 	]);
 
 	function archiveRows(rows: Order[]) {
 		console.info(
-			'Archivieren:',
+			'Archive:',
 			rows.map((row) => row.number)
 		);
 	}
 
 	function cancelRows(rows: Order[]) {
 		const ids = new Set(rows.map((row) => row.id));
-		orders = orders.map((order) => (ids.has(order.id) ? { ...order, status: 'storniert' } : order));
+		orders = orders.map((order) => (ids.has(order.id) ? { ...order, status: 'cancelled' } : order));
+	}
+
+	function exportRows(rows: Order[]) {
+		console.info(
+			'Export:',
+			rows.map((row) => row.number)
+		);
 	}
 
 	let showBanner = $state(true);
@@ -97,24 +135,24 @@
 	const customerItems = customers.map((name) => ({ value: name, label: name }));
 
 	const team: AvatarStackItem[] = [
-		{ fallback: 'AR' },
-		{ fallback: 'MK' },
-		{ fallback: 'JS' },
-		{ fallback: 'TH' },
-		{ fallback: 'LW' },
-		{ fallback: 'PB' },
-		{ fallback: 'NN' }
+		{ fallback: 'AR', name: 'Alois Reinstadler' },
+		{ fallback: 'MK', name: 'Maria König' },
+		{ fallback: 'JS', name: 'Jonas Steiner' },
+		{ fallback: 'TH', name: 'Theresa Huber' },
+		{ fallback: 'LW', name: 'Lukas Wieser' },
+		{ fallback: 'PB', name: 'Paula Brandner' },
+		{ fallback: 'NN', name: 'Nina Nagele' }
 	];
 
 	const tags = [
-		'Dringend',
+		'Urgent',
 		'Export',
-		'Teillieferung',
-		'Rahmenvertrag',
-		'Skonto 2 %',
-		'Selbstabholer',
-		'Neukunde',
-		'Reklamation offen'
+		'Partial delivery',
+		'Framework contract',
+		'2 % discount',
+		'Pickup',
+		'New customer',
+		'Open complaint'
 	];
 
 	function placeholderImage(label: string, hue: number): string {
@@ -124,37 +162,44 @@
 
 	const attachments: LightboxItem[] = [
 		{
-			src: placeholderImage('Lieferschein', 210),
-			alt: 'Lieferschein',
-			caption: 'Lieferschein LS-2026-0113'
+			src: placeholderImage('Delivery note', 210),
+			alt: 'Delivery note',
+			caption: 'Delivery note DN-2026-0113'
 		},
 		{
-			src: placeholderImage('Wiegeschein', 30),
-			alt: 'Wiegeschein',
-			caption: 'Wiegeschein vom 29.08.2026'
+			src: placeholderImage('Weight ticket', 30),
+			alt: 'Weight ticket',
+			caption: 'Weight ticket from Aug 29, 2026'
 		},
-		{ src: placeholderImage('Foto Anlieferung', 140), alt: 'Foto der Anlieferung' },
-		{ src: '/demo/beleg.pdf', alt: 'Rechnung RE-2026-0815 (PDF)', caption: 'Rechnung RE-2026-0815' }
+		{ src: placeholderImage('Delivery photo', 140), alt: 'Delivery photo' },
+		{ src: '/demo/beleg.pdf', alt: 'Invoice RE-2026-0815 (PDF)', caption: 'Invoice RE-2026-0815' }
 	];
+
+	const lightboxLabels = {
+		close: 'Close',
+		previous: 'Previous attachment',
+		next: 'Next attachment',
+		counter: (current: number, total: number) => `${current} of ${total}`
+	};
 
 	type Message = { id: number; role: 'user' | 'assistant'; text: string; at: Date };
 	let messages = $state<Message[]>([
 		{
 			id: 1,
 			role: 'assistant',
-			text: 'Grüß dich! Wie kann ich beim Auftrag helfen?',
+			text: 'Hi! How can I help with this order?',
 			at: new Date(Date.now() - 340_000)
 		},
 		{
 			id: 2,
 			role: 'user',
-			text: 'Wann wird AU-2026-1042 geliefert?',
+			text: 'When will PO-2026-1042 be delivered?',
 			at: new Date(Date.now() - 250_000)
 		},
 		{
 			id: 3,
 			role: 'assistant',
-			text: 'AU-2026-1042 ist für Donnerstag, 3. September bestätigt. Die Spedition wurde gestern avisiert.',
+			text: 'PO-2026-1042 is confirmed for Thursday, September 3. The carrier was notified yesterday.',
 			at: new Date(Date.now() - 180_000)
 		}
 	]);
@@ -166,26 +211,19 @@
 			messages.push({
 				id: nextId++,
 				role: 'assistant',
-				text: 'Verstanden — ich habe mir das notiert.',
+				text: 'Got it — noted.',
 				at: new Date()
 			});
 		}, 600);
 	}
-
-	function exportRows(rows: Order[]) {
-		console.info(
-			'Export:',
-			rows.map((row) => row.number)
-		);
-	}
 </script>
 
 {#snippet createdCell(order: Order)}
-	<Timestamp date={order.createdAt} class="text-muted-foreground" />
+	<Timestamp date={order.createdAt} locale="en" class="text-muted-foreground" />
 {/snippet}
 
 <svelte:head>
-	<title>ERP-Primitive</title>
+	<title>ERP primitives</title>
 </svelte:head>
 
 <div class="min-h-[100dvh] bg-background text-foreground">
@@ -193,12 +231,12 @@
 		<Banner.Root variant="warning">
 			<TriangleAlertIcon />
 			<Banner.Content>
-				<span class="font-medium">Wartungsfenster</span>
+				<span class="font-medium">Maintenance window</span>
 				<span class="text-muted-foreground">
-					Samstag, 6. September, 22:00–24:00 Uhr — Buchungen sind währenddessen pausiert.
+					Saturday, September 6, 22:00–24:00 — postings are paused during this time.
 				</span>
 			</Banner.Content>
-			<Banner.Close onclick={() => (showBanner = false)} />
+			<Banner.Close aria-label="Close" onclick={() => (showBanner = false)} />
 		</Banner.Root>
 	{/if}
 
@@ -208,9 +246,9 @@
 				<p class="mb-2 text-[10px] font-medium tracking-[0.22em] text-muted-foreground uppercase">
 					Bedrock ERP
 				</p>
-				<h1 class="font-heading text-3xl tracking-tight">ERP-Primitive</h1>
+				<h1 class="font-heading text-3xl tracking-tight">ERP primitives</h1>
 				<p class="mt-1 text-sm text-muted-foreground">
-					Aufträge, Lieferungen und Belege — Bedrock-Komponenten im Verbund.
+					Orders, deliveries, and documents — Bedrock components working together.
 				</p>
 			</div>
 			<Tooltip.Provider>
@@ -219,50 +257,53 @@
 						{#snippet child({ props })}
 							<Button {...props}>
 								<PlusIcon />
-								Neuer Auftrag
+								New order
 							</Button>
 						{/snippet}
 					</Tooltip.Trigger>
-					<Tooltip.Content>Legt einen neuen Auftrag an</Tooltip.Content>
+					<Tooltip.Content>Creates a new purchase order</Tooltip.Content>
 				</Tooltip.Root>
 			</Tooltip.Provider>
 		</header>
 
 		<section class="flex flex-col gap-3">
-			<h2 class="text-sm font-medium text-muted-foreground">Aufträge</h2>
+			<h2 class="text-sm font-medium text-muted-foreground">Orders</h2>
 			<DataTable
 				data={orders}
 				{columns}
 				selectable
 				searchable
 				pageSize={10}
-				caption="Auftragsliste"
+				caption="Order list"
 				{views}
 				groupable={['customer']}
 				reorderable
+				labels={tableLabels}
 			>
 				{#snippet actions(rows: Order[])}
-					<Button size="sm" variant="outline" onclick={() => archiveRows(rows)}>Archivieren</Button>
+					<Button size="sm" variant="outline" onclick={() => archiveRows(rows)}>Archive</Button>
 					<AlertDialog.Root>
 						<AlertDialog.Trigger>
 							{#snippet child({ props })}
-								<Button {...props} size="sm" variant="destructive">Stornieren</Button>
+								<Button {...props} size="sm" variant="destructive">Cancel orders</Button>
 							{/snippet}
 						</AlertDialog.Trigger>
 						<AlertDialog.Content>
 							<AlertDialog.Header>
 								<AlertDialog.Title>
-									{rows.length}
-									{rows.length === 1 ? 'Auftrag' : 'Aufträge'} stornieren?
+									Cancel {rows.length}
+									{rows.length === 1 ? 'order' : 'orders'}?
 								</AlertDialog.Title>
 								<AlertDialog.Description>
-									Die Stornierung wird sofort gebucht und in den Ansichten sichtbar. Diese Aktion
-									kann nicht rückgängig gemacht werden.
+									The cancellation is posted immediately and reflected in the views. This action
+									cannot be undone.
 								</AlertDialog.Description>
 							</AlertDialog.Header>
 							<AlertDialog.Footer>
-								<AlertDialog.Cancel>Abbrechen</AlertDialog.Cancel>
-								<AlertDialog.Action onclick={() => cancelRows(rows)}>Stornieren</AlertDialog.Action>
+								<AlertDialog.Cancel>Keep orders</AlertDialog.Cancel>
+								<AlertDialog.Action onclick={() => cancelRows(rows)}
+									>Cancel orders</AlertDialog.Action
+								>
 							</AlertDialog.Footer>
 						</AlertDialog.Content>
 					</AlertDialog.Root>
@@ -270,7 +311,7 @@
 				{#snippet exportActions(rows: Order[])}
 					<Button size="sm" variant="outline" onclick={() => exportRows(rows)}>
 						<DownloadIcon />
-						Exportieren
+						Export ({rows.length})
 					</Button>
 				{/snippet}
 			</DataTable>
@@ -282,48 +323,49 @@
 				<Combobox
 					items={customerItems}
 					bind:value={selectedCustomer}
-					placeholder="Kunde wählen…"
-					searchPlaceholder="Kunde suchen…"
+					placeholder="Select customer…"
+					searchPlaceholder="Search customers…"
+					emptyText="No results."
 				/>
 				{#if selectedCustomer}
-					<p class="text-sm text-muted-foreground">Ausgewählt: {selectedCustomer}</p>
+					<p class="text-sm text-muted-foreground">Selected: {selectedCustomer}</p>
 				{/if}
 
-				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Zuständige</h2>
-				<AvatarStack items={team} max={4} />
+				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Assignees</h2>
+				<AvatarStack items={team} max={4} moreLabel={(count) => `Show ${count} more`} />
 
-				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Systemstatus</h2>
+				<h2 class="mt-4 text-sm font-medium text-muted-foreground">System status</h2>
 				<ul class="flex flex-col gap-1.5 text-sm">
 					<li class="flex items-center gap-2">
-						<StatusDot status="success" /> Buchhaltung betriebsbereit
+						<StatusDot status="success" /> Accounting operational
 					</li>
 					<li class="flex items-center gap-2">
-						<StatusDot status="info" pulse /> Lagerbestand wird synchronisiert
+						<StatusDot status="info" pulse /> Inventory syncing
 					</li>
 					<li class="flex items-center gap-2">
-						<StatusDot status="warning" /> Wartungsfenster geplant
+						<StatusDot status="warning" /> Maintenance scheduled
 					</li>
 					<li class="flex items-center gap-2">
-						<StatusDot status="destructive" /> Zoll-Schnittstelle gestört
+						<StatusDot status="destructive" /> Customs interface down
 					</li>
 				</ul>
 
 				<h2 class="mt-4 text-sm font-medium text-muted-foreground">
-					Merkmale (Container schmal ziehen)
+					Tags (drag the container narrower)
 				</h2>
 				<div class="resize-x overflow-hidden rounded-lg border border-dashed border-border p-3">
-					<OverflowList items={tags}>
+					<OverflowList items={tags} moreLabel={(count) => `Show ${count} more tags`}>
 						{#snippet item(tag)}
 							<Badge variant="secondary">{tag}</Badge>
 						{/snippet}
 					</OverflowList>
 				</div>
 
-				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Anhänge</h2>
+				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Attachments</h2>
 				<div class="flex items-center gap-2">
 					{#each attachments as attachment, index (attachment.src)}
 						{@const isPdf = attachment.src.toLowerCase().endsWith('.pdf')}
-						<Lightbox items={attachments} {index}>
+						<Lightbox items={attachments} {index} labels={lightboxLabels}>
 							<Thumbnail src={isPdf ? undefined : attachment.src} alt={attachment.alt} size="lg">
 								{#if isPdf}<FileTextIcon />{:else}<ImageIcon />{/if}
 							</Thumbnail>
@@ -336,25 +378,25 @@
 				<h2 class="text-sm font-medium text-muted-foreground">Chat</h2>
 				<Chat.Root class="h-96 rounded-lg border border-border">
 					<Chat.MessageList>
-						<Chat.SystemMessage>Heute</Chat.SystemMessage>
+						<Chat.SystemMessage>Today</Chat.SystemMessage>
 						{#each messages as message (message.id)}
 							<Chat.Message role={message.role}>
 								<Chat.MessageBubble>{message.text}</Chat.MessageBubble>
 								<Chat.MessageMetadata>
-									<Timestamp date={message.at} />
+									<Timestamp date={message.at} locale="en" />
 								</Chat.MessageMetadata>
 							</Chat.Message>
 						{/each}
 					</Chat.MessageList>
 					<div class="p-3 pt-0">
-						<Chat.Composer onSend={sendMessage} />
+						<Chat.Composer onSend={sendMessage} placeholder="Write a message…" sendLabel="Send" />
 					</div>
 				</Chat.Root>
 
 				<Banner.Root variant="info" class="rounded-lg border">
 					<InfoIcon />
 					<Banner.Content>
-						<span>Alle Beträge netto in EUR, Formatierung de-AT.</span>
+						<span>All amounts are net in EUR.</span>
 					</Banner.Content>
 				</Banner.Root>
 			</div>

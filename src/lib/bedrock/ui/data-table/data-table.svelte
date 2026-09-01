@@ -39,6 +39,34 @@
 	});
 	const PAGE_SIZES = [10, 25, 50, 100];
 	const ALL_VIEW_KEY = '__bedrock_all__';
+
+	const defaultLabels = {
+		all: 'Alle',
+		views: 'Ansichten',
+		searchPlaceholder: 'Suchen…',
+		searchAria: 'Tabelle durchsuchen',
+		group: 'Gruppieren',
+		groupNone: 'Keine',
+		columns: 'Spalten',
+		selected: 'ausgewählt',
+		clearSelection: 'Auswahl aufheben',
+		selectAll: 'Alle Zeilen auswählen',
+		selectRow: 'Zeile auswählen',
+		selectGroup: 'Gruppe auswählen',
+		noResults: 'Keine Ergebnisse.',
+		showAll: 'Alle anzeigen',
+		entries: (shown: number, total: number) => `${shown} von ${total} Einträgen`,
+		rowsPerPage: 'Zeilen pro Seite',
+		pageOf: (page: number, pages: number) => `Seite ${page} von ${pages}`,
+		firstPage: 'Erste Seite',
+		previousPage: 'Vorherige Seite',
+		nextPage: 'Nächste Seite',
+		lastPage: 'Letzte Seite',
+		reorderHint: 'Spalte ziehen oder mit Alt+Pfeiltasten verschieben',
+		reorderAria: (header: string) => `${header} — mit Alt+Pfeiltasten verschieben`
+	};
+
+	export type DataTableLabels = Partial<typeof defaultLabels>;
 </script>
 
 <script lang="ts" generics="TData extends import('@tanstack/svelte-table').RowData">
@@ -66,7 +94,7 @@
 	import { cn } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
 	import { formatCellValue, formatCurrencyParts } from './formatters.js';
-	import type { DataTableColumn, DataTableDensity, DataTableView } from './types.js';
+	import type { DataTableColumn, DataTableView } from './types.js';
 
 	let {
 		data,
@@ -86,6 +114,7 @@
 		groupable,
 		reorderable = false,
 		columnOrder = $bindable(),
+		labels: labelOverrides = {},
 		empty,
 		onRowClick
 	}: {
@@ -105,13 +134,17 @@
 		reorderable?: boolean;
 		/** Current column order (ids); bindable so apps can persist the layout. */
 		columnOrder?: string[];
+		/** Overrides for the built-in (German) UI strings. */
+		labels?: DataTableLabels;
 		empty?: Snippet;
 		onRowClick?: (row: TData) => void;
 	} = $props();
 
+	const uid = $props.id();
+	const l = $derived({ ...defaultLabels, ...labelOverrides });
+
 	let activeViewKey = $state(ALL_VIEW_KEY);
 	let searchTerm = $state('');
-	let density = $state<DataTableDensity>('compact');
 	const activeView = $derived(views?.find((view) => view.key === activeViewKey));
 	const viewData = $derived(activeView ? data.filter(activeView.filter) : data);
 	const viewCounts = $derived(
@@ -177,10 +210,15 @@
 		activeViewKey = key;
 		table.setPageIndex(0);
 	}
+	const isGrouped = $derived(grouping.length > 0);
+
 	function setGrouping(key: string) {
 		table.setGrouping(key ? [key] : []);
 		table.setExpanded(true);
 		table.setPageIndex(0);
+		// Pagination over group rows miscounts entries, so grouped tables
+		// show everything and the pagination controls hide.
+		table.setPageSize(key ? Number.MAX_SAFE_INTEGER : (pageSize ?? Number.MAX_SAFE_INTEGER));
 	}
 	function leafCount(rows: ReturnType<typeof table.getRowModel>['rows']): number {
 		return rows.reduce(
@@ -261,6 +299,20 @@
 		dropTarget = null;
 	}
 
+	function onTabKeydown(event: KeyboardEvent, position: number) {
+		const keys = [ALL_VIEW_KEY, ...(views ?? []).map((view) => view.key)];
+		let target: number;
+		if (event.key === 'ArrowRight') target = (position + 1) % keys.length;
+		else if (event.key === 'ArrowLeft') target = (position - 1 + keys.length) % keys.length;
+		else if (event.key === 'Home') target = 0;
+		else if (event.key === 'End') target = keys.length - 1;
+		else return;
+		event.preventDefault();
+		selectView(keys[target]);
+		const tablist = (event.currentTarget as HTMLElement).closest('[role="tablist"]');
+		(tablist?.querySelectorAll<HTMLElement>('[role="tab"]')[target] as HTMLElement)?.focus();
+	}
+
 	function onHeaderKeydown(event: KeyboardEvent, id: string) {
 		if (!reorderable || !event.altKey) return;
 		if (event.key === 'ArrowLeft') {
@@ -288,38 +340,42 @@
 <div data-slot="data-table" class={cn('flex w-full flex-col gap-3', className)}>
 	{#if views?.length}
 		<div
-			class="flex items-center gap-1 border-b border-border"
+			class="flex items-center gap-1 overflow-x-auto border-b border-border"
 			role="tablist"
-			aria-label="Ansichten"
+			aria-label={l.views}
 		>
 			<button
 				type="button"
 				role="tab"
 				aria-selected={activeViewKey === ALL_VIEW_KEY}
+				tabindex={activeViewKey === ALL_VIEW_KEY ? 0 : -1}
 				class={cn(
-					'relative min-h-11 px-3 text-sm font-medium after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+					'relative min-h-11 shrink-0 px-3 text-sm font-medium after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
 					activeViewKey === ALL_VIEW_KEY
 						? 'text-foreground after:opacity-100'
 						: 'text-muted-foreground after:opacity-0'
 				)}
 				onclick={() => selectView(ALL_VIEW_KEY)}
+				onkeydown={(event: KeyboardEvent) => onTabKeydown(event, 0)}
 			>
-				Alle <span class="ml-1 tabular-nums">{data.length}</span>
+				{l.all} <span class="ml-1 tabular-nums">{data.length}</span>
 			</button>
-			{#each views as view (view.key)}
+			{#each views as view, viewIndex (view.key)}
 				{@const count = viewCounts.get(view.key) ?? 0}
 				<button
 					type="button"
 					role="tab"
 					aria-selected={activeViewKey === view.key}
+					tabindex={activeViewKey === view.key ? 0 : -1}
 					class={cn(
-						'relative min-h-11 px-3 text-sm font-medium after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+						'relative min-h-11 shrink-0 px-3 text-sm font-medium after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:rounded-full after:bg-primary focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
 						activeViewKey === view.key
 							? 'text-foreground after:opacity-100'
 							: 'text-muted-foreground after:opacity-0',
 						count === 0 && 'opacity-50'
 					)}
 					onclick={() => selectView(view.key)}
+					onkeydown={(event: KeyboardEvent) => onTabKeydown(event, viewIndex + 1)}
 				>
 					{view.label} <span class="ml-1 tabular-nums">{count}</span>
 				</button>
@@ -331,22 +387,26 @@
 		<div class="flex flex-wrap items-center gap-2">
 			{#if searchable}<Input
 					type="search"
-					placeholder="Suchen…"
-					aria-label="Tabelle durchsuchen"
+					id="{uid}-search"
+					name="search"
+					placeholder={l.searchPlaceholder}
+					aria-label={l.searchAria}
 					class="h-8 w-56"
 					value={searchTerm}
 					oninput={(event: Event & { currentTarget: HTMLInputElement }) =>
 						(searchTerm = event.currentTarget.value)}
 				/>{/if}
 			{#if groupable?.length}
-				<label class="flex items-center gap-2 text-sm text-muted-foreground"
-					>Gruppieren
+				<label class="flex items-center gap-2 text-sm text-muted-foreground" for="{uid}-group"
+					>{l.group}
 					<NativeSelect.Root
+						id="{uid}-group"
+						name="group"
 						class="h-8 min-w-36"
 						value={grouping[0] ?? ''}
 						onchange={(event) => setGrouping(event.currentTarget.value)}
 					>
-						<NativeSelect.Option value="">Keine</NativeSelect.Option>
+						<NativeSelect.Option value="">{l.groupNone}</NativeSelect.Option>
 						{#each groupable as key (key)}{#if specByKey.has(key)}<NativeSelect.Option value={key}
 									>{specByKey.get(key)?.header}</NativeSelect.Option
 								>{/if}{/each}
@@ -354,25 +414,11 @@
 				</label>
 			{/if}
 			<div class="ml-auto flex items-center gap-2">
-				<div class="flex rounded-lg border border-border p-0.5" aria-label="Tabellendichte">
-					<Button
-						variant={density === 'compact' ? 'secondary' : 'ghost'}
-						size="sm"
-						aria-pressed={density === 'compact'}
-						onclick={() => (density = 'compact')}>Kompakt</Button
-					>
-					<Button
-						variant={density === 'comfortable' ? 'secondary' : 'ghost'}
-						size="sm"
-						aria-pressed={density === 'comfortable'}
-						onclick={() => (density = 'comfortable')}>Komfortabel</Button
-					>
-				</div>
 				{#if hideableColumns.length > 0}
 					<DropdownMenu.Root
 						><DropdownMenu.Trigger
 							>{#snippet child({ props })}<Button {...props} variant="outline" size="sm"
-									><Settings2Icon />Spalten</Button
+									><Settings2Icon />{l.columns}</Button
 								>{/snippet}</DropdownMenu.Trigger
 						>
 						<DropdownMenu.Content align="end"
@@ -393,12 +439,13 @@
 		<Table.Root>
 			{#if caption}<Table.Caption class="sr-only">{caption}</Table.Caption>{/if}
 			<Table.Header
-				><Table.Row class={density === 'compact' ? 'h-8' : 'h-10'}>
+				><Table.Row class="h-8">
 					{#if selectable}<Table.Head class="w-10"
 							><Checkbox
+								name="{uid}-select-all"
 								checked={table.getIsAllRowsSelected()}
 								indeterminate={table.getIsSomeRowsSelected()}
-								aria-label="Alle Zeilen auswählen"
+								aria-label={l.selectAll}
 								onCheckedChange={() => table.toggleAllRowsSelected()}
 							/></Table.Head
 						>{/if}
@@ -416,7 +463,7 @@
 									? 'descending'
 									: undefined}
 							draggable={reorderable ? 'true' : undefined}
-							title={reorderable ? 'Spalte ziehen oder mit Alt+Pfeiltasten verschieben' : undefined}
+							title={reorderable ? l.reorderHint : undefined}
 							ondragstart={(event: DragEvent) => onHeaderDragStart(event, column.id)}
 							ondragover={(event: DragEvent) => onHeaderDragOver(event, column.id)}
 							ondrop={(event: DragEvent) => onHeaderDrop(event, column.id)}
@@ -443,8 +490,7 @@
 									role="button"
 									tabindex="0"
 									class="inline-flex h-7 items-center gap-1 rounded-md px-1.5 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-									aria-label="{specByKey.get(column.id)?.header ??
-										column.id} — mit Alt+Pfeiltasten verschieben"
+									aria-label={l.reorderAria(specByKey.get(column.id)?.header ?? column.id)}
 									aria-keyshortcuts="Alt+ArrowLeft Alt+ArrowRight"
 									onkeydown={(event: KeyboardEvent) => onHeaderKeydown(event, column.id)}
 									><GripVerticalIcon class="size-3 shrink-0 opacity-40" />{specByKey.get(column.id)
@@ -457,8 +503,17 @@
 			<Table.Body>
 				{#each table.getRowModel().rows as row (row.id)}
 					{#if row.getIsGrouped()}
-						<Table.Row class={cn('bg-muted/40', density === 'compact' ? 'h-8' : 'h-10')}
-							><Table.Cell colspan={columnCount}>
+						<Table.Row class="h-8 bg-muted/40">
+							{#if selectable}<Table.Cell class="w-10"
+									><Checkbox
+										name="{uid}-select-group"
+										checked={row.getIsAllSubRowsSelected()}
+										indeterminate={row.getIsSomeSelected()}
+										aria-label="{l.selectGroup}: {String(row.groupingValue ?? '–')}"
+										onCheckedChange={() => row.toggleSelected()}
+									/></Table.Cell
+								>{/if}
+							<Table.Cell colspan={columnCount - (selectable ? 1 : 0)}>
 								<button
 									type="button"
 									class="tap-target flex min-h-7 items-center gap-2 font-medium focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
@@ -476,16 +531,17 @@
 					{:else}
 						<Table.Row
 							data-state={row.getIsSelected() ? 'selected' : undefined}
-							class={cn(density === 'compact' ? 'h-8' : 'h-10', onRowClick && 'cursor-pointer')}
+							class={cn('h-8', onRowClick && 'cursor-pointer')}
 							onclick={onRowClick ? () => onRowClick(row.original) : undefined}
 						>
 							{#if selectable}<Table.Cell
 									class="w-10"
 									onclick={(event: MouseEvent) => event.stopPropagation()}
 									><Checkbox
+										name="{uid}-select-row"
 										checked={row.getIsSelected()}
 										disabled={!row.getCanSelect()}
-										aria-label="Zeile auswählen"
+										aria-label={l.selectRow}
 										onCheckedChange={() => row.toggleSelected()}
 									/></Table.Cell
 								>{/if}
@@ -517,7 +573,14 @@
 					{/if}
 				{:else}<Table.Row
 						><Table.Cell colspan={columnCount} class="h-24 text-center text-muted-foreground"
-							>{#if empty}{@render empty()}{:else}Keine Ergebnisse.{/if}</Table.Cell
+							>{#if empty}{@render empty()}{:else}<span
+									class="inline-flex flex-col items-center gap-2"
+									>{l.noResults}{#if activeView}<Button
+											variant="outline"
+											size="sm"
+											onclick={() => selectView(ALL_VIEW_KEY)}>{l.showAll} ({data.length})</Button
+										>{/if}</span
+								>{/if}</Table.Cell
 						></Table.Row
 					>{/each}
 			</Table.Body>
@@ -531,12 +594,13 @@
 			class="bedrock-selection-bar sticky bottom-4 z-10 mx-auto flex items-center gap-2 rounded-full border border-border bg-background/95 py-1.5 pr-1.5 pl-4 shadow-lg supports-backdrop-filter:backdrop-blur-sm"
 		>
 			<span class="flex items-center gap-1 text-sm font-medium tabular-nums">
-				<Swap key={selectedRows.length}>{selectedRows.length}</Swap> ausgewählt
+				<Swap key={selectedRows.length}>{selectedRows.length}</Swap>
+				{l.selected}
 			</span>
 			{@render actions?.(selectedRows)}
 			<button
 				type="button"
-				aria-label="Auswahl aufheben"
+				aria-label={l.clearSelection}
 				class="tap-target inline-flex size-7 items-center justify-center rounded-full text-muted-foreground motion-state hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
 				onclick={() => table.resetRowSelection()}
 			>
@@ -546,10 +610,12 @@
 	{/if}
 
 	<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-		<span class="tabular-nums">{filteredRows.length} von {data.length} Einträgen</span>
-		{#if pageSize}<div class="ml-auto flex items-center gap-4">
-				<label class="flex items-center gap-2"
-					>Zeilen pro Seite<NativeSelect.Root
+		<span class="tabular-nums">{l.entries(filteredRows.length, data.length)}</span>
+		{#if pageSize && !isGrouped}<div class="ml-auto flex items-center gap-4">
+				<label class="flex items-center gap-2" for="{uid}-page-size"
+					>{l.rowsPerPage}<NativeSelect.Root
+						id="{uid}-page-size"
+						name="page-size"
 						class="h-8 w-18"
 						value={String(pagination.pageSize)}
 						onchange={(event) => table.setPageSize(Number(event.currentTarget.value))}
@@ -558,31 +624,31 @@
 							>{/each}</NativeSelect.Root
 					></label
 				><span class="tabular-nums"
-					>Seite {pagination.pageIndex + 1} von {Math.max(table.getPageCount(), 1)}</span
+					>{l.pageOf(pagination.pageIndex + 1, Math.max(table.getPageCount(), 1))}</span
 				>
 				<div class="flex items-center gap-1">
 					<Button
 						variant="outline"
 						size="icon-sm"
-						aria-label="Erste Seite"
+						aria-label={l.firstPage}
 						disabled={!table.getCanPreviousPage()}
 						onclick={() => table.firstPage()}><ChevronsLeftIcon /></Button
 					><Button
 						variant="outline"
 						size="icon-sm"
-						aria-label="Vorherige Seite"
+						aria-label={l.previousPage}
 						disabled={!table.getCanPreviousPage()}
 						onclick={() => table.previousPage()}><ChevronLeftIcon /></Button
 					><Button
 						variant="outline"
 						size="icon-sm"
-						aria-label="Nächste Seite"
+						aria-label={l.nextPage}
 						disabled={!table.getCanNextPage()}
 						onclick={() => table.nextPage()}><ChevronRightIcon /></Button
 					><Button
 						variant="outline"
 						size="icon-sm"
-						aria-label="Letzte Seite"
+						aria-label={l.lastPage}
 						disabled={!table.getCanNextPage()}
 						onclick={() => table.lastPage()}><ChevronsRightIcon /></Button
 					>
