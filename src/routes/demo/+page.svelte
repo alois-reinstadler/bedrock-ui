@@ -6,4 +6,5 @@
 	<a href={resolve('/demo/motion')}>motion lab</a>
 	<a href={resolve('/demo/ui')}>layout motion</a>
 	<a href={resolve('/demo/playwright')}>playwright</a>
+	<a href={resolve('/demo/erp')}>erp primitives</a>
 </nav>

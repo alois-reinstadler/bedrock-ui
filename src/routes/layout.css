@@ -1,7 +1,7 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
-@import "shadcn-svelte/tailwind.css";
-@import "@fontsource-variable/instrument-sans";
+@import 'tw-animate-css';
+@import 'shadcn-svelte/tailwind.css';
+@import '@fontsource-variable/instrument-sans';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -126,5 +126,22 @@
 	}
 	html {
 		@apply font-sans;
+	}
+}
+
+/* Expands the hit area of a small control to at least 44x44px (WCAG 2.5.5)
+ * without changing its visual size. The pseudo-element receives pointer
+ * events on behalf of the element it belongs to. */
+@utility tap-target {
+	position: relative;
+
+	&::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: max(100%, 2.75rem);
+		height: max(100%, 2.75rem);
+		translate: -50% -50%;
 	}
 }

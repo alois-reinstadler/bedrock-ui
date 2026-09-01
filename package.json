@@ -27,6 +27,7 @@
 		"@sveltejs/kit": "next",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@tailwindcss/vite": "^4.3.0",
+		"@tanstack/svelte-table": "^9.2.4",
 		"@types/node": "^24",
 		"@vitest/browser-playwright": "^4.1.8",
 		"bits-ui": "^2.19.0",
