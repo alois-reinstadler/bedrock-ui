@@ -7,4 +7,5 @@
 	<a href={resolve('/demo/ui')}>layout motion</a>
 	<a href={resolve('/demo/playwright')}>playwright</a>
 	<a href={resolve('/demo/erp')}>erp primitives</a>
+	<a href={resolve('/demo/chat')}>ai chat</a>
 </nav>
