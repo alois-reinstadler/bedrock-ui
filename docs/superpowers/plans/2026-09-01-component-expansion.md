@@ -127,6 +127,32 @@ proceeds wave by wave on `integration/shadcn-motion`.
     initially rendered empty fields; fixed centrally with `{segment.value}` and a
     visible-value regression test (wave-2 review catch).
 
+22. **Session-limit interruptions** (three during waves 3-4) were absorbed by
+    resume agents completing partial worktrees; each wave was still reviewed,
+    gate-verified, and merged by the orchestrator. Cost note: waves 3-4 on Claude
+    subagents roughly doubled token spend vs the codex plan; future runs should
+    re-login codex first and stagger its job starts.
+23. **`pnpm test:unit -- --run` starts watch mode** (the literal `--` reaches
+    vitest); the correct invocation is `pnpm test:unit --run`. Full-suite browser
+    runs also flake under CPU contention/stale `.vite-test` caches — clear the
+    cache and rerun before believing failures.
+24. **PowerSearch field menu** is a hand-rolled listbox mirroring Tokenizer
+    (deterministic keyboard state) rather than a nested Command; Command is used
+    for the enum value editor. Clear-all emits `{type:'remove', index:-1}`.
+25. **ColorPicker format cycler** is a text button (shows HEX/RGB/HSL) rather than
+    an icon-only control — no semantic icon fits and the label carries state.
+26. **Facade bindability**: pass-through Bedrock facades don't re-expose
+    `$bindable`, so internal composition uses controlled `value/open` +
+    `onOpenChange` where needed (chat collapsibles, PowerSearch editors);
+    public bindable props are unaffected.
+
+Status 2026-09-02: all four waves shipped and committed on
+`integration/shadcn-motion` (HEAD 668b17b). Final gates: `pnpm check` 0/0 across
+3695 files, 308/308 unit tests, production build green, shadcn diff empty,
+motion grep empty. Deferred: VideoPlayer (backlog §8), ColorPicker
+compact/popover/ring variants, Markdown raw-HTML mode, Tokenizer async search,
+FLIP-gated polish (M2).
+
 (Entries added as waves land are appended here and repeated in the final report.)
 
 ## 3. Shared foundations (Wave 1, Claude-owned)
