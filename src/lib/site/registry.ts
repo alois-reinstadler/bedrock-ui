@@ -586,6 +586,18 @@ export const components: ComponentDoc[] = [
 		title: 'Checkbox List',
 		description: 'A labelled group of checkboxes bound to one value array.',
 		category: 'form'
+	},
+	{
+		slug: 'power-search',
+		title: 'Power Search',
+		description: 'Typed filter tokens: field, operator, and value editors.',
+		category: 'data'
+	},
+	{
+		slug: 'color-picker',
+		title: 'Color Picker',
+		description: 'HSV color selection with hex, RGB, and HSL entry.',
+		category: 'form'
 	}
 ];
 

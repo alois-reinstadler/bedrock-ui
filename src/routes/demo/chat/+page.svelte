@@ -95,6 +95,10 @@ sub-key such as \`report:\${id}\` and invalidate only that.`;
 	];
 </script>
 
+<svelte:head>
+	<title>Chat — Bedrock demo</title>
+</svelte:head>
+
 <div class="mx-auto flex max-w-3xl flex-col gap-10 p-6">
 	<section class="flex h-[42rem] flex-col gap-3">
 		<h2 class="text-lg font-semibold">AI chat</h2>
