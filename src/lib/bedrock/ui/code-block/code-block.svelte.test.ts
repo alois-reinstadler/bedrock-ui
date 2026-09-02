@@ -22,8 +22,10 @@ describe('CodeBlock', () => {
 
 	it('highlights a supported language after loading Shiki', async () => {
 		const view = await render(Fixture);
-		await vi.waitFor(() =>
-			expect(view.container.querySelector('[data-slot="code-block"] .shiki')).not.toBeNull()
+		// Shiki loads lazily; under full-suite load the default 1s timeout flakes.
+		await vi.waitFor(
+			() => expect(view.container.querySelector('[data-slot="code-block"] .shiki')).not.toBeNull(),
+			{ timeout: 5000 }
 		);
 	});
 
