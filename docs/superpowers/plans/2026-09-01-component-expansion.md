@@ -102,6 +102,31 @@ proceeds wave by wave on `integration/shadcn-motion`.
     carries real behavior (Chat list/composer, CheckboxList, MetadataList); not
     added speculatively elsewhere.
 
+16. **`agent-job` codex invocation fixed** — codex 0.149 made `-s workspace-write`
+    conflict with `--approve-for-me`, and its new bwrap sandbox cannot run in this
+    container; the wrapper now uses `codex exec -s danger-full-access` (the
+    container itself is the sandbox, the flag's documented use case).
+17. **pnpm store left at `/home/node/repos/.pnpm-store`** — switching to the
+    baseline's `/workspace/pnpm-store` broke the main repo's existing install
+    (UNEXPECTED_STORE); reverted rather than reinstalling mid-run. Both are shared
+    stores; migrate deliberately later.
+18. **Codex auth outage → Claude subagents for waves 3-4.** Launching four codex
+    processes concurrently raced the ChatGPT token refresh ("refresh token already
+    used"), invalidating the stored auth. Re-login is an interactive OAuth flow;
+    deliberately NOT attempted through the shared browser session (auth-sensitive).
+    Waves 3-4 run on Claude subagents in the same worktrees with the same briefs
+    and gates. **User action needed: `codex login`.** If codex is restored later,
+    stagger job starts to avoid the refresh race.
+19. **`formatCellValue`/`formatCurrencyParts` keep positional trailing args**
+    (`currency`, `locale`) for source compatibility; Intl formatters are cached
+    per locale/currency at module level (per-cell construction was a regression
+    caught in wave-1 review).
+20. **`PDFViewer` export alias** added so the docs generator's
+    `title.replaceAll(' ','')` convention resolves for the "PDF Viewer" title.
+21. **bits-ui segments render their children** — all four date/time families
+    initially rendered empty fields; fixed centrally with `{segment.value}` and a
+    visible-value regression test (wave-2 review catch).
+
 (Entries added as waves land are appended here and repeated in the final report.)
 
 ## 3. Shared foundations (Wave 1, Claude-owned)

@@ -1,14 +1,23 @@
 <script lang="ts">
+	import { Heading } from '#lib/bedrock/ui/heading';
 	import { Outline } from '#lib/bedrock/ui/outline';
+	import { Text } from '#lib/bedrock/ui/text';
 
 	const items = [
-		{ id: 'introduction', label: 'Introduction', level: 1 },
-		{ id: 'installation', label: 'Installation', level: 2 },
-		{ id: 'usage', label: 'Usage', level: 2 },
-		{ id: 'streaming', label: 'Streaming', level: 3 },
-		{ id: 'api-reference', label: 'API reference', level: 1 }
+		{ id: 'outline-introduction', label: 'Introduction', level: 1 },
+		{ id: 'outline-installation', label: 'Installation', level: 2 },
+		{ id: 'outline-usage', label: 'Usage', level: 2 }
 	];
 </script>
 
-<!-- Static demo: scroll-spy is off and the active item is fixed. -->
-<Outline {items} activeId="usage" scrollSpy={false} class="max-w-56" />
+<div class="flex gap-8">
+	<Outline {items} class="w-44 shrink-0" />
+	<div class="min-w-0 space-y-4">
+		<Heading level={2} visual={4} id="outline-introduction">Introduction</Heading>
+		<Text as="p">The outline tracks these headings as you scroll.</Text>
+		<Heading level={3} visual={5} id="outline-installation">Installation</Heading>
+		<Text as="p">Each item id must match a heading id on the page.</Text>
+		<Heading level={3} visual={5} id="outline-usage">Usage</Heading>
+		<Text as="p">Clicking an item scrolls to its heading and updates the hash.</Text>
+	</div>
+</div>

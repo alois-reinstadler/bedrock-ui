@@ -472,6 +472,120 @@ export const components: ComponentDoc[] = [
 		title: 'Citation',
 		description: 'Inline source references for AI responses and articles.',
 		category: 'content'
+	},
+	{
+		slug: 'markdown',
+		title: 'Markdown',
+		description: 'Renders markdown through Bedrock components, safely.',
+		category: 'content'
+	},
+	{
+		slug: 'outline',
+		title: 'Outline',
+		description: 'In-page table of contents with scroll-spy.',
+		category: 'navigation'
+	},
+	{
+		slug: 'selector',
+		title: 'Selector',
+		description: 'Rich data-driven single select with groups and search.',
+		category: 'form'
+	},
+	{
+		slug: 'multi-selector',
+		title: 'Multi Selector',
+		description: 'Checkbox dropdown for multiple values, with badges.',
+		category: 'form'
+	},
+	{
+		slug: 'tokenizer',
+		title: 'Tokenizer',
+		description: 'Chips-in-input multi-select with search and creation.',
+		category: 'form'
+	},
+	{
+		slug: 'async-button',
+		title: 'Async Button',
+		description: 'A button that runs an async action with pending and result states.',
+		category: 'form'
+	},
+	{
+		slug: 'clickable-card',
+		title: 'Clickable Card',
+		description: 'A whole-card navigation or action target.',
+		category: 'layout'
+	},
+	{
+		slug: 'selectable-card',
+		title: 'Selectable Card',
+		description: 'A card that toggles a selected state.',
+		category: 'layout'
+	},
+	{
+		slug: 'indicator',
+		title: 'Checkbox Indicator',
+		description: 'Decorative checkbox, check, and radio selection visuals.',
+		category: 'display'
+	},
+	{
+		slug: 'metadata-list',
+		title: 'Metadata List',
+		description: 'Label and value pairs for record detail panels.',
+		category: 'data'
+	},
+	{
+		slug: 'stepper',
+		title: 'Stepper',
+		description: 'Multi-step progress with status and optional navigation.',
+		category: 'navigation'
+	},
+	{
+		slug: 'code-block',
+		title: 'Code Block',
+		description: 'Syntax-highlighted code with copy, titles, and line numbers.',
+		category: 'content'
+	},
+	{
+		slug: 'number-input',
+		title: 'Number Input',
+		description: 'Locale-aware numbers with steppers, units, and clamping.',
+		category: 'form'
+	},
+	{
+		slug: 'date-input',
+		title: 'Date Input',
+		description: 'Segmented date entry with a calendar popover.',
+		category: 'form'
+	},
+	{
+		slug: 'date-range-input',
+		title: 'Date Range Input',
+		description: 'Start and end dates with presets and a dual-month picker.',
+		category: 'form'
+	},
+	{
+		slug: 'date-time-input',
+		title: 'Date Time Input',
+		description: 'Date and time in one segmented field.',
+		category: 'form'
+	},
+	{
+		slug: 'time-input',
+		title: 'Time Input',
+		description: 'Segmented time entry via the platform field primitive.',
+		category: 'form'
+	},
+	{
+		slug: 'file-input',
+		title: 'File Input',
+		description: 'File selection with drag and drop, constraints, and summaries.',
+		category: 'form'
+	},
+	{
+		slug: 'checkbox-list',
+		title: 'Checkbox List',
+		description: 'A labelled group of checkboxes bound to one value array.',
+		category: 'form'
 	}
 ];
 
