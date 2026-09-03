@@ -3,7 +3,7 @@
 </script>
 
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, untrack } from 'svelte';
 	import { createLayoutGroup, layout } from '#lib/bedrock/motion/index.js';
 	import TabsList from '#lib/shadcn/ui/tabs/tabs-list.svelte';
 	import { cn } from '#lib/utils.js';
@@ -45,7 +45,9 @@
 		owned = on;
 		const trigger = on ? list.querySelector<HTMLElement>('[data-state="active"]') : null;
 		if (!trigger) {
-			pill = { ...pill, visible: false };
+			// A literal (never a spread of current state) — reading `pill` here
+			// would make the calling $effect depend on what it writes and loop.
+			pill = { x: 0, y: 0, width: 0, height: 0, visible: false };
 			return;
 		}
 		pill = {
@@ -61,7 +63,8 @@
 		void indicator;
 		const list = ref;
 		if (!list) return;
-		measure();
+		// measure() writes state the effect must not depend on.
+		untrack(measure);
 		const mutations = new MutationObserver(() => measure());
 		mutations.observe(list, { subtree: true, attributes: true, attributeFilter: ['data-state'] });
 		const sizes = new ResizeObserver(() => measure());

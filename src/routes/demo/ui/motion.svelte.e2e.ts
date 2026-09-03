@@ -482,7 +482,7 @@ test('high-risk morph, shared, wrapping, rail, and swap scenes preserve visual c
 	expect(railGeometry.settledAnimations).toBe(0);
 
 	const swap = scenes.filter({ has: page.getByRole('heading', { name: 'Content swap' }) });
-	await swap.getByRole('button', { name: 'Überblenden' }).click();
+	await swap.getByRole('button', { name: 'Fade' }).click();
 	const swapMotion = await swap.evaluate(async (scene) => {
 		const button = scene.querySelector<HTMLButtonElement>('button[aria-label="Upload manifest"]')!;
 		const content = button.querySelector<HTMLElement>(':scope > span.relative')!;
