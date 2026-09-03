@@ -29,7 +29,7 @@
 			<p class="mt-1 mb-3 text-sm text-muted-foreground">
 				Point at the Bedrock entry, not the generated shadcn folder.
 			</p>
-			<CodeBlock label="Svelte" code={buttonExample} />
+			<CodeBlock label="Svelte" language="svelte" code={buttonExample} />
 		</li>
 		<li>
 			<p class="text-sm font-medium">2. Tokens are already loaded</p>

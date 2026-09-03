@@ -15,14 +15,15 @@
 	<h1 class="mt-2 text-3xl font-medium tracking-tight">A kit that stays in the repo.</h1>
 	<p class="mt-4 max-w-[62ch] text-base leading-relaxed text-muted-foreground">
 		Bedrock is the in-tree UI for this project. Each primitive is a Svelte 5 component under
-		<code class="font-mono text-foreground">src/lib/bedrock</code>. You do not install a UI package to
-		use a button — you import the file.
+		<code class="font-mono text-foreground">src/lib/bedrock</code>. You do not install a UI package
+		to use a button — you import the file.
 	</p>
 
 	<div class="mt-8 space-y-3">
 		<h2 class="text-lg font-medium tracking-tight">Import</h2>
 		<CodeBlock
 			label="Svelte"
+			language="typescript"
 			code={`import { Button } from '#lib/bedrock/ui/button';
 import * as Dialog from '#lib/bedrock/ui/dialog';`}
 		/>

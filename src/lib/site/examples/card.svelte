@@ -9,7 +9,9 @@
 		<Card.Description>East face, 02:14 to 06:40.</Card.Description>
 	</Card.Header>
 	<Card.Content>
-		<p class="text-sm text-muted-foreground">Water ingress held at 31.8m. Crew rotated. Core sample 08 sealed.</p>
+		<p class="text-sm text-muted-foreground">
+			Water ingress held at 31.8m. Crew rotated. Core sample 08 sealed.
+		</p>
 	</Card.Content>
 	<Card.Footer class="justify-end gap-2">
 		<Button variant="outline" size="sm">Dismiss</Button>

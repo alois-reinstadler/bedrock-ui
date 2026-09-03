@@ -51,7 +51,11 @@
 
 	<div class="mt-8 space-y-3">
 		<h2 class="text-lg font-medium tracking-tight">Import</h2>
-		<CodeBlock label="TypeScript" code={`import { ${exportName} } from '${path}';`} />
+		<CodeBlock
+			label="TypeScript"
+			language="typescript"
+			code={`import { ${exportName} } from '${path}';`}
+		/>
 		<p class="text-sm text-muted-foreground">
 			Compound components also export named parts from the same module. Prefer
 			<code class="font-mono text-foreground">import * as {exportName} from '{path}'</code>

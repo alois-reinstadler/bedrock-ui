@@ -108,7 +108,7 @@
 	class={cn('overflow-hidden', container === 'card' && 'rounded-xl border bg-muted/30', className)}
 	{...restProps}
 >
-	{#if title || language || copyButton}
+	{#if title || copyButton || language !== 'plaintext'}
 		<div
 			data-slot="code-block-header"
 			class={cn(
@@ -118,7 +118,10 @@
 		>
 			<div class="min-w-0 font-code text-[11px] tracking-wide text-muted-foreground">
 				{#if title}<span class="truncate">{title}</span>{/if}
-				<span class={cn(title && 'ml-2 opacity-70')}>{labels.language(language)}</span>
+				<!-- The language label is meaningless noise for plaintext. -->
+				{#if language !== 'plaintext'}
+					<span class={cn(title && 'ml-2 opacity-70')}>{labels.language(language)}</span>
+				{/if}
 			</div>
 			{#if copyButton}<IconButton
 					icon={copied ? 'checkDouble' : 'copy'}

@@ -8,13 +8,15 @@
 	<Accordion.Item value="a">
 		<Accordion.Trigger>Where do the files live?</Accordion.Trigger>
 		<Accordion.Content>
-			Under <code class="font-mono">src/lib/bedrock</code>. App code should import from that alias only.
+			Under <code class="font-mono">src/lib/bedrock</code>. App code should import from that alias
+			only.
 		</Accordion.Content>
 	</Accordion.Item>
 	<Accordion.Item value="b">
 		<Accordion.Trigger>Can I restyle a primitive?</Accordion.Trigger>
 		<Accordion.Content>
-			Yes. Open the Svelte file and change it. Tokens in <code class="font-mono">layout.css</code> cover color and radius.
+			Yes. Open the Svelte file and change it. Tokens in <code class="font-mono">layout.css</code> cover
+			color and radius.
 		</Accordion.Content>
 	</Accordion.Item>
 	<Accordion.Item value="c">
