@@ -1,7 +1,7 @@
 export { default as LayoutGroup } from './layout-group.svelte';
 export { default as Swap } from './swap.svelte';
 export { autoSize } from './auto-size.js';
-export { layout } from './layout.svelte.js';
+export { createLayoutGroup, layout } from './layout.svelte.js';
 export {
 	appear,
 	drawer,

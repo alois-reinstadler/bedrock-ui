@@ -784,6 +784,30 @@ describe('Bedrock motion browser contract', () => {
 		expectNoProjectionResidue(root);
 	});
 
+	it('keeps an in-flight projection running while an inside-group container scrolls', async () => {
+		const view = await render(MotionTestbed, { scenario: 'scroll' });
+		await nextFrame(2);
+		const root = view.container.querySelector<HTMLElement>('[data-testid="scroll-root"]')!;
+		const node = view.container.querySelector<HTMLElement>('[data-testid="scrolling-node"]')!;
+		clickButton(view.container, 'Element verschieben');
+		const animation = await waitForAnimation(node);
+		animation.pause();
+		animation.currentTime = 70;
+		await nextFrame();
+
+		// Scrolling the container moves the node with it, but its layout inside
+		// the scroller is unchanged — the projection must survive, not snap.
+		root.scrollLeft = 60;
+		root.dispatchEvent(new Event('scroll', { bubbles: true }));
+		await nextFrame(2);
+		expect(node.getAnimations()[0]).toBe(animation);
+		expect(animation.currentTime).toBe(70);
+
+		animation.play();
+		await waitForIdle(root);
+		expectNoProjectionResidue(root);
+	});
+
 	it('lets an internal scroll baseline dominate a same-frame mutation', async () => {
 		const view = await render(MotionTestbed, { scenario: 'scroll' });
 		await nextFrame(2);

@@ -146,6 +146,19 @@ proceeds wave by wave on `integration/shadcn-motion`.
     `onOpenChange` where needed (chat collapsibles, PowerSearch editors);
     public bindable props are unaffected.
 
+M2 update 2026-09-03: re-audit of the engine against the six 08-30 defects
+found five already addressed by the snapshot/restore machinery (unrelated
+mutations restore in place; nested children extend to the ancestor's remaining
+duration; the redesigned flush guard can trip at rAF cadence; unpainted shared
+owners don't publish; reads are batched before WAAPI writes). The remaining
+one — inside-group container scroll snapping in-flight projections — is fixed
+by scroll-compensated measurement (boxes in layout space; regression test
+added). Tabs' indicator now uses the real engine: `createLayoutGroup` bound to
+the tablist + `layout()` on the pill; verified via CDP frame-sampling (spring
+flight, width scale-correction, mid-flight retarget, aligned settle, no
+residue). Broader FLIP rollout (packing, shared-element) proceeds per-component
+with the same interrupt/reversal acceptance.
+
 Status 2026-09-02: all four waves shipped and committed on
 `integration/shadcn-motion` (HEAD 668b17b). Final gates: `pnpm check` 0/0 across
 3695 files, 308/308 unit tests, production build green, shadcn diff empty,

@@ -244,8 +244,31 @@ export function createLayoutGroup(): LayoutGroupHandle {
 		return box;
 	}
 
+	// Boxes are measured in layout space: ancestor scroll offsets up to and
+	// including the group root are added back so scrolling a container never
+	// reads as a layout change (it would otherwise snap in-flight projections
+	// and stash scroll-shifted shared geometry). Nodes in differently scrolled
+	// containers therefore fly along layout-space paths, which is the stable
+	// choice for in-group scrollers.
+	function scrollCompensation(el: HTMLElement): { left: number; top: number } {
+		let left = 0;
+		let top = 0;
+		let node: HTMLElement | null = el.parentElement;
+		while (node) {
+			left += node.scrollLeft;
+			top += node.scrollTop;
+			if (node === bound) break;
+			node = node.parentElement;
+		}
+		return { left, top };
+	}
+
 	function measure(el: HTMLElement, origin: { left: number; top: number }): LayoutBox {
-		return relativeBox(el.getBoundingClientRect(), origin);
+		const box = relativeBox(el.getBoundingClientRect(), origin);
+		const scrolled = scrollCompensation(el);
+		box.left += scrolled.left;
+		box.top += scrolled.top;
+		return box;
 	}
 
 	function matchesCommittedResize(entry: ResizeObserverEntry): boolean {
