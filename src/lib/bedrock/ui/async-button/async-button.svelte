@@ -26,6 +26,7 @@
 		successLabel,
 		errorLabel,
 		resetAfter = 1600,
+		swapEffect = 'slide-up',
 		interruptible = false,
 		onError,
 		disabled = false,
@@ -42,6 +43,10 @@
 		/** Milliseconds the success/error result stays before returning to idle.
 		 * State timing, not animation timing — deliberately not a motion token. */
 		resetAfter?: number;
+		/** Label transition. `slide-up` (the /demo/ui polish) rolls the
+		 * single-line content and keeps both copies crisp; `fade` crossfades,
+		 * which momentarily overlays both labels. */
+		swapEffect?: 'fade' | 'slide-up';
 		/** By default only idle clicks invoke `action` (pending, success, and
 		 * error states ignore clicks until the button resets). When `true` the
 		 * button stays interactive in every state and each click calls `action`
@@ -120,7 +125,7 @@
 	{...restProps}
 >
 	<span {@attach shell} class="inline-flex items-center justify-center">
-		<Swap key={state} effect="fade" class="whitespace-nowrap">
+		<Swap key={state} effect={swapEffect} class="whitespace-nowrap">
 			{#if state === 'idle'}
 				{@render children?.()}
 			{:else if state === 'pending'}
