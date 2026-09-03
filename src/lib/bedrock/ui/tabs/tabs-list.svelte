@@ -20,8 +20,8 @@
 		 * toggling its own background. The pill is repositioned to the measured
 		 * active trigger and animated by the shared-layout FLIP engine, so it
 		 * survives interruption and container scrolling. Applies to the default
-		 * variant in horizontal orientation; `line` and vertical tabs keep the
-		 * per-trigger treatment. */
+		 * variant in both orientations; the `line` variant keeps its
+		 * per-trigger underline. */
 		indicator?: boolean;
 	} = $props();
 
@@ -40,9 +40,8 @@
 	function measure() {
 		const list = ref;
 		if (!list) return;
-		const horizontal = list.getAttribute('data-orientation') !== 'vertical';
 		const variant = list.getAttribute('data-variant') ?? 'default';
-		const on = indicator && horizontal && variant === 'default';
+		const on = indicator && variant === 'default';
 		owned = on;
 		const trigger = on ? list.querySelector<HTMLElement>('[data-state="active"]') : null;
 		if (!trigger) {

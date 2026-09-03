@@ -20,6 +20,13 @@
 	} from '#lib/bedrock/ui/data-table';
 	import { Lightbox, type LightboxItem } from '#lib/bedrock/ui/lightbox';
 	import { OverflowList } from '#lib/bedrock/ui/overflow-list';
+	import {
+		PowerSearch,
+		applyPowerSearchFilters,
+		type PowerSearchConfig,
+		type PowerSearchFilter,
+		type PowerSearchLabels
+	} from '#lib/bedrock/ui/power-search';
 	import { StatusDot } from '#lib/bedrock/ui/status-dot';
 	import { Thumbnail } from '#lib/bedrock/ui/thumbnail';
 	import { Timestamp } from '#lib/bedrock/ui/timestamp';
@@ -97,6 +104,66 @@
 		lastPage: 'Letzte Seite',
 		reorderHint: 'Spalte ziehen oder mit Alt+Pfeiltasten verschieben',
 		reorderAria: (header) => `${header} — mit Alt+Pfeiltasten verschieben`
+	};
+
+	// Typed filter bar feeding the orders table; German labels continue the
+	// explicit-localization pattern of this demo.
+	const searchConfig: PowerSearchConfig = {
+		freeTextField: 'customer',
+		fields: [
+			{ key: 'customer', label: 'Kunde', type: 'string' },
+			{
+				key: 'status',
+				label: 'Status',
+				type: 'enumList',
+				values: [
+					{ value: 'open', label: 'Offen' },
+					{ value: 'confirmed', label: 'Bestätigt' },
+					{ value: 'delivered', label: 'Geliefert' },
+					{ value: 'cancelled', label: 'Storniert' }
+				],
+				operators: [
+					{ key: 'isAnyOf', label: 'ist eines von' },
+					{ key: 'isNoneOf', label: 'ist keines von' }
+				]
+			},
+			{
+				key: 'net',
+				label: 'Netto',
+				type: 'number',
+				operators: [
+					{ key: 'gte', label: '≥' },
+					{ key: 'lte', label: '≤' },
+					{ key: 'eq', label: '=' }
+				]
+			},
+			{
+				key: 'createdAt',
+				label: 'Angelegt',
+				type: 'date',
+				operators: [
+					{ key: 'after', label: 'nach' },
+					{ key: 'before', label: 'vor' },
+					{ key: 'is', label: 'am' }
+				]
+			}
+		]
+	};
+	let orderFilters = $state<PowerSearchFilter[]>([]);
+	const filteredOrders = $derived(applyPowerSearchFilters(orderFilters, orders));
+	const searchLabels: PowerSearchLabels = {
+		results: (count) => `${count} Treffer`,
+		clearAll: 'Filter löschen',
+		edit: (label) => `Filter ${label} bearbeiten`,
+		remove: (label) => `Filter ${label} entfernen`,
+		apply: 'Übernehmen',
+		noFields: 'Keine passenden Felder.',
+		operator: 'Operator',
+		searchValues: 'Werte suchen…',
+		added: (label) => `Filter ${label} hinzugefügt`,
+		updated: (label) => `Filter ${label} aktualisiert`,
+		removed: (label) => `Filter ${label} entfernt`,
+		cleared: 'Filter gelöscht'
 	};
 
 	const columns: DataTableColumn<Order>[] = $derived([
@@ -287,8 +354,15 @@
 
 		<section class="flex flex-col gap-3">
 			<h2 class="text-sm font-medium text-muted-foreground">Orders</h2>
+			<PowerSearch
+				config={searchConfig}
+				bind:filters={orderFilters}
+				placeholder="Bestellungen filtern…"
+				resultCount={filteredOrders.length}
+				labels={searchLabels}
+			/>
 			<DataTable
-				data={orders}
+				data={filteredOrders}
 				{columns}
 				selectable
 				searchable

@@ -4,6 +4,8 @@
 </script>
 
 <script lang="ts">
+	import { onDestroy } from 'svelte';
+	import { createLayoutGroup, layout } from '#lib/bedrock/motion/index.js';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -152,6 +154,12 @@
 		return () => observer.disconnect();
 	});
 
+	// The nav is its own layout group; the indicator is the only registered
+	// node, so discrete top/height updates below become spring projections.
+	const group = createLayoutGroup();
+	const indicatorLayout = layout();
+	onDestroy(() => group.destroy());
+
 	// Indicator geometry: the nav is the offsetParent of every item link.
 	$effect(() => {
 		const index = items.findIndex((item) => item.id === activeId);
@@ -167,16 +175,18 @@
 
 <nav
 	bind:this={ref}
+	{@attach group.bindRoot}
 	data-slot="outline"
 	aria-label={label}
 	class={cn('relative text-sm', className)}
 	{...restProps}
 >
 	<div
+		{@attach indicatorLayout}
 		data-slot="outline-indicator"
 		aria-hidden="true"
-		class="absolute start-0 top-0 w-0.5 rounded-full bg-primary"
-		style:transform={`translateY(${indicatorTop}px)`}
+		class="absolute start-0 w-0.5 rounded-full bg-primary"
+		style:top={`${indicatorTop}px`}
 		style:height={`${indicatorHeight}px`}
 		style:opacity={indicatorHeight > 0 ? '1' : '0'}
 	></div>
@@ -203,8 +213,9 @@
 </nav>
 
 <style>
+	/* Movement comes from the shared-layout engine; only visibility fades. */
 	[data-slot='outline-indicator'] {
-		transition-property: transform, height, opacity;
+		transition-property: opacity;
 		transition-duration: var(--motion-state);
 		transition-timing-function: var(--motion-ease-enter);
 	}
