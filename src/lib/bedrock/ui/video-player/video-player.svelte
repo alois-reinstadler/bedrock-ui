@@ -354,8 +354,6 @@
 	onfocusin={wake}
 	{...restProps}
 >
-	<!-- svelte-ignore a11y_media_has_caption -- caption tracks come from the
-	     `captions` prop; the rule cannot see the {#each}. -->
 	<video
 		{@attach setVideo}
 		class="block aspect-video w-full"

@@ -34,19 +34,23 @@ properties so every layer reads the same values:
 
 ```css
 :root {
-  --motion-press: 130ms;
-  --motion-state: 175ms;
-  --motion-enter: 230ms;  --motion-ease-enter: cubic-bezier(0.23, 1, 0.32, 1);
-  --motion-exit: 175ms;   --motion-ease-exit: cubic-bezier(0.3, 0, 0.6, 0.6);
-  --motion-reveal: 310ms;
-  --motion-overlay: 410ms;
-  --motion-ease-move: cubic-bezier(0.77, 0, 0.175, 1);
-  --motion-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-  --motion-ease-spring-layout: linear(…);  /* spring sampled to linear() at build */
-  --motion-ease-spring-swap: linear(…);
+	--motion-press: 130ms;
+	--motion-state: 175ms;
+	--motion-enter: 230ms;
+	--motion-ease-enter: cubic-bezier(0.23, 1, 0.32, 1);
+	--motion-exit: 175ms;
+	--motion-ease-exit: cubic-bezier(0.3, 0, 0.6, 0.6);
+	--motion-reveal: 310ms;
+	--motion-overlay: 410ms;
+	--motion-ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+	--motion-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+	--motion-ease-spring-layout: linear(…); /* spring sampled to linear() at build */
+	--motion-ease-spring-swap: linear(…);
 }
 @media (prefers-reduced-motion: reduce) {
-  :root { --motion-press: 0.01ms; /* …all durations; 0.01ms keeps transitionend firing */ }
+	:root {
+		--motion-press: 0.01ms; /* …all durations; 0.01ms keeps transitionend firing */
+	}
 }
 ```
 
@@ -134,8 +138,8 @@ on 5.56), loading→content becomes a first-class transition point:
 
 ```svelte
 <MotionBoundary preset="swap">
-  {#snippet pending()}<Skeleton … />{/snippet}
-  <OrderTable rows={await getOrders()} />
+	{#snippet pending()}<Skeleton … />{/snippet}
+	<OrderTable rows={await getOrders()} />
 </MotionBoundary>
 ```
 
@@ -149,7 +153,7 @@ instead of per-component.
 **View Transitions API for navigation.** SvelteKit `onNavigate` +
 `document.startViewTransition` for route-level transitions, honoring reduced
 motion. Later: bridge FLIP shared ids to `view-transition-name` so a `Card`
-can hand off to a detail *route*, not just a detail dialog.
+can hand off to a detail _route_, not just a detail dialog.
 
 **`Spring`/`Tween` classes from `svelte/motion`** for value animation —
 animated numbers in stat tiles, smoothed `Progress` (when updates are
@@ -234,12 +238,12 @@ the M2 engine hardening above; CSS/`Swap`/presence entries can ship first.
 
 ## Phasing
 
-| Phase | Scope | Gate |
-|---|---|---|
-| 1 | Token→CSS emission, Layer 1 utilities, preset split (`popover`/`hint`), press/state + overlay + reveal rollout, `transition-all` ban | `pnpm check` + visual pass on /demo/ui |
-| 2 | Engine hardening M2 (defects 1–6), batched read/write flush | CDP frame-sampling verification, stress fixture |
-| 3 | FLIP rollout: indicator, packing, swap, shared-element per the approved mapping | Interrupt/reversal acceptance per component |
-| 4 | MotionBoundary, `$effect.pending` busy states, View Transitions bridge | Reduced-motion + async-flicker audit |
+| Phase | Scope                                                                                                                                | Gate                                            |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------- |
+| 1     | Token→CSS emission, Layer 1 utilities, preset split (`popover`/`hint`), press/state + overlay + reveal rollout, `transition-all` ban | `pnpm check` + visual pass on /demo/ui          |
+| 2     | Engine hardening M2 (defects 1–6), batched read/write flush                                                                          | CDP frame-sampling verification, stress fixture |
+| 3     | FLIP rollout: indicator, packing, swap, shared-element per the approved mapping                                                      | Interrupt/reversal acceptance per component     |
+| 4     | MotionBoundary, `$effect.pending` busy states, View Transitions bridge                                                               | Reduced-motion + async-flicker audit            |
 
 Verification caveat: this container exports `NODE_ENV=production`, so the
 engine's dev-only warnings are dead here and true dev SSR is broken — Phase 2

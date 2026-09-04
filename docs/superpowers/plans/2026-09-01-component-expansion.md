@@ -96,7 +96,7 @@ proceeds wave by wave on `integration/shadcn-motion`.
 13. **AsyncButton is its own family** (despite Astryx folding it into Button):
     the brief names it, and Bedrock's Button is a frozen-layer façade we won't fork.
     It promotes the proven `/demo/ui` shell + Swap pattern.
-14. **`--font-code`** is a monospace *stack* token (no new font package):
+14. **`--font-code`** is a monospace _stack_ token (no new font package):
     `ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace`.
 15. **Astryx `density` prop** (`compact|balanced|spacious`) is adopted only where it
     carries real behavior (Chat list/composer, CheckboxList, MetadataList); not
@@ -182,6 +182,7 @@ representative pages and fails on serious/critical violations.
 ## 3. Shared foundations (Wave 1, Claude-owned)
 
 ### 3.1 Typography tokens
+
 - `--font-code` added to `@theme inline` in `src/routes/layout.css` (decision 14) →
   Tailwind `font-code` utility. Consumers: Text `type="code"`, CodeBlock, Kbd,
   DataTable `id` column (`font-mono` → `font-code`).
@@ -189,17 +190,50 @@ representative pages and fails on serious/critical violations.
   Semantic mapping lives in Text/Heading variants, not in components.
 
 ### 3.2 Icon architecture (`ui/icon/`)
+
 ```ts
 // types.ts
-export type IconName = 'close' | 'chevronUp' | 'chevronDown' | 'chevronLeft'
-  | 'chevronRight' | 'chevronsLeft' | 'chevronsRight' | 'check' | 'success'
-  | 'error' | 'warning' | 'info' | 'calendar' | 'clock' | 'externalLink' | 'menu'
-  | 'moreHorizontal' | 'search' | 'arrowUp' | 'arrowDown' | 'arrowsUpDown'
-  | 'funnel' | 'eyeSlash' | 'viewColumns' | 'copy' | 'checkDouble' | 'wrench'
-  | 'stop' | 'microphone' | 'download' | 'add' | 'send' | 'drag' | 'attachment'
-  | 'image' | 'file' | 'loading';
+export type IconName =
+	| 'close'
+	| 'chevronUp'
+	| 'chevronDown'
+	| 'chevronLeft'
+	| 'chevronRight'
+	| 'chevronsLeft'
+	| 'chevronsRight'
+	| 'check'
+	| 'success'
+	| 'error'
+	| 'warning'
+	| 'info'
+	| 'calendar'
+	| 'clock'
+	| 'externalLink'
+	| 'menu'
+	| 'moreHorizontal'
+	| 'search'
+	| 'arrowUp'
+	| 'arrowDown'
+	| 'arrowsUpDown'
+	| 'funnel'
+	| 'eyeSlash'
+	| 'viewColumns'
+	| 'copy'
+	| 'checkDouble'
+	| 'wrench'
+	| 'stop'
+	| 'microphone'
+	| 'download'
+	| 'add'
+	| 'send'
+	| 'drag'
+	| 'attachment'
+	| 'image'
+	| 'file'
+	| 'loading';
 export type IconType = IconName | Component<SvelteHTMLElements['svg']>;
 ```
+
 - `registry.svelte.ts`: `$state`-backed map IconName → lucide component
   (deep imports); `setIcons(partial)` replaces globally; `resolveIcon(icon)` helper.
 - `icon.svelte`: `{ icon: IconType; label?: string; class?: … }` — with `label`:
@@ -209,6 +243,7 @@ export type IconType = IconName | Component<SvelteHTMLElements['svg']>;
   (not a big-bang rewrite of the frozen layer — shadcn stays untouched).
 
 ### 3.3 English-defaults migration (Wave 1)
+
 Every German default listed in §1 flips to English; the three non-overridable
 strings become label props; Lightbox gets an exported `LightboxLabels` type;
 Chat MessageList gains `scrollDownLabel`; formatters gain `locale`. `/demo/erp`
@@ -234,6 +269,7 @@ updated to English expectations.
 ## 5. Component APIs (per family; Astryx-informed, Svelte-idiomatic)
 
 ### Foundations & content
+
 - **Text** (`ui/text`): `type: 'body'|'large'|'label'|'supporting'|'code'|'display-1'|'display-2'|'display-3'` (default body), `as: 'span'|'p'|'div'|'label'` (default span; label type may pair with `for`), `color: 'default'|'muted'|'accent'|'destructive'|'inherit'`, `weight: 'normal'|'medium'|'semibold'|'bold'` (semantic override), `align`, `truncate?: boolean`, `maxLines?: number` (line-clamp), `tabularNums?: boolean`. No raw sizes/weights in consumers.
 - **Heading** (`ui/heading`): `level: 1|2|3|4|5|6` (required; element + default visual), `visual?: 1|2|3|4|5|6 | 'display-1'|'display-2'|'display-3'` (visual override; element stays from `level`), `accessibilityLevel?: 1–6` (sets `aria-level` when ≠ level), plus color/align/truncate as Text. Docs discourage skipped levels.
 - **Link** (`ui/link`): `href`, `external?: boolean` (new tab + `externalLink` icon + safe rel + sr-only suffix, `labels.opensInNewTab`), `underline?: boolean`, `standalone?: boolean`, `disabled?`, forwards Text sizing via `type`/`weight`.
@@ -248,6 +284,7 @@ updated to English expectations.
 - **FieldStatus** (`ui/field-status`): `status: 'info'|'success'|'warning'|'error'`, `message: string`, `id?` (for `aria-describedby`), `variant: 'attached'|'detached'`; status icon from registry; `role="alert"` only for error, `role="status"` otherwise. FieldError remains and is documented as the error-only shorthand.
 
 ### Inputs & selection
+
 - **DateInput / DateRangeInput / DateTimeInput / TimeInput** (`ui/date-input`, `ui/date-range-input`, `ui/date-time-input`, `ui/time-input`): wrap bits-ui `DateField`/`DatePicker`, `DateRangeField`/`DateRangePicker`, `TimeField` (+ Calendar popover). Values: `@internationalized/date` types, bindable, `onValueChange`. Shared props: `min`/`max`, `disabled`, `readonly`, `locale = 'en-US'`, `granularity`, `labels` (calendar/clear/etc.), `clearable?`. Range adds `numberOfMonths = 2`, `presets?`. DateTime composes date-picker + time-field segments. No hand-rolled segment parsing.
 - **NumberInput** (`ui/number-input`): built on InputGroup. `value?: number | null` bindable, `onValueChange`, format on blur / parse locale-aware (`Intl.NumberFormat`, `locale = 'en-US'`), `min`/`max` (clamp on commit), `step = 1`, `steppers?: boolean` (inc/dec IconButtons), `integer?: boolean`, `unit?: string` (suffix), `clearable?`, `formatOptions?: Intl.NumberFormatOptions` (currency/percent modes), `aria-valuetext` for formatted value, wheel-stepping only when focused and `wheel = false` default.
 - **FileInput** (`ui/file-input`): `files: File[] | null` bindable, `onFilesChange`, `multiple?`, `accept?`, `maxFiles?`, `maxSize?` (bytes; rejections surface via FieldStatus + `onReject`), `mode: 'input'|'dropzone'` (drag & drop with dragover state), file summary rows (name, `Intl` size, remove via IconButton), `disabled`, `labels`. Composes native input; adds real value over `Input type=file`.
@@ -259,6 +296,7 @@ updated to English expectations.
 - **ColorPicker** (`ui/color-picker`): ported per decision 1. `value: string` bindable (`#rrggbb[aa]`), `alpha?`, `format: 'hex'|'rgb'|'hsl'` bindable, `swatches?: string[]`, `variant: 'panel'|'swatches'` (re-derived taxonomy; compact popover deferred), SV area + hue/alpha rails as ARIA sliders with full keyboard (adds Home/End/PageUp/PageDown), text input with invalid-state alert, `hsv.ts` + `hsvToHsl` + ported tests.
 
 ### Specialized interaction
+
 - **AsyncButton** (`ui/async-button`): `action: () => Promise<void>`, state machine idle→pending→success/error→idle (`resetAfter = 1600ms`), autoSize shell + Swap label/icon (the `/demo/ui` pattern), `pendingLabel`, `successLabel`, `errorLabel`, `interruptible?` (stays clickable, re-click restarts), `aria-busy` + sr-only `role="status"` announcements, never blocks interactivity waiting for animation, all Button props forwarded.
 - **PowerSearch** (`ui/power-search`): structured filter bar. `config: { fields: [{ key, label, type: 'string'|'number'|'enum'|'enumList'|'date'|'entity', operators?, values?, search? }], freeTextField? }`, `filters: PowerSearchFilter[]` bindable, `onFiltersChange(filters, change)`. Composes Tokenizer (token row) + Command (field/operator menus) + typed value editors (NumberInput, DateInput, enum checkbox list). Tokens click-to-edit in popover. `resultCount?` announced politely. Late in critical path; ships last.
 - **Stepper** (`ui/stepper`): `Root { activeStep, onStepClick?, orientation, label, labels }` as `<ol>` + `Step { label, description?, optional?, disabled?, status?: 'success'|'warning'|'error', indicator?: snippet, children? (expanding content for vertical flows) }`. Segment fill animates only on +1 advance (CSS width transition, `--motion-state`); back/jump/mount/reduced-motion commit instantly.
@@ -267,6 +305,7 @@ updated to English expectations.
 - **Outline** (`ui/outline`): `items: { id, label, level }[]`, `activeId?` bindable (controlled disables built-in scroll-spy), IntersectionObserver scroll-spy, `offset`, `scrollContainer?`, `onNavigateStart/End` (End fires exactly once — settle, instant jump, or interruption), single-tab-stop roving arrows/Home/End, sliding indicator via CSS transform transition (decision 10), `label = 'Table of contents'` nav landmark. Helper `outlineFromMarkdown(content)` shares Markdown's heading-id generation.
 
 ### Existing components
+
 - **Timestamp**: keep API; locale default → `'en-US'` (decision 2); add unit tests
   (relative/absolute/auto thresholds, invalid date, locale override), docs entry.
   No duplicate component.
@@ -282,9 +321,9 @@ updated to English expectations.
     `headerActions`/`footerActions`/`drawer` snippets (attachments row above input),
     `maxRows`, `onFiles?` (paste/drop), Enter/Shift+Enter per ERP standards, labels.
   - AI surfaces: `Chat.ToolCalls { calls: [{ name, status, target?, duration?,
-    detail?, error? }], expanded bindable }` (single inline / grouped summary,
+detail?, error? }], expanded bindable }` (single inline / grouped summary,
     monospace names via `font-code`, wrench icon); `Chat.Reasoning { open bindable,
-    label, children }` (collapsible status surface, Collapsible-based);
+label, children }` (collapsible status surface, Collapsible-based);
     `Chat.Suggestions { items, onSelect }` (prompt chips); `Chat.MessageActions`
     (copy/retry/feedback IconButton row, `checkDouble` copied state);
     `streamText(target, { speed })` — Svelte port of useStreamingText (rAF,
@@ -300,24 +339,24 @@ Token → Tokenizer/MultiSelector/PowerSearch; Selector → MultiSelector/PowerS
 CodeBlock/Citation/Markdown/Tokenizer → AI chat; NumberInput/date inputs →
 PowerSearch editors; English migration lands before new components copy defaults.
 
-| Wave | Who | Scope |
-|---|---|---|
-| 1·serial | Claude | `--font-code`, `ui/icon` family, registry categories, proposal commit |
-| 1 | Codex A | English-defaults migration (existing components + demo/erp + tests) |
-| 1 | Codex B | Text, Heading |
-| 1 | Codex C | IconButton, FieldStatus, Token |
-| 1 | Codex D | Link, List, Blockquote, Citation |
-| 2 | Codex E | CodeBlock promotion (+shiki), Kbd/`font-code` adoption, site wrapper |
-| 2 | Codex F | NumberInput |
-| 2 | Codex G | DateInput, DateRangeInput, DateTimeInput, TimeInput |
-| 2 | Codex H | FileInput, CheckboxList |
-| 3 | Codex I | Markdown (+marked), Outline |
-| 3 | Codex J | Selector, ComplexSelector, MultiSelector (Combobox façade), Tokenizer |
-| 3 | Codex K | AsyncButton, ClickableCard, SelectableCard, Indicator |
-| 3 | Codex L | MetadataList, Stepper, Timestamp tests/docs |
-| 4 | Codex M | Chat + AI-chat expansion |
-| 4 | Codex N | PowerSearch |
-| 4 | Codex O | ColorPicker (Resax salvage per decision 1) |
+| Wave     | Who     | Scope                                                                 |
+| -------- | ------- | --------------------------------------------------------------------- |
+| 1·serial | Claude  | `--font-code`, `ui/icon` family, registry categories, proposal commit |
+| 1        | Codex A | English-defaults migration (existing components + demo/erp + tests)   |
+| 1        | Codex B | Text, Heading                                                         |
+| 1        | Codex C | IconButton, FieldStatus, Token                                        |
+| 1        | Codex D | Link, List, Blockquote, Citation                                      |
+| 2        | Codex E | CodeBlock promotion (+shiki), Kbd/`font-code` adoption, site wrapper  |
+| 2        | Codex F | NumberInput                                                           |
+| 2        | Codex G | DateInput, DateRangeInput, DateTimeInput, TimeInput                   |
+| 2        | Codex H | FileInput, CheckboxList                                               |
+| 3        | Codex I | Markdown (+marked), Outline                                           |
+| 3        | Codex J | Selector, ComplexSelector, MultiSelector (Combobox façade), Tokenizer |
+| 3        | Codex K | AsyncButton, ClickableCard, SelectableCard, Indicator                 |
+| 3        | Codex L | MetadataList, Stepper, Timestamp tests/docs                           |
+| 4        | Codex M | Chat + AI-chat expansion                                              |
+| 4        | Codex N | PowerSearch                                                           |
+| 4        | Codex O | ColorPicker (Resax salvage per decision 1)                            |
 
 Claude owns serially between waves: `src/lib/site/registry.ts` entries, shared-file
 integration (`layout.css`, `package.json`), diff review of every agent, wave

@@ -5,7 +5,12 @@
 	let pressed = $state(false);
 </script>
 
-<Toggle {pressed} onPressedChange={(next) => (pressed = next)} aria-label="Toggle filters" variant="outline">
+<Toggle
+	{pressed}
+	onPressedChange={(next) => (pressed = next)}
+	aria-label="Toggle filters"
+	variant="outline"
+>
 	<Icon icon="funnel" />
 	Filters
 </Toggle>

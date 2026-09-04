@@ -6,7 +6,12 @@
 </script>
 
 <div class="flex flex-col items-start gap-2">
-	<Calendar type="single" {value} onValueChange={(next) => (value = next)} class="rounded-lg border" />
+	<Calendar
+		type="single"
+		{value}
+		onValueChange={(next) => (value = next)}
+		class="rounded-lg border"
+	/>
 	{#if value}
 		<p class="text-sm text-muted-foreground">
 			Selected: {value.toDate(getLocalTimeZone()).toDateString()}
