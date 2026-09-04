@@ -15,7 +15,7 @@
 	data-slot="chat-system-message"
 	role="status"
 	class={cn(
-		'self-center rounded-full bg-muted px-3 py-1 text-center text-xs text-muted-foreground',
+		'self-center rounded-full bg-muted px-3 py-1 text-center text-xs text-foreground/70',
 		className
 	)}
 	{...restProps}

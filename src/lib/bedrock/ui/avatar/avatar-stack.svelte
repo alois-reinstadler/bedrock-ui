@@ -15,7 +15,14 @@
 	import Group from '#lib/shadcn/ui/avatar/avatar-group.svelte';
 	import Image from '#lib/shadcn/ui/avatar/avatar-image.svelte';
 	import Root from '#lib/shadcn/ui/avatar/avatar.svelte';
-	import { Swap, autoSize, motionPresets } from '#lib/bedrock/motion/index.js';
+	import { onDestroy } from 'svelte';
+	import {
+		Swap,
+		autoSize,
+		createLayoutGroup,
+		layout,
+		motionPresets
+	} from '#lib/bedrock/motion/index.js';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -65,6 +72,18 @@
 	// the card between intrinsic sizes while Swap crossfades the content.
 	const cardShell = autoSize({ duration: motionPresets.swap.duration, axis: 'both' });
 
+	// Membership packing: the stack is its own layout group and every member
+	// (plus the +n trigger) is a registered position node, so identity-keyed
+	// adds/removes spring the remaining members into place. The hover card is
+	// not registered and keeps its CSS treatment.
+	const stackGroup = createLayoutGroup();
+	const memberLayout = layout({ type: 'position' });
+	onDestroy(() => stackGroup.destroy());
+
+	function memberKey(item: AvatarStackItem): string {
+		return `${displayName(item)}|${item.src ?? ''}`;
+	}
+
 	const triggerClasses =
 		'rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none';
 </script>
@@ -83,13 +102,15 @@
 
 <div
 	bind:this={ref}
+	{@attach stackGroup.bindRoot}
 	data-slot="avatar-stack"
 	class={cn('relative inline-block', className)}
 	{...restProps}
 >
 	<Group>
-		{#each visible as item, index (index)}
+		{#each visible as item, index (memberKey(item))}
 			<button
+				{@attach memberLayout}
 				type="button"
 				aria-label={displayName(item)}
 				class={triggerClasses}
@@ -108,6 +129,7 @@
 		{/each}
 		{#if hidden.length > 0}
 			<button
+				{@attach memberLayout}
 				type="button"
 				aria-label={moreLabel(hidden.length)}
 				class={triggerClasses}

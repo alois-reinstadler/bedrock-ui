@@ -136,9 +136,12 @@
 </script>
 
 <div {@attach setRef} data-slot="file-input" class={cn('grid gap-2', className)} {...restProps}>
+	<!-- The visible browse button is the accessible control; the native
+	     input stays out of the a11y tree (and is already unfocusable). -->
 	<input
 		{@attach setInputRef}
 		class="sr-only"
+		aria-hidden="true"
 		type="file"
 		{accept}
 		{multiple}

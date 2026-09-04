@@ -87,6 +87,11 @@
 		dataSlot?: string;
 	} = $props();
 
+	// role="combobox" takes no name from content; the trigger labels itself
+	// with its own value/placeholder span unless the consumer names it.
+	const selectorUid = $props.id();
+	const triggerValueId = `${selectorUid}-value`;
+
 	const labels = $derived({ ...defaultLabels, ...labelOverrides });
 	const options = $derived(flattenSelectorItems(items));
 	const selectedOption = $derived(options.find((entry) => entry.value === value));
@@ -147,6 +152,7 @@
 					type="button"
 					role="combobox"
 					aria-expanded={open}
+					aria-labelledby={'aria-label' in restProps ? undefined : triggerValueId}
 					data-slot="{dataSlot}-trigger"
 					data-size={size}
 					data-variant={variant}
@@ -156,7 +162,7 @@
 						className
 					)}
 				>
-					<span class="flex min-w-0 flex-1 items-center gap-2">
+					<span id={triggerValueId} class="flex min-w-0 flex-1 items-center gap-2">
 						{#if selectedOption}
 							{#if selected}
 								{@render selected(selectedOption)}

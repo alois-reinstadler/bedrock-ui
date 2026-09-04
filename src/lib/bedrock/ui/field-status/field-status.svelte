@@ -28,8 +28,8 @@
 	const color = $derived(
 		{
 			info: 'text-muted-foreground',
-			success: 'text-green-600 dark:text-green-500',
-			warning: 'text-amber-600 dark:text-amber-500',
+			success: 'text-green-700 dark:text-green-400',
+			warning: 'text-amber-700 dark:text-amber-400',
 			error: 'text-destructive'
 		}[status]
 	);

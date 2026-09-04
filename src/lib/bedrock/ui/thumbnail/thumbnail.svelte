@@ -52,9 +52,13 @@
 	const showImage = $derived(Boolean(src) && !failed);
 </script>
 
+<!-- The fallback keeps the accessible name the image would have carried, so
+     icon-only compositions (e.g. a lightbox trigger) stay labelled. -->
 <span
 	bind:this={ref}
 	data-slot="thumbnail"
+	role={!showImage && alt ? 'img' : undefined}
+	aria-label={!showImage && alt ? alt : undefined}
 	class={cn(thumbnailVariants({ size, shape }), className)}
 	{...restProps}
 >

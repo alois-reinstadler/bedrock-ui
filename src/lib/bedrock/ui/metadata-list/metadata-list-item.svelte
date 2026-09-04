@@ -37,7 +37,6 @@
 <div
 	bind:this={ref}
 	data-slot="metadata-list-item"
-	role="presentation"
 	inert={hidden}
 	class={cn(
 		labelPosition === 'start' && 'grid grid-cols-[max-content_1fr] items-baseline gap-x-4',

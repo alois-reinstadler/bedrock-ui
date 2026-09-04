@@ -166,6 +166,17 @@ motion grep empty. Deferred: VideoPlayer (backlog §8), ColorPicker
 compact/popover/ring variants, Markdown raw-HTML mode, Tokenizer async search,
 FLIP-gated polish (M2).
 
+Overnight 2026-09-03 (second pass): DataTable's view-tab indicator and
+AvatarStack membership packing joined the layout-engine rollout (identity-keyed
+members; the /demo/erp assignees row gained ±. controls to exercise it);
+PowerSearch shipped into /demo/erp with German labels; VideoPlayer proposal
+written (2026-09-03-video-player.md, three open questions for review); 24
+example files added for the pre-existing wrapper slugs (form, chart, and
+sidebar deliberately skipped — app-shell/superforms/layerchart scaffolding
+doesn't fit the preview pane; noted as remaining); an axe-core a11y e2e sweep
+(`src/routes/a11y.e2e.ts`, @axe-core/playwright as test-only dep) scans 29
+representative pages and fails on serious/critical violations.
+
 (Entries added as waves land are appended here and repeated in the final report.)
 
 ## 3. Shared foundations (Wave 1, Claude-owned)

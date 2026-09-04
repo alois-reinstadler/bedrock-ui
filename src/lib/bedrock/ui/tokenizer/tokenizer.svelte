@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	const defaultLabels = {
+		input: 'Add items',
 		empty: 'No results.',
 		remove: (label: string) => `Remove ${label}`,
 		create: (query: string) => `Create "${query}"`,
@@ -262,6 +263,7 @@
 			bind:this={inputRef}
 			bind:value={query}
 			type="text"
+			aria-label={labels.input}
 			role="combobox"
 			aria-expanded={listOpen}
 			aria-controls={listId}

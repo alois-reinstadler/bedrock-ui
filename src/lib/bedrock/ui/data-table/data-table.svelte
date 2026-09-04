@@ -83,7 +83,7 @@
 	import Settings2Icon from '@lucide/svelte/icons/settings-2';
 	import XIcon from '@lucide/svelte/icons/x';
 	import { createTable } from '@tanstack/svelte-table';
-	import { Swap } from '#lib/bedrock/motion/index.js';
+	import { Swap, createLayoutGroup, layout } from '#lib/bedrock/motion/index.js';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Checkbox } from '#lib/bedrock/ui/checkbox';
@@ -92,6 +92,7 @@
 	import * as NativeSelect from '#lib/bedrock/ui/native-select';
 	import * as Table from '#lib/bedrock/ui/table';
 	import { cn } from '#lib/utils.js';
+	import { onDestroy } from 'svelte';
 	import type { Snippet } from 'svelte';
 	import { formatCellValue, formatCurrencyParts } from './formatters.js';
 	import type { DataTableColumn, DataTableView } from './types.js';
@@ -215,6 +216,11 @@
 	}
 
 	// One indicator slides between tabs instead of each tab toggling its own.
+	// The tablist is its own layout group; the indicator is the only
+	// registered node, so discrete left/width writes become spring projections.
+	const tabGroup = createLayoutGroup();
+	const tabIndicatorLayout = layout();
+	onDestroy(() => tabGroup.destroy());
 	let tablistEl = $state<HTMLDivElement | null>(null);
 	let tabIndicator = $state({ x: 0, width: 0 });
 
@@ -368,11 +374,13 @@
 	{#if views?.length}
 		<div
 			bind:this={tablistEl}
+			{@attach tabGroup.bindRoot}
 			class="relative flex items-center gap-1 overflow-x-auto border-b border-border"
 			role="tablist"
 			aria-label={l.views}
 		>
 			<span
+				{@attach tabIndicatorLayout}
 				aria-hidden="true"
 				class={cn(
 					'bedrock-tab-indicator absolute bottom-0 h-0.5 rounded-full bg-primary',
@@ -404,8 +412,7 @@
 					tabindex={activeViewKey === view.key ? 0 : -1}
 					class={cn(
 						'min-h-11 shrink-0 px-3 text-sm font-medium focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-						activeViewKey === view.key ? 'text-foreground' : 'text-muted-foreground',
-						count === 0 && 'opacity-50'
+						activeViewKey === view.key ? 'text-foreground' : 'text-muted-foreground'
 					)}
 					onclick={() => selectView(view.key)}
 					onkeydown={(event: KeyboardEvent) => onTabKeydown(event, viewIndex + 1)}
@@ -697,10 +704,9 @@
 </div>
 
 <style>
+	/* Movement comes from the shared-layout engine; only visibility fades. */
 	.bedrock-tab-indicator {
-		transition:
-			left var(--motion-enter) var(--motion-ease-move),
-			width var(--motion-enter) var(--motion-ease-move);
+		transition: opacity var(--motion-state) var(--motion-ease-enter);
 	}
 
 	.bedrock-selection-bar {

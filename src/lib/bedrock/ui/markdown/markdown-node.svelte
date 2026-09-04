@@ -134,11 +134,12 @@
 			{#each list.items as item, itemIndex (itemIndex)}
 				{#if item.task}
 					<ListItem class="flex list-none items-start gap-2">
-						<!-- Non-interactive task glyph: GFM task state is read-only in rendered markdown. -->
+						<!-- Non-interactive task glyph: GFM task state is read-only in
+						     rendered markdown, so the box is decorative and the state is
+						     conveyed as screen-reader text. -->
+						<span class="sr-only">{item.checked ? 'Done:' : 'To do:'}</span>
 						<span
-							role="checkbox"
-							aria-checked={item.checked === true}
-							aria-disabled="true"
+							aria-hidden="true"
 							class="mt-[0.2em] inline-flex size-4 shrink-0 items-center justify-center rounded-sm border border-border bg-muted/40"
 						>
 							{#if item.checked}<Icon icon="check" class="size-3" />{/if}

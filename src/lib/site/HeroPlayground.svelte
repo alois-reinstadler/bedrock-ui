@@ -25,7 +25,9 @@
 	let depth = $state(47);
 	let acknowledged = $state(false);
 	let tab = $state('intake');
-	let selectedLayer = $derived(strata.find((item) => item.value === layer)?.label ?? 'Select layer');
+	let selectedLayer = $derived(
+		strata.find((item) => item.value === layer)?.label ?? 'Select layer'
+	);
 </script>
 
 <div class="relative">
@@ -68,9 +70,9 @@
 					</Field.Field>
 					<Field.Field>
 						<Field.Label>Depth {depth}m</Field.Label>
-						<Slider type="single" bind:value={depth} min={8} max={92} />
+						<Slider type="single" bind:value={depth} min={8} max={92} aria-label="Depth" />
 					</Field.Field>
-					<Progress value={depth} max={92} />
+					<Progress value={depth} max={92} aria-label="Depth progress" />
 					<div class="flex items-center justify-between gap-3">
 						<Field.Field orientation="horizontal" class="w-auto">
 							<Switch id="alerts" bind:checked={notify} />

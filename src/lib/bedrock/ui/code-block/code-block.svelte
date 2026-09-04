@@ -116,11 +116,11 @@
 				container === 'card' && 'border-b bg-muted/50'
 			)}
 		>
-			<div class="min-w-0 font-code text-[11px] tracking-wide text-muted-foreground">
+			<div class="min-w-0 font-code text-[11px] tracking-wide text-foreground/70">
 				{#if title}<span class="truncate">{title}</span>{/if}
 				<!-- The language label is meaningless noise for plaintext. -->
 				{#if language !== 'plaintext'}
-					<span class={cn(title && 'ml-2 opacity-70')}>{labels.language(language)}</span>
+					<span class={cn(title && 'ml-2')}>{labels.language(language)}</span>
 				{/if}
 			</div>
 			{#if copyButton}<IconButton

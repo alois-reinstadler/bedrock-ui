@@ -202,7 +202,7 @@
 	let selectedCustomer = $state<string>('');
 	const customerItems = customers.map((name) => ({ value: name, label: name }));
 
-	const team: AvatarStackItem[] = [
+	const fullTeam: AvatarStackItem[] = [
 		{ fallback: 'AR', name: 'Alois Reinstadler' },
 		{ fallback: 'MK', name: 'Maria König' },
 		{ fallback: 'JS', name: 'Jonas Steiner' },
@@ -211,6 +211,9 @@
 		{ fallback: 'PB', name: 'Paula Brandner' },
 		{ fallback: 'NN', name: 'Nina Nagele' }
 	];
+
+	let teamSize = $state(7);
+	const team = $derived(fullTeam.slice(0, teamSize));
 
 	const tags = [
 		'Urgent',
@@ -318,7 +321,7 @@
 			<TriangleAlertIcon />
 			<Banner.Content>
 				<span class="font-medium">Maintenance window</span>
-				<span class="text-muted-foreground">
+				<span class="text-foreground/70">
 					Saturday, September 6, 22:00–24:00 — postings are paused during this time.
 				</span>
 			</Banner.Content>
@@ -426,7 +429,25 @@
 				{/if}
 
 				<h2 class="mt-4 text-sm font-medium text-muted-foreground">Assignees</h2>
-				<AvatarStack items={team} max={4} moreLabel={(count) => `${count} weitere anzeigen`} />
+				<div class="flex items-center gap-3">
+					<AvatarStack items={team} max={4} moreLabel={(count) => `${count} weitere anzeigen`} />
+					<span class="inline-flex gap-1">
+						<Button
+							variant="ghost"
+							size="icon-xs"
+							aria-label="Mitglied entfernen"
+							disabled={teamSize <= 1}
+							onclick={() => (teamSize -= 1)}>−</Button
+						>
+						<Button
+							variant="ghost"
+							size="icon-xs"
+							aria-label="Mitglied hinzufügen"
+							disabled={teamSize >= fullTeam.length}
+							onclick={() => (teamSize += 1)}>+</Button
+						>
+					</span>
+				</div>
 
 				<h2 class="mt-4 text-sm font-medium text-muted-foreground">System status</h2>
 				<ul class="flex flex-col gap-1.5 text-sm">
