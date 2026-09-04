@@ -240,11 +240,22 @@ For each candidate:
 
 ## Internationalization
 
-- [ ] Define the complete English canonical source catalogue.
+- [x] Define English as the canonical source catalogue and `en-US` as the
+      deterministic library default (approved 2026-09-04).
 - [ ] Prohibit hardcoded internal, accessible and live-region component strings.
 - [ ] Define catalogue lookup and fallback behavior without coupling component APIs to a translation library.
 - [ ] Add a `de-AT` locale pack when a milestone or consumer requires translation coverage.
 - [ ] Verify that adding locale packs requires no component API changes.
+
+## Approved upstream and motion follow-ups
+
+- [ ] Resolve the frozen shadcn tinted-destructive Badge and Avatar contrast
+      findings through an upstream/theme change; retain the narrow a11y allowlist
+      until then.
+- [ ] Track the bits-ui Slider thumb-labeling gap upstream; retain the narrow
+      Slider allowlist rather than forking the frozen primitive.
+- [ ] Build the Thumbnail→Lightbox shared-element flight with a View Transitions
+      bridge; do not stretch an app-level `LayoutGroup` across the boundary.
 
 ## Explicitly deferred
 
@@ -276,9 +287,10 @@ Do not build this family speculatively. When triggered, begin with the consumer'
 
 Use this table for backlog changes that alter scope or ordering.
 
-| Date       | Change                                                     | Reason                                                                | Effect on milestones                                                   |
-| ---------- | ---------------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| 2026-08-30 | Created the layered backlog.                               | Preserve and harden motion before expanding Bedrock.                  | Establishes M0–M5 order and explicit later/conditional work.           |
-| 2026-08-30 | Added on-demand component graduation.                      | Catalogue size is not a reason to rewrite unused families.            | Families enter milestones only through a named dependency or consumer. |
-| 2026-08-30 | Deferred locale breadth but fixed the string architecture. | Avoid API churn without making translation coverage an early blocker. | English catalogue is foundational; `de-AT` is a later pack.            |
-| 2026-08-30 | Deferred AI/chat until demanded.                           | No current consumer establishes the right streaming contract.         | AI/chat has no milestone allocation until its trigger is met.          |
+| Date       | Change                                                     | Reason                                                                                                                                 | Effect on milestones                                                              |
+| ---------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| 2026-08-30 | Created the layered backlog.                               | Preserve and harden motion before expanding Bedrock.                                                                                   | Establishes M0–M5 order and explicit later/conditional work.                      |
+| 2026-08-30 | Added on-demand component graduation.                      | Catalogue size is not a reason to rewrite unused families.                                                                             | Families enter milestones only through a named dependency or consumer.            |
+| 2026-08-30 | Deferred locale breadth but fixed the string architecture. | Avoid API churn without making translation coverage an early blocker.                                                                  | English catalogue is foundational; `de-AT` is a later pack.                       |
+| 2026-08-30 | Deferred AI/chat until demanded.                           | No current consumer establishes the right streaming contract.                                                                          | AI/chat has no milestone allocation until its trigger is met.                     |
+| 2026-09-04 | Approved the expansion close-out decisions.                | English is canonical; frozen/upstream a11y gaps stay narrowly allowlisted; cross-boundary shared-element motion uses View Transitions. | Completes the expansion project and records three follow-ups without local forks. |

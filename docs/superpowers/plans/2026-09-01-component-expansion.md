@@ -1,6 +1,6 @@
 # Bedrock component expansion — implementation proposal
 
-Date: 2026-09-01 · Status: provisionally approved (autonomous run) · Owner: Claude (orchestrator)
+Date: 2026-09-01 · Status: completed and approved 2026-09-04 · Owner: Claude (orchestrator)
 Binding context: `docs/bedrock/component-contract.md`, `docs/bedrock/erp-standards.md`,
 `docs/superpowers/plans/2026-08-31-motion-system.md`, `2026-08-31-erp-primitives.md`.
 
@@ -176,6 +176,13 @@ sidebar deliberately skipped — app-shell/superforms/layerchart scaffolding
 doesn't fit the preview pane; noted as remaining); an axe-core a11y e2e sweep
 (`src/routes/a11y.e2e.ts`, @axe-core/playwright as test-only dep) scans 29
 representative pages and fails on serious/critical violations.
+
+Close-out 2026-09-04: the user approved English as the canonical UI language and
+the deterministic `en-US` library default. The narrowly scoped accessibility
+allowlist remains for frozen shadcn contrast findings and the bits-ui Slider thumb
+labeling gap; both are upstream/theme follow-ups rather than local forks. The
+Thumbnail→Lightbox shared-element flight will use a View Transitions bridge, not
+an app-level `LayoutGroup`; its implementation remains explicitly deferred.
 
 (Entries added as waves land are appended here and repeated in the final report.)
 
@@ -380,7 +387,8 @@ on the demo/docs pages, then commits.
   captions/subtitles, keyboard map, fullscreen, picture-in-picture, mobile behavior,
   and streaming formats (HLS/DASH), plus poster/preload policy and reduced-motion.
 - FLIP-dependent polish (M2 gate): Outline/Stepper indicator via `layout()`,
-  Tokenizer chip packing, shared-element card→detail.
+  Tokenizer chip packing, and the Thumbnail→Lightbox shared-element flight via a
+  View Transitions bridge.
 - Markdown opt-in raw-HTML mode (sanitizer decision), Mermaid/KaTeX.
 - ColorPicker compact popover variant + eyedropper (EyeDropper API).
 - ChatDictationButton (speech recognition), composer trigger menus (@/# tokens),
