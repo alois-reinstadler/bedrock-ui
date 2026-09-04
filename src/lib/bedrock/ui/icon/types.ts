@@ -39,7 +39,15 @@ export type IconName =
 	| 'attachment'
 	| 'image'
 	| 'file'
-	| 'loading';
+	| 'loading'
+	| 'play'
+	| 'pause'
+	| 'volume'
+	| 'volumeMuted'
+	| 'fullscreen'
+	| 'exitFullscreen'
+	| 'pip'
+	| 'captions';
 
 /** SVG props every icon component must accept. Narrows the few attributes
  * lucide narrows (`name`, `color`, `title`) so lucide icons and plain SVG

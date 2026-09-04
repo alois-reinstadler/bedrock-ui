@@ -598,6 +598,12 @@ export const components: ComponentDoc[] = [
 		title: 'Color Picker',
 		description: 'HSV color selection with hex, RGB, and HSL entry.',
 		category: 'form'
+	},
+	{
+		slug: 'video-player',
+		title: 'Video Player',
+		description: 'Media playback with accessible design-system controls.',
+		category: 'display'
 	}
 ];
 

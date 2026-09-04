@@ -32,6 +32,7 @@ const routes = [
 	'/docs/components/data-table',
 	'/docs/components/chat',
 	'/docs/components/lightbox',
+	'/docs/components/video-player',
 	'/demo/erp',
 	'/demo/chat'
 ];

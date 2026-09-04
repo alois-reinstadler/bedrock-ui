@@ -1,4 +1,12 @@
 import ArrowDownIcon from '@lucide/svelte/icons/arrow-down';
+import CaptionsIcon from '@lucide/svelte/icons/captions';
+import MaximizeIcon from '@lucide/svelte/icons/maximize';
+import MinimizeIcon from '@lucide/svelte/icons/minimize';
+import PauseIcon from '@lucide/svelte/icons/pause';
+import PictureInPicture2Icon from '@lucide/svelte/icons/picture-in-picture-2';
+import PlayIcon from '@lucide/svelte/icons/play';
+import Volume2Icon from '@lucide/svelte/icons/volume-2';
+import VolumeXIcon from '@lucide/svelte/icons/volume-x';
 import ArrowUpDownIcon from '@lucide/svelte/icons/arrow-up-down';
 import ArrowUpIcon from '@lucide/svelte/icons/arrow-up';
 import CalendarIcon from '@lucide/svelte/icons/calendar';
@@ -73,7 +81,15 @@ const defaultIcons: Record<IconName, IconComponent> = {
 	attachment: PaperclipIcon,
 	image: ImageIcon,
 	file: FileIcon,
-	loading: LoaderCircleIcon
+	loading: LoaderCircleIcon,
+	play: PlayIcon,
+	pause: PauseIcon,
+	volume: Volume2Icon,
+	volumeMuted: VolumeXIcon,
+	fullscreen: MaximizeIcon,
+	exitFullscreen: MinimizeIcon,
+	pip: PictureInPicture2Icon,
+	captions: CaptionsIcon
 };
 
 const registry = $state({ icons: { ...defaultIcons } });

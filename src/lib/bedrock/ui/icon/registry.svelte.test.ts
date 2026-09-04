@@ -39,7 +39,15 @@ const names: IconName[] = [
 	'attachment',
 	'image',
 	'file',
-	'loading'
+	'loading',
+	'play',
+	'pause',
+	'volume',
+	'volumeMuted',
+	'fullscreen',
+	'exitFullscreen',
+	'pip',
+	'captions'
 ];
 
 afterEach(() => resetIcons());
