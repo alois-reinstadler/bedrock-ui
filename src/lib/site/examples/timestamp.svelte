@@ -5,11 +5,23 @@
 	const lastMonth = new Date(Date.now() - 32 * 24 * 60 * 60 * 1000);
 </script>
 
-<div class="grid max-w-sm grid-cols-[max-content_1fr] items-baseline gap-x-6 gap-y-2 text-sm">
-	<span class="text-muted-foreground">Absolute</span>
-	<Timestamp date={lastMonth} mode="absolute" />
-	<span class="text-muted-foreground">Relative</span>
-	<Timestamp date={twoHoursAgo} mode="relative" />
-	<span class="text-muted-foreground">de-AT override</span>
-	<Timestamp date={lastMonth} mode="absolute" locale="de-AT" />
-</div>
+<section class="w-full min-w-0 space-y-4">
+	<div class="space-y-1">
+		<h3 class="font-medium">Document activity history</h3>
+		<p class="text-sm text-muted-foreground">
+			Use relative timestamps for scanning recent activity and absolute dates when the exact event
+			date matters.
+		</p>
+	</div>
+
+	<ol class="max-w-md space-y-4 rounded-xl border p-5">
+		<li>
+			<p class="text-sm font-medium">Mara approved the final draft</p>
+			<Timestamp date={twoHoursAgo} mode="relative" />
+		</li>
+		<li>
+			<p class="text-sm font-medium">Ellis created the document</p>
+			<Timestamp date={lastMonth} mode="absolute" locale="en-GB" />
+		</li>
+	</ol>
+</section>

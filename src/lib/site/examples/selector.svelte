@@ -27,26 +27,42 @@
 	let draft = $state(80);
 </script>
 
-<div class="flex flex-col items-start gap-4">
-	<Selector items={environments} bind:value={environment} searchable clearable />
+<section class="w-full min-w-0 space-y-4">
+	<div class="space-y-1">
+		<h3 class="font-medium">Configure an environment alert</h3>
+		<p class="text-sm text-muted-foreground">
+			Choose the monitored environment, then commit a threshold explicitly. Closing the threshold
+			popup without applying keeps the saved value.
+		</p>
+	</div>
 
-	<ComplexSelector bind:value={threshold} placeholder="Alert threshold">
-		{#snippet triggerLabel(current)}
-			{current === undefined ? 'Alert threshold' : `Above ${current}%`}
-		{/snippet}
-		{#snippet content({ commit, close })}
-			<div class="flex w-56 flex-col gap-3">
-				<Slider type="single" bind:value={draft} max={100} step={5} />
-				<Button
-					size="sm"
-					onclick={() => {
-						commit(draft);
-						close();
-					}}
-				>
-					Apply {draft}%
-				</Button>
-			</div>
-		{/snippet}
-	</ComplexSelector>
-</div>
+	<div class="flex flex-col items-start gap-4">
+		<Selector items={environments} bind:value={environment} searchable clearable />
+
+		<ComplexSelector bind:value={threshold} placeholder="Alert threshold">
+			{#snippet triggerLabel(current)}
+				{current === undefined ? 'Alert threshold' : `Above ${current}%`}
+			{/snippet}
+			{#snippet content({ commit, close })}
+				<div class="flex w-56 flex-col gap-3">
+					<Slider type="single" bind:value={draft} max={100} step={5} />
+					<Button
+						size="sm"
+						onclick={() => {
+							commit(draft);
+							close();
+						}}
+					>
+						Apply {draft}%
+					</Button>
+				</div>
+			{/snippet}
+		</ComplexSelector>
+	</div>
+
+	<p role="status" class="text-sm">
+		Monitoring {environment || 'no environment'}{threshold === undefined
+			? ': no threshold applied'
+			: `: alert above ${threshold}%`}.
+	</p>
+</section>

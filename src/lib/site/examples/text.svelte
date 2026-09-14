@@ -2,17 +2,19 @@
 	import { Text } from '#lib/bedrock/ui/text';
 </script>
 
-<div class="space-y-6">
-	<div class="space-y-2">
-		<Text type="display-1" as="div">Display one</Text>
-		<Text type="display-2" as="div">Display two</Text>
-		<Text type="display-3" as="div">Quarterly revenue</Text>
-	</div>
-	<div class="space-y-2">
-		<Text as="p" type="large">Large text introduces a section or important idea.</Text>
-		<Text as="p">Body text carries the primary reading experience.</Text>
-		<Text as="p" type="label">Label text names controls and compact data.</Text>
-		<Text as="p" type="supporting">Supporting text provides helpful secondary context.</Text>
-		<Text as="span" type="code">pnpm check</Text>
-	</div>
-</div>
+<article class="max-w-xl space-y-4 rounded-xl border p-6">
+	<Text type="supporting" as="p">FIELD NOTES · 6 MIN READ</Text><Text
+		type="display-3"
+		as="div"
+		role="heading"
+		aria-level={3}>Make room for a calmer workday</Text
+	><Text type="large" as="p"
+		>A practical guide to protecting your team's focus without losing touch.</Text
+	><Text as="p"
+		>Start with one shared agreement: updates belong in a place people can check when they are
+		ready. Reserve interruptions for decisions that cannot wait.</Text
+	><Text type="label" as="div" role="heading" aria-level={4}>Try this with your team</Text><Text
+		as="p"
+		>Collect non-urgent questions in a daily note, then review them together at a predictable time.</Text
+	><Text type="supporting" as="p">Written by Mara Chen · Updated September 14, 2026</Text>
+</article>
