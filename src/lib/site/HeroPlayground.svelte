@@ -73,7 +73,7 @@
 				<div class="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
 					<CommandIcon class="size-3.5" />
 					<span class="font-code">Quick find</span>
-					<Kbd class="ms-auto">⌘ K</Kbd>
+					<Kbd class="ms-auto text-foreground">⌘ K</Kbd>
 				</div>
 				<Input
 					id="hero-component-search"
