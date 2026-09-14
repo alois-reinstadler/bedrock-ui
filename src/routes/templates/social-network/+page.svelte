@@ -14,6 +14,9 @@
 	import SparklesIcon from '@lucide/svelte/icons/sparkles';
 	import UserRoundIcon from '@lucide/svelte/icons/user-round';
 	import UsersIcon from '@lucide/svelte/icons/users';
+	import { onMount, tick } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
 	import { SvelteSet } from 'svelte/reactivity';
 	import { slide } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
@@ -42,30 +45,91 @@
 		{ label: 'Home', icon: HomeIcon },
 		{ label: 'Discover', icon: SparklesIcon },
 		{ label: 'Circles', icon: UsersIcon },
-		{ label: 'Saved', icon: BookmarkIcon }
+		{ label: 'Saved', icon: BookmarkIcon },
+		{ label: 'Profile', icon: UserRoundIcon }
 	] as const;
 
-	let activeNav = $state('Home');
+	let mounted = $state(false);
+	const activeNav = $derived(
+		mounted && navItems.some((item) => item.label === page.url.searchParams.get('view'))
+			? page.url.searchParams.get('view')!
+			: 'Home'
+	);
+	const openThreadId = $derived(mounted ? page.url.searchParams.get('thread') : null);
+	let profileName = $state(people.mina.name);
+	let profileBio = $state(
+		'Designing useful things. Collecting field notes, generous ideas, and small moments outside.'
+	);
+	let editingProfile = $state(false);
+	let editedName = $state('');
+	let editedBio = $state('');
+	let unreadOnly = $state(false);
+	let attachmentAlt = $state('An original field map showing shaded paths and gathering places');
+	const hiddenPosts = new SvelteSet<string>();
+	let lastHidden = $state<string | null>(null);
+	const currentPerson = $derived({ ...people.mina, name: profileName });
+	const selectedProfile = $derived(
+		mounted
+			? ([currentPerson, ...Object.values(people).filter((person) => person.id !== 'mina')].find(
+					(person) => person.id === page.url.searchParams.get('profile')
+				) ?? null)
+			: null
+	);
+	onMount(() => {
+		mounted = true;
+		try {
+			draft = localStorage.getItem('mosaic-draft-v1') ?? '';
+		} catch {
+			/* Storage is optional. */
+		}
+	});
+	function updateDraft(value: string) {
+		draft = value;
+		try {
+			localStorage.setItem('mosaic-draft-v1', value);
+		} catch {
+			/* The in-memory draft remains usable. */
+		}
+	}
+	function navigate(values: Record<string, string | null>) {
+		const url = new URL(page.url.href);
+		for (const [key, value] of Object.entries(values)) {
+			if (value) url.searchParams.set(key, value);
+			else url.searchParams.delete(key);
+		}
+		return goto(url, { reset: false });
+	}
+	function hidePost(id: string) {
+		hiddenPosts.add(id);
+		lastHidden = id;
+		announcement = 'Note hidden. You can undo this action.';
+	}
+	function undoHide() {
+		if (lastHidden) hiddenPosts.delete(lastHidden);
+		lastHidden = null;
+		announcement = 'Note restored.';
+	}
+
 	let feedView = $state('following');
 	let draft = $state('');
 	let posts = $state<FeedPost[]>(initialPosts.map((post) => ({ ...post })));
-	let openThreadId = $state<string | null>(null);
 	const following = new SvelteSet<string>(['sora']);
 	let announcement = $state('');
 	let mobileMenuOpen = $state(false);
 	let notificationsOpen = $state(false);
 	let search = $state('');
 
-	let selectedProfile = $state<Person | null>(null);
 	let replyDraft = $state('');
 	let attachArt = $state(false);
 	const readNotifications = new SvelteSet<string>();
 	const visiblePosts = $derived.by(() => {
-		let result = posts.filter((post) =>
-			`${post.content} ${post.author.name} ${post.topic ?? ''}`
-				.toLowerCase()
-				.includes(search.toLowerCase().trim())
-		);
+		let result = posts
+			.filter((post) => !hiddenPosts.has(post.id))
+			.filter((post) =>
+				`${post.content} ${post.author.name} ${post.topic ?? ''}`
+					.toLowerCase()
+					.includes(search.toLowerCase().trim())
+			);
 		if (activeNav === 'Saved') result = result.filter((post) => post.bookmarked);
 		if (activeNav === 'Profile')
 			result = result.filter((post) => post.author.id === people.mina.id);
@@ -73,7 +137,9 @@
 		return feedView === 'discover' ? [...result].sort((a, b) => b.likes - a.likes) : result;
 	});
 	const remaining = $derived(320 - draft.length);
-	const canPublish = $derived(draft.trim().length > 0 && remaining >= 0);
+	const canPublish = $derived(
+		draft.trim().length > 0 && remaining >= 0 && (!attachArt || attachmentAlt.trim().length > 0)
+	);
 	const unreadCount = $derived(
 		notifications.filter((item) => item.unread && !readNotifications.has(item.id)).length
 	);
@@ -86,19 +152,22 @@
 		if (!canPublish) return;
 		const nextPost: FeedPost = {
 			id: `local-${Date.now()}`,
-			author: people.mina,
+			author: currentPerson,
 			time: 'now',
 			content: draft.trim(),
 			likes: 0,
 			reposts: 0,
 			views: '1',
-			image: attachArt ? initialPosts[0].image : undefined,
+			image:
+				attachArt && initialPosts[0].image
+					? { ...initialPosts[0].image, alt: attachmentAlt.trim() }
+					: undefined,
 			replies: []
 		};
 		posts = [nextPost, ...posts];
-		draft = '';
+		updateDraft('');
 		attachArt = false;
-		activeNav = 'Home';
+		navigate({ view: 'Home', thread: null, profile: null });
 		search = '';
 		announcement = 'Your note was published.';
 	}
@@ -124,7 +193,8 @@
 	}
 
 	function toggleThread(postId: string) {
-		openThreadId = openThreadId === postId ? null : postId;
+		replyDraft = '';
+		navigate({ thread: openThreadId === postId ? null : postId });
 	}
 
 	function sendReply(postId: string) {
@@ -137,7 +207,7 @@
 							...post.replies,
 							{
 								id: `reply-${Date.now()}`,
-								author: people.mina,
+								author: currentPerson,
 								time: 'now',
 								content: replyDraft.trim(),
 								likes: 0
@@ -150,12 +220,15 @@
 		announcement = 'Reply added to the conversation.';
 	}
 
-	function chooseNav(label: string) {
-		activeNav = label;
+	async function chooseNav(label: string) {
+		const navigation = navigate({ view: label, thread: null, profile: null });
 		search = '';
 		feedView = label === 'Discover' ? 'discover' : 'following';
 		mobileMenuOpen = false;
 		announcement = `${label} view selected.`;
+		await navigation;
+		await tick();
+		document.querySelector<HTMLElement>('#feed-title')?.focus();
 	}
 </script>
 
@@ -223,6 +296,7 @@
 					class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
 				/>
 				<Input
+					disabled={!mounted}
 					value={search}
 					oninput={(event) => (search = event.currentTarget.value)}
 					name="social-search"
@@ -254,8 +328,31 @@
 							{unreadCount === 1 ? 'update' : 'updates'} waiting for you</Sheet.Description
 						>
 					</Sheet.Header>
+					<div class="flex flex-wrap gap-2 border-b p-4">
+						<Button
+							size="sm"
+							variant={unreadOnly ? 'secondary' : 'outline'}
+							aria-pressed={unreadOnly}
+							onclick={() => (unreadOnly = !unreadOnly)}>Unread only</Button
+						>
+						<Button
+							size="sm"
+							variant="ghost"
+							disabled={!unreadCount}
+							onclick={() => {
+								notifications.forEach((item) => readNotifications.add(item.id));
+								announcement = 'All updates marked as read.';
+							}}>Mark all read</Button
+						>
+					</div>
 					<div class="grid gap-1 p-3">
-						{#each notifications as item (item.id)}
+						{#if unreadOnly && unreadCount === 0}<p
+								class="p-5 text-sm text-muted-foreground"
+								role="status"
+							>
+								You are all caught up. Switch off Unread only to revisit earlier updates.
+							</p>{/if}
+						{#each notifications.filter((item) => !unreadOnly || (item.unread && !readNotifications.has(item.id))) as item (item.id)}
 							<button
 								onclick={() => {
 									readNotifications.add(item.id);
@@ -325,7 +422,7 @@
 								>
 							</Avatar>
 							<div class="min-w-0">
-								<p class="truncate text-sm font-medium">{people.mina.name}</p>
+								<p class="truncate text-sm font-medium">{profileName}</p>
 								<p class="truncate text-xs text-muted-foreground">{people.mina.handle}</p>
 							</div>
 						</div>
@@ -344,7 +441,11 @@
 						<p class="mb-1 text-xs font-medium tracking-[0.12em] text-muted-foreground uppercase">
 							{activeNav}
 						</p>
-						<h1 class="text-2xl font-semibold tracking-tight">
+						<h1
+							id="feed-title"
+							tabindex="-1"
+							class="text-2xl font-semibold tracking-tight outline-none"
+						>
 							{activeNav === 'Home'
 								? 'Your corner of the internet'
 								: activeNav === 'Profile'
@@ -373,6 +474,111 @@
 				</div>
 			</div>
 
+			{#key activeNav}
+				<div class="screen-intro">
+					{#if activeNav === 'Profile'}
+						<section
+							class="profile-cover m-4 rounded-2xl border p-6 sm:m-6"
+							aria-label="Your profile"
+						>
+							<p class="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+								Member since spring 2024
+							</p>
+							<div class="mt-6 flex flex-wrap items-center gap-4">
+								<Avatar class="size-16"
+									><AvatarFallback class={avatarTone(currentPerson)}>MO</AvatarFallback></Avatar
+								>
+								<div>
+									<h2 class="text-2xl font-semibold">{profileName}</h2>
+									<p class="text-sm text-muted-foreground">{people.mina.handle}</p>
+								</div>
+							</div>
+							<p class="mt-4 max-w-lg leading-relaxed">{profileBio}</p>
+							<p class="my-4 text-sm text-muted-foreground">
+								{posts.filter((post) => post.author.id === 'mina').length} notes · {following.size} following
+								· 128 followers
+							</p>
+							<Button
+								variant="outline"
+								onclick={() => {
+									editedName = profileName;
+									editedBio = profileBio;
+									editingProfile = !editingProfile;
+								}}>{editingProfile ? 'Close editor' : 'Edit profile'}</Button
+							>
+							{#if editingProfile}<form
+									class="mt-4 grid gap-3"
+									onsubmit={(event) => {
+										event.preventDefault();
+										profileName = editedName.trim();
+										profileBio = editedBio.trim();
+										posts = posts.map((post) =>
+											post.author.id === 'mina' ? { ...post, author: currentPerson } : post
+										);
+										editingProfile = false;
+										announcement = 'Profile updated.';
+									}}
+								>
+									<label class="grid gap-1 text-sm"
+										>Display name<Input
+											value={editedName}
+											oninput={(event) => (editedName = event.currentTarget.value)}
+											required
+											maxlength={48}
+										/></label
+									><label class="grid gap-1 text-sm"
+										>About you<Textarea
+											value={editedBio}
+											oninput={(event) => (editedBio = event.currentTarget.value)}
+											maxlength={180}
+										/></label
+									><Button type="submit" disabled={!editedName.trim()}>Save profile</Button>
+								</form>{/if}
+						</section>
+					{:else if activeNav === 'Discover' || activeNav === 'Circles'}
+						<section
+							class="m-4 rounded-2xl border bg-muted/30 p-5 sm:m-6"
+							aria-label="Explore circles"
+						>
+							<p class="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+								Find your people
+							</p>
+							<h2 class="mt-2 text-xl font-semibold">Small circles. Wider perspectives.</h2>
+							<p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+								Follow a voice to bring their notes into your circle.
+							</p>
+							<div class="mt-4 grid gap-3">
+								{#each suggestions as person (person.id)}<div class="flex items-center gap-3">
+										<Avatar
+											><AvatarFallback class={avatarTone(person)}>{person.initials}</AvatarFallback
+											></Avatar
+										><button
+											class="min-w-0 flex-1 text-left text-sm underline-offset-4 hover:underline focus-visible:outline-2"
+											onclick={() => navigate({ profile: person.id })}
+											><strong class="block">{person.name}</strong><span
+												class="text-muted-foreground">{person.role}</span
+											></button
+										><Button
+											size="sm"
+											variant="outline"
+											aria-pressed={following.has(person.id)}
+											onclick={() => toggleFollow(person)}
+											>{following.has(person.id) ? 'Following' : 'Follow'}</Button
+										>
+									</div>{/each}
+							</div>
+						</section>
+					{/if}
+				</div>
+			{/key}
+			{#if lastHidden}<div
+					class="mx-4 my-3 flex items-center justify-between gap-3 rounded-xl border bg-muted p-3 text-sm"
+					role="status"
+				>
+					Note hidden from your feed.<Button size="sm" variant="outline" onclick={undoHide}
+						>Undo hide</Button
+					>
+				</div>{/if}
 			<section class="border-b p-4 sm:p-6" aria-labelledby="composer-heading">
 				<div class="flex gap-3">
 					<Avatar class="mt-0.5 size-10 shrink-0">
@@ -382,14 +588,36 @@
 						<h2 id="composer-heading" class="sr-only">Write a new note</h2>
 						<Textarea
 							id="new-note"
+							disabled={!mounted}
 							value={draft}
-							oninput={(event) => (draft = event.currentTarget.value)}
+							oninput={(event) => updateDraft(event.currentTarget.value)}
 							maxlength={320}
 							placeholder="Share something worth keeping…"
 							aria-label="Write a new note"
 							aria-describedby="composer-limit"
 							class="min-h-24 resize-none border-0 bg-transparent p-0 text-[1rem] leading-relaxed shadow-none focus-visible:ring-2"
 						></Textarea>
+						{#if attachArt}<div
+								class="mt-3 rounded-xl border bg-emerald-50 p-3 dark:bg-emerald-950"
+							>
+								<img
+									src="/templates/social-network/field-map.svg"
+									alt={attachmentAlt}
+									class="h-32 w-full rounded-lg object-cover"
+								/>
+								<p class="mt-2 text-xs text-muted-foreground">Original community field map</p>
+								<label class="mt-3 grid gap-1 text-sm"
+									>Image description<Input
+										value={attachmentAlt}
+										oninput={(event) => (attachmentAlt = event.currentTarget.value)}
+										maxlength={200}
+										placeholder="Describe the image for someone who cannot see it"
+									/></label
+								>
+							</div>{/if}
+						<p class="mt-2 text-xs text-muted-foreground">
+							Draft text stays in this browser until you publish.
+						</p>
 						<Separator class="my-3" />
 						<div class="flex items-center gap-2">
 							<IconButton
@@ -423,7 +651,7 @@
 							<button
 								class="h-fit rounded-full focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
 								aria-label={`Open ${post.author.name}'s profile`}
-								onclick={() => (selectedProfile = post.author)}
+								onclick={() => navigate({ profile: post.author.id })}
 							>
 								<Avatar class="size-10">
 									<AvatarFallback class={avatarTone(post.author)}
@@ -444,6 +672,12 @@
 												in {post.topic}
 											</p>{/if}
 									</div>
+									<Button
+										size="sm"
+										variant="ghost"
+										aria-label={`Hide note by ${post.author.name}`}
+										onclick={() => hidePost(post.id)}>Hide</Button
+									>
 								</header>
 
 								<p class="mt-3 text-[0.965rem] leading-6 text-foreground/90">{post.content}</p>
@@ -452,23 +686,14 @@
 									<figure
 										class={`visual-note mt-4 overflow-hidden rounded-2xl border bg-gradient-to-br ${post.image.tone}`}
 									>
-										<div
-											class="relative aspect-[16/9] min-h-48 p-5 sm:p-7"
-											role="img"
-											aria-label={post.image.alt}
-										>
-											<div
-												class="absolute inset-0 [background-image:radial-gradient(circle_at_center,currentColor_1px,transparent_1px)] [background-size:22px_22px] opacity-40"
-											></div>
-											<div
-												class="absolute top-[20%] left-[12%] h-[55%] w-[70%] rotate-[-4deg] rounded-[45%] border-2 border-emerald-700/30 bg-emerald-300/20"
-											></div>
-											<div
-												class="absolute right-[12%] bottom-[14%] size-24 rounded-full border border-amber-700/30 bg-amber-300/25"
-											></div>
-										</div>
+										<img
+											src={post.image.src ?? '/templates/social-network/field-map.svg'}
+											alt={post.image.alt}
+											class="aspect-[16/9] w-full object-cover"
+											loading="lazy"
+										/>
 										<figcaption
-											class="-mt-8 px-4 pb-4 text-xs font-medium text-emerald-950/75 dark:text-emerald-100/80"
+											class="px-4 py-3 text-xs font-medium text-emerald-950/75 dark:text-emerald-100/80"
 										>
 											{post.image.caption}
 										</figcaption>
@@ -632,7 +857,7 @@
 							{#each topics as topic, index (topic.label)}
 								<button
 									onclick={() => {
-										activeNav = 'Discover';
+										chooseNav('Discover');
 										search =
 											topic.label === 'City fieldwork'
 												? 'Field notes'
@@ -706,7 +931,7 @@
 <Sheet.Root
 	open={selectedProfile !== null}
 	onOpenChange={(open) => {
-		if (!open) selectedProfile = null;
+		if (!open) navigate({ profile: null });
 	}}
 >
 	<Sheet.Content>
@@ -721,12 +946,17 @@
 					><AvatarFallback class={avatarTone(person)}>{person.initials}</AvatarFallback></Avatar
 				>
 				<p>
-					A fictional community member sharing observations about thoughtful work and everyday
-					places.
+					{person.id === 'mina'
+						? profileBio
+						: 'Sharing observations about thoughtful work and everyday places. Based nearby, curious about what comes next.'}
 				</p>
-				<Button aria-pressed={following.has(person.id)} onclick={() => toggleFollow(person)}
-					>{following.has(person.id) ? 'Unfollow' : 'Follow'} {person.name}</Button
-				>
+				{#if person.id === 'mina'}<Button onclick={() => chooseNav('Profile')}
+						>View your profile</Button
+					>{:else}
+					<Button aria-pressed={following.has(person.id)} onclick={() => toggleFollow(person)}
+						>{following.has(person.id) ? 'Unfollow' : 'Follow'} {person.name}</Button
+					>
+				{/if}
 				<h3 class="font-semibold">Recent notes</h3>
 				{#each posts.filter((post) => post.author.id === person.id) as post (post.id)}<p
 						class="border-b pb-4 text-sm leading-relaxed"
@@ -739,6 +969,27 @@
 </Sheet.Root>
 
 <style>
+	.screen-intro {
+		animation: screen-enter var(--motion-enter) var(--motion-ease-enter) both;
+	}
+	.profile-cover {
+		background: radial-gradient(
+			ellipse at top right,
+			color-mix(in oklab, var(--primary) 14%, transparent),
+			transparent 70%
+		);
+	}
+	@keyframes screen-enter {
+		from {
+			opacity: 0;
+			transform: translateY(6px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
 	.post-card {
 		transition: background-color var(--motion-state) var(--motion-ease-enter);
 	}
@@ -780,6 +1031,7 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		.screen-intro,
 		.post-card,
 		.visual-note,
 		:global(.social-shell *) {

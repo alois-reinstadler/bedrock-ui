@@ -64,3 +64,91 @@ test('searches, saves, replies, opens profiles, and marks notifications read', a
 		.click();
 	await expect(page.getByText('1 update waiting for you')).toBeVisible();
 });
+
+test('retains drafts, publishes described media, and supports reversible moderation', async ({
+	page
+}) => {
+	await page.goto('/templates/social-network');
+	const draft = page.getByRole('textbox', { name: 'Write a new note' });
+	await draft.fill('A garden gives a neighborhood room to pause.');
+	await page.reload();
+	await expect(draft).toHaveValue('A garden gives a neighborhood room to pause.');
+	await page.getByRole('button', { name: 'Attach sample field map' }).click();
+	await page
+		.getByRole('textbox', { name: 'Image description' })
+		.fill('Three shaded gathering places connected by garden paths');
+	await page.getByRole('button', { name: 'Publish', exact: true }).click();
+	const post = page.locator('[data-post-id]').first();
+	await expect(
+		post.getByRole('img', { name: 'Three shaded gathering places connected by garden paths' })
+	).toBeVisible();
+	await post.getByRole('button', { name: 'Save note', exact: true }).click();
+	await page
+		.getByRole('navigation', { name: 'Social primary navigation', exact: true })
+		.getByRole('button', { name: 'Saved', exact: true })
+		.click();
+	await expect(page).toHaveURL(/view=Saved/);
+	await expect(page.getByText('A garden gives a neighborhood room to pause.')).toBeVisible();
+	await page
+		.locator('[data-post-id]')
+		.first()
+		.getByRole('button', { name: 'Hide note by Mina Okafor' })
+		.click();
+	await expect(page.getByText('A garden gives a neighborhood room to pause.')).toHaveCount(0);
+	await page.getByRole('button', { name: 'Undo hide' }).click();
+	await expect(page.getByText('A garden gives a neighborhood room to pause.')).toBeVisible();
+});
+
+test('links profiles and threads, edits own profile, and filters notifications', async ({
+	page
+}) => {
+	await page.goto('/templates/social-network?view=Profile');
+	await page.getByRole('button', { name: 'Edit profile', exact: true }).click();
+	await page.getByRole('textbox', { name: 'Display name' }).fill('Mina Fieldwork');
+	await page.getByRole('textbox', { name: 'About you' }).fill('Making more room for useful ideas.');
+	await page.getByRole('button', { name: 'Save profile' }).click();
+	await expect(
+		page
+			.getByRole('region', { name: 'Your profile' })
+			.getByRole('heading', { name: 'Mina Fieldwork' })
+	).toBeVisible();
+	await page.goto('/templates/social-network?thread=garden-signals');
+	await expect(page.getByRole('textbox', { name: 'Reply to Sora Bell' })).toBeVisible();
+	await page.reload();
+	await expect(page.getByRole('textbox', { name: 'Reply to Sora Bell' })).toBeVisible();
+	await page
+		.locator('[data-post-id="garden-signals"]')
+		.getByRole('button', { name: "Open Sora Bell's profile" })
+		.click();
+	await expect(page).toHaveURL(/profile=sora/);
+	await page.reload();
+	await expect(page.getByRole('dialog').getByRole('heading', { name: 'Sora Bell' })).toBeVisible();
+	await page.keyboard.press('Escape');
+	await page.getByRole('button', { name: 'Open notifications', exact: true }).click();
+	await page.getByRole('button', { name: 'Unread only' }).click();
+	await page.getByRole('button', { name: 'Mark all read' }).click();
+	await expect(page.getByText('0 updates waiting for you')).toBeVisible();
+});
+
+test('mobile discovery and browser history work with reduced motion', async ({ page }) => {
+	await page.setViewportSize({ width: 390, height: 844 });
+	await page.emulateMedia({ reducedMotion: 'reduce', colorScheme: 'dark' });
+	await page.goto('/templates/social-network');
+	const navigation = page.getByRole('navigation', { name: 'Mobile navigation', exact: true });
+	await navigation.getByRole('button', { name: 'Discover', exact: true }).click();
+	await expect(
+		page.getByRole('heading', { name: 'Small circles. Wider perspectives.' })
+	).toBeVisible();
+	await page
+		.getByRole('region', { name: 'Explore circles' })
+		.getByRole('button', { name: 'Follow', exact: true })
+		.first()
+		.click();
+	await navigation.getByRole('button', { name: 'Profile', exact: true }).click();
+	await expect(page.getByRole('region', { name: 'Your profile' })).toBeVisible();
+	await page.goBack();
+	await expect(page).toHaveURL(/view=Discover/);
+	expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
+		true
+	);
+});

@@ -29,6 +29,7 @@ export type FeedPost = {
 	reposted?: boolean;
 	bookmarked?: boolean;
 	image?: {
+		src?: string;
 		alt: string;
 		caption: string;
 		tone: string;
@@ -153,6 +154,12 @@ export const initialPosts: FeedPost[] = [
 	},
 	{
 		id: 'margin-notes',
+		image: {
+			src: '/templates/social-network/margins.svg',
+			alt: 'Original editorial spread with orange circles and generous ivory page margins',
+			caption: 'Issue twelve · Space to think',
+			tone: 'from-orange-50 to-amber-50 dark:from-orange-950 dark:to-amber-950'
+		},
 		author: people.rhea,
 		time: '3 hr',
 		topic: 'Independent publishing',
