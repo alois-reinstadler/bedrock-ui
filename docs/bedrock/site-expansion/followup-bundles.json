@@ -1,0 +1,351 @@
+{
+	"baseline": "15bbf5d",
+	"scope": "Production JS entry sizes and static import closures. Excludes dynamic imports, CSS, bootstrap, server data, and media. Gzip measured per file.",
+	"routes": {
+		"demo/motion-test/+page.svelte": {
+			"entryBytes": 2085,
+			"entryGzipBytes": 1016,
+			"staticClosureBytes": 111735,
+			"previousEntryBytes": 2085
+		},
+		"+layout.ts": {
+			"entryBytes": 26447,
+			"entryGzipBytes": 9232,
+			"staticClosureBytes": 264300,
+			"previousEntryBytes": 26457
+		},
+		"docs/changelog/+page.svelte": {
+			"entryBytes": 2442,
+			"entryGzipBytes": 1200,
+			"staticClosureBytes": 141181,
+			"previousEntryBytes": 2442
+		},
+		"demo/motion/+layout.svelte": {
+			"entryBytes": 4968,
+			"entryGzipBytes": 1988,
+			"staticClosureBytes": 74669,
+			"previousEntryBytes": 4968
+		},
+		"demo/playwright/+page.svelte": {
+			"entryBytes": 148,
+			"entryGzipBytes": 154,
+			"staticClosureBytes": 61927,
+			"previousEntryBytes": 148
+		},
+		"demo/motion/continuity/+page.svelte": {
+			"entryBytes": 15907,
+			"entryGzipBytes": 6068,
+			"staticClosureBytes": 281042,
+			"previousEntryBytes": 15907
+		},
+		"demo/ui/+page.svelte": {
+			"entryBytes": 25717,
+			"entryGzipBytes": 8387,
+			"staticClosureBytes": 147982,
+			"previousEntryBytes": 25720
+		},
+		"docs/+layout.svelte": {
+			"entryBytes": 9060,
+			"entryGzipBytes": 2590,
+			"staticClosureBytes": 385151,
+			"previousEntryBytes": 9030
+		},
+		"docs/components/[slug]/+page.svelte": {
+			"entryBytes": 69767,
+			"entryGzipBytes": 17471,
+			"staticClosureBytes": 407636,
+			"previousEntryBytes": 60813
+		},
+		"demo/+page.svelte": {
+			"entryBytes": 635,
+			"entryGzipBytes": 375,
+			"staticClosureBytes": 65741,
+			"previousEntryBytes": 635
+		},
+		"docs/theming/+page.svelte": {
+			"entryBytes": 4310,
+			"entryGzipBytes": 1591,
+			"staticClosureBytes": 294762,
+			"previousEntryBytes": 4310
+		},
+		"templates/social-network/+page.svelte": {
+			"entryBytes": 38955,
+			"entryGzipBytes": 12036,
+			"staticClosureBytes": 487211,
+			"previousEntryBytes": 31493
+		},
+		"demo/motion/foundations/+page.svelte": {
+			"entryBytes": 8685,
+			"entryGzipBytes": 3457,
+			"staticClosureBytes": 127984,
+			"previousEntryBytes": 8680
+		},
+		"docs/templates/+page.svelte": {
+			"entryBytes": 4010,
+			"entryGzipBytes": 1940,
+			"staticClosureBytes": 139233,
+			"previousEntryBytes": 4015
+		},
+		"docs/+page.svelte": {
+			"entryBytes": 4515,
+			"entryGzipBytes": 2051,
+			"staticClosureBytes": 164468,
+			"previousEntryBytes": 4515
+		},
+		"demo/erp/+page.svelte": {
+			"entryBytes": 15150,
+			"entryGzipBytes": 5687,
+			"staticClosureBytes": 753039,
+			"previousEntryBytes": 15150
+		},
+		"demo/motion/concurrency/+page.svelte": {
+			"entryBytes": 14826,
+			"entryGzipBytes": 5541,
+			"staticClosureBytes": 292712,
+			"previousEntryBytes": 14825
+		},
+		"demo/contrast/+page.svelte": {
+			"entryBytes": 1683,
+			"entryGzipBytes": 910,
+			"staticClosureBytes": 136704,
+			"previousEntryBytes": 1683
+		},
+		"docs/installation/+page.svelte": {
+			"entryBytes": 1993,
+			"entryGzipBytes": 989,
+			"staticClosureBytes": 285090,
+			"previousEntryBytes": 1993
+		},
+		"+page.svelte": {
+			"entryBytes": 12882,
+			"entryGzipBytes": 4639,
+			"staticClosureBytes": 274674,
+			"previousEntryBytes": 12881
+		},
+		"docs/forms/+page.svelte": {
+			"entryBytes": 12655,
+			"entryGzipBytes": 4840,
+			"staticClosureBytes": 320506,
+			"previousEntryBytes": 12655
+		},
+		"templates/video-library/+page.svelte": {
+			"entryBytes": 32930,
+			"entryGzipBytes": 10472,
+			"staticClosureBytes": 417645,
+			"previousEntryBytes": 24944
+		},
+		"templates/email-client/+page.svelte": {
+			"entryBytes": 57048,
+			"entryGzipBytes": 17064,
+			"staticClosureBytes": 644565,
+			"previousEntryBytes": 31095
+		},
+		"demo/chat/+page.svelte": {
+			"entryBytes": 7119,
+			"entryGzipBytes": 2869,
+			"staticClosureBytes": 440235,
+			"previousEntryBytes": 7119
+		},
+		"demo/motion/accessibility/+page.svelte": {
+			"entryBytes": 13579,
+			"entryGzipBytes": 5398,
+			"staticClosureBytes": 204605,
+			"previousEntryBytes": 13579
+		},
+		"docs/blocks/[slug]/+page.svelte": {
+			"entryBytes": 7235,
+			"entryGzipBytes": 2649,
+			"staticClosureBytes": 303634,
+			"previousEntryBytes": 7340
+		},
+		"templates/+layout.svelte": {
+			"entryBytes": 1917,
+			"entryGzipBytes": 1022,
+			"staticClosureBytes": 210053,
+			"previousEntryBytes": 665
+		},
+		"demo/motion/+page.svelte": {
+			"entryBytes": 5120,
+			"entryGzipBytes": 2321,
+			"staticClosureBytes": 72105,
+			"previousEntryBytes": 5120
+		},
+		"docs/skills/+page.svelte": {
+			"entryBytes": 4156,
+			"entryGzipBytes": 1672,
+			"staticClosureBytes": 296428,
+			"previousEntryBytes": 4156
+		},
+		"demo/ui-page-transitions/+page.svelte": {
+			"entryBytes": 21872,
+			"entryGzipBytes": 7384,
+			"staticClosureBytes": 91678,
+			"previousEntryBytes": 22151
+		},
+		"demo/motion/components/+page.svelte": {
+			"entryBytes": 18836,
+			"entryGzipBytes": 5645,
+			"staticClosureBytes": 478970,
+			"previousEntryBytes": 18836
+		},
+		"docs/components/+page.svelte": {
+			"entryBytes": 7894,
+			"entryGzipBytes": 3067,
+			"staticClosureBytes": 175963,
+			"previousEntryBytes": 7899
+		},
+		"docs/blocks/+page.svelte": {
+			"entryBytes": 3757,
+			"entryGzipBytes": 1685,
+			"staticClosureBytes": 157695,
+			"previousEntryBytes": 3757
+		},
+		"templates/music-player/+page.svelte": {
+			"entryBytes": 28791,
+			"entryGzipBytes": 9095,
+			"staticClosureBytes": 430354,
+			"previousEntryBytes": 21445
+		}
+	},
+	"docsWithLayouts": {
+		"bytes": 555847,
+		"previousBytes": 549732,
+		"files": [
+			"_app/immutable/nodes/0.CzIuoHq_.js",
+			"_app/immutable/nodes/25.r1jWVdY4.js",
+			"_app/immutable/nodes/3.Dawv2g0J.js",
+			"_app/immutable/chunks/4zleTBJW.js",
+			"_app/immutable/chunks/5o828efA.js",
+			"_app/immutable/chunks/94KK1QN6.js",
+			"_app/immutable/chunks/B-UkZxTw.js",
+			"_app/immutable/chunks/B-giwNC8.js",
+			"_app/immutable/chunks/BAB8rcE7.js",
+			"_app/immutable/chunks/BC2102x4.js",
+			"_app/immutable/chunks/BGFcyiXM.js",
+			"_app/immutable/chunks/BJ3TS103.js",
+			"_app/immutable/chunks/BODGcY2G.js",
+			"_app/immutable/chunks/BaE4uqHF.js",
+			"_app/immutable/chunks/BeKJgE-T.js",
+			"_app/immutable/chunks/BeLIMWJF.js",
+			"_app/immutable/chunks/BjDS0fWV.js",
+			"_app/immutable/chunks/BlTlFYXG.js",
+			"_app/immutable/chunks/BotAgMxl.js",
+			"_app/immutable/chunks/BpBJSoyY.js",
+			"_app/immutable/chunks/BrKvIAE2.js",
+			"_app/immutable/chunks/C01AVYLv.js",
+			"_app/immutable/chunks/C1LVOi02.js",
+			"_app/immutable/chunks/C9fsdqFq.js",
+			"_app/immutable/chunks/CHxhbrlj.js",
+			"_app/immutable/chunks/COV1E4lg.js",
+			"_app/immutable/chunks/CRI7RYFV.js",
+			"_app/immutable/chunks/CS0CTlhZ.js",
+			"_app/immutable/chunks/CU82GoAh.js",
+			"_app/immutable/chunks/CWTF97Jo.js",
+			"_app/immutable/chunks/CXKVJENn.js",
+			"_app/immutable/chunks/CXYjDqDp.js",
+			"_app/immutable/chunks/CYTDGxr0.js",
+			"_app/immutable/chunks/CdJ-jk-Y.js",
+			"_app/immutable/chunks/Cg_55M5R.js",
+			"_app/immutable/chunks/ChgN2bqI.js",
+			"_app/immutable/chunks/Cmj8RZVl.js",
+			"_app/immutable/chunks/CrM4Kzgz.js",
+			"_app/immutable/chunks/Cv5xwm_X.js",
+			"_app/immutable/chunks/Cv7u_K_F.js",
+			"_app/immutable/chunks/CxQ4pwAz.js",
+			"_app/immutable/chunks/D0FokmUC.js",
+			"_app/immutable/chunks/DCLnUAmK.js",
+			"_app/immutable/chunks/DHXCUNmr.js",
+			"_app/immutable/chunks/DK3Fl9T5.js",
+			"_app/immutable/chunks/DKbf1IsL.js",
+			"_app/immutable/chunks/DKrACq0q.js",
+			"_app/immutable/chunks/DLdvLIZb.js",
+			"_app/immutable/chunks/DOfwFZ-0.js",
+			"_app/immutable/chunks/DRSip22J.js",
+			"_app/immutable/chunks/DUeMIOEw.js",
+			"_app/immutable/chunks/DWjWm-Fd.js",
+			"_app/immutable/chunks/Dn8Ecjov.js",
+			"_app/immutable/chunks/DnmCkSWi.js",
+			"_app/immutable/chunks/DpMQKe6v.js",
+			"_app/immutable/chunks/Dym_2jSX.js",
+			"_app/immutable/chunks/E1nhVIRx.js",
+			"_app/immutable/chunks/EIuDvn1D.js",
+			"_app/immutable/chunks/FIzwiY7q.js",
+			"_app/immutable/chunks/FR6Jfry6.js",
+			"_app/immutable/chunks/G5AfLsJe.js",
+			"_app/immutable/chunks/HclGiUj8.js",
+			"_app/immutable/chunks/T4db7VCI.js",
+			"_app/immutable/chunks/Xqum2ppD.js",
+			"_app/immutable/chunks/Z8TBmJFX.js",
+			"_app/immutable/chunks/_aoYskxR.js",
+			"_app/immutable/chunks/dniFFZM8.js",
+			"_app/immutable/chunks/ejIphM7R.js",
+			"_app/immutable/chunks/r3Xjttst.js",
+			"_app/immutable/chunks/tlBK-nua.js",
+			"_app/immutable/chunks/u0RPBTyx.js",
+			"_app/immutable/chunks/zPUnlIDv.js",
+			"_app/immutable/entry/payload.DSmR2FwN.js"
+		]
+	},
+	"largestChunks": [
+		{
+			"file": "_app/immutable/chunks/c_oH4hRZ.js",
+			"bytes": 790000
+		},
+		{
+			"file": "_app/immutable/chunks/Bd5PR4J-.js",
+			"bytes": 785512
+		},
+		{
+			"file": "_app/immutable/chunks/BnjxR4X6.js",
+			"bytes": 622325
+		},
+		{
+			"file": "_app/immutable/chunks/CIKVmJ8v.js",
+			"bytes": 430954
+		},
+		{
+			"file": "_app/immutable/chunks/DLL8P-h_.js",
+			"bytes": 262384
+		},
+		{
+			"file": "_app/immutable/chunks/_AjD9dJ3.js",
+			"bytes": 230870
+		},
+		{
+			"file": "_app/immutable/chunks/CAaadklP.js",
+			"bytes": 214772
+		},
+		{
+			"file": "_app/immutable/chunks/Eu7fqxDR.js",
+			"bytes": 190018
+		},
+		{
+			"file": "_app/immutable/chunks/PQzR-riV.js",
+			"bytes": 183713
+		},
+		{
+			"file": "_app/immutable/chunks/PYXmkWQR.js",
+			"bytes": 181129
+		},
+		{
+			"file": "_app/immutable/chunks/CcDslhWf.js",
+			"bytes": 177841
+		},
+		{
+			"file": "_app/immutable/chunks/q7bdLbId.js",
+			"bytes": 175585
+		},
+		{
+			"file": "_app/immutable/chunks/DKxQjsmF.js",
+			"bytes": 174876
+		},
+		{
+			"file": "_app/immutable/chunks/BsSzOQcm.js",
+			"bytes": 171965
+		},
+		{
+			"file": "_app/immutable/chunks/CsJ9-EYl.js",
+			"bytes": 163130
+		}
+	]
+}

@@ -1,0 +1,21 @@
+$ svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+Loading svelte-check in workspace: /workspace/wt/bedrock-template-music-depth
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+Checking formatting...
+All matched files use Prettier code style!
+
+Running 7 tests using 1 worker
+
+(node:1562204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 src/routes/templates/music-player/music-player.e2e.ts:3:1 › music search, playback, saved songs, and keyboard range controls (1.4s)
+  ✓  2 src/routes/templates/music-player/music-player.e2e.ts:27:1 › compact music player supports queue and mobile track playback (1.1s)
+  ✓  3 src/routes/templates/music-player/music-player.e2e.ts:43:1 › native audio advances, seeks, changes source, repeats, and stops on navigation (2.8s)
+  ✓  4 src/routes/templates/music-player/music-player.e2e.ts:93:1 › saved albums, liked songs, and linked library views survive reload (2.4s)
+  ✓  5 src/routes/templates/music-player/music-player.e2e.ts:113:1 › mobile now-playing exposes full transport and queue editing (924ms)
+  ✓  6 src/routes/templates/music-player/music-player.e2e.ts:129:1 › a failed media request has an actionable retry state (1.2s)
+  ✓  7 src/routes/templates/music-player/music-player.e2e.ts:141:1 › tablet library and track grids fit inside the main scroll region (679ms)
+
+  7 passed (11.7s)

@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+(node:1573988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 src/routes/templates/social-network/social-network.e2e.ts:4:2 › Social Network template › publishes a note and supports feed reactions and threads (773ms)
+  ✓  2 src/routes/templates/social-network/social-network.e2e.ts:29:2 › Social Network template › adapts its primary controls to a mobile viewport (491ms)
+  ✓  3 src/routes/templates/social-network/social-network.e2e.ts:41:1 › searches, saves, replies, opens profiles, and marks notifications read (2.6s)
+  ✓  4 src/routes/templates/social-network/social-network.e2e.ts:68:1 › retains drafts, publishes described media, and supports reversible moderation (892ms)
+  ✓  5 src/routes/templates/social-network/social-network.e2e.ts:102:1 › links profiles and threads, edits own profile, and filters notifications (2.3s)
+  ✓  6 src/routes/templates/social-network/social-network.e2e.ts:133:1 › mobile discovery and browser history work with reduced motion (594ms)
+
+  6 passed (8.6s)

@@ -1,0 +1,44 @@
+$ NODE_ENV=test vitest -- --run --maxWorkers=2
+
+ RUN  v4.1.11 /home/node/repos/bedrock-ui
+
+The following plugins may not work correctly because they use the `transformIndexHtml` hook which is not supported:
+
+  - vitest:browser:transform-tester-html
+3:10:04 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:10:04 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:10:04 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:10:04 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:10:04 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:10:04 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:10:04 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:10:04 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+404 GET /missing.vtt
+3:10:06 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:10:06 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+
+ Test Files  63 passed (63)
+      Tests  346 passed (346)
+   Start at  03:09:45
+   Duration  26.02s (transform 23.70s, setup 0ms, import 108.15s, tests 27.05s, environment 13ms)
+

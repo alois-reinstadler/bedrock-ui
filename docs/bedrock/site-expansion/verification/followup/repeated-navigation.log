@@ -1,0 +1,50 @@
+
+Running 33 tests using 2 workers
+
+(node:1579866) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1579867) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 src/routes/docs/components/docs-rendering.e2e.ts:3:1 › imports are highlighted without JavaScript (304ms)
+  ✓   3 src/routes/docs/components/docs-rendering.e2e.ts:16:1 › source loads on demand and renders colored tokens in both themes (714ms)
+  ✓   1 src/routes/docs/components/docs-navigation.e2e.ts:4:2 › component documentation navigation › keeps page content in sync across rapid docs navigation (2.4s)
+  ✓   5 src/routes/docs/components/docs-navigation.e2e.ts:37:2 › component documentation navigation › uses Bedrock timing tokens and avoids a duplicate TypeScript label (590ms)
+  ✓   4 src/routes/docs/components/docs-rendering.e2e.ts:39:1 › navigation stays consistent while an example chunk is delayed (3.2s)
+  ✓   6 src/routes/docs/components/docs-navigation.e2e.ts:55:2 › component documentation navigation › keeps component reference tabs addressable across navigation and reload (1.4s)
+  ✓   7 src/routes/docs/components/docs-rendering.e2e.ts:68:1 › contextual examples perform real local workflows (1.2s)
+  ✓   8 src/routes/docs/components/docs-navigation.e2e.ts:90:2 › component documentation navigation › exposes component-specific known accessibility gaps (1.1s)
+  ✓   9 src/routes/docs/components/docs-rendering.e2e.ts:82:1 › form and selectable-card examples survive interaction and tab navigation (1.3s)
+(node:1580189) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  11 src/routes/docs/components/docs-navigation.e2e.ts:4:2 › component documentation navigation › keeps page content in sync across rapid docs navigation (1.9s)
+  ✓  12 src/routes/docs/components/docs-navigation.e2e.ts:37:2 › component documentation navigation › uses Bedrock timing tokens and avoids a duplicate TypeScript label (438ms)
+  ✓  13 src/routes/docs/components/docs-navigation.e2e.ts:55:2 › component documentation navigation › keeps component reference tabs addressable across navigation and reload (1.0s)
+  ✓  10 src/routes/templates/template-navigation.e2e.ts:4:2 › template route transitions: no-preference (6.2s)
+  ✓  14 src/routes/docs/components/docs-navigation.e2e.ts:90:2 › component documentation navigation › exposes component-specific known accessibility gaps (1.0s)
+  ✓  16 src/routes/docs/components/docs-rendering.e2e.ts:3:1 › imports are highlighted without JavaScript (231ms)
+  ✓  17 src/routes/docs/components/docs-rendering.e2e.ts:16:1 › source loads on demand and renders colored tokens in both themes (666ms)
+  ✓  15 src/routes/templates/template-navigation.e2e.ts:4:2 › template route transitions: reduce (1.7s)
+(node:1580397) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  18 src/routes/docs/components/docs-rendering.e2e.ts:39:1 › navigation stays consistent while an example chunk is delayed (2.6s)
+  ✓  20 src/routes/docs/components/docs-rendering.e2e.ts:68:1 › contextual examples perform real local workflows (1.2s)
+  ✓  21 src/routes/docs/components/docs-rendering.e2e.ts:82:1 › form and selectable-card examples survive interaction and tab navigation (1.1s)
+(node:1580520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  19 src/routes/templates/template-navigation.e2e.ts:4:2 › template route transitions: no-preference (5.6s)
+  ✓  22 src/routes/docs/components/docs-navigation.e2e.ts:4:2 › component documentation navigation › keeps page content in sync across rapid docs navigation (2.0s)
+  ✓  24 src/routes/docs/components/docs-navigation.e2e.ts:37:2 › component documentation navigation › uses Bedrock timing tokens and avoids a duplicate TypeScript label (538ms)
+  ✓  23 src/routes/templates/template-navigation.e2e.ts:4:2 › template route transitions: reduce (2.1s)
+  ✓  25 src/routes/docs/components/docs-navigation.e2e.ts:55:2 › component documentation navigation › keeps component reference tabs addressable across navigation and reload (1.5s)
+(node:1580711) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  27 src/routes/docs/components/docs-rendering.e2e.ts:3:1 › imports are highlighted without JavaScript (245ms)
+  ✓  26 src/routes/docs/components/docs-navigation.e2e.ts:90:2 › component documentation navigation › exposes component-specific known accessibility gaps (1.2s)
+  ✓  28 src/routes/docs/components/docs-rendering.e2e.ts:16:1 › source loads on demand and renders colored tokens in both themes (850ms)
+  ✓  30 src/routes/docs/components/docs-rendering.e2e.ts:39:1 › navigation stays consistent while an example chunk is delayed (2.8s)
+  ✓  31 src/routes/docs/components/docs-rendering.e2e.ts:68:1 › contextual examples perform real local workflows (1.5s)
+  ✓  32 src/routes/docs/components/docs-rendering.e2e.ts:82:1 › form and selectable-card examples survive interaction and tab navigation (1.5s)
+  ✓  29 src/routes/templates/template-navigation.e2e.ts:4:2 › template route transitions: no-preference (6.9s)
+  ✓  33 src/routes/templates/template-navigation.e2e.ts:4:2 › template route transitions: reduce (1.4s)
+
+  33 passed (33.1s)

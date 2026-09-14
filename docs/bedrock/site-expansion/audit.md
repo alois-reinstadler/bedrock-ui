@@ -1,5 +1,7 @@
 # Site expansion audit
 
+This records the initial expansion at `15bbf5d`. See [the follow-up audit](./followup-audit.md) for the later documentation rendering and template depth pass.
+
 ## Implemented scope
 
 The public site now has one responsive header and a persistent documentation shell. Routes include `/`, `/docs`, `/docs/installation`, `/docs/theming`, `/docs/skills`, `/docs/forms`, `/docs/changelog`, and the components, blocks, and templates catalogues. Changelog has an empty release model and remains absent from navigation.

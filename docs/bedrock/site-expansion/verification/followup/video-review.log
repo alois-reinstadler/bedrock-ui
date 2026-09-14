@@ -1,0 +1,27 @@
+$ svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+Loading svelte-check in workspace: /workspace/wt/bedrock-template-video-depth
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+Checking formatting...
+All matched files use Prettier code style!
+
+Running 13 tests using 1 worker
+
+(node:1562216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 src/routes/templates/video-library/video-library.e2e.ts:12:2 › Video Library template › searches, saves, and plays a fictional title (2.2s)
+  ✓   2 src/routes/templates/video-library/video-library.e2e.ts:34:2 › Video Library template › watchlist state is reflected in My list (743ms)
+  ✓   3 src/routes/templates/video-library/video-library.e2e.ts:41:2 › Video Library template › mobile navigation remains operable (668ms)
+  ✓   4 src/routes/templates/video-library/video-library.e2e.ts:53:1 › keyboard shortcuts, dialog focus return, and empty search (1.0s)
+  ✓   5 src/routes/templates/video-library/video-library.e2e.ts:78:3 › 390px light layout and reduced motion (634ms)
+  ✓   6 src/routes/templates/video-library/video-library.e2e.ts:78:3 › 390px dark layout and reduced motion (599ms)
+  ✓   7 src/routes/templates/video-library/video-library.e2e.ts:78:3 › 768px light layout and reduced motion (702ms)
+  ✓   8 src/routes/templates/video-library/video-library.e2e.ts:78:3 › 768px dark layout and reduced motion (822ms)
+  ✓   9 src/routes/templates/video-library/video-library.e2e.ts:78:3 › 1440px light layout and reduced motion (686ms)
+  ✓  10 src/routes/templates/video-library/video-library.e2e.ts:78:3 › 1440px dark layout and reduced motion (756ms)
+  ✓  11 src/routes/templates/video-library/video-library.e2e.ts:102:1 › original shorts have distinct media, real seeking, and persisted resume progress (3.9s)
+  ✓  12 src/routes/templates/video-library/video-library.e2e.ts:153:1 › watchlist persists and category filtering changes the catalogue (1.0s)
+  ✓  13 src/routes/templates/video-library/video-library.e2e.ts:170:1 › failed local media offers retry and can recover (1.6s)
+
+  13 passed (16.9s)

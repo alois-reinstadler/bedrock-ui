@@ -1,0 +1,21 @@
+$ svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+Loading svelte-check in workspace: /workspace/wt/bedrock-template-email-depth
+Getting Svelte diagnostics...
+
+svelte-check found 0 errors and 0 warnings
+Checking formatting...
+All matched files use Prettier code style!
+
+Running 7 tests using 1 worker
+
+(node:1563215) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 src/lib/templates/email-client/email-client.e2e.ts:3:1 › mail search, selection, archive, compose, and calendar work locally (1.7s)
+  ✓  2 src/lib/templates/email-client/email-client.e2e.ts:34:1 › mobile reading returns focus to the list and keeps layout within viewport (722ms)
+  ✓  3 src/lib/templates/email-client/email-client.e2e.ts:53:1 › mobile standard motion focuses the opened message (484ms)
+  ✓  4 src/lib/templates/email-client/email-client.e2e.ts:61:1 › calendar creates, validates, edits and deletes events with month navigation (3.2s)
+  ✓  5 src/lib/templates/email-client/email-client.e2e.ts:102:1 › mobile tasks lifecycle and screen history preserve local work (1.9s)
+  ✓  6 src/lib/templates/email-client/email-client.e2e.ts:140:1 › mail reply thread, forward draft and archive undo remain local (2.3s)
+  ✓  7 src/lib/templates/email-client/email-client.e2e.ts:168:1 › screen history closes a portaled event editor (2.4s)
+
+  7 passed (13.8s)
