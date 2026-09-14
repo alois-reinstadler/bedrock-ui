@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import BoxIcon from '@lucide/svelte/icons/box';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Button } from '#lib/bedrock/ui/button';
@@ -9,6 +10,10 @@
 	import { Outline, type OutlineItem } from '#lib/bedrock/ui/outline';
 	import { Text } from '#lib/bedrock/ui/text';
 	import CodeBlock from '#lib/site/CodeBlock.svelte';
+	import AccessibilityTab from '#lib/site/component-docs/AccessibilityTab.svelte';
+	import ComponentTabs from '#lib/site/component-docs/ComponentTabs.svelte';
+	import PropertiesTab from '#lib/site/component-docs/PropertiesTab.svelte';
+	import type { ComponentDocTab } from '#lib/site/component-guides/index.js';
 	import { getExample } from '#lib/site/examples';
 	import { importPath } from '#lib/site/registry';
 
@@ -20,8 +25,15 @@
 	// another page's data shape.
 	let component = $derived(data.component as typeof data.component | undefined);
 	let slug = $derived(component?.slug ?? '');
-	let examplePromise = $derived(slug ? getExample(slug) : Promise.resolve(undefined));
 	let guide = $derived(component ? data.guide : undefined);
+	let reference = $derived(component ? data.reference : undefined);
+	let requestedTab = $derived(page.url.searchParams.get('tab'));
+	let activeTab = $derived.by<ComponentDocTab>(() =>
+		requestedTab === 'properties' || requestedTab === 'accessibility' ? requestedTab : 'overview'
+	);
+	let examplePromise = $derived(
+		slug && activeTab === 'overview' ? getExample(slug) : Promise.resolve(undefined)
+	);
 	let path = $derived(slug ? importPath(slug) : '');
 	let exportName = $derived(
 		component?.importName ?? component?.title.replaceAll(' ', '') ?? 'Component'
@@ -32,7 +44,43 @@
 			? `import * as ${exportName} from '${path}';`
 			: `import { ${exportName} } from '${path}';`
 	);
+	let bestPractices = $derived([
+		...(guide?.behavior ?? []).slice(0, 3),
+		...(guide?.avoidWhen ?? []).slice(0, 2)
+	]);
 	let outlineItems = $derived.by<OutlineItem[]>(() => {
+		if (activeTab === 'properties') {
+			const items: OutlineItem[] = [
+				{ id: 'api', label: 'Public API', level: 2 },
+				{ id: 'properties', label: 'Properties and bindings', level: 3 },
+				{ id: 'composition', label: 'Composition', level: 3 },
+				{ id: 'parts', label: 'Component parts', level: 3 }
+			];
+			if (component?.slug === 'button') {
+				items.splice(3, 0, { id: 'property-demo', label: 'Property playground', level: 3 });
+			}
+			return items;
+		}
+		if (activeTab === 'accessibility') {
+			const items: OutlineItem[] = [
+				{ id: 'accessibility-overview', label: 'Accessibility contract', level: 2 },
+				{ id: 'semantics', label: 'Semantics', level: 3 },
+				{ id: 'keyboard', label: 'Keyboard interaction', level: 3 },
+				{ id: 'focus', label: 'Focus management', level: 3 },
+				{ id: 'labels', label: 'Labels and instructions', level: 3 },
+				{ id: 'announcements', label: 'Announcements', level: 3 },
+				{ id: 'reduced-motion', label: 'Reduced motion', level: 3 }
+			];
+			if (reference?.accessibility.requirements?.length) {
+				items.push({
+					id: 'color-contrast',
+					label: component?.slug === 'button' ? 'Color contrast' : 'Requirements',
+					level: 2
+				});
+			}
+			items.push({ id: 'known-gaps', label: 'Known gaps', level: 2 });
+			return items;
+		}
 		const items: OutlineItem[] = [
 			{ id: 'installation', label: 'Installation', level: 2 },
 			{ id: 'usage', label: 'Usage', level: 2 },
@@ -40,13 +88,16 @@
 			{ id: 'anatomy', label: 'Anatomy', level: 3 }
 		];
 		if (guide?.behavior?.length) items.push({ id: 'behavior', label: 'Behavior', level: 3 });
+		items.push({ id: 'best-practices', label: 'Best practices', level: 3 });
 		items.push({ id: 'examples', label: 'Examples', level: 2 });
 		return items;
 	});
 </script>
 
 <svelte:head>
-	<title>{component?.title ?? 'Components'} — Bedrock</title>
+	<title
+		>{component?.title ?? 'Components'}{activeTab === 'overview' ? '' : ` ${activeTab}`} — Bedrock</title
+	>
 	<meta name="description" content={component?.description ?? 'Bedrock component documentation'} />
 </svelte:head>
 
@@ -67,173 +118,199 @@
 					</Text>
 				</header>
 
-				<section id="installation" aria-labelledby="installation-heading" class="space-y-4">
-					<Heading id="installation-heading" level={2}>Installation</Heading>
-					<CodeBlock label="TypeScript" language="typescript" code={importCode} />
-					{#if isCompound}
-						<Text color="muted" as="p" class="leading-relaxed">
-							Use a namespace import to keep the family together. Usage stays discoverable as
-							<code class="font-code text-foreground">{guide?.anatomy[0]?.name}</code> in TypeScript autocomplete.
-						</Text>
-					{/if}
-				</section>
+				<ComponentTabs {component} active={activeTab} />
 
-				<section id="usage" aria-labelledby="usage-heading" class="space-y-10">
-					<Heading id="usage-heading" level={2}>Usage</Heading>
+				{#if activeTab === 'overview'}
+					<section id="installation" aria-labelledby="installation-heading" class="space-y-4">
+						<Heading id="installation-heading" level={2}>Installation</Heading>
+						<pre class="overflow-x-auto rounded-xl border bg-muted/30 p-4 text-sm"><code
+								class="font-code">{importCode}</code
+							></pre>
+						{#if isCompound}
+							<Text color="muted" as="p" class="leading-relaxed">
+								Use a namespace import to keep the family together. Usage stays discoverable as
+								<code class="font-code text-foreground">{guide?.anatomy[0]?.name}</code> in TypeScript
+								autocomplete.
+							</Text>
+						{/if}
+					</section>
 
-					{#if guide}
-						<section id="what-it-is" aria-labelledby="purpose-heading" class="space-y-4">
-							<Heading id="purpose-heading" level={3} visual={4}>What it is</Heading>
-							<Text type="large" as="p" class="max-w-3xl leading-relaxed">{guide.purpose}</Text>
+					<section id="usage" aria-labelledby="usage-heading" class="space-y-10">
+						<Heading id="usage-heading" level={2}>Usage</Heading>
 
-							<div class="grid gap-4 pt-2 md:grid-cols-2">
-								<Card.Root class="h-full border-primary/20 shadow-none">
-									<Card.Header><Card.Title>When to use it</Card.Title></Card.Header>
-									<Card.Content>
-										<ul
-											class="list-disc space-y-2 ps-5 text-sm leading-relaxed text-muted-foreground"
+						{#if guide}
+							<section id="what-it-is" aria-labelledby="purpose-heading" class="space-y-4">
+								<Heading id="purpose-heading" level={3} visual={4}>What it is</Heading>
+								<Text type="large" as="p" class="max-w-3xl leading-relaxed">{guide.purpose}</Text>
+
+								<div class="grid gap-4 pt-2 md:grid-cols-2">
+									<Card.Root class="h-full border-primary/20 shadow-none">
+										<Card.Header><Card.Title>When to use it</Card.Title></Card.Header>
+										<Card.Content>
+											<ul
+												class="list-disc space-y-2 ps-5 text-sm leading-relaxed text-muted-foreground"
+											>
+												{#each guide.useWhen as item (item)}<li>{item}</li>{/each}
+											</ul>
+										</Card.Content>
+									</Card.Root>
+
+									<Card.Root class="h-full shadow-none">
+										<Card.Header><Card.Title>When not to use it</Card.Title></Card.Header>
+										<Card.Content>
+											<ul
+												class="list-disc space-y-2 ps-5 text-sm leading-relaxed text-muted-foreground"
+											>
+												{#each guide.avoidWhen as item (item)}<li>{item}</li>{/each}
+											</ul>
+										</Card.Content>
+									</Card.Root>
+								</div>
+							</section>
+
+							<section id="anatomy" aria-labelledby="anatomy-heading" class="space-y-4">
+								<div class="max-w-3xl space-y-2">
+									<Heading id="anatomy-heading" level={3} visual={4}>Anatomy</Heading>
+									<Text color="muted" as="p" class="leading-relaxed">
+										The public pieces of the component family and the role each one plays.
+									</Text>
+								</div>
+
+								<dl class="divide-y overflow-hidden rounded-xl border bg-card">
+									{#each guide.anatomy as part (part.name)}
+										<div
+											class="grid gap-2 p-4 md:grid-cols-[minmax(12rem,0.7fr)_1.3fr] md:gap-6 md:p-5"
 										>
-											{#each guide.useWhen as item (item)}<li>{item}</li>{/each}
-										</ul>
-									</Card.Content>
-								</Card.Root>
+											<dt class="flex flex-wrap items-start gap-2">
+												<code class="font-code text-sm font-medium break-all text-foreground">
+													{part.name}
+												</code>
+												{#if part.required}<Badge variant="outline">Required</Badge>{/if}
+											</dt>
+											<dd class="text-sm leading-relaxed text-muted-foreground">
+												{part.description}
+											</dd>
+										</div>
+									{/each}
+								</dl>
+							</section>
 
-								<Card.Root class="h-full shadow-none">
-									<Card.Header><Card.Title>When not to use it</Card.Title></Card.Header>
-									<Card.Content>
-										<ul
-											class="list-disc space-y-2 ps-5 text-sm leading-relaxed text-muted-foreground"
-										>
-											{#each guide.avoidWhen as item (item)}<li>{item}</li>{/each}
-										</ul>
-									</Card.Content>
-								</Card.Root>
-							</div>
-						</section>
-
-						<section id="anatomy" aria-labelledby="anatomy-heading" class="space-y-4">
-							<div class="max-w-3xl space-y-2">
-								<Heading id="anatomy-heading" level={3} visual={4}>Anatomy</Heading>
-								<Text color="muted" as="p" class="leading-relaxed">
-									The public pieces of the component family and the role each one plays.
-								</Text>
-							</div>
-
-							<dl class="divide-y overflow-hidden rounded-xl border bg-card">
-								{#each guide.anatomy as part (part.name)}
-									<div
-										class="grid gap-2 p-4 md:grid-cols-[minmax(12rem,0.7fr)_1.3fr] md:gap-6 md:p-5"
+							{#if guide.behavior?.length}
+								<section id="behavior" aria-labelledby="behavior-heading" class="space-y-4">
+									<Heading id="behavior-heading" level={3} visual={4}>Behavior</Heading>
+									<ul
+										class="grid gap-3 text-sm leading-relaxed text-muted-foreground md:grid-cols-2"
 									>
-										<dt class="flex flex-wrap items-start gap-2">
-											<code class="font-code text-sm font-medium break-all text-foreground">
-												{part.name}
-											</code>
-											{#if part.required}<Badge variant="outline">Required</Badge>{/if}
-										</dt>
-										<dd class="text-sm leading-relaxed text-muted-foreground">
-											{part.description}
-										</dd>
-									</div>
-								{/each}
-							</dl>
-						</section>
+										{#each guide.behavior as item, index (item)}
+											<li class="rounded-lg border bg-muted/20 p-4">
+												<span class="me-2 font-code text-xs text-foreground/60">{index + 1}.</span
+												>{item}
+											</li>
+										{/each}
+									</ul>
+								</section>
+							{/if}
 
-						{#if guide.behavior?.length}
-							<section id="behavior" aria-labelledby="behavior-heading" class="space-y-4">
-								<Heading id="behavior-heading" level={3} visual={4}>Behavior</Heading>
+							<section
+								id="best-practices"
+								aria-labelledby="best-practices-heading"
+								class="space-y-4"
+							>
+								<Heading id="best-practices-heading" level={3} visual={4}>Best practices</Heading>
 								<ul class="grid gap-3 text-sm leading-relaxed text-muted-foreground md:grid-cols-2">
-									{#each guide.behavior as item, index (item)}
-										<li class="rounded-lg border bg-muted/20 p-4">
-											<span class="me-2 font-code text-xs text-foreground/60">{index + 1}.</span
-											>{item}
-										</li>
+									{#each bestPractices as item (item)}
+										<li class="rounded-lg border bg-muted/20 p-4">{item}</li>
 									{/each}
 								</ul>
 							</section>
 						{/if}
-					{/if}
-				</section>
+					</section>
 
-				<section id="examples" aria-labelledby="examples-heading" class="space-y-6">
-					<Heading id="examples-heading" level={2}>Examples</Heading>
+					<section id="examples" aria-labelledby="examples-heading" class="space-y-6">
+						<Heading id="examples-heading" level={2}>Examples</Heading>
 
-					<section aria-labelledby="live-example-heading" class="space-y-4">
-						<div class="max-w-3xl space-y-2">
-							<Heading id="live-example-heading" level={3} visual={4}>Default example</Heading>
-							<Text color="muted" as="p" class="leading-relaxed">
-								A working starting point using the public Bedrock API.
-							</Text>
-						</div>
-
-						<div class="overflow-hidden rounded-xl border bg-card">
-							<div class="border-b bg-muted/40 px-4 py-2">
-								<Text type="supporting" class="font-code tracking-wide uppercase">Preview</Text>
+						<section aria-labelledby="live-example-heading" class="space-y-4">
+							<div class="max-w-3xl space-y-2">
+								<Heading id="live-example-heading" level={3} visual={4}>Default example</Heading>
+								<Text color="muted" as="p" class="leading-relaxed">
+									A working starting point using the public Bedrock API.
+								</Text>
 							</div>
-							<div class="p-6 md:p-8">
-								{#await examplePromise}
-									<div
-										class="h-32 animate-pulse rounded-lg bg-muted"
-										aria-label="Loading example"
-									></div>
-								{:then example}
-									{#if example}
-										{@const Example = example.component}
-										<Example />
-									{:else}
+
+							<div class="overflow-hidden rounded-xl border bg-card">
+								<div class="border-b bg-muted/40 px-4 py-2">
+									<Text type="supporting" class="font-code tracking-wide uppercase">Preview</Text>
+								</div>
+								<div class="p-6 md:p-8">
+									{#await examplePromise}
+										<div
+											class="h-32 animate-pulse rounded-lg bg-muted"
+											aria-label="Loading example"
+										></div>
+									{:then example}
+										{#if example}
+											{@const Example = example.component}
+											<Example />
+										{:else}
+											<Empty.Root class="border-0 p-2">
+												<Empty.Header>
+													<Empty.Media variant="icon"><BoxIcon /></Empty.Media>
+													<Empty.Title>Example in review</Empty.Title>
+													<Empty.Description>
+														The API is available; its primary example is still being reviewed.
+													</Empty.Description>
+												</Empty.Header>
+											</Empty.Root>
+										{/if}
+									{:catch}
 										<Empty.Root class="border-0 p-2">
 											<Empty.Header>
 												<Empty.Media variant="icon"><BoxIcon /></Empty.Media>
-												<Empty.Title>Example in review</Empty.Title>
-												<Empty.Description>
-													The API is available; its primary example is still being reviewed.
-												</Empty.Description>
+												<Empty.Title>Example failed to load</Empty.Title>
+												<Empty.Description
+													>Reload the page to retry this example chunk.</Empty.Description
+												>
 											</Empty.Header>
 										</Empty.Root>
-									{/if}
-								{:catch}
-									<Empty.Root class="border-0 p-2">
-										<Empty.Header>
-											<Empty.Media variant="icon"><BoxIcon /></Empty.Media>
-											<Empty.Title>Example failed to load</Empty.Title>
-											<Empty.Description
-												>Reload the page to retry this example chunk.</Empty.Description
-											>
-										</Empty.Header>
-									</Empty.Root>
-								{/await}
-							</div>
-						</div>
-
-						<div class="space-y-3">
-							<Button
-								id={`example-source-trigger-${slug}`}
-								variant="outline"
-								size="sm"
-								aria-expanded={sourceOpen}
-								aria-controls={`example-source-content-${slug}`}
-								onclick={() => (sourceOpen = !sourceOpen)}
-							>
-								{sourceOpen ? 'Hide code' : 'View code'}
-								<Icon icon={sourceOpen ? 'chevronUp' : 'chevronDown'} />
-							</Button>
-							{#if sourceOpen}
-								<div id={`example-source-content-${slug}`}>
-									{#await examplePromise then example}
-										{#if example}
-											<CodeBlock
-												label={`${component.title} example`}
-												language="svelte"
-												code={example.source}
-												lineNumbers
-												maxHeight="32rem"
-											/>
-										{/if}
 									{/await}
 								</div>
-							{/if}
-						</div>
+							</div>
+
+							<div class="space-y-3">
+								<Button
+									id={`example-source-trigger-${slug}`}
+									variant="outline"
+									size="sm"
+									aria-expanded={sourceOpen}
+									aria-controls={`example-source-content-${slug}`}
+									onclick={() => (sourceOpen = !sourceOpen)}
+								>
+									{sourceOpen ? 'Hide code' : 'View code'}
+									<Icon icon={sourceOpen ? 'chevronUp' : 'chevronDown'} />
+								</Button>
+								{#if sourceOpen}
+									<div id={`example-source-content-${slug}`}>
+										{#await examplePromise then example}
+											{#if example}
+												<CodeBlock
+													label={`${component.title} example`}
+													language="svelte"
+													code={example.source}
+													lineNumbers
+													maxHeight="32rem"
+												/>
+											{/if}
+										{/await}
+									</div>
+								{/if}
+							</div>
+						</section>
 					</section>
-				</section>
+				{:else if activeTab === 'properties' && guide && reference}
+					<PropertiesTab {component} {guide} {reference} />
+				{:else if activeTab === 'accessibility' && reference}
+					<AccessibilityTab {component} accessibility={reference.accessibility} />
+				{/if}
 			</article>
 
 			<aside class="sticky top-20 hidden xl:block">

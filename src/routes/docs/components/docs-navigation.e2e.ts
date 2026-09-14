@@ -49,8 +49,48 @@ test.describe('component documentation navigation', () => {
 
 		const installation = page.locator('#installation');
 		await expect(installation.getByRole('heading', { name: 'Installation' })).toBeVisible();
-		const importHeader = installation.locator('[data-slot="code-block-header"]');
-		await expect(importHeader).toHaveText(/TypeScript/);
-		await expect(importHeader).not.toContainText('typescript');
+		await expect(installation.locator('pre code')).toContainText('import');
+	});
+
+	test('keeps component reference tabs addressable across navigation and reload', async ({
+		page
+	}) => {
+		const pageErrors: string[] = [];
+		page.on('pageerror', (exception) => pageErrors.push(exception.message));
+
+		await page.goto('/docs/components/button?tab=properties');
+		await expect(page).toHaveURL(/\/docs\/components\/button\?tab=properties$/);
+		await expect(page.locator('[data-doc-tab="properties"]')).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Public API' })).toBeVisible();
+		await expect(page.getByRole('columnheader', { name: 'Type' }).first()).toBeVisible();
+		await expect(page.getByText('variant', { exact: true }).first()).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Property playground' })).toBeVisible();
+
+		await page.reload();
+		await expect(page.getByRole('link', { name: 'Properties', exact: true })).toHaveAttribute(
+			'aria-current',
+			'page'
+		);
+
+		await page.getByRole('link', { name: 'Accessibility', exact: true }).click();
+		await expect(page).toHaveURL(/\/docs\/components\/button\?tab=accessibility$/);
+		await expect(page.locator('[data-doc-tab="accessibility"]')).toBeVisible();
+		await expect(page.getByRole('heading', { name: 'Color contrast' })).toBeVisible();
+		await expect(page.getByRole('rowheader', { name: 'Text label' })).toBeVisible();
+		await expect(page.getByText('72 generated pairs')).toBeVisible();
+
+		await page.reload();
+		await expect(page.getByRole('link', { name: 'Accessibility', exact: true })).toHaveAttribute(
+			'aria-current',
+			'page'
+		);
+		await expect(pageErrors).toEqual([]);
+	});
+
+	test('exposes component-specific known accessibility gaps', async ({ page }) => {
+		for (const slug of ['badge', 'avatar', 'slider']) {
+			await page.goto(`/docs/components/${slug}?tab=accessibility`);
+			await expect(page.getByText('Needs attention')).toBeVisible();
+		}
 	});
 });

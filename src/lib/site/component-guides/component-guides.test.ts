@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { componentGuides } from './index';
+import { getComponentReference } from '../../server/component-reference/index';
 import { components } from '../registry';
 
 const examples = import.meta.glob('../examples/*.svelte');
@@ -30,6 +31,74 @@ describe('component documentation coverage', () => {
 				Object.hasOwn(examples, `../examples/${component.slug}.svelte`),
 				`${component.slug} example`
 			).toBe(true);
+		}
+	});
+
+	it('has properties and accessibility guidance for every registered component', () => {
+		for (const component of components) {
+			const reference = getComponentReference(component.slug, component.category);
+			expect(reference.api.length, `${component.slug} API`).toBeGreaterThan(0);
+			expect(
+				reference.accessibility.semantics.length,
+				`${component.slug} semantics`
+			).toBeGreaterThan(0);
+			expect(reference.accessibility.keyboard.length, `${component.slug} keyboard`).toBeGreaterThan(
+				0
+			);
+			expect(reference.accessibility.focus.length, `${component.slug} focus`).toBeGreaterThan(0);
+			expect(reference.accessibility.labels.length, `${component.slug} labels`).toBeGreaterThan(0);
+			expect(
+				reference.accessibility.announcements.length,
+				`${component.slug} announcements`
+			).toBeGreaterThan(0);
+			expect(
+				reference.accessibility.reducedMotion.length,
+				`${component.slug} reduced motion`
+			).toBeGreaterThan(0);
+		}
+	});
+
+	it('extracts real primitive contracts, defaults and public aliases', () => {
+		const accordion = getComponentReference('accordion', 'layout');
+		expect(accordion.parts?.[0].aliases).toContain('Accordion');
+		expect(accordion.api.find((entry) => entry.name === 'type')?.type).toContain('single');
+		expect(accordion.api.find((entry) => entry.name === 'type')?.type).toContain('multiple');
+		expect(accordion.api.find((entry) => entry.name === 'value')?.type).toContain(
+			'string | string[]'
+		);
+		expect(accordion.api.find((entry) => entry.name === 'type')).toMatchObject({ required: true });
+		expect(accordion.api.find((entry) => entry.name === 'value')).toMatchObject({
+			kind: 'bindable'
+		});
+		expect(accordion.api.some((entry) => entry.name === 'onValueChange')).toBe(true);
+		const button = getComponentReference('button', 'form');
+		expect(button.api.find((entry) => entry.name === 'variant')).toMatchObject({
+			default: '"default"'
+		});
+		expect(button.parts).toHaveLength(1);
+		expect(button.parts?.[0].aliases).toEqual(['Button']);
+		const checkbox = getComponentReference('checkbox', 'form');
+		expect(checkbox.api.some((entry) => entry.name === 'checked')).toBe(true);
+		expect(checkbox.accessibility.semantics[0]).toContain('mixed');
+		expect(getComponentReference('slider', 'form').accessibility.keyboard[0]).toContain('Home/End');
+	});
+
+	it('documents the full Button contrast test matrix and known upstream gaps', () => {
+		const button = getComponentReference('button', 'form');
+		expect(button.api.map((entry) => entry.name)).toEqual(
+			expect.arrayContaining(['variant', 'size', 'href', 'disabled', 'children', 'ref'])
+		);
+		expect(button.accessibility.requirements).toHaveLength(6);
+		expect(
+			button.accessibility.requirements?.find((item) => item.requirement === 'Badge text')?.guidance
+		).toContain('72 generated pairs');
+
+		for (const slug of ['badge', 'avatar', 'slider']) {
+			const component = components.find((item) => item.slug === slug);
+			expect(component).toBeDefined();
+			expect(
+				getComponentReference(slug, component!.category).accessibility.knownGaps?.length
+			).toBeGreaterThan(0);
 		}
 	});
 });

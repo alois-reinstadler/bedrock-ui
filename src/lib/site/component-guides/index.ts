@@ -7,7 +7,17 @@ import { navigationGuides } from './navigation';
 import { overlayGuides } from './overlay';
 import type { ComponentGuide, ComponentGuides } from './types';
 
-export type { ComponentAnatomyPart, ComponentExamplePlan, ComponentGuide } from './types';
+export type {
+	ComponentAccessibilityGuide,
+	ComponentAccessibilityRequirement,
+	ComponentAnatomyPart,
+	ComponentApiEntry,
+	ComponentApiKind,
+	ComponentDocTab,
+	ComponentExamplePlan,
+	ComponentGuide,
+	ComponentReference
+} from './types';
 
 export const componentGuides: ComponentGuides = {
 	...contentGuides,
