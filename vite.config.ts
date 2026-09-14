@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { mdsvex } from 'mdsvex';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
@@ -22,6 +23,7 @@ export default defineConfig({
 	// dependencies once so opening a new example in dev does not trigger Vite's
 	// optimizer restart (which can briefly serve a stale route or a 500).
 	optimizeDeps: {
+		exclude: ['sveltekit-superforms'],
 		include: [
 			'@internationalized/date',
 			'@lucide/svelte/icons/**',
@@ -35,12 +37,28 @@ export default defineConfig({
 			'pdfjs-dist',
 			'shiki',
 			'svelte-sonner',
-			'sveltekit-superforms',
 			'tailwind-variants',
 			'tailwind-merge'
 		]
 	},
 	plugins: [
+		{
+			name: 'bedrock-superforms-kit3',
+			enforce: 'pre',
+			// Superforms 2 imports two legacy stores. Keep its adapter narrow instead
+			// of overriding SvelteKit modules for application code or other packages.
+			transform(code, id) {
+				if (!id.replaceAll('\\', '/').endsWith('/sveltekit-superforms/dist/client/superForm.js'))
+					return;
+				return {
+					code: code.replace(
+						"from '$app/stores'",
+						`from ${JSON.stringify(fileURLToPath(new URL('./src/lib/site/superforms-stores.ts', import.meta.url)))}`
+					),
+					map: null
+				};
+			}
+		},
 		tailwindcss(),
 		sveltekit({
 			compilerOptions: {

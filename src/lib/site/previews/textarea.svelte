@@ -4,7 +4,7 @@
 </script>
 
 <div class="grid max-w-md gap-2">
-	<Label for="preview-notes">Night preview-notes</Label>
+	<Label for="preview-notes">Night notes</Label>
 	<Textarea id="preview-notes" placeholder="Face condition, pump status, crew changes." />
 </div>
 

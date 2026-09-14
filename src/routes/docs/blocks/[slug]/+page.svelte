@@ -9,16 +9,13 @@
 	import * as Card from '#lib/bedrock/ui/card';
 	import ApiTable from '#lib/site/component-docs/ApiTable.svelte';
 	import BlockPreview from '#lib/site/BlockPreview.svelte';
-	import CodeBlock from '#lib/site/CodeBlock.svelte';
+	import HighlightedCode from '#lib/site/HighlightedCode.svelte';
 	import DocsPageHeader from '#lib/site/DocsPageHeader.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 	let tab = $derived(
 		mounted && page.url.searchParams.get('tab') === 'properties' ? 'properties' : 'overview'
-	);
-	let importCode = $derived(
-		`import { ${data.block.importName} } from '#lib/bedrock/blocks/${data.block.slug}/index.js';`
 	);
 </script>
 
@@ -33,7 +30,7 @@
 	class="mx-auto max-w-5xl px-4 py-10 md:px-8"
 >
 	<DocsPageHeader eyebrow="Block" title={data.block.title} description={data.block.description} />
-	<nav aria-label="Block reference" class="mt-7 flex gap-1 border-b">
+	<nav data-sveltekit-reload="off" aria-label="Block reference" class="mt-7 flex gap-1 border-b">
 		<Button
 			href="?tab=overview"
 			variant={tab === 'overview' ? 'secondary' : 'ghost'}
@@ -68,7 +65,7 @@
 				<p class="mt-2 mb-4 text-muted-foreground">
 					Copy the block source into your project, then import its stable Bedrock entry.
 				</p>
-				<CodeBlock label="TypeScript" language="typescript" code={importCode} />
+				<HighlightedCode code={data.importCode} html={data.importHtml} />
 			</section>
 			<section aria-labelledby="usage-heading">
 				<h2 id="usage-heading" class="text-2xl font-medium tracking-tight">Usage</h2>

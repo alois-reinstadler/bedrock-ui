@@ -7,7 +7,7 @@
 
 <div class="flex items-center gap-2">
 	<Switch id="preview-alerts" bind:checked />
-	<Label for="preview-alerts">Shift preview-alerts {checked ? 'on' : 'off'}</Label>
+	<Label for="preview-alerts">Shift alerts {checked ? 'on' : 'off'}</Label>
 </div>
 
 <div class="mt-4 flex items-center gap-2">

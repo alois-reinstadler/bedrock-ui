@@ -8,7 +8,7 @@
 		{ id: '09', note: 'Pending analysis' }
 	];
 
-	let selected = $state<Record<string, boolean>>({});
+	let selected = $state<Record<string, boolean>>({ '07': false, '08': false, '09': false });
 	const count = $derived(Object.values(selected).filter(Boolean).length);
 </script>
 

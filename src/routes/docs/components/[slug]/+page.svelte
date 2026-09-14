@@ -293,6 +293,7 @@
 							<div class="space-y-3">
 								<Button
 									id={`example-source-trigger-${slug}`}
+									disabled={!mounted}
 									variant="outline"
 									size="sm"
 									aria-expanded={sourceOpen}

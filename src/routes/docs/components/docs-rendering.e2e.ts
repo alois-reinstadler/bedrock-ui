@@ -64,3 +64,37 @@ test('navigation stays consistent while an example chunk is delayed', async ({ p
 	}
 	expect(errors).toEqual([]);
 });
+
+test('contextual examples perform real local workflows', async ({ page }) => {
+	await page.goto('/docs/components/avatar');
+	const example = page.locator('#examples');
+	await example.getByRole('button', { name: 'Assign reviewer' }).first().click();
+	await expect(example.getByRole('status')).toContainText('Kai Holt');
+	await page.goto('/docs/components/input');
+	await example.getByLabel('Work email').fill('reader@example.com');
+	await example.getByRole('button', { name: 'Subscribe to the digest' }).click();
+	await expect(example.getByRole('status')).toContainText('reader@example.com');
+	await page.goto('/docs/components/table');
+	await example.getByRole('button', { name: 'Restock labels' }).click();
+	await expect(example.getByRole('status')).toContainText('restock request');
+});
+
+test('form and selectable-card examples survive interaction and tab navigation', async ({
+	page
+}) => {
+	const errors: string[] = [];
+	page.on('pageerror', (error) => errors.push(error.message));
+	await page.goto('/docs/components/form');
+	const example = page.locator('#examples');
+	await example.getByLabel('Email address').fill('recovery@example.com');
+	await example.getByRole('button', { name: 'Save recovery email' }).click();
+	await expect(example.getByRole('status')).toContainText('recovery@example.com');
+	await page.getByRole('link', { name: 'Properties', exact: true }).click();
+	await expect(page.locator('[data-doc-tab="properties"]')).toBeVisible();
+	await page.getByRole('link', { name: 'Overview', exact: true }).click();
+	await expect(example.getByLabel('Email address')).toBeVisible();
+	await page.goto('/docs/components/selectable-card');
+	await example.getByRole('checkbox', { name: 'Select core sample 07' }).click();
+	await expect(example.getByRole('status')).toContainText('1 sample selected');
+	expect(errors).toEqual([]);
+});
