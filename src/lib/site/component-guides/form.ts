@@ -1,6 +1,99 @@
 import type { ComponentGuides } from './types';
 
 export const formGuides = {
+	'stepped-form': {
+		purpose:
+			'Stepped Form coordinates a long form as focused, validated sections while preserving one native form and all entered values. Stepper communicates progress; Stepped Form owns navigation, validation boundaries, focus, announcements, and submission.',
+		useWhen: [
+			'A mobile form or onboarding flow would be overwhelming as one long page.',
+			'Each section has a meaningful validation boundary before users continue.',
+			'Users need to move backward without losing entered values.'
+		],
+		avoidWhen: [
+			'Use a regular Form when all fields fit comfortably in one short view.',
+			'Use Stepper alone when progress is informational and it should not orchestrate form state.',
+			'Do not split tightly related fields merely to make a flow appear shorter.'
+		],
+		anatomy: [
+			{
+				name: 'SteppedForm.Root (`SteppedForm.SteppedForm` alias)',
+				description:
+					'Required native form that owns step state, validation, focus, announcements, persistence hooks, and submission.',
+				required: true
+			},
+			{
+				name: 'SteppedForm.Progress',
+				description:
+					'Optional Stepper-backed progress summary. In nonlinear mode, only valid reachable steps can be activated.'
+			},
+			{
+				name: 'SteppedForm.Step',
+				description:
+					'Required persistent form section identified by a stable step id. Inactive sections are hidden and inert without discarding their controls.',
+				required: true
+			},
+			{
+				name: 'SteppedForm.Title',
+				description:
+					'Focusable step heading used when navigation or validation moves between sections.',
+				required: true
+			},
+			{
+				name: 'SteppedForm.Description',
+				description: 'Optional supporting guidance beneath a step title.'
+			},
+			{ name: 'SteppedForm.Content', description: 'Field layout for the active section.' },
+			{
+				name: 'SteppedForm.Actions',
+				description: 'Mobile-first action row that stacks safely on narrow screens.'
+			},
+			{
+				name: 'SteppedForm.Previous',
+				description: 'Moves backward without validation and preserves every field value.'
+			},
+			{
+				name: 'SteppedForm.Next',
+				description:
+					'Validates the current native controls and sync or async validator before advancing.'
+			},
+			{
+				name: 'SteppedForm.Submit',
+				description: 'Validates every enabled step and runs the root submission callback.'
+			},
+			{
+				name: 'SteppedForm.Status',
+				description:
+					'Polite live region for validation, submission, success, error, and retry feedback.'
+			}
+		],
+		behavior: [
+			'`value` is bindable and `defaultValue` initializes uncontrolled use. Stable string ids keep dynamic step arrays predictable.',
+			'Linear navigation is the default. Nonlinear progress navigation still requires reachable completed steps and may be further restricted with `canNavigate`.',
+			'Native constraints and sync or async validators run before advancement; invalid controls receive focus, falling back to the step heading.',
+			'Inactive steps stay in the native form so values and FormData are preserved, but are hidden, inert, and excluded from assistive-technology navigation. The root uses `novalidate` and coordinates validation so hidden fields never trigger an unreachable browser error bubble.',
+			'Optional `persistence.read` and `persistence.write` hooks support URL query state or another store without coupling the component to SvelteKit routing.'
+		],
+		examplePlan: [
+			{
+				title: 'Mobile onboarding',
+				demonstrates:
+					'A three-step workspace setup with field-level validation, preserved values, review, async submission, and status announcements.',
+				priority: 'primary'
+			},
+			{
+				title: 'Async eligibility check',
+				demonstrates:
+					'A step that waits for a remote validation result and provides retryable failure feedback.',
+				priority: 'secondary'
+			},
+			{
+				title: 'Dynamic optional step',
+				demonstrates:
+					'A conditional step being inserted or removed without leaving the flow on an invalid id.',
+				priority: 'edge-case'
+			}
+		]
+	},
 	'async-button': {
 		purpose:
 			'Async Button owns the visible lifecycle of one promise-returning action: idle, pending, success, error, and reset. It keeps status changes available to assistive technology while the label and width animate between states.',

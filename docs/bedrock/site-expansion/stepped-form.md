@@ -1,0 +1,30 @@
+# Stepped Form decisions
+
+- Stepper remains a progress primitive; Root owns one native form and the coordination state. Public namespace: Root, Progress, Step, Title, Description, Content, Actions, Previous, Next, Submit, Status. Each also has its SteppedForm-prefixed alias (Root aliases SteppedForm).
+- Root accepts required `steps: SteppedFormStepDefinition[]` (unique stable id/title; optional description/optional/disabled). `value?: string` is bindable; `defaultValue?: string` selects uncontrolled initial state. Invalid/removed values render the first enabled step. The external value is not silently rewritten when a parent removes a step; the next navigation emits the valid id. Duplicate step IDs are unsupported.
+- `nonlinear = false`; forward navigation validates the current step. Nonlinear forward skips require a previously completed predecessor; use `canNavigate({from,to,completed})` for domain restrictions. Back does not validate. `disabled = false` prevents navigation/submission. Async operations lock navigation and discard results when form, current id, enabled step sequence or disabled state changes.
+- `validateStep?: SteppedFormValidator` is the root fallback; Step accepts `validate?: SteppedFormValidator`, which overrides it. Validators receive `{ step, value, form, formData }`; return boolean, an error string, or `{valid, message?, field?: HTMLElement | string}`. Field selectors and supplied elements are scoped to that panel. Native constraints run first. All enabled sections are validated again on submit.
+- `onSubmit?: (context: {value,form,formData,steps}) => void | Promise<void>` handles application-owned submission; a rejected promise becomes retryable error. An absent callback is a locally successful no-op, not persistence. `onValueChange?: (value,previous,reason) => void` reports committed navigation. Reasons: next, previous, progress, programmatic.
+- `persistence?: {read(): string | null | undefined; write(value: string): void}` is browser-initial restoration plus committed-step storage. It does not listen for popstate or persist fields; bind the parent value for router changes. Persisting a step never bypasses final validation. No router dependency.
+- `ref?: HTMLFormElement | null` is bindable. Root forwards native form attributes except onsubmit. Do not override novalidate or spread remote-form enhancement on Root; use its onSubmit with a remote command. Native short remote forms are covered separately in the guide.
+- Progress props: `label = 'Form progress'`, `orientation = 'horizontal'` (or vertical), class/native div attributes. Step requires `id` matching a definition. All layout parts accept children snippets, class and native attributes. Previous/Next/Submit inherit Button props; their type must remain button/button/submit. Previous/Next accept preventable onclick callbacks. Status renders root feedback and Retry with no child override.
+- Data hooks: Root `data-slot=stepped-form`, `data-status=idle|validating|submitting|success|error`, `aria-busy`; Step `data-stepped-form-step=id`, `data-direction=forward|backward`, hidden/inert/aria-hidden. Other parts use `data-slot=stepped-form-*`. No custom DOM events are dispatched.
+
+## Accessibility acceptance
+
+| Requirement                                                                     | Evidence target                           | WCAG                           |
+| ------------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------ |
+| Every Step includes Title; instance-unique aria-labelledby connects the section | Two-instance component test               | 1.3.1                          |
+| Inputs have durable visible labels and consumer-linked error descriptions       | Example and production axe/keyboard tests | 3.3.2, 3.3.1                   |
+| Invalid control gets focus; hidden failure first reveals its section            | Native and full-submit component tests    | 2.4.3                          |
+| Inactive controls stay mounted but hidden, inert, outside accessibility tree    | Component tests                           | 2.1.1, 4.1.2                   |
+| Enter advances before the last step; actions are keyboard buttons               | Production E2E                            | 2.1.1                          |
+| Status stays mounted with polite atomic live announcements and Retry            | Component/E2E assertions                  | 4.1.3                          |
+| Directional animation is absent with reduced motion                             | Production E2E computed style             | 2.3.3 (AAA preference support) |
+| Text and button treatment use existing theme tokens; check both themes          | Integrated browser verification           | 1.4.3, 1.4.11                  |
+
+Known limits: this JavaScript coordination component does not provide a no-JavaScript multi-step flow. Supply a single-page native fallback if required. Parent writes to value are trusted programmatic navigation and do not run per-step guards; final validation still applies. Consumers own server authorization, idempotency, field aria-invalid/error IDs, draft retention, and labeling custom controls. A validator cannot safely cancel an already-dispatched server mutation; freshness only prevents stale UI updates. Frozen shadcn Badge/avatar exceptions and upstream Slider labeling are unchanged.
+
+## Forms guide verification
+
+Official Svelte MCP `kit/remote-functions` fetched during takeover. Verified schema-based form/command, nullable issues()/allIssues(), numeric pending, validate({includeUntouched:true}), preflight(schema), result lifetime, enhance callback form instance and boolean submit(). Documentation source uses a dependency-free Standard Schema, not an absent validation package. Static demo explicitly stores no server data.

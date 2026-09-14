@@ -558,6 +558,12 @@ export const components: ComponentDoc[] = [
 		category: 'navigation'
 	},
 	{
+		slug: 'stepped-form',
+		title: 'Stepped Form',
+		description: 'Coordinates validation, navigation, and submission across form sections.',
+		category: 'form'
+	},
+	{
 		slug: 'code-block',
 		title: 'Code Block',
 		description: 'Syntax-highlighted code with copy, titles, and line numbers.',
