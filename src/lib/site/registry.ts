@@ -1,6 +1,12 @@
 export type DocsNavItem = {
 	title: string;
-	href: '/docs' | '/docs/installation' | '/docs/components';
+	href:
+		| '/docs'
+		| '/docs/components'
+		| '/docs/installation'
+		| '/docs/theming'
+		| '/docs/skills'
+		| '/docs/forms';
 };
 
 export type ComponentDoc = {
@@ -14,8 +20,11 @@ export type ComponentDoc = {
 
 export const gettingStarted: DocsNavItem[] = [
 	{ title: 'Introduction', href: '/docs' },
+	{ title: 'Components', href: '/docs/components' },
 	{ title: 'Installation', href: '/docs/installation' },
-	{ title: 'Components', href: '/docs/components' }
+	{ title: 'Theming', href: '/docs/theming' },
+	{ title: 'Skills', href: '/docs/skills' },
+	{ title: 'Forms', href: '/docs/forms' }
 ];
 
 export const components: ComponentDoc[] = [

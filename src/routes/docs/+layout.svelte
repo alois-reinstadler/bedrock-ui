@@ -1,15 +1,15 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import * as Breadcrumb from '#lib/bedrock/ui/breadcrumb';
 	import { Separator } from '#lib/bedrock/ui/separator';
 	import * as Sidebar from '#lib/bedrock/ui/sidebar';
 	import DocsSidebar from '#lib/site/DocsSidebar.svelte';
-	import ThemeToggle from '#lib/site/ThemeToggle.svelte';
+	import SiteHeader from '#lib/site/SiteHeader.svelte';
+	import { getBlock } from '#lib/site/blocks.js';
 	import { getComponent } from '#lib/site/registry';
 
 	type Crumb = {
-		href: '/docs' | '/docs/installation' | '/docs/components' | null;
+		href: string | null;
 		label: string;
 		current: boolean;
 	};
@@ -21,16 +21,27 @@
 		if (path === '/docs') {
 			return [{ href: '/docs', label: 'Docs', current: true }];
 		}
-		if (path === '/docs/installation') {
+		if (/^\/docs\/(installation|theming|skills|forms|changelog)$/.test(path)) {
+			const label = path.split('/').at(-1) ?? 'Docs';
 			return [
 				{ href: '/docs', label: 'Docs', current: false },
-				{ href: '/docs/installation', label: 'Installation', current: true }
+				{ href: path, label: label[0].toUpperCase() + label.slice(1), current: true }
 			];
 		}
-		if (path === '/docs/components') {
+		if (path === '/docs/components' || path === '/docs/blocks' || path === '/docs/templates') {
+			const label = path.split('/').at(-1) ?? 'Docs';
 			return [
 				{ href: '/docs', label: 'Docs', current: false },
-				{ href: '/docs/components', label: 'Components', current: true }
+				{ href: path, label: label[0].toUpperCase() + label.slice(1), current: true }
+			];
+		}
+		const blockMatch = path.match(/^\/docs\/blocks\/([^/]+)$/);
+		if (blockMatch) {
+			const block = getBlock(blockMatch[1]);
+			return [
+				{ href: '/docs', label: 'Docs', current: false },
+				{ href: '/docs/blocks', label: 'Blocks', current: false },
+				{ href: null, label: block?.title ?? blockMatch[1], current: true }
 			];
 		}
 		const match = path.match(/^\/docs\/components\/([^/]+)$/);
@@ -50,32 +61,34 @@
 	});
 </script>
 
-<Sidebar.Provider>
-	<DocsSidebar />
-	<Sidebar.Inset>
-		<header class="flex h-14 items-center gap-2 border-b px-4">
-			<Sidebar.Trigger class="-ms-1" />
-			<Separator orientation="vertical" class="h-4" />
-			<Breadcrumb.Root class="min-w-0 flex-1">
-				<Breadcrumb.List>
-					{#each crumbs as crumb, index (crumb.href)}
-						<Breadcrumb.Item>
-							{#if crumb.current}
-								<Breadcrumb.Page>{crumb.label}</Breadcrumb.Page>
-							{:else if crumb.href}
-								<Breadcrumb.Link href={resolve(crumb.href)}>{crumb.label}</Breadcrumb.Link>
+<div class="flex min-h-dvh flex-col">
+	<SiteHeader />
+	<Sidebar.Provider class="min-h-0 flex-1">
+		<DocsSidebar />
+		<Sidebar.Inset>
+			<header class="flex h-14 items-center gap-2 border-b px-4">
+				<Sidebar.Trigger class="-ms-1" />
+				<Separator orientation="vertical" class="h-4" />
+				<Breadcrumb.Root class="min-w-0 flex-1">
+					<Breadcrumb.List>
+						{#each crumbs as crumb, index (crumb.href)}
+							<Breadcrumb.Item>
+								{#if crumb.current}
+									<Breadcrumb.Page>{crumb.label}</Breadcrumb.Page>
+								{:else if crumb.href}
+									<Breadcrumb.Link href={crumb.href}>{crumb.label}</Breadcrumb.Link>
+								{/if}
+							</Breadcrumb.Item>
+							{#if index < crumbs.length - 1}
+								<Breadcrumb.Separator />
 							{/if}
-						</Breadcrumb.Item>
-						{#if index < crumbs.length - 1}
-							<Breadcrumb.Separator />
-						{/if}
-					{/each}
-				</Breadcrumb.List>
-			</Breadcrumb.Root>
-			<ThemeToggle />
-		</header>
-		<div class="flex-1">
-			{@render children()}
-		</div>
-	</Sidebar.Inset>
-</Sidebar.Provider>
+						{/each}
+					</Breadcrumb.List>
+				</Breadcrumb.Root>
+			</header>
+			<div class="flex-1">
+				{@render children()}
+			</div>
+		</Sidebar.Inset>
+	</Sidebar.Provider>
+</div>

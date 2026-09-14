@@ -42,9 +42,8 @@
 		<li>
 			<p class="text-sm font-medium">3. Change the source</p>
 			<p class="mt-1 text-sm leading-relaxed text-muted-foreground">
-				Edit files under <code class="font-mono text-foreground">src/lib/bedrock</code> or the
-				wrapped primitives in <code class="font-mono text-foreground">src/lib/shadcn</code>. App
-				imports stay stable.
+				Edit files under <code class="font-mono text-foreground">src/lib/bedrock</code> and preserve the
+				frozen shadcn source. App imports stay stable.
 			</p>
 		</li>
 	</ol>
