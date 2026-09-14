@@ -114,9 +114,9 @@
 	}
 	.app-rail {
 		position: sticky;
-		top: 3.5rem;
+		top: calc(3.5rem + 1px);
 		align-self: start;
-		height: calc(100svh - 3.5rem);
+		height: calc(100svh - 3.5rem - 1px);
 		grid-row: 1;
 		grid-column: 1;
 		background: var(--muted);

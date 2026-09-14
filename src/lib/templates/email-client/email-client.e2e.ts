@@ -276,9 +276,16 @@ test('app navigation stays reachable on scrolled mobile and tablet task screens'
 		await page.goto('/templates/email-client?screen=tasks');
 		const nav = page.getByRole('navigation', { name: 'Productivity screens' });
 		await expect(page.getByRole('heading', { name: 'Tasks', exact: true })).toBeVisible();
-		await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-		const bounds = await nav.boundingBox();
-		expect(bounds?.y).toBeGreaterThanOrEqual(56);
+		await page.evaluate(() =>
+			window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' })
+		);
+		await expect
+			.poll(async () => {
+				const bounds = await nav.boundingBox();
+				const header = await page.getByRole('banner').first().boundingBox();
+				return bounds && header ? bounds.y - (header.y + header.height) : -Infinity;
+			})
+			.toBeGreaterThanOrEqual(-0.5);
 		await nav.getByRole('link', { name: 'Calendar', exact: true }).click();
 		await expect(page.getByRole('heading', { name: 'Calendar', exact: true })).toBeVisible();
 		expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
