@@ -11,7 +11,11 @@ test('mail search, selection, archive, compose, and calendar work locally', asyn
 	await page.getByRole('checkbox', { name: 'Select message from June Park' }).check();
 	await page.getByRole('button', { name: 'Archive selected', exact: true }).click();
 	await expect(page.locator('.message-summary')).toHaveCount(4);
-	await page.getByRole('button', { name: 'Compose', exact: false }).first().click();
+	await page
+		.getByRole('button', { name: 'Compose', exact: false })
+		.filter({ visible: true })
+		.first()
+		.click();
 	await page.getByRole('textbox', { name: 'To', exact: true }).fill('friend@example.com');
 	await page.getByRole('textbox', { name: 'Subject', exact: true }).fill('A local hello');
 	await page
@@ -141,6 +145,8 @@ test('mail reply thread, forward draft and archive undo remain local', async ({ 
 	await page.goto('/templates/email-client');
 	await expect(page.locator('.mail-app')).toHaveAttribute('data-ready', 'true');
 	await page.getByRole('button', { name: 'Reply to Marin Ortiz…', exact: true }).click();
+	await expect(page.getByRole('dialog')).toHaveCount(0);
+	await expect(page.getByLabel('Message', { exact: true })).toBeFocused();
 	await page
 		.getByRole('textbox', { name: 'Message', exact: true })
 		.fill('The banner copy is approved.');
@@ -180,4 +186,103 @@ test('screen history closes a portaled event editor', async ({ page }) => {
 	await page.goForward();
 	await expect(page.getByRole('heading', { name: 'Calendar', exact: true })).toBeVisible();
 	await expect(page.getByRole('dialog')).toHaveCount(0);
+});
+
+test('integrated workspace creates follow-ups from mail and preserves inline composition', async ({
+	page
+}) => {
+	await page.goto('/templates/email-client');
+	await expect(page.locator('.mail-app')).toHaveAttribute('data-ready', 'true');
+	const nav = page.getByRole('navigation', { name: 'Productivity screens' });
+	await nav.getByRole('link', { name: 'Tasks', exact: true }).click();
+	await page.getByRole('button', { name: 'Completed', exact: true }).click();
+	await page.getByLabel('Search tasks', { exact: true }).fill('no matching task');
+	await nav.getByRole('link', { name: 'Mail', exact: true }).click();
+	await page.getByRole('button', { name: 'Create task from message', exact: true }).click();
+	await expect(page).toHaveURL(/screen=tasks/);
+	await expect(
+		page.getByRole('button', { name: 'Edit Launch notes for tomorrow', exact: true })
+	).toBeVisible();
+	await page
+		.getByRole('button', { name: 'Mark Launch notes for tomorrow important', exact: true })
+		.click();
+	await page.getByRole('button', { name: 'Important', exact: true }).click();
+	await expect(
+		page.getByRole('button', { name: 'Edit Launch notes for tomorrow', exact: true })
+	).toBeVisible();
+	await nav.getByRole('link', { name: 'Mail', exact: true }).click();
+	await page.getByRole('button', { name: 'Schedule from message', exact: true }).click();
+	await expect(page.getByLabel('Event title', { exact: true })).toHaveValue(
+		'Launch notes for tomorrow'
+	);
+	await page.getByLabel('Start time', { exact: true }).fill('12:30');
+	await page.getByLabel('End time', { exact: true }).fill('13:00');
+	await page.getByRole('button', { name: 'Save event', exact: true }).click();
+	await expect(
+		page.getByRole('button', { name: 'Edit Launch notes for tomorrow', exact: true })
+	).toBeVisible();
+	await nav.getByRole('link', { name: 'Mail', exact: true }).click();
+	await page
+		.getByRole('button', { name: 'Compose', exact: false })
+		.filter({ visible: true })
+		.first()
+		.click();
+	await expect(page.getByRole('dialog')).toHaveCount(0);
+	await expect(page.getByLabel('To', { exact: true })).toBeFocused();
+	await page.getByLabel('To', { exact: true }).fill('ellis@example.com');
+	await page.getByLabel('Subject', { exact: true }).fill('Keep this draft');
+	await page.getByLabel('Message', { exact: true }).fill('A thoughtful follow-up.');
+	await nav.getByRole('link', { name: 'Tasks', exact: true }).click();
+	await nav.getByRole('link', { name: 'Mail', exact: true }).click();
+	await expect(page.getByLabel('Message', { exact: true })).toHaveValue('A thoughtful follow-up.');
+	await page.getByRole('button', { name: 'Save draft', exact: true }).click();
+	await page
+		.getByRole('navigation', { name: 'Mailbox', exact: true })
+		.getByRole('button', { name: 'Drafts' })
+		.click();
+	await page.locator('.message-summary').filter({ hasText: 'Keep this draft' }).click();
+	await page.getByRole('button', { name: 'Edit draft', exact: true }).click();
+	await expect(page.getByLabel('Message', { exact: true })).toHaveValue('A thoughtful follow-up.');
+	await page.getByRole('button', { name: 'Send message', exact: true }).click();
+	await expect(page.locator('.compose-pane')).toHaveCount(0);
+});
+
+test('mobile compose is an accessible full pane with draft-saving Back', async ({ page }) => {
+	await page.setViewportSize({ width: 390, height: 844 });
+	await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' });
+	await page.goto('/templates/email-client');
+	await expect(page.locator('.mail-app')).toHaveAttribute('data-ready', 'true');
+	await page
+		.getByRole('button', { name: 'Compose', exact: false })
+		.filter({ visible: true })
+		.first()
+		.click();
+	await expect(page.getByRole('dialog')).toHaveCount(0);
+	await expect(page.getByLabel('To', { exact: true })).toBeFocused();
+	await page.getByLabel('Subject', { exact: true }).fill('Mobile draft');
+	await page.getByLabel('Message', { exact: true }).fill('Preserve this while checking my day.');
+	await page.locator('.compose-pane').getByRole('button', { name: 'Back', exact: true }).click();
+	await expect(page.locator('#mail-reader-heading')).toBeFocused();
+	await page.getByRole('button', { name: 'Back to messages', exact: true }).click();
+	await expect(page.locator('#mail-list-heading')).toBeFocused();
+	expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+});
+
+test('app navigation stays reachable on scrolled mobile and tablet task screens', async ({
+	page
+}) => {
+	for (const width of [390, 768]) {
+		await page.setViewportSize({ width, height: 844 });
+		await page.goto('/templates/email-client?screen=tasks');
+		const nav = page.getByRole('navigation', { name: 'Productivity screens' });
+		await expect(page.getByRole('heading', { name: 'Tasks', exact: true })).toBeVisible();
+		await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+		const bounds = await nav.boundingBox();
+		expect(bounds?.y).toBeGreaterThanOrEqual(56);
+		await nav.getByRole('link', { name: 'Calendar', exact: true }).click();
+		await expect(page.getByRole('heading', { name: 'Calendar', exact: true })).toBeVisible();
+		expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(
+			false
+		);
+	}
 });

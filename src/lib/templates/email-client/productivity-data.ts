@@ -9,6 +9,7 @@ export type CalendarEvent = {
 	category: 'Team' | 'Focus' | 'Personal';
 };
 export type WorkspaceTask = {
+	important?: boolean;
 	id: string;
 	title: string;
 	due: string;

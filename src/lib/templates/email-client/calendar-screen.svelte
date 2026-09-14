@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
-	let { active = true }: { active?: boolean } = $props();
+	let {
+		active = true,
+		events = $bindable<CalendarEvent[]>([])
+	}: { active?: boolean; events?: CalendarEvent[] } = $props();
 	import { CalendarDate, parseDate, type DateValue } from '@internationalized/date';
 	import Plus from '@lucide/svelte/icons/plus';
 	import MapPin from '@lucide/svelte/icons/map-pin';
@@ -12,8 +15,7 @@
 	import { Label } from '#lib/bedrock/ui/label';
 	import { Textarea } from '#lib/bedrock/ui/textarea';
 	import * as Dialog from '#lib/bedrock/ui/dialog';
-	import { calendarEvents, demoToday, type CalendarEvent } from './productivity-data.js';
-	let events = $state(calendarEvents.map((event) => ({ ...event })));
+	import { demoToday, type CalendarEvent } from './productivity-data.js';
 	let selected = $state<DateValue>(parseDate(demoToday));
 	let month = $state<DateValue>(parseDate(demoToday));
 	let open = $state(false);
@@ -49,6 +51,11 @@
 	const monthLabel = $derived(
 		new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' }).format(month.toDate('UTC'))
 	);
+	export function composeEvent(subject: string, context: string) {
+		edit();
+		title = subject;
+		note = context;
+	}
 	function edit(event?: CalendarEvent) {
 		editing = event?.id ?? null;
 		title = event?.title ?? '';

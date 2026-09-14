@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ListChecksIcon from '@lucide/svelte/icons/list-checks';
 	import ArchiveIcon from '@lucide/svelte/icons/archive';
 	import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';
 	import { onMount, tick } from 'svelte';
@@ -36,8 +37,15 @@
 
 	let {
 		active = true,
-		onNavigateCalendar = () => {}
-	}: { active?: boolean; onNavigateCalendar?: () => void } = $props();
+		onNavigateCalendar = () => {},
+		onCreateTask = () => {},
+		onCreateEvent = () => {}
+	}: {
+		active?: boolean;
+		onNavigateCalendar?: () => void;
+		onCreateTask?: (subject: string, context: string) => void;
+		onCreateEvent?: (subject: string, context: string) => void;
+	} = $props();
 	let undoArchive = $state<Array<{ id: string; mailbox: MailboxId }>>([]);
 	let draftId = $state<string | null>(null);
 	let composeReplyId = $state<string | null>(null);
@@ -72,7 +80,6 @@
 	let attachmentOpen = $state(false);
 	afterNavigate(() => {
 		if (!active) {
-			composeOpen = false;
 			foldersOpen = false;
 			attachmentOpen = false;
 		}
@@ -125,6 +132,10 @@
 	}
 
 	async function chooseMessage(id: string) {
+		if (composeOpen) {
+			persistDraft();
+			composeOpen = false;
+		}
 		selectedMessageId = id;
 		mobilePane = 'reader';
 		const message = messages.find((item) => item.id === id);
@@ -194,7 +205,11 @@
 		selectedIds = [];
 	}
 
-	function openCompose(to = '', subject = '', body = '', replyId: string | null = null) {
+	async function openCompose(to = '', subject = '', body = '', replyId: string | null = null) {
+		if (composeOpen) {
+			persistDraft();
+			composeOpen = false;
+		}
 		draftId = null;
 		composeReplyId = replyId;
 		foldersOpen = false;
@@ -202,9 +217,23 @@
 		composeSubject = subject;
 		composeBody = body;
 		composeOpen = true;
+		mobilePane = 'reader';
+		await tick();
+		document.getElementById(replyId ? 'compose-body' : 'compose-to')?.focus();
+	}
+
+	async function closeCompose() {
+		composeOpen = false;
+		await tick();
+		if (currentMessage) document.getElementById('mail-reader-heading')?.focus();
+		else await backToMessages();
 	}
 
 	function saveDraft() {
+		persistDraft();
+		void closeCompose();
+	}
+	function persistDraft() {
 		const draft = {
 			id: draftId ?? `draft-${Date.now()}`,
 			mailbox: 'drafts' as const,
@@ -226,7 +255,6 @@
 		messages = draftId
 			? messages.map((message) => (message.id === draftId ? draft : message))
 			: [draft, ...messages];
-		composeOpen = false;
 		announcement = 'Draft saved locally. Find it in Drafts.';
 	}
 	function restoreArchive() {
@@ -272,7 +300,7 @@
 			starred: false
 		});
 		announcement = `Demo message to ${composeTo} saved in Sent. No email was sent.`;
-		composeOpen = false;
+		void closeCompose();
 	}
 
 	function navigateMessage(direction: 1 | -1) {
@@ -356,6 +384,12 @@
 		</div>
 
 		<div class="header-actions">
+			<IconButton
+				class="md:hidden"
+				icon={PencilIcon}
+				label="Compose"
+				onclick={() => openCompose()}
+			/>
 			<IconButton icon={CalendarIcon} label="Open calendar" onclick={onNavigateCalendar} />
 			<Avatar class="size-8">
 				<AvatarFallback class="bg-primary text-xs text-primary-foreground">AL</AvatarFallback>
@@ -584,7 +618,66 @@
 		</section>
 
 		<section class="reader-pane" aria-label="Reading pane">
-			{#if currentMessage}
+			{#if composeOpen}
+				<form class="compose-pane" aria-labelledby="compose-heading" onsubmit={sendMessage}>
+					<header class="border-b px-5 py-4">
+						<div class="mb-2 flex items-center gap-3">
+							<Button type="button" variant="ghost" size="sm" onclick={saveDraft}
+								><ArrowLeftIcon class="size-4" />Back</Button
+							>
+							<h2 id="compose-heading" class="text-lg font-semibold">
+								{composeReplyId ? 'Reply' : 'New message'}
+							</h2>
+						</div>
+						<p class="text-xs text-muted-foreground">
+							Local demo: messages appear in Sent. No email leaves this page.
+						</p>
+					</header>
+					<div class="grid gap-4 p-5">
+						<div class="grid gap-1.5">
+							<Label for="compose-to">To</Label>
+							<Input
+								id="compose-to"
+								value={composeTo}
+								oninput={(event) => (composeTo = event.currentTarget.value)}
+								name="to"
+								type="email"
+								placeholder="name@example.com"
+								required
+							/>
+						</div>
+						<div class="grid gap-1.5">
+							<Label for="compose-subject">Subject</Label>
+							<Input
+								id="compose-subject"
+								value={composeSubject}
+								oninput={(event) => (composeSubject = event.currentTarget.value)}
+								name="subject"
+								placeholder="What is this about?"
+								required
+							/>
+						</div>
+						<div class="grid gap-1.5">
+							<Label for="compose-body">Message</Label>
+							<Textarea
+								id="compose-body"
+								value={composeBody}
+								oninput={(event) => (composeBody = event.currentTarget.value)}
+								name="body"
+								class="min-h-52 resize-none"
+								placeholder="Write your message…"
+								required
+							/>
+						</div>
+					</div>
+					<footer class="flex flex-wrap justify-end gap-2 border-t bg-muted/35 px-5 py-3">
+						<Button variant="ghost" type="button" onclick={closeCompose}>Cancel</Button>
+						<Button type="button" variant="outline" onclick={saveDraft}>Save draft</Button><Button
+							type="submit"><Icon icon={SendIcon} />Send message</Button
+						>
+					</footer>
+				</form>
+			{:else if currentMessage}
 				<div class="reader-toolbar">
 					<div class="flex items-center gap-1">
 						<IconButton
@@ -606,6 +699,24 @@
 							onclick={() => updateCurrent('delete')}
 						/>
 						<IconButton icon={CalendarIcon} label="Open calendar" onclick={onNavigateCalendar} />
+						<IconButton
+							icon={ListChecksIcon}
+							label="Create task from message"
+							onclick={() =>
+								onCreateTask(
+									currentMessage.subject,
+									`From ${currentMessage.from.name}: ${currentMessage.preview}`
+								)}
+						/>
+						<IconButton
+							icon={CalendarIcon}
+							label="Schedule from message"
+							onclick={() =>
+								onCreateEvent(
+									currentMessage.subject,
+									`From ${currentMessage.from.name}: ${currentMessage.preview}`
+								)}
+						/>
 					</div>
 					<div class="flex items-center gap-1">
 						<IconButton
@@ -727,66 +838,6 @@
 	</div>
 </div>
 
-<Dialog.Root open={active && composeOpen} onOpenChange={(open) => (composeOpen = open)}>
-	<Dialog.Content class="gap-0 overflow-hidden p-0 sm:max-w-2xl">
-		<form onsubmit={sendMessage}>
-			<Dialog.Header class="border-b px-5 py-4">
-				<Dialog.Title>New message</Dialog.Title>
-				<Dialog.Description
-					>Local demo: messages appear in Sent. No email leaves this page.</Dialog.Description
-				>
-			</Dialog.Header>
-			<div class="grid gap-4 p-5">
-				<div class="grid gap-1.5">
-					<Label for="compose-to">To</Label>
-					<Input
-						id="compose-to"
-						value={composeTo}
-						oninput={(event) => (composeTo = event.currentTarget.value)}
-						name="to"
-						type="email"
-						placeholder="name@example.com"
-						required
-					/>
-				</div>
-				<div class="grid gap-1.5">
-					<Label for="compose-subject">Subject</Label>
-					<Input
-						id="compose-subject"
-						value={composeSubject}
-						oninput={(event) => (composeSubject = event.currentTarget.value)}
-						name="subject"
-						placeholder="What is this about?"
-						required
-					/>
-				</div>
-				<div class="grid gap-1.5">
-					<Label for="compose-body">Message</Label>
-					<Textarea
-						id="compose-body"
-						value={composeBody}
-						oninput={(event) => (composeBody = event.currentTarget.value)}
-						name="body"
-						class="min-h-52 resize-none"
-						placeholder="Write your message…"
-						required
-					/>
-				</div>
-			</div>
-			<Dialog.Footer class="border-t bg-muted/35 px-5 py-3">
-				<Dialog.Close>
-					{#snippet child({ props })}
-						<Button variant="ghost" type="button" {...props}>Cancel</Button>
-					{/snippet}
-				</Dialog.Close>
-				<Button type="button" variant="outline" onclick={saveDraft}>Save draft</Button><Button
-					type="submit"><Icon icon={SendIcon} />Send message</Button
-				>
-			</Dialog.Footer>
-		</form>
-	</Dialog.Content>
-</Dialog.Root>
-
 <Dialog.Root open={active && attachmentOpen} onOpenChange={(open) => (attachmentOpen = open)}>
 	<Dialog.Content
 		><Dialog.Header
@@ -803,6 +854,13 @@
 </Dialog.Root>
 
 <style>
+	.compose-pane {
+		min-height: 0;
+		overflow-y: auto;
+		height: 100%;
+		background: var(--card);
+	}
+
 	.mail-app {
 		--mail-sidebar: 15rem;
 		--mail-list: 23rem;
@@ -1210,6 +1268,8 @@
 
 	@media (max-width: 767px) {
 		.mail-app {
+			height: calc(100svh - 14rem);
+			min-height: 30rem;
 			grid-template-rows: 3.5rem minmax(0, 1fr);
 		}
 
@@ -1235,8 +1295,7 @@
 			border: 0;
 			transition:
 				transform var(--motion-overlay) var(--motion-ease-drawer),
-				opacity var(--motion-state) var(--motion-ease-enter),
-				visibility var(--motion-overlay);
+				opacity var(--motion-state) var(--motion-ease-enter);
 		}
 
 		.reader-pane {

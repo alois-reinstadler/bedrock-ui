@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
-	let { active = true }: { active?: boolean } = $props();
+	let {
+		active = true,
+		tasks = $bindable<WorkspaceTask[]>([])
+	}: { active?: boolean; tasks?: WorkspaceTask[] } = $props();
 	import { tick } from 'svelte';
 	import { parseDate, type CalendarDate } from '@internationalized/date';
+	import Star from '@lucide/svelte/icons/star';
 	import Plus from '@lucide/svelte/icons/plus';
 	import CheckCheck from '@lucide/svelte/icons/check-check';
 	import { Button } from '#lib/bedrock/ui/button';
@@ -14,9 +18,8 @@
 	import { Textarea } from '#lib/bedrock/ui/textarea';
 	import { DateInput } from '#lib/bedrock/ui/date-input';
 	import * as Dialog from '#lib/bedrock/ui/dialog';
-	import { workspaceTasks, demoToday, type WorkspaceTask } from './productivity-data.js';
-	let tasks = $state(workspaceTasks.map((task) => ({ ...task })));
-	let filter = $state<'Today' | 'Upcoming' | 'Completed'>('Today');
+	import { demoToday, type WorkspaceTask } from './productivity-data.js';
+	let filter = $state<'Today' | 'Upcoming' | 'Important' | 'Completed'>('Today');
 	let query = $state('');
 	let open = $state(false);
 	afterNavigate(() => {
@@ -36,12 +39,22 @@
 					(filter === 'Completed'
 						? task.completed
 						: !task.completed &&
-							(filter === 'Today' ? task.due <= demoToday : task.due > demoToday)) &&
+							(filter === 'Important'
+								? task.important
+								: filter === 'Today'
+									? task.due <= demoToday
+									: task.due > demoToday)) &&
 					`${task.title} ${task.project}`.toLowerCase().includes(query.toLowerCase())
 			)
 			.sort((a, b) => a.due.localeCompare(b.due))
 	);
 	const completed = $derived(tasks.filter((task) => task.completed).length);
+	export async function revealTask(id: string) {
+		filter = 'Today';
+		query = '';
+		await tick();
+		document.getElementById(`task-${id}`)?.focus();
+	}
 	function edit(task?: WorkspaceTask) {
 		editing = task?.id ?? null;
 		title = task?.title ?? '';
@@ -63,6 +76,7 @@
 			due: due.toString(),
 			project: project.trim() || 'Personal',
 			note: note.trim(),
+			important: tasks.find((task) => task.id === editing)?.important ?? false,
 			completed: tasks.find((task) => task.id === editing)?.completed ?? false
 		};
 		tasks = editing ? tasks.map((item) => (item.id === editing ? task : item)) : [...tasks, task];
@@ -138,8 +152,8 @@
 		</aside>
 		<div class="order-1 min-w-0 overflow-hidden rounded-2xl border bg-card shadow-sm lg:order-2">
 			<div class="flex flex-wrap items-center justify-between gap-3 border-b p-4">
-				<div class="flex gap-1" role="group" aria-label="Task filters">
-					{#each ['Today', 'Upcoming', 'Completed'] as item (item)}<Button
+				<div class="flex flex-wrap gap-1" role="group" aria-label="Task filters">
+					{#each ['Today', 'Upcoming', 'Important', 'Completed'] as item (item)}<Button
 							size="sm"
 							variant={filter === item ? 'secondary' : 'ghost'}
 							aria-pressed={filter === item}
@@ -162,7 +176,9 @@
 						? 'Your priorities'
 						: filter === 'Upcoming'
 							? 'On the horizon'
-							: 'A job well done'}
+							: filter === 'Important'
+								? 'Keep in sight'
+								: 'A job well done'}
 				</h2>
 				<Badge variant="outline">{visible.length} {visible.length === 1 ? 'task' : 'tasks'}</Badge>
 			</div>
@@ -177,6 +193,7 @@
 							class="min-w-0 flex-1 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
 							onclick={() => edit(task)}
 							aria-label={`Edit ${task.title}`}
+							id={`task-${task.id}`}
 							><span
 								class="block font-medium"
 								class:line-through={task.completed}
@@ -191,6 +208,16 @@
 										: ''}</span
 								></span
 							></button
+						>
+						<Button
+							variant="ghost"
+							size="icon"
+							aria-label={`${task.important ? 'Unmark' : 'Mark'} ${task.title} important`}
+							aria-pressed={!!task.important}
+							onclick={() => {
+								task.important = !task.important;
+								announcement = `${task.title} ${task.important ? 'marked important' : 'removed from important'}.`;
+							}}><Star class={task.important ? 'size-4 fill-current' : 'size-4'} /></Button
 						>
 					</li>{:else}<li class="px-6 py-16 text-center">
 						<CheckCheck class="mx-auto mb-3 size-8 text-muted-foreground" />
