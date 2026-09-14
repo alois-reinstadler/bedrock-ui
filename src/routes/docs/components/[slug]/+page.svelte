@@ -14,22 +14,22 @@
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import { Outline, type OutlineItem } from '#lib/bedrock/ui/outline';
 	import { Text } from '#lib/bedrock/ui/text';
-	import CodeBlock from '#lib/site/CodeBlock.svelte';
+	import HighlightedCode from '#lib/site/HighlightedCode.svelte';
 	import AccessibilityTab from '#lib/site/component-docs/AccessibilityTab.svelte';
 	import ComponentTabs from '#lib/site/component-docs/ComponentTabs.svelte';
 	import PropertiesTab from '#lib/site/component-docs/PropertiesTab.svelte';
 	import type { ComponentDocTab } from '#lib/site/component-guides/index.js';
-	import { getExample } from '#lib/site/examples';
-	import { importPath } from '#lib/site/registry';
+	import { getExample, getPreview, getExampleSource } from '#lib/site/examples';
 
 	let { data } = $props();
-	let sourceOpen = $state(false);
+	let sourceSlug = $state<string | null>(null);
 
 	// SvelteKit can update leaf props before destroying this component when a
 	// navigation leaves the dynamic route. Keep teardown/HMR from dereferencing
 	// another page's data shape.
 	let component = $derived(data.component as typeof data.component | undefined);
 	let slug = $derived(component?.slug ?? '');
+	let sourceOpen = $derived(sourceSlug === slug);
 	let guide = $derived(component ? data.guide : undefined);
 	let reference = $derived(component ? data.reference : undefined);
 	let requestedTab = $derived(mounted ? page.url.searchParams.get('tab') : null);
@@ -39,15 +39,12 @@
 	let examplePromise = $derived(
 		slug && activeTab === 'overview' ? getExample(slug) : Promise.resolve(undefined)
 	);
-	let path = $derived(slug ? importPath(slug) : '');
-	let exportName = $derived(
-		component?.importName ?? component?.title.replaceAll(' ', '') ?? 'Component'
-	);
 	let isCompound = $derived((guide?.anatomy.length ?? 0) > 1);
-	let importCode = $derived(
-		isCompound
-			? `import * as ${exportName} from '${path}';`
-			: `import { ${exportName} } from '${path}';`
+	let previewPromise = $derived(
+		slug && activeTab === 'overview' ? getPreview(slug) : Promise.resolve(undefined)
+	);
+	let sourcePromise = $derived(
+		sourceOpen && slug ? getExampleSource(slug) : Promise.resolve(undefined)
 	);
 	let bestPractices = $derived([
 		...(guide?.behavior ?? []).slice(0, 3),
@@ -87,6 +84,7 @@
 			return items;
 		}
 		const items: OutlineItem[] = [
+			{ id: 'preview', label: 'Common variants', level: 2 },
 			{ id: 'installation', label: 'Installation', level: 2 },
 			{ id: 'usage', label: 'Usage', level: 2 },
 			{ id: 'what-it-is', label: 'What it is', level: 3 },
@@ -126,11 +124,24 @@
 				<ComponentTabs {component} active={activeTab} />
 
 				{#if activeTab === 'overview'}
+					<section id="preview" aria-labelledby="preview-heading" class="space-y-4">
+						<Heading id="preview-heading" level={2}>Common variants</Heading>
+						<div class="rounded-xl border bg-card p-6 md:p-8">
+							{#await previewPromise}<p
+									role="status"
+									class="min-h-24 text-sm text-muted-foreground"
+								>
+									Loading variants…
+								</p>
+							{:then preview}{#if preview}{@const Preview = preview.component}<Preview />{/if}
+							{:catch}<p role="status">
+									Variants could not load. Reload the page to retry.
+								</p>{/await}
+						</div>
+					</section>
 					<section id="installation" aria-labelledby="installation-heading" class="space-y-4">
 						<Heading id="installation-heading" level={2}>Installation</Heading>
-						<pre class="overflow-x-auto rounded-xl border bg-muted/30 p-4 text-sm"><code
-								class="font-code">{importCode}</code
-							></pre>
+						<HighlightedCode code={data.importCode} html={data.importHtml} />
 						{#if isCompound}
 							<Text color="muted" as="p" class="leading-relaxed">
 								Use a namespace import to keep the family together. Usage stays discoverable as
@@ -236,9 +247,10 @@
 
 						<section aria-labelledby="live-example-heading" class="space-y-4">
 							<div class="max-w-3xl space-y-2">
-								<Heading id="live-example-heading" level={3} visual={4}>Default example</Heading>
+								<Heading id="live-example-heading" level={3} visual={4}>In practice</Heading>
 								<Text color="muted" as="p" class="leading-relaxed">
-									A working starting point using the public Bedrock API.
+									Use the component in a realistic product workflow, with supporting UI and
+									meaningful state.
 								</Text>
 							</div>
 
@@ -248,10 +260,7 @@
 								</div>
 								<div class="p-6 md:p-8">
 									{#await examplePromise}
-										<div
-											class="h-32 animate-pulse rounded-lg bg-muted"
-											aria-label="Loading example"
-										></div>
+										<div class="h-32 rounded-lg bg-muted" aria-label="Loading example"></div>
 									{:then example}
 										{#if example}
 											{@const Example = example.component}
@@ -288,23 +297,26 @@
 									size="sm"
 									aria-expanded={sourceOpen}
 									aria-controls={`example-source-content-${slug}`}
-									onclick={() => (sourceOpen = !sourceOpen)}
+									onclick={() => (sourceSlug = sourceOpen ? null : slug)}
 								>
 									{sourceOpen ? 'Hide code' : 'View code'}
 									<Icon icon={sourceOpen ? 'chevronUp' : 'chevronDown'} />
 								</Button>
 								{#if sourceOpen}
 									<div id={`example-source-content-${slug}`}>
-										{#await examplePromise then example}
-											{#if example}
-												<CodeBlock
+										{#await sourcePromise}
+											<p role="status" class="p-4 text-sm text-muted-foreground">
+												Loading highlighted source…
+											</p>
+										{:then source}{#if source}<HighlightedCode
 													label={`${component.title} example`}
-													language="svelte"
-													code={example.source}
-													lineNumbers
+													code={source.code}
+													html={source.html}
 													maxHeight="32rem"
-												/>
-											{/if}
+												/>{/if}
+										{:catch}<p role="status">
+												Source could not load. Close and reopen it to retry.
+											</p>
 										{/await}
 									</div>
 								{/if}

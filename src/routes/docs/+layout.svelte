@@ -61,7 +61,8 @@
 	});
 </script>
 
-<div class="flex min-h-dvh flex-col">
+<!-- Keep cross-page navigation outside the known primitive teardown race. -->
+<div class="flex min-h-dvh flex-col" data-sveltekit-reload>
 	<SiteHeader />
 	<Sidebar.Provider class="min-h-0 flex-1">
 		<DocsSidebar />

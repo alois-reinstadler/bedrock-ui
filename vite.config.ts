@@ -9,6 +9,15 @@ const runtimeEnvironment = process.env.NODE_ENV ?? 'development';
 
 export default defineConfig({
 	cacheDir: `node_modules/.vite-${runtimeEnvironment}`,
+	server: {
+		watch: {
+			ignored: [
+				'**/build/**',
+				'**/docs/bedrock/site-expansion/screenshots/**',
+				'**/docs/bedrock/site-expansion/verification/**'
+			]
+		}
+	},
 	// Component examples are route-level lazy chunks. Pre-bundle their bare
 	// dependencies once so opening a new example in dev does not trigger Vite's
 	// optimizer restart (which can briefly serve a stale route or a 500).

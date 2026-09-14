@@ -23,6 +23,7 @@
 			<li>
 				<a
 					href={href(tab.value)}
+					data-sveltekit-reload="off"
 					aria-current={active === tab.value ? 'page' : undefined}
 					class="relative block py-3 text-sm font-medium whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none aria-[current=page]:text-foreground"
 				>

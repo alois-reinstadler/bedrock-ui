@@ -28,13 +28,20 @@
 		highlightCache[key] = html;
 	}
 
-	async function highlightCode(source: string, language: string): Promise<string | undefined> {
+	function highlightCode(
+		source: string,
+		language: string
+	): string | Promise<string | undefined> | undefined {
 		if (typeof window === 'undefined') return undefined;
 		const lang = language.trim().toLowerCase();
 		if (!lang || lang === 'plaintext' || lang === 'text' || lang === 'txt') return undefined;
 		const cacheKey = `${lang}\u0000${source}`;
 		if (Object.hasOwn(highlightCache, cacheKey)) return highlightCache[cacheKey];
 
+		return loadHighlight(source, lang, cacheKey);
+	}
+
+	async function loadHighlight(source: string, lang: string, cacheKey: string) {
 		try {
 			const shiki = await loadShiki();
 			highlighterPromise ??= shiki.createHighlighter({
@@ -181,6 +188,9 @@
 </div>
 
 <style>
+	:global([data-slot='code-block-content'] .shiki span) {
+		color: var(--shiki-light);
+	}
 	:global([data-slot='code-block-content'] .shiki) {
 		margin: 0;
 		padding: 1rem;

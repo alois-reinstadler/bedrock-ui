@@ -1,25 +1,20 @@
 import type { Component } from 'svelte';
-
 type ExampleModule = { default: Component };
-
-export type ComponentExample = {
-	component: Component;
-	source: string;
-};
-
-// Keep every component demo out of the shared docs bundle. Vite turns each
-// loader into a cached, hashed chunk and the browser only fetches the example
-// for the page being viewed.
+export type ComponentExample = { component: Component };
 const modules = import.meta.glob<ExampleModule>('./examples/*.svelte');
-const sources = import.meta.glob<string>('./examples/*.svelte', {
-	query: '?raw',
-	import: 'default'
-});
-
-export async function getExample(slug: string): Promise<ComponentExample | undefined> {
-	if (typeof window === 'undefined') return undefined;
-	const key = `./examples/${slug}.svelte`;
-	const [module, source] = await Promise.all([modules[key]?.(), sources[key]?.()]);
-	if (!module || source === undefined) return undefined;
-	return { component: module.default, source };
+const previews = import.meta.glob<ExampleModule>('./previews/*.svelte');
+async function load(loader?: () => Promise<ExampleModule>): Promise<ComponentExample | undefined> {
+	if (typeof window === 'undefined' || !loader) return undefined;
+	return { component: (await loader()).default };
+}
+export function getExample(slug: string) {
+	return load(modules[`./examples/${slug}.svelte`]);
+}
+export function getPreview(slug: string) {
+	return load(previews[`./previews/${slug}.svelte`]);
+}
+export async function getExampleSource(slug: string): Promise<{ code: string; html: string }> {
+	const response = await fetch(`/docs/components/${encodeURIComponent(slug)}/source.json`);
+	if (!response.ok) throw new Error('Example source could not be loaded');
+	return response.json();
 }
