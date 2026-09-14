@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { componentGuides } from './index';
+import { createComponentReference } from './reference';
 import { getComponentReference } from '../../server/component-reference/index';
 import { components } from '../registry';
 
@@ -81,6 +82,27 @@ describe('component documentation coverage', () => {
 		expect(checkbox.api.some((entry) => entry.name === 'checked')).toBe(true);
 		expect(checkbox.accessibility.semantics[0]).toContain('mixed');
 		expect(getComponentReference('slider', 'form').accessibility.keyboard[0]).toContain('Home/End');
+	});
+
+	it('documents Stepped Form coordination and its application-owned accessibility boundaries', () => {
+		const guide = createComponentReference('stepped-form', 'form').accessibility;
+		expect(guide.semantics.join(' ')).toContain('FormData');
+		expect(guide.focus.join(' ')).toContain('preventScroll');
+		expect(guide.focus.join(' ')).toContain('inactive section reveals it');
+		expect(guide.announcements.join(' ')).toContain('keep it mounted');
+		expect(guide.knownGaps?.join(' ')).toContain('no-JavaScript');
+		expect(guide.knownGaps?.join(' ')).toContain('popstate');
+		expect(guide.knownGaps?.join(' ')).toContain('cannot cancel');
+		expect(guide.requirements?.map((item) => item.criteria)).toEqual(
+			expect.arrayContaining([
+				'WCAG 2.4.3: Focus Order',
+				'WCAG 3.3.1: Error Identification',
+				'WCAG 4.1.3: Status Messages'
+			])
+		);
+		expect(createComponentReference('button', 'form').accessibility.focus[0]).toContain(
+			'test obligation'
+		);
 	});
 
 	it('documents the full Button contrast test matrix and known upstream gaps', () => {
