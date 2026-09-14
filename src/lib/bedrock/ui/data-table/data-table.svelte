@@ -83,7 +83,7 @@
 	import Settings2Icon from '@lucide/svelte/icons/settings-2';
 	import XIcon from '@lucide/svelte/icons/x';
 	import { createTable } from '@tanstack/svelte-table';
-	import { Swap, createLayoutGroup, layout } from '#lib/bedrock/motion/index.js';
+	import { Motion, createMotion } from '#lib/bedrock/motion/css.js';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Checkbox } from '#lib/bedrock/ui/checkbox';
@@ -92,7 +92,6 @@
 	import * as NativeSelect from '#lib/bedrock/ui/native-select';
 	import * as Table from '#lib/bedrock/ui/table';
 	import { cn } from '#lib/utils.js';
-	import { onDestroy } from 'svelte';
 	import type { Snippet } from 'svelte';
 	import { formatCellValue, formatCurrencyParts } from './formatters.js';
 	import type { DataTableColumn, DataTableView } from './types.js';
@@ -215,14 +214,12 @@
 		table.setPageIndex(0);
 	}
 
-	// One indicator slides between tabs instead of each tab toggling its own.
-	// The tablist is its own layout group; the indicator is the only
-	// registered node, so discrete left/width writes become spring projections.
-	const tabGroup = createLayoutGroup();
-	const tabIndicatorLayout = layout();
-	onDestroy(() => tabGroup.destroy());
 	let tablistEl = $state<HTMLDivElement | null>(null);
 	let tabIndicator = $state({ x: 0, width: 0 });
+	const indicatorMotion = createMotion(() => ({
+		animate: { x: tabIndicator.x, width: tabIndicator.width },
+		transition: { duration: 0.2 }
+	}));
 
 	function measureTabIndicator() {
 		const activeTab = tablistEl?.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]');
@@ -374,20 +371,17 @@
 	{#if views?.length}
 		<div
 			bind:this={tablistEl}
-			{@attach tabGroup.bindRoot}
 			class="relative flex items-center gap-1 overflow-x-auto border-b border-border"
 			role="tablist"
 			aria-label={l.views}
 		>
 			<span
-				{@attach tabIndicatorLayout}
+				{...indicatorMotion.props}
 				aria-hidden="true"
 				class={cn(
-					'bedrock-tab-indicator absolute bottom-0 h-0.5 rounded-full bg-primary',
+					'bedrock-tab-indicator absolute bottom-0 left-0 h-0.5 rounded-full bg-primary',
 					tabIndicator.width === 0 && 'opacity-0'
 				)}
-				style:left="{tabIndicator.x}px"
-				style:width="{tabIndicator.width}px"
 			></span>
 			<button
 				type="button"
@@ -640,7 +634,15 @@
 			class="bedrock-selection-bar sticky bottom-4 z-10 mx-auto flex items-center gap-2 rounded-full border border-border bg-background/95 py-1.5 pr-1.5 pl-4 shadow-lg supports-backdrop-filter:backdrop-blur-sm"
 		>
 			<span class="flex items-center gap-1 text-sm font-medium tabular-nums">
-				<Swap key={selectedRows.length}>{selectedRows.length}</Swap>
+				{#key selectedRows.length}<Motion
+						as="span"
+						class="inline-block"
+						motion={{
+							initial: { opacity: 0, y: 4 },
+							animate: { opacity: 1, y: 0 },
+							transition: { duration: 0.16 }
+						}}>{selectedRows.length}</Motion
+					>{/key}
 				{l.selected}
 			</span>
 			{@render actions?.(selectedRows)}
@@ -704,7 +706,7 @@
 </div>
 
 <style>
-	/* Movement comes from the shared-layout engine; only visibility fades. */
+	/* Astra CSS owns movement and width; visibility also fades. */
 	.bedrock-tab-indicator {
 		transition: opacity var(--motion-state) var(--motion-ease-enter);
 	}

@@ -28,7 +28,7 @@
 	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
 	import XIcon from '@lucide/svelte/icons/x';
 	import { Dialog as DialogPrimitive } from 'bits-ui';
-	import { Swap } from '#lib/bedrock/motion/index.js';
+	import { Motion } from '#lib/bedrock/motion/css.js';
 	import { PdfViewer } from '#lib/bedrock/ui/pdf-viewer';
 	import { cn } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
@@ -130,26 +130,34 @@
 				{current?.alt ?? l.imageView}
 			</DialogPrimitive.Title>
 			{#if current}
-				<Swap key={current.src} effect="fade">
-					<div
-						data-slot="lightbox-stage"
-						class="flex h-[80dvh] w-[min(92vw,56rem)] items-center justify-center"
+				{#key current.src}
+					<Motion
+						motion={{
+							initial: { opacity: 0 },
+							animate: { opacity: 1 },
+							transition: { duration: 0.18 }
+						}}
 					>
-						{#if kind === 'pdf'}
-							<PdfViewer
-								src={current.src}
-								aria-label={current.alt}
-								class="h-full w-full rounded-lg shadow-2xl"
-							/>
-						{:else}
-							<img
-								src={current.src}
-								alt={current.alt}
-								class="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
-							/>
-						{/if}
-					</div>
-				</Swap>
+						<div
+							data-slot="lightbox-stage"
+							class="flex h-[80dvh] w-[min(92vw,56rem)] items-center justify-center"
+						>
+							{#if kind === 'pdf'}
+								<PdfViewer
+									src={current.src}
+									aria-label={current.alt}
+									class="h-full w-full rounded-lg shadow-2xl"
+								/>
+							{:else}
+								<img
+									src={current.src}
+									alt={current.alt}
+									class="max-h-full max-w-full rounded-lg object-contain shadow-2xl"
+								/>
+							{/if}
+						</div>
+					</Motion>
+				{/key}
 				<div class="flex items-center gap-3 text-sm text-white/90">
 					{#if current.caption}
 						<span data-slot="lightbox-caption">{current.caption}</span>

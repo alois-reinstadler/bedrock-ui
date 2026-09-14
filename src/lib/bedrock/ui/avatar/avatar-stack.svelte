@@ -16,13 +16,8 @@
 	import Image from '#lib/shadcn/ui/avatar/avatar-image.svelte';
 	import Root from '#lib/shadcn/ui/avatar/avatar.svelte';
 	import { onDestroy } from 'svelte';
-	import {
-		Swap,
-		autoSize,
-		createLayoutGroup,
-		layout,
-		motionPresets
-	} from '#lib/bedrock/motion/index.js';
+	import { createLayout } from '#lib/bedrock/motion/projection.js';
+	import { Motion, createMotion } from '#lib/bedrock/motion/css.js';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -68,17 +63,17 @@
 		closeTimer = setTimeout(() => (active = null), 150);
 	}
 
-	// Same shell pattern as the demo's async upload button: autoSize animates
-	// the card between intrinsic sizes while Swap crossfades the content.
-	const cardShell = autoSize({ duration: motionPresets.swap.duration, axis: 'both' });
-
-	// Membership packing: the stack is its own layout group and every member
-	// (plus the +n trigger) is a registered position node, so identity-keyed
-	// adds/removes spring the remaining members into place. The hover card is
-	// not registered and keeps its CSS treatment.
-	const stackGroup = createLayoutGroup();
-	const memberLayout = layout({ type: 'position' });
-	onDestroy(() => stackGroup.destroy());
+	// Astra projection handles measured member packing; the preview uses CSS motion.
+	const stackLayout = createLayout({ observationRoot: () => ref });
+	const memberLayout = stackLayout({ mode: 'position' });
+	const previewLayout = createLayout({ transition: { duration: 0.18 } });
+	const previewSize = previewLayout({ mode: 'size' });
+	const cardMotion = createMotion(() => ({
+		initial: { opacity: 0, y: 4 },
+		animate: { opacity: 1, y: 0 },
+		transition: { duration: 0.16 }
+	}));
+	onDestroy(() => clearTimeout(closeTimer));
 
 	function memberKey(item: AvatarStackItem): string {
 		return `${displayName(item)}|${item.src ?? ''}`;
@@ -102,7 +97,6 @@
 
 <div
 	bind:this={ref}
-	{@attach stackGroup.bindRoot}
 	data-slot="avatar-stack"
 	class={cn('relative inline-block', className)}
 	{...restProps}
@@ -144,7 +138,7 @@
 	</Group>
 	{#if active !== null}
 		<div
-			{@attach cardShell}
+			{...cardMotion.props}
 			data-slot="avatar-stack-card"
 			role="status"
 			class="bedrock-avatar-card absolute bottom-full z-50 mb-2 w-max rounded-lg border border-border bg-popover p-2 text-popover-foreground shadow-md"
@@ -152,24 +146,36 @@
 			onmouseenter={() => clearTimeout(closeTimer)}
 			onmouseleave={scheduleHide}
 		>
-			<Swap key={active} effect="fade">
-				{#if active < visible.length}
-					{@render memberRow(visible[active])}
-				{:else}
-					<span class="flex flex-col gap-1.5">
-						{#each hidden as item, index (index)}
-							{@render memberRow(item)}
-						{/each}
-					</span>
-				{/if}
-			</Swap>
+			<div {@attach previewSize}>
+				{#key active}
+					<Motion
+						as="span"
+						class="block"
+						motion={{
+							initial: { opacity: 0 },
+							animate: { opacity: 1 },
+							transition: { duration: 0.16 }
+						}}
+					>
+						{#if active < visible.length}
+							{@render memberRow(visible[active])}
+						{:else}
+							<span class="flex flex-col gap-1.5">
+								{#each hidden as item, index (index)}
+									{@render memberRow(item)}
+								{/each}
+							</span>
+						{/if}
+					</Motion>
+				{/key}
+			</div>
 		</div>
 	{/if}
 </div>
 
 <style>
 	.bedrock-avatar-card {
-		transform: translateX(-50%);
+		translate: -50% 0;
 		transition:
 			left var(--motion-enter) var(--motion-ease-move),
 			opacity var(--motion-state) var(--motion-ease-enter);

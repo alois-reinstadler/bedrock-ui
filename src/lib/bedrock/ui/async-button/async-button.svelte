@@ -12,7 +12,8 @@
 
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { Swap, autoSize, motionPresets } from '#lib/bedrock/motion/index.js';
+	import { Motion } from '#lib/bedrock/motion/css.js';
+	import { createLayout } from '#lib/bedrock/motion/projection.js';
 	import { Button, type ButtonProps } from '#lib/bedrock/ui/button';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import { cn } from '#lib/utils.js';
@@ -72,9 +73,9 @@
 	const statusMessage = $derived(buttonState === 'idle' ? '' : text[buttonState]);
 	const statusId = $props.id();
 
-	// Same shell pattern as AvatarStack's hover card: autoSize animates the
-	// label area between intrinsic sizes while Swap crossfades the content.
-	const shell = autoSize({ duration: motionPresets.swap.duration, axis: 'both' });
+	// Intrinsic label dimensions need measured projection; entrances remain CSS.
+	const labelLayout = createLayout({ transition: { duration: 0.18 } });
+	const labelSize = labelLayout({ mode: 'size' });
 
 	async function invoke() {
 		clearTimeout(resetTimer);
@@ -110,7 +111,10 @@
 		};
 	}
 
-	onDestroy(() => clearTimeout(resetTimer));
+	onDestroy(() => {
+		run++;
+		clearTimeout(resetTimer);
+	});
 </script>
 
 <!-- Not natively disabled while pending: `aria-disabled` keeps the button
@@ -127,21 +131,34 @@
 	onclick={handleClick}
 	{...restProps}
 >
-	<span {@attach shell} class="inline-flex items-center justify-center">
-		<Swap key={buttonState} effect={swapEffect} direction={swapDirection} class="whitespace-nowrap">
-			{#if buttonState === 'idle'}
-				{@render children?.()}
-			{:else if buttonState === 'pending'}
-				<Icon icon="loading" class="animate-spin motion-reduce:animate-none" />
-				{text.pending}
-			{:else if buttonState === 'success'}
-				<Icon icon="success" />
-				{text.success}
-			{:else}
-				<Icon icon="error" />
-				{text.error}
-			{/if}
-		</Swap>
+	<span {@attach labelSize} class="inline-grid items-center justify-center overflow-hidden">
+		{#key buttonState}
+			<Motion
+				as="span"
+				class="col-start-1 row-start-1 inline-flex items-center justify-center gap-2 whitespace-nowrap"
+				motion={{
+					initial: {
+						opacity: 0,
+						y: swapEffect === 'slide-up' ? (swapDirection === 'forward' ? 12 : -12) : 0
+					},
+					animate: { opacity: 1, y: 0 },
+					transition: { duration: 0.18 }
+				}}
+			>
+				{#if buttonState === 'idle'}
+					{@render children?.()}
+				{:else if buttonState === 'pending'}
+					<Icon icon="loading" class="animate-spin motion-reduce:animate-none" />
+					{text.pending}
+				{:else if buttonState === 'success'}
+					<Icon icon="success" />
+					{text.success}
+				{:else}
+					<Icon icon="error" />
+					{text.error}
+				{/if}
+			</Motion>
+		{/key}
 	</span>
 </Button>
 <span id={statusId} class="sr-only" role="status" data-slot="async-button-status">
