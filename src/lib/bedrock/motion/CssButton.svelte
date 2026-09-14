@@ -4,6 +4,7 @@
 	import { Button } from '#lib/bedrock/ui/button';
 
 	let {
+		ref = $bindable(null),
 		motion = {
 			initial: false,
 			animate: { scale: 1 },
@@ -16,4 +17,9 @@
 	const binding = createMotion(() => ({ ...motion, disabled: props.disabled || motion.disabled }));
 </script>
 
-<Button {...props} {...binding.props} style={`${props.style ?? ''};${binding.props.style}`} />
+<Button
+	{...props}
+	{...binding.props}
+	bind:ref
+	style={`${props.style ?? ''};${binding.props.style}`}
+/>

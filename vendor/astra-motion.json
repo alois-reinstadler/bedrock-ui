@@ -1,0 +1,12 @@
+{
+	"name": "astra-motion",
+	"version": "0.0.1",
+	"archive": "astra-motion-0.0.1.tgz",
+	"sha256": "b99f2f8d46b4e6c3c515ad97fa6b9ac730e2e556ce25b5a505b13b800dc14afe",
+	"upstream": "https://github.com/alois-reinstadler/astra-motion",
+	"baseCommit": "b5dc31e",
+	"sourceState": "Includes completed, uncommitted CSS backend and aftercare changes from the Evaluate CSS Motion Alternatives thread; baseCommit alone does not reproduce this archive.",
+	"threadId": "64e2c9f6-9d06-4f23-ab2a-8885067eb328",
+	"license": "unspecified upstream",
+	"verification": "Archive runtime files match current upstream dist; 29 TypeScript runtime sources independently transpiled to matching output."
+}

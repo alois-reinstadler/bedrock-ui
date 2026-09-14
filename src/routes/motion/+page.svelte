@@ -17,6 +17,10 @@
 
 <MotionConfig reducedMotion={reduced ? 'always' : 'user'}>
 	<main class="mx-auto max-w-5xl px-6 py-16">
+		<nav aria-label="Motion navigation" class="mb-8 flex gap-4 text-sm">
+			<a href="/" class="underline underline-offset-4">Bedrock UI</a>
+			<a href="/docs/motion" class="underline underline-offset-4">Motion guide</a>
+		</nav>
 		<p class="mb-3 text-sm text-muted-foreground">BEDROCK / MOTION</p>
 		<h1 class="mb-5 text-4xl font-semibold tracking-tight">One API. Choose the movement.</h1>
 		<p class="mb-8 max-w-2xl leading-relaxed text-muted-foreground">
@@ -37,6 +41,7 @@
 					<CssButton
 						data-testid="bedrock-css-toggle"
 						onclick={() => (cssVisible = !cssVisible)}
+						aria-controls="css-motion-panel"
 						aria-expanded={cssVisible}>Toggle CSS panel</CssButton
 					>
 					<CssButton
@@ -48,6 +53,7 @@
 				<div class="min-h-36 overflow-clip">
 					{#if cssVisible}
 						<CssPanel
+							id="css-motion-panel"
 							data-testid="bedrock-css-panel"
 							class="rounded-lg bg-muted p-5"
 							motion={{
@@ -77,11 +83,13 @@
 					data-testid="bedrock-engine-toggle"
 					class="mb-5"
 					onclick={() => (engineVisible = !engineVisible)}
+					aria-controls="spring-motion-panel"
 					aria-expanded={engineVisible}>Toggle spring panel</CssButton
 				>
 				<div class="min-h-36">
 					{#if engineVisible}
 						<Motion
+							id="spring-motion-panel"
 							data-testid="bedrock-engine-panel"
 							class="rounded-lg bg-muted p-5"
 							motion={{

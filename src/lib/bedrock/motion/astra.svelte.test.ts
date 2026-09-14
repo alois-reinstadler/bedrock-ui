@@ -62,3 +62,17 @@ describe('Astra CSS wrapper contracts', () => {
 		expect(onactivate).toHaveBeenCalledTimes(1);
 	});
 });
+
+describe('Astra provider policy', () => {
+	it('settles CSS movement when its provider changes after mount', async () => {
+		const { default: PolicyFixture } = await import('./astra-policy.test.svelte');
+		const view = await render(PolicyFixture);
+		const panel = view.container.querySelector<HTMLElement>('[data-testid="policy-panel"]')!;
+		const translation = () => Number.parseFloat(getComputedStyle(panel).translate) || 0;
+		await expect.poll(translation).toBe(32);
+		await view.getByRole('button', { name: 'Change policy' }).click();
+		await expect.poll(translation).toBe(0);
+		await view.getByRole('button', { name: 'Change policy' }).click();
+		await expect.poll(translation).toBe(32);
+	});
+});

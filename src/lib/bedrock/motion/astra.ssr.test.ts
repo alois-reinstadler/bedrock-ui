@@ -36,3 +36,12 @@ describe('Astra opt-in SSR contract', () => {
 			expect(legacy[name]).toBeTypeOf('function');
 	});
 });
+
+describe('Default content visibility', () => {
+	it('renders essential panel content visibly before hydration', async () => {
+		const { default: PolicyFixture } = await import('./astra-policy.test.svelte');
+		const { body } = render(PolicyFixture);
+		expect(body).toContain('Essential content');
+		expect(body).not.toMatch(/opacity:\s*0(?:[;"\s])/);
+	});
+});

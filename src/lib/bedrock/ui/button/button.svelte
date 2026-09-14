@@ -6,7 +6,7 @@
 	import Button from '#lib/shadcn/ui/button/button.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Button> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof Button> = $props();
 </script>
 
-<Button {...props} />
+<Button {...props} bind:ref />
