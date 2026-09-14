@@ -1,0 +1,25 @@
+
+Running 10 tests using 2 workers
+
+(node:1587736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1587737) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 src/lib/templates/email-client/email-client.e2e.ts:57:1 › mobile standard motion focuses the opened message (692ms)
+  ✓   1 src/lib/templates/email-client/email-client.e2e.ts:57:1 › mobile standard motion focuses the opened message (739ms)
+  ✓   4 src/lib/templates/email-client/email-client.e2e.ts:250:1 › mobile compose is an accessible full pane with draft-saving Back (827ms)
+  ✓   3 src/lib/templates/email-client/email-client.e2e.ts:250:1 › mobile compose is an accessible full pane with draft-saving Back (840ms)
+(node:1587944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1587943) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 src/lib/templates/email-client/email-client.e2e.ts:57:1 › mobile standard motion focuses the opened message (648ms)
+  ✓   6 src/lib/templates/email-client/email-client.e2e.ts:57:1 › mobile standard motion focuses the opened message (665ms)
+  ✓   7 src/lib/templates/email-client/email-client.e2e.ts:250:1 › mobile compose is an accessible full pane with draft-saving Back (844ms)
+  ✓   8 src/lib/templates/email-client/email-client.e2e.ts:250:1 › mobile compose is an accessible full pane with draft-saving Back (870ms)
+(node:1588148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 src/lib/templates/email-client/email-client.e2e.ts:57:1 › mobile standard motion focuses the opened message (565ms)
+  ✓  10 src/lib/templates/email-client/email-client.e2e.ts:250:1 › mobile compose is an accessible full pane with draft-saving Back (754ms)
+
+  10 passed (7.1s)

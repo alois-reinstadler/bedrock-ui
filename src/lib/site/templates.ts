@@ -47,7 +47,7 @@ export const templates: TemplateDoc[] = [
 		slug: 'email-client',
 		title: 'Email Client',
 		description:
-			'A complete local workspace for mail conversations, calendar planning, and everyday tasks.',
+			'Mail, Calendar, and Tasks in one workspace, with inline composition and message follow-ups.',
 		layouts: ['Mobile', 'Tablet', 'Desktop'],
 		components: [
 			'Avatar',

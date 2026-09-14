@@ -46,8 +46,8 @@
 		},
 		"docs/+layout.svelte": {
 			"entryBytes": 9060,
-			"entryGzipBytes": 2590,
-			"staticClosureBytes": 385151,
+			"entryGzipBytes": 2591,
+			"staticClosureBytes": 385153,
 			"previousEntryBytes": 9030
 		},
 		"docs/components/[slug]/+page.svelte": {
@@ -82,8 +82,8 @@
 		},
 		"docs/templates/+page.svelte": {
 			"entryBytes": 4010,
-			"entryGzipBytes": 1940,
-			"staticClosureBytes": 139233,
+			"entryGzipBytes": 1941,
+			"staticClosureBytes": 139235,
 			"previousEntryBytes": 4015
 		},
 		"docs/+page.svelte": {
@@ -135,9 +135,9 @@
 			"previousEntryBytes": 24944
 		},
 		"templates/email-client/+page.svelte": {
-			"entryBytes": 57048,
-			"entryGzipBytes": 17064,
-			"staticClosureBytes": 644565,
+			"entryBytes": 59015,
+			"entryGzipBytes": 17722,
+			"staticClosureBytes": 646532,
 			"previousEntryBytes": 31095
 		},
 		"demo/chat/+page.svelte": {
@@ -161,7 +161,7 @@
 		"templates/+layout.svelte": {
 			"entryBytes": 1917,
 			"entryGzipBytes": 1022,
-			"staticClosureBytes": 210053,
+			"staticClosureBytes": 210055,
 			"previousEntryBytes": 665
 		},
 		"demo/motion/+page.svelte": {
@@ -208,12 +208,12 @@
 		}
 	},
 	"docsWithLayouts": {
-		"bytes": 555847,
+		"bytes": 555849,
 		"previousBytes": 549732,
 		"files": [
-			"_app/immutable/nodes/0.CzIuoHq_.js",
+			"_app/immutable/nodes/0.Ccbf99Oy.js",
 			"_app/immutable/nodes/25.r1jWVdY4.js",
-			"_app/immutable/nodes/3.Dawv2g0J.js",
+			"_app/immutable/nodes/3.Dtr8U8FJ.js",
 			"_app/immutable/chunks/4zleTBJW.js",
 			"_app/immutable/chunks/5o828efA.js",
 			"_app/immutable/chunks/94KK1QN6.js",
@@ -223,7 +223,6 @@
 			"_app/immutable/chunks/BC2102x4.js",
 			"_app/immutable/chunks/BGFcyiXM.js",
 			"_app/immutable/chunks/BJ3TS103.js",
-			"_app/immutable/chunks/BODGcY2G.js",
 			"_app/immutable/chunks/BaE4uqHF.js",
 			"_app/immutable/chunks/BeKJgE-T.js",
 			"_app/immutable/chunks/BeLIMWJF.js",
@@ -280,6 +279,7 @@
 			"_app/immutable/chunks/dniFFZM8.js",
 			"_app/immutable/chunks/ejIphM7R.js",
 			"_app/immutable/chunks/r3Xjttst.js",
+			"_app/immutable/chunks/rtA7oCHW.js",
 			"_app/immutable/chunks/tlBK-nua.js",
 			"_app/immutable/chunks/u0RPBTyx.js",
 			"_app/immutable/chunks/zPUnlIDv.js",

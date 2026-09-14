@@ -1,0 +1,46 @@
+$ NODE_ENV=test vitest -- --run
+
+ RUN  v4.1.11 /workspace/wt/bedrock-expansion-verification
+
+The following plugins may not work correctly because they use the `transformIndexHtml` hook which is not supported:
+
+  - vitest:browser:transform-tester-html
+3:34:06 AM [vite] (client) [optimizer] scanning dependencies...
+3:34:08 AM [vite] (client) [optimizer] bundling dependencies...
+3:34:20 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:34:20 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:34:20 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:34:20 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:34:20 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:34:20 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:34:20 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:34:20 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+404 GET /missing.vtt
+3:34:25 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+3:34:25 AM [vite] (client) [console.warn] [svelte] derived_inert
+Reading a derived belonging to a now-destroyed effect may result in stale values
+https://svelte.dev/e/derived_inert
+
+ Test Files  63 passed (63)
+      Tests  346 passed (346)
+   Start at  03:34:02
+   Duration  26.50s (transform 6.10s, setup 0ms, import 52.89s, tests 21.59s, environment 11ms)
+

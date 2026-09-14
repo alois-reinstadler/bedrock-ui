@@ -1,0 +1,17 @@
+
+Running 10 tests using 1 worker
+
+(node:1588650) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 src/lib/templates/email-client/email-client.e2e.ts:3:1 › mail search, selection, archive, compose, and calendar work locally (1.4s)
+  ✓   2 src/lib/templates/email-client/email-client.e2e.ts:38:1 › mobile reading returns focus to the list and keeps layout within viewport (1.0s)
+  ✓   3 src/lib/templates/email-client/email-client.e2e.ts:57:1 › mobile standard motion focuses the opened message (629ms)
+  ✓   4 src/lib/templates/email-client/email-client.e2e.ts:65:1 › calendar creates, validates, edits and deletes events with month navigation (3.5s)
+  ✓   5 src/lib/templates/email-client/email-client.e2e.ts:106:1 › mobile tasks lifecycle and screen history preserve local work (1.9s)
+  ✓   6 src/lib/templates/email-client/email-client.e2e.ts:144:1 › mail reply thread, forward draft and archive undo remain local (1.3s)
+  ✓   7 src/lib/templates/email-client/email-client.e2e.ts:174:1 › screen history closes a portaled event editor (2.3s)
+  ✓   8 src/lib/templates/email-client/email-client.e2e.ts:191:1 › integrated workspace creates follow-ups from mail and preserves inline composition (4.2s)
+  ✓   9 src/lib/templates/email-client/email-client.e2e.ts:250:1 › mobile compose is an accessible full pane with draft-saving Back (1.2s)
+  ✓  10 src/lib/templates/email-client/email-client.e2e.ts:271:1 › app navigation stays reachable on scrolled mobile and tablet task screens (1.8s)
+
+  10 passed (20.6s)

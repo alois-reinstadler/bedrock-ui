@@ -1,5 +1,5 @@
 $ svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
-Loading svelte-check in workspace: /workspace/wt/bedrock-expansion-verification
+Loading svelte-check in workspace: /workspace/wt/bedrock-email-workspace-integration
 Getting Svelte diagnostics...
 
 svelte-check found 0 errors and 0 warnings
