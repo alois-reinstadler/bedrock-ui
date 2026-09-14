@@ -20,10 +20,10 @@ export const catalogue: VideoItem[] = [
 		title: 'Signal Above',
 		tagline: 'Some messages arrive before they are sent.',
 		description:
-			'A quiet radio astronomer traces an impossible transmission across three observatories and one disappearing coastline.',
+			'A solitary signal crosses an aurora-lit mountain range as night slowly gives way to the first light. An original silent motion landscape.',
 		year: 2026,
 		rating: '13+',
-		duration: '1h 48m',
+		duration: '24 sec short',
 		genres: ['Science fiction', 'Mystery'],
 		tone: 'tide',
 		mark: 'SA',
@@ -124,10 +124,10 @@ export const catalogue: VideoItem[] = [
 		title: 'Paper Suns',
 		tagline: 'Make your own weather.',
 		description:
-			'A young inventor enters a floating lantern race with a machine built from scraps and stubborn optimism.',
+			'Seven folded lanterns rise above layered dunes toward a paper sun. An original silent study of light, depth, and patient movement.',
 		year: 2026,
 		rating: 'All ages',
-		duration: '1h 24m',
+		duration: '24 sec short',
 		genres: ['Animation', 'Family'],
 		tone: 'violet',
 		mark: 'PS'
@@ -149,7 +149,7 @@ export const catalogue: VideoItem[] = [
 
 export const rails = [
 	{
-		title: 'Continue watching',
+		title: 'Evening favorites',
 		ids: ['small-hours', 'parallel-lines', 'field-notes', 'last-station']
 	},
 	{
@@ -171,3 +171,41 @@ export const featured = catalogue.find((item) => item.featured) ?? catalogue[0];
 export function findVideo(id: string): VideoItem {
 	return catalogue.find((item) => item.id === id) ?? featured;
 }
+
+export const shortFilms = {
+	'signal-above': {
+		id: 'signal-above',
+		title: 'Signal Above',
+		src: '/templates/video-library/signal-above.mp4',
+		poster: '/templates/video-library/signal-above.jpg',
+		captions: '/templates/video-library/signal-above.vtt',
+		seconds: 24,
+		description: 'A moving signal crosses a star field over aurora-lit mountain silhouettes.'
+	},
+	'paper-suns': {
+		id: 'paper-suns',
+		title: 'Paper Suns',
+		src: '/templates/video-library/paper-suns.mp4',
+		poster: '/templates/video-library/paper-suns.jpg',
+		captions: '/templates/video-library/paper-suns.vtt',
+		seconds: 24,
+		description: 'Folded lanterns float above layered dunes as the sun rises.'
+	}
+} as const;
+export type FilmId = keyof typeof shortFilms;
+export function filmFor(item: VideoItem) {
+	return shortFilms[
+		item.id === 'paper-suns' || item.tone === 'solar' || item.tone === 'moss'
+			? 'paper-suns'
+			: 'signal-above'
+	];
+}
+export const categories = [
+	'All titles',
+	'Original shorts',
+	'Documentary',
+	'Drama',
+	'Mystery',
+	'Nature',
+	'Animation'
+];

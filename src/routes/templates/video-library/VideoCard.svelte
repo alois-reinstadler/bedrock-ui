@@ -2,7 +2,7 @@
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { IconButton } from '#lib/bedrock/ui/icon-button';
-	import type { VideoItem } from './catalog.js';
+	import { shortFilms, type FilmId, type VideoItem } from './catalog.js';
 	import PosterArt from './PosterArt.svelte';
 
 	let {
@@ -28,7 +28,14 @@
 			onclick={onOpen}
 			aria-label={`View details for ${item.title}`}
 		>
-			<PosterArt tone={item.tone} mark={item.mark} />
+			{#if item.id in shortFilms}<img
+					src={shortFilms[item.id as FilmId].poster}
+					alt=""
+					width="960"
+					height="540"
+					loading="lazy"
+					class="aspect-[16/10] w-full object-cover"
+				/>{:else}<PosterArt tone={item.tone} mark={item.mark} />{/if}
 		</button>
 		<div
 			class="absolute top-2 right-2 transition-[opacity,transform] duration-(--motion-state) group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:transition-none"

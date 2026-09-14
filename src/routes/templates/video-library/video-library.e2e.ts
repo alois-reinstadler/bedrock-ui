@@ -64,6 +64,10 @@ test('keyboard shortcuts, dialog focus return, and empty search', async ({ page 
 	const details = page.getByRole('button', { name: 'Details', exact: true });
 	await details.click();
 	await expect(page.getByRole('dialog')).toBeVisible();
+	await expect(page.getByRole('dialog').locator('.film-surface')).toHaveCSS(
+		'animation-duration',
+		'0.23s'
+	);
 	await page.keyboard.press('Escape');
 	await expect(page.getByRole('dialog')).not.toBeVisible();
 	await expect(details).toBeFocused();
@@ -94,3 +98,88 @@ for (const width of [390, 768, 1440]) {
 		});
 	}
 }
+
+test('original shorts have distinct media, real seeking, and persisted resume progress', async ({
+	page
+}) => {
+	await page.goto('/templates/video-library');
+	await expect(page.locator('[data-template="video-library"]')).toHaveAttribute(
+		'data-ready',
+		'true'
+	);
+	await page.getByRole('button', { name: 'Original shorts', exact: true }).click();
+	await expect(page.locator('#category-results article')).toHaveCount(2);
+	await page
+		.locator('#category-results')
+		.getByRole('button', { name: 'View details for Paper Suns' })
+		.click();
+	await page.getByRole('dialog').getByRole('button', { name: 'Play', exact: true }).click();
+	const player = page.getByRole('group', { name: 'Paper Suns video player' });
+	const media = player.locator('video');
+	await expect.poll(() => media.evaluate((video: HTMLVideoElement) => video.duration)).toBe(24);
+	await expect.poll(() => media.evaluate((video: HTMLVideoElement) => video.paused)).toBe(true);
+	await expect(media.locator('source')).toHaveAttribute(
+		'src',
+		'/templates/video-library/paper-suns.mp4'
+	);
+	await player.getByRole('button', { name: 'Play', exact: true }).click();
+	await expect
+		.poll(() => media.evaluate((video: HTMLVideoElement) => video.currentTime))
+		.toBeGreaterThan(0.5);
+	await player.getByRole('button', { name: 'Pause', exact: true }).click();
+	await player.getByRole('slider', { name: 'Seek' }).focus();
+	await page.keyboard.press('ArrowRight');
+	await expect
+		.poll(() => media.evaluate((video: HTMLVideoElement) => video.currentTime))
+		.toBeGreaterThan(5);
+	await page.keyboard.press('Escape');
+	await page.reload();
+	await page.getByRole('button', { name: 'Resume Paper Suns', exact: true }).click();
+	await expect
+		.poll(() => page.locator('video').evaluate((video: HTMLVideoElement) => video.currentTime))
+		.toBeGreaterThanOrEqual(5);
+	await page.keyboard.press('Escape');
+	await page.getByRole('button', { name: 'Details', exact: true }).click();
+	await page.getByRole('dialog').getByRole('button', { name: 'Play', exact: true }).click();
+	await expect(page.locator('video source')).toHaveAttribute(
+		'src',
+		'/templates/video-library/signal-above.mp4'
+	);
+	await expect
+		.poll(() => page.locator('video').evaluate((video: HTMLVideoElement) => video.duration))
+		.toBe(24);
+});
+
+test('watchlist persists and category filtering changes the catalogue', async ({ page }) => {
+	await page.goto('/templates/video-library');
+	await expect(page.locator('[data-template="video-library"]')).toHaveAttribute(
+		'data-ready',
+		'true'
+	);
+	await page.getByRole('button', { name: 'Add Signal Above to watchlist' }).first().click();
+	await page.reload();
+	await expect(
+		page.getByRole('button', { name: 'Remove Signal Above from watchlist' }).first()
+	).toBeVisible();
+	await page.getByRole('button', { name: 'Documentary', exact: true }).click();
+	await expect(page.locator('#category-results article')).toHaveCount(3);
+	await expect(page.locator('#category-results')).toContainText('Field Notes');
+	await expect(page.locator('#category-results')).not.toContainText('Signal Above');
+});
+
+test('failed local media offers retry and can recover', async ({ page }) => {
+	await page.route('**/signal-above.mp4', (route) => route.abort());
+	await page.goto('/templates/video-library');
+	await page.getByRole('button', { name: 'Play', exact: true }).first().click();
+	const player = page.getByRole('group', { name: 'Signal Above video player' });
+	await expect(page.getByTestId('film-error')).toContainText('The local film could not load.');
+	await page.unroute('**/signal-above.mp4');
+	await page.getByRole('button', { name: 'Reload film', exact: true }).click();
+	await expect
+		.poll(() => player.locator('video').evaluate((video: HTMLVideoElement) => video.duration))
+		.toBe(24);
+	await player.getByRole('button', { name: 'Play', exact: true }).click();
+	await expect
+		.poll(() => player.locator('video').evaluate((video: HTMLVideoElement) => video.currentTime))
+		.toBeGreaterThan(0);
+});
