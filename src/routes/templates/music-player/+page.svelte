@@ -28,10 +28,20 @@
 	import VolumeIcon from '@lucide/svelte/icons/volume-2';
 	import VolumeOffIcon from '@lucide/svelte/icons/volume-x';
 	import XIcon from '@lucide/svelte/icons/x';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
+	import { page } from '$app/state';
+	import { pushState, replaceState } from '$app/navigation';
 
-	type View = 'home' | 'search' | 'library' | 'favorites';
-	let announcement = $state('Demo playback — no audio is streamed.');
+	type View = 'home' | 'search' | 'library' | 'favorites' | 'recent';
+	let announcement = $state('Nine original instrumental sketches. Press play to listen.');
+	let audio: HTMLAudioElement;
+	let playbackError = $state('');
+	let duration = $state(0);
+	let savedAlbums = $state<string[]>(['after-dark', 'low-tide']);
+	let recentlyPlayed = $state<string[]>([]);
+	let nowPlayingOpen = $state(false);
+	let returnFocus: HTMLElement | null = null;
+	let playRequest = 0;
 
 	let view = $state<View>('home');
 	let query = $state('');
@@ -39,7 +49,7 @@
 	let currentTrackId = $state(initialQueue[0]);
 	let queue = $state([...initialQueue]);
 	let isPlaying = $state(false);
-	let elapsed = $state(74);
+	let elapsed = $state(0);
 	let volume = $state(68);
 	let previousVolume = $state(68);
 	let queueOpen = $state(false);
@@ -70,24 +80,174 @@
 			? searchResults
 			: view === 'favorites'
 				? tracks.filter((track) => favorites.includes(track.id))
-				: collectionTracks
+				: view === 'recent'
+					? recentlyPlayed
+							.map((id) => tracks.find((track) => track.id === id))
+							.filter((track): track is Track => Boolean(track))
+					: collectionTracks
 	);
 
 	onMount(() => {
-		const timer = window.setInterval(() => {
-			if (!isPlaying) return;
-			if (elapsed >= currentTrack.duration) {
-				if (repeat) elapsed = 0;
-				else nextTrack();
-			} else {
-				elapsed += 1;
+		restoreScreen();
+		try {
+			const saved = JSON.parse(localStorage.getItem('drift-library-v1') ?? 'null');
+			if (saved) {
+				if (Array.isArray(saved.favorites))
+					favorites = saved.favorites.filter((id: string) =>
+						tracks.some((track) => track.id === id)
+					);
+				if (Array.isArray(saved.albums))
+					savedAlbums = saved.albums.filter((id: string) =>
+						collections.some((collection) => collection.id === id)
+					);
+				if (Array.isArray(saved.recent))
+					recentlyPlayed = saved.recent.filter((id: string) =>
+						tracks.some((track) => track.id === id)
+					);
 			}
-		}, 1000);
-		return () => window.clearInterval(timer);
+		} catch {
+			announcement =
+				'Your library is available for this visit; saved browser data could not be read.';
+		}
 	});
 
-	function artworkStyle(track: Pick<Track, 'tone' | 'accent'>) {
-		return `--art-tone:${track.tone};--art-accent:${track.accent}`;
+	function connectAudio(element: HTMLAudioElement) {
+		audio = element;
+		element.src = tracks[0].audio;
+		element.volume = 0.68;
+		return () => {
+			playRequest += 1;
+			element.pause();
+			element.removeAttribute('src');
+			element.load();
+		};
+	}
+
+	function saveLibrary() {
+		try {
+			localStorage.setItem(
+				'drift-library-v1',
+				JSON.stringify({ favorites, albums: savedAlbums, recent: recentlyPlayed })
+			);
+		} catch {
+			announcement = 'Your selection is saved for this visit only.';
+		}
+	}
+
+	async function startPlayback() {
+		const request = ++playRequest;
+		playbackError = '';
+		try {
+			await audio.play();
+		} catch (error) {
+			if (request !== playRequest || (error instanceof DOMException && error.name === 'AbortError'))
+				return;
+			playbackError = 'Playback could not start. Check your connection and try again.';
+			announcement = playbackError;
+		}
+	}
+
+	function togglePlayback() {
+		if (audio.paused) void startPlayback();
+		else {
+			playRequest += 1;
+			audio.pause();
+		}
+	}
+
+	function seek(value: number) {
+		if (!Number.isFinite(audio.duration)) return;
+		audio.currentTime = Math.max(0, Math.min(audio.duration, value));
+		elapsed = audio.currentTime;
+	}
+
+	function setVolume(value: number) {
+		volume = value;
+		audio.volume = value / 100;
+	}
+
+	function trackEnded() {
+		if (repeat) {
+			seek(0);
+			void startPlayback();
+			return;
+		}
+		if (!shuffle && queue.indexOf(currentTrackId) === queue.length - 1) {
+			announcement = 'You reached the end of your queue.';
+			return;
+		}
+		nextTrack();
+	}
+
+	function toggleAlbum(id: string) {
+		savedAlbums = savedAlbums.includes(id)
+			? savedAlbums.filter((album) => album !== id)
+			: [...savedAlbums, id];
+		saveLibrary();
+		announcement = savedAlbums.includes(id)
+			? 'Album saved to your library.'
+			: 'Album removed from your library.';
+	}
+
+	function updateLocation(
+		nextView: View,
+		album = selectedCollectionId,
+		search = query,
+		replace = false
+	) {
+		view = nextView;
+		selectedCollectionId = album;
+		query = search;
+		const url = new URL(window.location.href);
+		url.searchParams.set('view', nextView);
+		url.searchParams.set('album', album);
+		if (search) url.searchParams.set('q', search);
+		else url.searchParams.delete('q');
+		if (replace) replaceState(url, page.state);
+		else pushState(url, page.state);
+	}
+
+	function restoreScreen() {
+		const params = new URL(window.location.href).searchParams;
+		const requested = params.get('view') ?? 'home';
+		view = ['home', 'search', 'library', 'favorites', 'recent'].includes(requested)
+			? (requested as View)
+			: 'home';
+		query = params.get('q') ?? '';
+		selectedCollectionId = params.get('album') ?? collections[0].id;
+	}
+
+	function openCollection(id: string) {
+		updateLocation('home', id);
+	}
+
+	async function openQueue() {
+		returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+		queueOpen = true;
+		await tick();
+		document
+			.querySelector<HTMLButtonElement>('.queue-panel button[aria-label="Close play queue"]')
+			?.focus();
+	}
+
+	function closeQueue() {
+		queueOpen = false;
+		returnFocus?.focus();
+	}
+
+	function moveNext(id: string) {
+		const remaining = queue.filter((track) => track !== id);
+		const index = remaining.indexOf(currentTrackId);
+		queue = [...remaining.slice(0, index + 1), id, ...remaining.slice(index + 1)];
+		announcement = `${tracks.find((track) => track.id === id)?.title} will play next.`;
+	}
+
+	function artworkStyle(track: Pick<Track, 'tone' | 'accent'> & { id?: string }) {
+		const artId =
+			collections.find((collection) => collection.id === track.id)?.trackIds[0] ??
+			track.id ??
+			'soft-static';
+		return `--art-tone:${track.tone};--art-accent:${track.accent};--cover-art:url('/templates/music-player/${artId}.svg')`;
 	}
 
 	function formatTime(seconds: number) {
@@ -96,48 +256,64 @@
 	}
 
 	function playTrack(id: string) {
+		const track = tracks.find((item) => item.id === id);
+		if (!track) return;
+		playRequest += 1;
 		currentTrackId = id;
 		elapsed = 0;
-		isPlaying = true;
+		duration = 0;
 		if (!queue.includes(id)) queue = [id, ...queue];
+		if (audio.getAttribute('src') !== track.audio) {
+			audio.src = track.audio;
+			audio.load();
+		} else seek(0);
+		recentlyPlayed = [id, ...recentlyPlayed.filter((item) => item !== id)].slice(0, 9);
+		saveLibrary();
+		void startPlayback();
 	}
 
 	function nextTrack() {
-		const index = queue.indexOf(currentTrackId);
-		const nextIndex = shuffle
-			? Math.floor(Math.random() * queue.length)
-			: (index + 1) % queue.length;
-		currentTrackId = queue[nextIndex];
-		elapsed = 0;
+		const alternatives = queue.filter((id) => id !== currentTrackId);
+		if (!alternatives.length) {
+			seek(0);
+			void startPlayback();
+			return;
+		}
+		const next = shuffle
+			? alternatives[Math.floor(Math.random() * alternatives.length)]
+			: queue[(queue.indexOf(currentTrackId) + 1) % queue.length];
+		playTrack(next);
 	}
 
 	function previousTrack() {
 		if (elapsed > 4) {
-			elapsed = 0;
+			seek(0);
 			return;
 		}
-		const index = queue.indexOf(currentTrackId);
-		currentTrackId = queue[(index - 1 + queue.length) % queue.length];
-		elapsed = 0;
+		playTrack(queue[(queue.indexOf(currentTrackId) - 1 + queue.length) % queue.length]);
 	}
 
 	function toggleFavorite(id: string) {
 		favorites = favorites.includes(id)
 			? favorites.filter((favorite) => favorite !== id)
 			: [...favorites, id];
+		saveLibrary();
+		announcement = favorites.includes(id)
+			? 'Song added to liked songs.'
+			: 'Song removed from liked songs.';
 	}
 
 	function toggleMute() {
 		if (volume > 0) {
 			previousVolume = volume;
-			volume = 0;
+			setVolume(0);
 		} else {
-			volume = previousVolume || 68;
+			setVolume(previousVolume || 68);
 		}
 	}
 
 	function chooseView(nextView: View) {
-		view = nextView;
+		updateLocation(nextView);
 		if (nextView === 'search')
 			requestAnimationFrame(() =>
 				document.querySelector<HTMLInputElement>('#music-search')?.focus()
@@ -151,7 +327,10 @@
 			chooseView('search');
 			return;
 		}
-		if (event.key === 'Escape') queueOpen = false;
+		if (event.key === 'Escape') {
+			if (queueOpen) closeQueue();
+			nowPlayingOpen = false;
+		}
 		if (
 			target.closest(
 				'button, a, input, textarea, select, [role="slider"], [contenteditable="true"]'
@@ -160,10 +339,10 @@
 			return;
 		if (event.code === 'Space') {
 			event.preventDefault();
-			isPlaying = !isPlaying;
+			togglePlayback();
 		}
-		if (event.key === 'ArrowRight') elapsed = Math.min(currentTrack.duration, elapsed + 10);
-		if (event.key === 'ArrowLeft') elapsed = Math.max(0, elapsed - 10);
+		if (event.key === 'ArrowRight') seek(elapsed + 10);
+		if (event.key === 'ArrowLeft') seek(elapsed - 10);
 	}
 </script>
 
@@ -175,7 +354,28 @@
 	/>
 </svelte:head>
 
-<svelte:window onkeydown={handleKeydown} />
+<svelte:window onkeydown={handleKeydown} onpopstate={restoreScreen} />
+<audio
+	{@attach connectAudio}
+	preload="metadata"
+	ontimeupdate={() => (elapsed = audio.currentTime)}
+	ondurationchange={() => (duration = Number.isFinite(audio.duration) ? audio.duration : 0)}
+	onplay={() => {
+		isPlaying = true;
+		announcement = `Playing ${currentTrack.title}.`;
+		recentlyPlayed = [
+			currentTrackId,
+			...recentlyPlayed.filter((id) => id !== currentTrackId)
+		].slice(0, 9);
+		saveLibrary();
+	}}
+	onpause={() => (isPlaying = false)}
+	onended={trackEnded}
+	onerror={() => {
+		isPlaying = false;
+		playbackError = 'This song could not be loaded. Retry playback or choose another song.';
+	}}
+></audio>
 
 <div class="music-shell" data-testid="music-player-template">
 	<p class="sr-only" role="status">{announcement}</p>
@@ -195,8 +395,11 @@
 				placeholder="Search songs, artists, albums"
 				aria-label="Search music"
 				value={query}
-				oninput={(event) => (query = event.currentTarget.value)}
-				onfocus={() => (view = 'search')}
+				oninput={(event) =>
+					updateLocation('search', selectedCollectionId, event.currentTarget.value, true)}
+				onfocus={() => {
+					if (view !== 'search') updateLocation('search');
+				}}
 			/>
 			<kbd>⌘ K</kbd>
 		</div>
@@ -205,7 +408,7 @@
 				icon={ListMusicIcon}
 				label="Open play queue"
 				tooltip="Play queue"
-				onclick={() => (queueOpen = true)}
+				onclick={openQueue}
 			/>
 			<Avatar class="size-8">
 				<AvatarFallback class="text-xs">RV</AvatarFallback>
@@ -228,8 +431,7 @@
 
 		<div class="sidebar-section">
 			<p>Made for you</p>
-			<button onclick={() => chooseView('library')}
-				><Icon icon={ClockIcon} /> Recently played</button
+			<button onclick={() => chooseView('recent')}><Icon icon={ClockIcon} /> Recently played</button
 			>
 			<button onclick={() => chooseView('favorites')}><Icon icon={HeartIcon} /> Liked songs</button>
 		</div>
@@ -240,8 +442,7 @@
 				<button
 					class:active={selectedCollectionId === collection.id && view !== 'search'}
 					onclick={() => {
-						selectedCollectionId = collection.id;
-						view = 'home';
+						openCollection(collection.id);
 					}}
 				>
 					<span class="nav-art" style={artworkStyle(collection)}></span>
@@ -252,159 +453,189 @@
 	</aside>
 
 	<main id="music-main" tabindex="-1">
-		{#if view === 'search'}
-			<section class="search-view" aria-labelledby="search-title">
-				<p class="eyebrow">Discover</p>
-				<h1 id="search-title">{query ? `Results for “${query}”` : 'Find your next favorite'}</h1>
-				<p class="lede">
-					{query
-						? `${searchResults.length} ${searchResults.length === 1 ? 'track' : 'tracks'} found across your library.`
-						: 'Search the local catalogue by song, artist, or album.'}
-				</p>
-			</section>
-		{:else if view === 'favorites'}
-			<section class="search-view">
-				<p class="eyebrow">Your collection</p>
-				<h1>Liked songs</h1>
-				<p class="lede">Your favorites, together in one place.</p>
-			</section>
-		{:else if view === 'library'}
-			<section class="search-view" aria-labelledby="library-title">
-				<p class="eyebrow">Your collection</p>
-				<h1 id="library-title">Saved for later</h1>
-				<p class="lede">A small library of records and songs you keep coming back to.</p>
-			</section>
-			<div class="album-grid">
-				{#each collections as collection (collection.id)}
-					<button
-						class="album-card"
-						onclick={() => {
-							selectedCollectionId = collection.id;
-							view = 'home';
-						}}
-					>
-						<span class="album-art" style={artworkStyle(collection)}><i></i></span>
-						<strong>{collection.title}</strong>
-						<small>{collection.subtitle}</small>
-					</button>
-				{/each}
-			</div>
-		{:else}
-			<section
-				class="hero"
-				style={artworkStyle(selectedCollection)}
-				aria-labelledby="collection-title"
-			>
-				<div class="hero-copy">
-					<Badge variant="secondary">Album pick</Badge>
-					<p class="eyebrow">Listen without rushing</p>
-					<h1 id="collection-title">{selectedCollection.title}</h1>
-					<p>{selectedCollection.description}</p>
-					<div class="hero-actions">
-						<Button
-							size="lg"
-							onclick={() => {
-								queue = [...selectedCollection.trackIds];
-								playTrack(queue[0]);
-							}}
-						>
-							<Icon icon={PlayIcon} /> Play album
-						</Button>
-						<Button
-							size="lg"
-							variant="secondary"
-							aria-pressed={favorites.includes(selectedCollection.id)}
-							onclick={() => toggleFavorite(selectedCollection.id)}
-						>
-							<Icon
-								icon={HeartIcon}
-								class={favorites.includes(selectedCollection.id) ? 'filled' : ''}
-							/> Save
-						</Button>
-					</div>
-				</div>
-				<div class="hero-art" aria-hidden="true"><i></i><i></i><i></i></div>
-			</section>
-		{/if}
-
-		{#if view !== 'library'}
-			<section class="track-section" aria-labelledby="track-title">
-				<div class="section-heading">
-					<div>
-						<p class="eyebrow">{view === 'search' ? 'Songs' : 'From this record'}</p>
-						<h2 id="track-title">{view === 'search' ? 'Search results' : 'Track list'}</h2>
-					</div>
-					<span>{visibleTracks.length} songs</span>
-				</div>
-
-				<div class="track-list" role="list">
-					{#each visibleTracks as track, index (track.id)}
-						<div class:current={track.id === currentTrackId} class="track-row" role="listitem">
+		{#key `${view}-${selectedCollectionId}`}<div class="screen-enter">
+				{#if view === 'search'}
+					<section class="search-view" aria-labelledby="search-title">
+						<p class="eyebrow">Discover</p>
+						<h1 id="search-title">
+							{query ? `Results for “${query}”` : 'Find your next favorite'}
+						</h1>
+						<p class="lede">
+							{query
+								? `${searchResults.length} ${searchResults.length === 1 ? 'track' : 'tracks'} found across your library.`
+								: 'Search the local catalogue by song, artist, or album.'}
+						</p>
+					</section>
+				{:else if view === 'favorites'}
+					<section class="search-view">
+						<p class="eyebrow">Your collection</p>
+						<h1>Liked songs</h1>
+						<p class="lede">Your favorites, together in one place.</p>
+					</section>
+				{:else if view === 'recent'}<section class="search-view">
+						<p class="eyebrow">Listening history</p>
+						<h1>Recently played</h1>
+						<p class="lede">The songs you started most recently, saved on this browser.</p>
+					</section>
+				{:else if view === 'library'}
+					<section class="search-view" aria-labelledby="library-title">
+						<p class="eyebrow">Your collection</p>
+						<h1 id="library-title">Saved for later</h1>
+						<p class="lede">{savedAlbums.length} saved albums · {favorites.length} liked songs</p>
+						<Button variant="outline" onclick={() => chooseView('favorites')}
+							>Open liked songs</Button
+						>{#if savedAlbums.length === 0}<p class="lede">
+								No albums saved yet. Explore the records below and choose Save album.
+							</p>{/if}
+					</section>
+					<div class="album-grid">
+						{#each collections.filter( (collection) => savedAlbums.includes(collection.id) ) as collection (collection.id)}
 							<button
-								class="track-play"
-								aria-label={`${track.id === currentTrackId && isPlaying ? 'Pause' : 'Play'} ${track.title}`}
-								onclick={() =>
-									track.id === currentTrackId ? (isPlaying = !isPlaying) : playTrack(track.id)}
-							>
-								<span>{index + 1}</span>
-								<Icon icon={track.id === currentTrackId && isPlaying ? PauseIcon : PlayIcon} />
-							</button>
-							<span class="track-art" style={artworkStyle(track)}></span>
-							<button
-								class="track-name"
-								aria-label={`Listen to ${track.title}`}
-								onclick={() => playTrack(track.id)}
-								><strong>{track.title}</strong><small>{track.artist}</small></button
-							>
-							<span class="track-album">{track.album}</span>
-							<IconButton
-								icon={HeartIcon}
-								label={`${favorites.includes(track.id) ? 'Remove' : 'Add'} ${track.title} ${favorites.includes(track.id) ? 'from' : 'to'} favorites`}
-								class={favorites.includes(track.id) ? 'favorite' : ''}
-								onclick={() => toggleFavorite(track.id)}
-							/>
-							<time datetime={`PT${track.duration}S`}>{formatTime(track.duration)}</time>
-							<IconButton
-								icon={ListMusicIcon}
-								label={`Queue ${track.title}`}
+								class="album-card"
 								onclick={() => {
-									if (!queue.includes(track.id)) queue = [...queue, track.id];
-									announcement = `${track.title} is in your queue.`;
+									openCollection(collection.id);
 								}}
-							/>
-						</div>
-					{:else}
-						<div class="empty-search">
-							<Icon icon={SearchIcon} />
-							<h2>No songs found</h2>
-							<p>Try another title, artist, or album.</p>
-						</div>
-					{/each}
-				</div>
-			</section>
-		{/if}
-
-		<section class="recent-section" aria-labelledby="recent-title">
-			<div class="section-heading">
-				<h2 id="recent-title">Keep listening</h2>
-				<Button variant="ghost" onclick={() => chooseView('library')}>See all</Button>
-			</div>
-			<div class="album-grid compact">
-				{#each collections as collection (collection.id)}
-					<button
-						class="album-card"
-						onclick={() => {
-							selectedCollectionId = collection.id;
-							view = 'home';
-						}}
+							>
+								<span class="album-art" style={artworkStyle(collection)}><i></i></span>
+								<strong>{collection.title}</strong>
+								<small>{collection.subtitle}</small>
+							</button>
+						{/each}
+					</div>
+				{:else}
+					<section
+						class="hero"
+						style={artworkStyle(selectedCollection)}
+						aria-labelledby="collection-title"
 					>
-						<span class="album-art" style={artworkStyle(collection)}><i></i></span>
-						<strong>{collection.title}</strong>
-						<small>{collection.subtitle}</small>
-					</button>
-				{/each}
-			</div>
-		</section>
+						<div class="hero-copy">
+							<Badge variant="secondary">Album pick</Badge>
+							<p class="eyebrow">
+								Original instrumental collection · {collectionTracks.length} tracks
+							</p>
+							<h1 id="collection-title">{selectedCollection.title}</h1>
+							<p>{selectedCollection.description}</p>
+							<p class="collection-meta">
+								{selectedCollection.subtitle} · {formatTime(
+									collectionTracks.reduce((total, track) => total + track.duration, 0)
+								)} total · Original audio sketches
+							</p>
+							<div class="hero-actions">
+								<Button
+									size="lg"
+									onclick={() => {
+										queue = [...selectedCollection.trackIds];
+										playTrack(queue[0]);
+									}}
+								>
+									<Icon icon={PlayIcon} /> Play album
+								</Button>
+								<Button
+									size="lg"
+									variant="secondary"
+									aria-pressed={savedAlbums.includes(selectedCollection.id)}
+									onclick={() => toggleAlbum(selectedCollection.id)}
+								>
+									<Icon
+										icon={HeartIcon}
+										class={savedAlbums.includes(selectedCollection.id) ? 'filled' : ''}
+									/>
+									{savedAlbums.includes(selectedCollection.id) ? 'Saved' : 'Save album'}
+								</Button>
+							</div>
+						</div>
+						<div class="hero-art" aria-hidden="true"><i></i><i></i><i></i></div>
+					</section>
+				{/if}
+
+				{#if view !== 'library'}
+					<section class="track-section" aria-labelledby="track-title">
+						<div class="section-heading">
+							<div>
+								<p class="eyebrow">{view === 'search' ? 'Songs' : 'From this record'}</p>
+								<h2 id="track-title">{view === 'search' ? 'Search results' : 'Track list'}</h2>
+							</div>
+							<span>{visibleTracks.length} songs</span>
+						</div>
+
+						<div class="track-list" role="list">
+							{#each visibleTracks as track, index (track.id)}
+								<div class:current={track.id === currentTrackId} class="track-row" role="listitem">
+									<button
+										class="track-play"
+										aria-label={`${track.id === currentTrackId && isPlaying ? 'Pause' : 'Play'} ${track.title}`}
+										onclick={() =>
+											track.id === currentTrackId ? togglePlayback() : playTrack(track.id)}
+									>
+										<span>{index + 1}</span>
+										<Icon icon={track.id === currentTrackId && isPlaying ? PauseIcon : PlayIcon} />
+									</button>
+									<span class="track-art" style={artworkStyle(track)}></span>
+									<button
+										class="track-name"
+										aria-label={`Listen to ${track.title}`}
+										onclick={() => playTrack(track.id)}
+										><strong>{track.title}</strong><small>{track.artist}</small></button
+									>
+									<span class="track-album">{track.album}</span>
+									<IconButton
+										icon={HeartIcon}
+										label={`${favorites.includes(track.id) ? 'Remove' : 'Add'} ${track.title} ${favorites.includes(track.id) ? 'from' : 'to'} favorites`}
+										class={favorites.includes(track.id) ? 'favorite' : ''}
+										onclick={() => toggleFavorite(track.id)}
+									/>
+									<time datetime={`PT${track.duration}S`}>{formatTime(track.duration)}</time>
+									<IconButton
+										icon={ListMusicIcon}
+										label={`Queue ${track.title}`}
+										onclick={() => {
+											if (!queue.includes(track.id)) queue = [...queue, track.id];
+											announcement = `${track.title} is in your queue.`;
+										}}
+									/>
+								</div>
+							{:else}
+								<div class="empty-search">
+									<Icon icon={SearchIcon} />
+									<h2>
+										{view === 'favorites'
+											? 'No liked songs yet'
+											: view === 'recent'
+												? 'Your listening starts here'
+												: 'No songs found'}
+									</h2>
+									<p>
+										{view === 'search'
+											? 'Try another title, artist, or album.'
+											: 'Play or save a song from a record to build your collection.'}
+									</p>
+								</div>
+							{/each}
+						</div>
+					</section>
+				{/if}
+
+				<section class="recent-section" aria-labelledby="recent-title">
+					<div class="section-heading">
+						<h2 id="recent-title">Keep listening</h2>
+						<Button variant="ghost" onclick={() => chooseView('library')}>See all</Button>
+					</div>
+					<div class="album-grid compact">
+						{#each collections as collection (collection.id)}
+							<button
+								class="album-card"
+								onclick={() => {
+									openCollection(collection.id);
+								}}
+							>
+								<span class="album-art" style={artworkStyle(collection)}><i></i></span>
+								<strong>{collection.title}</strong>
+								<small>{collection.subtitle}</small>
+							</button>
+						{/each}
+					</div>
+				</section>
+			</div>{/key}
 	</main>
 
 	<aside class:open={queueOpen} class="queue-panel" aria-label="Play queue">
@@ -413,27 +644,42 @@
 				<p class="eyebrow">Up next</p>
 				<h2>Play queue</h2>
 			</div>
-			<IconButton icon={XIcon} label="Close play queue" onclick={() => (queueOpen = false)} />
+			<IconButton icon={XIcon} label="Close play queue" onclick={closeQueue} />
 		</div>
 		<ScrollArea class="queue-scroll" edgeBlur="vertical">
 			<div class="queue-now">
 				<span class="queue-art" style={artworkStyle(currentTrack)}><i></i></span>
-				<p>Demo playback · {isPlaying ? 'Playing' : 'Paused'}</p>
+				<p>Original instrumental · {isPlaying ? 'Playing' : 'Paused'}</p>
 				<h3>{currentTrack.title}</h3>
 				<span>{currentTrack.artist}</span>
 			</div>
 			<div class="queue-list">
-				{#each queue.filter((id) => id !== currentTrackId) as id, index (id)}
+				{#each shuffle ? queue.filter((id) => id !== currentTrackId) : queue.slice(queue.indexOf(currentTrackId) + 1) as id, index (id)}
 					{@const track = tracks.find((item) => item.id === id)}
 					{#if track}
-						<button onclick={() => playTrack(track.id)}>
-							<span class="queue-index">{String(index + 1).padStart(2, '0')}</span>
-							<span class="track-art" style={artworkStyle(track)}></span>
-							<span><strong>{track.title}</strong><small>{track.artist}</small></span>
-							<Icon icon={PlayIcon} />
-						</button>
+						<div class="queue-entry">
+							<button onclick={() => playTrack(track.id)}>
+								<span class="queue-index">{String(index + 1).padStart(2, '0')}</span>
+								<span class="track-art" style={artworkStyle(track)}></span>
+								<span><strong>{track.title}</strong><small>{track.artist}</small></span>
+								<Icon icon={PlayIcon} />
+							</button>
+							<div class="queue-entry-actions">
+								<Button size="sm" variant="ghost" onclick={() => moveNext(id)}>Play next</Button
+								><IconButton
+									icon={XIcon}
+									label={`Remove ${track.title} from queue`}
+									onclick={() => {
+										queue = queue.filter((item) => item !== id);
+										announcement = `${track.title} removed from queue.`;
+									}}
+								/>
+							</div>
+						</div>
 					{/if}
-				{/each}
+				{:else}<p class="p-4 text-sm text-muted-foreground">
+						No more songs queued. Add songs from the track list.
+					</p>{/each}
 			</div>
 		</ScrollArea>
 	</aside>
@@ -448,15 +694,30 @@
 		<button class:active={view === 'library'} onclick={() => chooseView('library')}
 			><Icon icon={LibraryIcon} /><span>Library</span></button
 		>
-		<button onclick={() => (queueOpen = true)}
-			><Icon icon={ListMusicIcon} /><span>Queue</span></button
-		>
+		<button onclick={openQueue}><Icon icon={ListMusicIcon} /><span>Queue</span></button>
 	</nav>
 
-	<footer class="player" aria-label="Music player controls">
+	{#if playbackError}<div class="playback-error" role="alert">
+			<span>{playbackError}</span><Button
+				size="sm"
+				variant="outline"
+				onclick={() => {
+					audio.load();
+					void startPlayback();
+				}}>Retry playback</Button
+			>
+		</div>{/if}
+	<footer class:expanded={nowPlayingOpen} class="player" aria-label="Music player controls">
 		<div class="playing-track">
 			<span class="player-art" style={artworkStyle(currentTrack)}></span>
-			<div><strong>{currentTrack.title}</strong><small>{currentTrack.artist}</small></div>
+			<button
+				class="now-playing-toggle"
+				aria-expanded={nowPlayingOpen}
+				onclick={() => (nowPlayingOpen = !nowPlayingOpen)}
+				><strong>{currentTrack.title}</strong><small
+					>{currentTrack.artist} · {nowPlayingOpen ? 'Collapse player' : 'Now playing'}</small
+				></button
+			>
 			<IconButton
 				icon={HeartIcon}
 				label={`${favorites.includes(currentTrack.id) ? 'Remove' : 'Add'} current song ${favorites.includes(currentTrack.id) ? 'from' : 'to'} favorites`}
@@ -464,6 +725,21 @@
 				onclick={() => toggleFavorite(currentTrack.id)}
 			/>
 		</div>
+		{#if nowPlayingOpen}<div class="now-playing-detail">
+				<span class="detail-art" style={artworkStyle(currentTrack)}></span>
+				<div>
+					<p class="eyebrow">Now playing</p>
+					<h2>{currentTrack.title}</h2>
+					<p>{currentTrack.album}</p>
+					<p class="text-sm text-muted-foreground">
+						Original instrumental sketch · {formatTime(currentTrack.duration)} · Synth keys, bass, chords,
+						and percussion.
+					</p>
+					<Button variant="outline" size="sm" onclick={() => (nowPlayingOpen = false)}
+						>Collapse player</Button
+					>
+				</div>
+			</div>{/if}
 		<div class="transport">
 			<div class="transport-buttons">
 				<IconButton
@@ -479,7 +755,7 @@
 					label={isPlaying ? 'Pause' : 'Play'}
 					class="main-play"
 					variant="default"
-					onclick={() => (isPlaying = !isPlaying)}
+					onclick={() => togglePlayback()}
 				/>
 				<IconButton icon={SkipForwardIcon} label="Next song" onclick={nextTrack} />
 				<IconButton
@@ -495,26 +771,125 @@
 				<input
 					type="range"
 					min={0}
-					max={currentTrack.duration}
-					bind:value={elapsed}
+					max={duration || currentTrack.duration}
+					value={elapsed}
+					oninput={(event) => seek(Number(event.currentTarget.value))}
 					aria-label="Song position"
 				/>
-				<time>{formatTime(currentTrack.duration)}</time>
+				<time>{formatTime(duration || currentTrack.duration)}</time>
 			</div>
 		</div>
 		<div class="player-tools">
-			<IconButton icon={ListMusicIcon} label="Open queue" onclick={() => (queueOpen = true)} />
+			<IconButton icon={ListMusicIcon} label="Open queue" onclick={openQueue} />
 			<IconButton
 				icon={volume === 0 ? VolumeOffIcon : VolumeIcon}
 				label={volume === 0 ? 'Unmute' : 'Mute'}
 				onclick={toggleMute}
 			/>
-			<input type="range" min={0} max={100} bind:value={volume} aria-label="Volume" />
+			<input
+				type="range"
+				min={0}
+				max={100}
+				value={volume}
+				oninput={(event) => setVolume(Number(event.currentTarget.value))}
+				aria-label="Volume"
+			/>
 		</div>
 	</footer>
 </div>
 
 <style>
+	.screen-enter {
+		animation: music-screen var(--motion-enter) var(--motion-ease-enter) both;
+	}
+	@keyframes music-screen {
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+	.collection-meta {
+		font-size: 0.75rem !important;
+		line-height: 1.6;
+	}
+	.playback-error {
+		position: fixed;
+		bottom: 8rem;
+		left: 1rem;
+		right: 1rem;
+		z-index: 80;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem;
+		border: 1px solid var(--destructive);
+		border-radius: 0.75rem;
+		background: var(--card);
+	}
+	.now-playing-toggle {
+		display: grid;
+		min-width: 0;
+		text-align: left;
+	}
+	.now-playing-detail {
+		grid-column: 1 / -1;
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		padding: 1rem;
+	}
+	.now-playing-detail h2 {
+		font-size: 1.8rem;
+		font-weight: 650;
+	}
+	.now-playing-detail p {
+		margin: 0.4rem 0;
+	}
+	.detail-art {
+		flex-shrink: 0;
+		width: 8rem;
+		aspect-ratio: 1;
+		border-radius: 1rem;
+		background:
+			radial-gradient(circle at 50% 50%, transparent 30%, var(--art-accent) 31%, transparent 32%),
+			conic-gradient(from 50deg, var(--art-tone), var(--art-accent), var(--art-tone));
+	}
+	.player.expanded {
+		position: fixed;
+		z-index: 70;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: auto;
+		grid-template-rows: auto auto;
+		border-radius: 1.5rem 1.5rem 0 0;
+		box-shadow: 0 -2rem 5rem #0002;
+	}
+	.player.expanded .now-playing-detail {
+		grid-row: 1;
+	}
+	@media (max-width: 640px) {
+		.now-playing-detail {
+			gap: 0.8rem;
+			padding: 0.4rem;
+		}
+		.detail-art {
+			width: 5rem;
+		}
+		.now-playing-detail h2 {
+			font-size: 1.3rem;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.screen-enter {
+			animation: none;
+		}
+	}
+
 	.music-shell {
 		--music-panel: color-mix(in oklab, var(--card) 88%, transparent);
 		--music-subtle: color-mix(in oklab, var(--foreground) 5%, transparent);
@@ -1107,7 +1482,7 @@
 		min-width: 0;
 		gap: 0.7rem;
 	}
-	.playing-track > div {
+	.playing-track > .now-playing-toggle {
 		display: grid;
 		min-width: 0;
 	}
@@ -1309,7 +1684,7 @@
 			padding: 0.45rem;
 			box-shadow: 0 1rem 3rem -1rem rgb(0 0 0 / 35%);
 		}
-		.playing-track > :global(button) {
+		.playing-track > :global(button:not(.now-playing-toggle)) {
 			display: none;
 		}
 		.transport {
@@ -1374,6 +1749,71 @@
 		}
 		.album-card:hover {
 			transform: none;
+		}
+	}
+
+	.nav-art,
+	.track-art,
+	.player-art,
+	.album-art,
+	.hero-art,
+	.detail-art {
+		background-image: var(--cover-art);
+		background-size: cover;
+		background-position: center;
+	}
+	.queue-entry {
+		border-bottom: 1px solid var(--border);
+	}
+	.queue-entry > button {
+		width: 100%;
+	}
+	.queue-entry-actions {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+	.queue-entry-actions :global(button) {
+		display: inline-flex;
+	}
+	.player.expanded {
+		max-height: 80svh;
+		overflow-y: auto;
+	}
+	.player.expanded .timeline {
+		display: flex;
+	}
+	.player.expanded .transport-buttons > :global(button) {
+		display: inline-flex;
+	}
+	@media (max-width: 760px) {
+		.player.expanded .transport {
+			grid-column: 1 / -1;
+		}
+		.player.expanded .playing-track {
+			grid-column: 1 / -1;
+		}
+		.player.expanded .now-playing-detail {
+			grid-column: 1 / -1;
+		}
+	}
+
+	@media (min-width: 761px) and (max-width: 1300px) {
+		.track-row {
+			grid-template-columns: 1.75rem 2.4rem minmax(0, 1fr) 2rem 2.5rem 2rem;
+			gap: 0.5rem;
+		}
+		.track-album {
+			display: none;
+		}
+		.hero {
+			grid-template-columns: minmax(0, 1fr) minmax(7rem, 36%);
+			gap: 1rem;
+		}
+	}
+	@media (min-width: 761px) and (max-width: 1100px) {
+		.album-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
 </style>
