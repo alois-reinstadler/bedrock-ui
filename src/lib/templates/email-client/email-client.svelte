@@ -2,6 +2,7 @@
 	import ArchiveIcon from '@lucide/svelte/icons/archive';
 	import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';
 	import { onMount, tick } from 'svelte';
+	import { afterNavigate } from '$app/navigation';
 	import CalendarIcon from '@lucide/svelte/icons/calendar-days';
 	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
 	import FileIcon from '@lucide/svelte/icons/file';
@@ -33,6 +34,13 @@
 	import { Textarea } from '#lib/bedrock/ui/textarea';
 	import { mailboxes, messages as initialMessages, type MailboxId } from './data.js';
 
+	let {
+		active = true,
+		onNavigateCalendar = () => {}
+	}: { active?: boolean; onNavigateCalendar?: () => void } = $props();
+	let undoArchive = $state<Array<{ id: string; mailbox: MailboxId }>>([]);
+	let draftId = $state<string | null>(null);
+	let composeReplyId = $state<string | null>(null);
 	let ready = $state(false);
 	onMount(() => {
 		ready = true;
@@ -61,9 +69,14 @@
 	let composeSubject = $state('');
 	let composeBody = $state('');
 	let announcement = $state('');
-	let calendarOpen = $state(false);
 	let attachmentOpen = $state(false);
-	let meetingAccepted = $state(false);
+	afterNavigate(() => {
+		if (!active) {
+			composeOpen = false;
+			foldersOpen = false;
+			attachmentOpen = false;
+		}
+	});
 
 	const mailboxMessages = $derived.by(() => {
 		if (selectedMailbox === 'starred') return messages.filter((message) => message.starred);
@@ -79,7 +92,7 @@
 				(messageFilter === 'starred' && message.starred);
 			const matchesQuery =
 				!normalizedQuery ||
-				`${message.from.name} ${message.subject} ${message.preview}`
+				`${message.from.name} ${message.subject} ${message.body.join(' ')}`
 					.toLocaleLowerCase('en-US')
 					.includes(normalizedQuery);
 			return matchesFilter && matchesQuery;
@@ -87,7 +100,7 @@
 	});
 
 	const currentMessage = $derived(
-		mailboxMessages.find((message) => message.id === selectedMessageId) ?? filteredMessages[0]
+		filteredMessages.find((message) => message.id === selectedMessageId) ?? filteredMessages[0]
 	);
 	const unreadCount = $derived(
 		messages.filter((message) => message.mailbox === 'inbox' && message.unread).length
@@ -165,6 +178,9 @@
 			messages = messages.filter((message) => !selectedIds.includes(message.id));
 			announcement = `${selectedIds.length} messages deleted locally`;
 		} else if (action === 'archive') {
+			undoArchive = messages
+				.filter((message) => selectedIds.includes(message.id))
+				.map((message) => ({ id: message.id, mailbox: message.mailbox }));
 			for (const message of messages) {
 				if (selectedIds.includes(message.id)) message.mailbox = 'archive';
 			}
@@ -178,16 +194,65 @@
 		selectedIds = [];
 	}
 
-	function openCompose(to = '', subject = '') {
+	function openCompose(to = '', subject = '', body = '', replyId: string | null = null) {
+		draftId = null;
+		composeReplyId = replyId;
 		foldersOpen = false;
 		composeTo = to;
 		composeSubject = subject;
-		composeBody = '';
+		composeBody = body;
 		composeOpen = true;
 	}
 
+	function saveDraft() {
+		const draft = {
+			id: draftId ?? `draft-${Date.now()}`,
+			mailbox: 'drafts' as const,
+			from: {
+				name: 'You',
+				email: 'alex@lumenmail.example',
+				initials: 'AL',
+				tone: 'bg-primary text-primary-foreground'
+			},
+			to: [composeTo],
+			subject: composeSubject || '(No subject)',
+			preview: composeBody,
+			body: composeBody.split('\n'),
+			time: 'Draft',
+			dateTime: new Date().toISOString(),
+			unread: false,
+			starred: false
+		};
+		messages = draftId
+			? messages.map((message) => (message.id === draftId ? draft : message))
+			: [draft, ...messages];
+		composeOpen = false;
+		announcement = 'Draft saved locally. Find it in Drafts.';
+	}
+	function restoreArchive() {
+		for (const item of undoArchive) {
+			const message = messages.find((message) => message.id === item.id);
+			if (message) message.mailbox = item.mailbox;
+		}
+		announcement = `Restored ${undoArchive.length} messages.`;
+		undoArchive = [];
+	}
+	function editDraft() {
+		if (!currentMessage) return;
+		openCompose(currentMessage.to[0] ?? '', currentMessage.subject, currentMessage.body.join('\n'));
+		draftId = currentMessage.id;
+	}
 	function sendMessage(event: SubmitEvent) {
 		event.preventDefault();
+		if (draftId) messages = messages.filter((message) => message.id !== draftId);
+		if (composeReplyId) {
+			const original = messages.find((message) => message.id === composeReplyId);
+			if (original)
+				original.thread = [
+					...(original.thread ?? []),
+					{ author: 'You', time: 'Just now', body: composeBody }
+				];
+		}
 		messages.unshift({
 			id: `local-${Date.now()}`,
 			mailbox: 'sent',
@@ -220,13 +285,13 @@
 
 	function handleShortcut(event: KeyboardEvent) {
 		if (
+			!active ||
 			event.defaultPrevented ||
 			event.ctrlKey ||
 			event.metaKey ||
 			event.altKey ||
 			composeOpen ||
 			foldersOpen ||
-			calendarOpen ||
 			attachmentOpen
 		)
 			return;
@@ -252,14 +317,18 @@
 <svelte:window onkeydown={handleShortcut} />
 
 <svelte:head>
-	<title>Lumen Mail — Email client template</title>
 	<meta
 		name="description"
 		content="A responsive email client template composed with Bedrock UI components."
 	/>
 </svelte:head>
 
-<div class="mail-app" data-ready={ready} data-mobile-pane={mobilePane}>
+<div
+	class="mail-app"
+	data-ready={ready}
+	data-mobile-pane={mobilePane}
+	class:has-undo={undoArchive.length > 0}
+>
 	<p class="sr-only" aria-live="polite">{announcement}</p>
 
 	<header class="app-header">
@@ -287,13 +356,22 @@
 		</div>
 
 		<div class="header-actions">
-			<IconButton icon={CalendarIcon} label="Open calendar" onclick={() => (calendarOpen = true)} />
+			<IconButton icon={CalendarIcon} label="Open calendar" onclick={onNavigateCalendar} />
 			<Avatar class="size-8">
 				<AvatarFallback class="bg-primary text-xs text-primary-foreground">AL</AvatarFallback>
 			</Avatar>
 		</div>
 	</header>
 
+	{#if undoArchive.length}<div
+			class="archive-notice flex items-center justify-between gap-3 border-b bg-muted px-4 py-2 text-sm"
+		>
+			<span>{undoArchive.length} messages archived</span><Button
+				size="sm"
+				variant="outline"
+				onclick={restoreArchive}>Undo archive</Button
+			>
+		</div>{/if}
 	<div class="mail-layout">
 		<aside class="folder-pane" aria-label="Mail folders">
 			<div class="folder-pane-inner">
@@ -356,7 +434,7 @@
 		<section class="message-pane" aria-label="Message list">
 			<div class="message-toolbar">
 				<div class="flex min-w-0 items-center gap-2">
-					<Sheet.Root open={foldersOpen} onOpenChange={(open) => (foldersOpen = open)}>
+					<Sheet.Root open={active && foldersOpen} onOpenChange={(open) => (foldersOpen = open)}>
 						<Sheet.Trigger>
 							{#snippet child({ props })}
 								<IconButton {...props} class="lg:hidden" icon={MenuIcon} label="Open folders" />
@@ -527,11 +605,7 @@
 							tooltip="Delete"
 							onclick={() => updateCurrent('delete')}
 						/>
-						<IconButton
-							icon={CalendarIcon}
-							label="Open calendar"
-							onclick={() => (calendarOpen = true)}
-						/>
+						<IconButton icon={CalendarIcon} label="Open calendar" onclick={onNavigateCalendar} />
 					</div>
 					<div class="flex items-center gap-1">
 						<IconButton
@@ -593,12 +667,49 @@
 							</div>
 						{/if}
 
+						{#if currentMessage.thread?.length}<section
+								class="space-y-3"
+								aria-label="Conversation history"
+							>
+								<h3 class="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+									Conversation · {currentMessage.thread.length + 1} messages
+								</h3>
+								{#each currentMessage.thread as reply, index (`${currentMessage.id}-reply-${index}`)}<div
+										class="rounded-xl border bg-muted/25 p-4"
+									>
+										<div class="flex justify-between gap-3 text-xs">
+											<span class="font-semibold">{reply.author}</span><span
+												class="text-muted-foreground">{reply.time}</span
+											>
+										</div>
+										<p class="mt-2 text-sm leading-relaxed">{reply.body}</p>
+									</div>{/each}
+							</section>{/if}
+						<div class="flex flex-wrap gap-2">
+							{#if currentMessage.mailbox === 'drafts'}<Button variant="outline" onclick={editDraft}
+									>Edit draft</Button
+								>{/if}<Button
+								variant="outline"
+								size="sm"
+								onclick={() =>
+									openCompose(
+										'',
+										`Fwd: ${currentMessage.subject}`,
+										`\n\nForwarded message from ${currentMessage.from.name}:\n${currentMessage.body.join('\n')}`
+									)}>Forward message</Button
+							>
+						</div>
 						<Separator />
 
 						<button
 							class="reply-prompt"
 							onclick={() =>
-								openCompose(currentMessage.from.email, `Re: ${currentMessage.subject}`)}
+								openCompose(
+									currentMessage.from.email,
+									`Re: ${currentMessage.subject}`,
+									'',
+									currentMessage.id
+								)}
 						>
 							<Icon icon={ReplyIcon} />
 							<span>Reply to {currentMessage.from.name}…</span>
@@ -616,7 +727,7 @@
 	</div>
 </div>
 
-<Dialog.Root open={composeOpen} onOpenChange={(open) => (composeOpen = open)}>
+<Dialog.Root open={active && composeOpen} onOpenChange={(open) => (composeOpen = open)}>
 	<Dialog.Content class="gap-0 overflow-hidden p-0 sm:max-w-2xl">
 		<form onsubmit={sendMessage}>
 			<Dialog.Header class="border-b px-5 py-4">
@@ -668,48 +779,15 @@
 						<Button variant="ghost" type="button" {...props}>Cancel</Button>
 					{/snippet}
 				</Dialog.Close>
-				<Button type="submit"><Icon icon={SendIcon} />Send message</Button>
+				<Button type="button" variant="outline" onclick={saveDraft}>Save draft</Button><Button
+					type="submit"><Icon icon={SendIcon} />Send message</Button
+				>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>
 </Dialog.Root>
 
-<Dialog.Root open={calendarOpen} onOpenChange={(open) => (calendarOpen = open)}>
-	<Dialog.Content>
-		<Dialog.Header
-			><Dialog.Title>Your day, at a glance</Dialog.Title><Dialog.Description
-				>Monday, September 14 · Local demo calendar</Dialog.Description
-			></Dialog.Header
-		>
-		<div class="grid gap-4 py-4">
-			<div class="rounded-xl border p-4">
-				<p class="text-xs text-muted-foreground">11:30–12:00 · Product team</p>
-				<h3 class="mt-1 font-semibold">Launch readiness</h3>
-				<p class="mt-2 text-sm text-muted-foreground">
-					Review banner copy and the support handoff with Marin.
-				</p>
-				<Button
-					class="mt-4"
-					variant="outline"
-					aria-pressed={meetingAccepted}
-					onclick={() => (meetingAccepted = !meetingAccepted)}
-					>{meetingAccepted ? 'Accepted · Undo' : 'Accept invitation'}</Button
-				>
-				<p role="status" class="mt-2 text-sm">
-					{meetingAccepted ? 'Added to your demo calendar.' : 'Invitation awaiting your response.'}
-				</p>
-			</div>
-			<div class="rounded-xl border p-4">
-				<p class="text-xs text-muted-foreground">14:00–15:00 · Focus time</p>
-				<h3 class="mt-1 font-semibold">Prototype review</h3>
-				<p class="mt-2 text-sm text-muted-foreground">
-					A quiet hour to work through the next iteration.
-				</p>
-			</div>
-		</div>
-	</Dialog.Content>
-</Dialog.Root>
-<Dialog.Root open={attachmentOpen} onOpenChange={(open) => (attachmentOpen = open)}>
+<Dialog.Root open={active && attachmentOpen} onOpenChange={(open) => (attachmentOpen = open)}>
 	<Dialog.Content
 		><Dialog.Header
 			><Dialog.Title>Launch checklist</Dialog.Title><Dialog.Description
@@ -730,7 +808,7 @@
 		--mail-list: 23rem;
 		display: grid;
 		grid-template-rows: 3.5rem minmax(0, 1fr);
-		height: calc(100svh - 7.5rem);
+		height: calc(100svh - 10.5rem);
 		min-height: 36rem;
 		background:
 			radial-gradient(
@@ -743,6 +821,9 @@
 		overflow: hidden;
 	}
 
+	.mail-app.has-undo {
+		grid-template-rows: 3.5rem auto minmax(0, 1fr);
+	}
 	.app-header {
 		display: grid;
 		grid-template-columns: var(--mail-sidebar) minmax(16rem, 38rem) auto;

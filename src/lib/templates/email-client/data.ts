@@ -18,6 +18,7 @@ export type MailMessage = {
 	unread: boolean;
 	starred: boolean;
 	hasAttachment?: boolean;
+	thread?: Array<{ author: string; time: string; body: string }>;
 	label?: string;
 };
 
@@ -36,6 +37,18 @@ export const mailboxes: Array<{
 export const messages: MailMessage[] = [
 	{
 		id: 'marin-launch-notes',
+		thread: [
+			{
+				author: 'Ellis Ford',
+				time: 'Yesterday · 16:20',
+				body: 'The rollout checklist is ready. I added a fallback step in case the migration takes longer than expected.'
+			},
+			{
+				author: 'Marin Ortiz',
+				time: 'Today · 09:15',
+				body: 'Thanks Ellis. Support has the checklist now; we only need a final decision on the banner copy.'
+			}
+		],
 		mailbox: 'inbox',
 		from: {
 			name: 'Marin Ortiz',

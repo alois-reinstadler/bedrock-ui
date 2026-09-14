@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { EmailClient } from '#lib/templates/email-client/index.js';
+	import ProductivityWorkspace from '#lib/templates/email-client/productivity-workspace.svelte';
 </script>
 
-<EmailClient />
+<ProductivityWorkspace />

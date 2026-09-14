@@ -24,8 +24,11 @@ test('mail search, selection, archive, compose, and calendar work locally', asyn
 		.click();
 	await expect(page.locator('.message-summary').filter({ hasText: 'A local hello' })).toBeVisible();
 	await page.getByRole('button', { name: 'Open calendar' }).first().click();
-	await page.getByRole('button', { name: 'Accept invitation' }).click();
-	await expect(page.getByRole('status')).toHaveText('Added to your demo calendar.');
+	await expect(page).toHaveURL(/screen=calendar/);
+	await expect(page.getByRole('heading', { name: 'Calendar', exact: true })).toBeVisible();
+	await expect(
+		page.getByRole('button', { name: 'Edit Launch readiness', exact: true })
+	).toBeVisible();
 });
 
 test('mobile reading returns focus to the list and keeps layout within viewport', async ({
@@ -53,4 +56,128 @@ test('mobile standard motion focuses the opened message', async ({ page }) => {
 	await expect(page.locator('.mail-app')).toHaveAttribute('data-ready', 'true');
 	await page.locator('.message-summary').first().click();
 	await expect(page.locator('#mail-reader-heading')).toBeFocused();
+});
+
+test('calendar creates, validates, edits and deletes events with month navigation', async ({
+	page
+}) => {
+	await page.goto('/templates/email-client?screen=calendar');
+	await expect(page.getByRole('heading', { name: 'Calendar', exact: true })).toBeVisible();
+	await page.getByRole('button', { name: 'New event', exact: true }).click();
+	await page.getByRole('textbox', { name: 'Event title', exact: true }).fill('Customer workshop');
+	await page.getByLabel('Start time', { exact: true }).fill('11:40');
+	await page.getByLabel('End time', { exact: true }).fill('12:10');
+	await page.getByRole('button', { name: 'Save event', exact: true }).click();
+	await expect(page.getByRole('alert')).toContainText('overlaps with Launch readiness');
+	await page.getByLabel('Start time', { exact: true }).fill('12:30');
+	await page.getByLabel('End time', { exact: true }).fill('13:00');
+	await page.getByRole('button', { name: 'Save event', exact: true }).click();
+	await expect(
+		page.getByRole('button', { name: 'Edit Customer workshop', exact: true })
+	).toBeVisible();
+	await page.getByRole('button', { name: 'Edit Customer workshop', exact: true }).click();
+	await page
+		.getByRole('textbox', { name: 'Event title', exact: true })
+		.fill('Customer workshop revised');
+	await page.getByRole('button', { name: 'Save event', exact: true }).click();
+	await expect(
+		page.getByRole('button', { name: 'Edit Customer workshop revised', exact: true })
+	).toBeVisible();
+	await page.locator('[data-productivity-screen="calendar"] [data-calendar-next-button]').click();
+	await expect(page.locator('[data-calendar-month]')).toHaveText('October 2026');
+	await page.getByRole('button', { name: 'Today', exact: true }).click();
+	await expect(page.locator('[data-calendar-month]')).toHaveText('September 2026');
+	await page.getByRole('button', { name: 'Tuesday, 15 September 2026', exact: true }).click();
+	await expect(
+		page.getByRole('button', { name: 'Edit Research synthesis', exact: true })
+	).toBeVisible();
+	await page.getByRole('button', { name: 'Today', exact: true }).click();
+	await page.getByRole('button', { name: 'Edit Customer workshop revised', exact: true }).click();
+	await page.getByRole('button', { name: 'Delete event', exact: true }).click();
+	await expect(
+		page.getByRole('button', { name: 'Edit Customer workshop revised', exact: true })
+	).toHaveCount(0);
+});
+
+test('mobile tasks lifecycle and screen history preserve local work', async ({ page }) => {
+	await page.setViewportSize({ width: 390, height: 844 });
+	await page.emulateMedia({ colorScheme: 'dark', reducedMotion: 'reduce' });
+	await page.goto('/templates/email-client');
+	const navigation = page.getByRole('navigation', { name: 'Productivity screens' });
+	await navigation.getByRole('link', { name: 'Tasks', exact: true }).click();
+	await expect(page).toHaveURL(/screen=tasks/);
+	await expect(page.getByRole('heading', { name: 'Tasks', exact: true })).toBeFocused();
+	await page.getByRole('button', { name: 'New task', exact: true }).click();
+	await page
+		.getByRole('textbox', { name: 'Task name', exact: true })
+		.fill('Review accessibility notes');
+	await page.getByRole('button', { name: 'Save task', exact: true }).click();
+	await page.getByRole('button', { name: 'Edit Review accessibility notes', exact: true }).click();
+	await page.getByRole('textbox', { name: 'Task name', exact: true }).fill('Review keyboard notes');
+	await page.getByRole('button', { name: 'Save task', exact: true }).click();
+	await page.getByRole('checkbox', { name: 'Complete Review keyboard notes', exact: true }).click();
+	await page.getByRole('button', { name: 'Completed', exact: true }).click();
+	await expect(
+		page.getByRole('button', { name: 'Edit Review keyboard notes', exact: true })
+	).toBeVisible();
+	await navigation.getByRole('link', { name: 'Calendar', exact: true }).click();
+	await expect(page.getByRole('heading', { name: 'Calendar', exact: true })).toBeFocused();
+	await page.goBack();
+	await expect(page).toHaveURL(/screen=tasks/);
+	await expect(
+		page.getByRole('button', { name: 'Edit Review keyboard notes', exact: true })
+	).toBeVisible();
+	await page.getByRole('button', { name: 'Edit Review keyboard notes', exact: true }).click();
+	await page.getByRole('button', { name: 'Delete task', exact: true }).click();
+	await expect(
+		page.getByRole('button', { name: 'Edit Review keyboard notes', exact: true })
+	).toHaveCount(0);
+	await navigation.getByRole('link', { name: 'Mail', exact: true }).click();
+	await expect(page.getByRole('heading', { name: 'inbox', exact: true })).toBeVisible();
+	expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+});
+
+test('mail reply thread, forward draft and archive undo remain local', async ({ page }) => {
+	await page.goto('/templates/email-client');
+	await expect(page.locator('.mail-app')).toHaveAttribute('data-ready', 'true');
+	await page.getByRole('button', { name: 'Reply to Marin Ortiz…', exact: true }).click();
+	await page
+		.getByRole('textbox', { name: 'Message', exact: true })
+		.fill('The banner copy is approved.');
+	await page.getByRole('button', { name: 'Send message', exact: true }).click();
+	await expect(page.getByRole('region', { name: 'Conversation history' })).toContainText(
+		'The banner copy is approved.'
+	);
+	await page.getByRole('button', { name: 'Forward message', exact: true }).click();
+	await expect(page.getByRole('textbox', { name: 'Subject', exact: true })).toHaveValue(
+		'Fwd: Launch notes for tomorrow'
+	);
+	await page.getByRole('button', { name: 'Save draft', exact: true }).click();
+	await page.getByRole('button', { name: 'Archive message', exact: true }).click();
+	await page.getByRole('button', { name: 'Undo archive', exact: true }).click();
+	await expect(page.locator('.message-summary')).toHaveCount(5);
+	await page
+		.getByRole('navigation', { name: 'Mailbox', exact: true })
+		.getByRole('button', { name: 'Drafts', exact: false })
+		.click();
+	await expect(
+		page.locator('.message-summary').filter({ hasText: 'Fwd: Launch notes for tomorrow' })
+	).toBeVisible();
+});
+
+test('screen history closes a portaled event editor', async ({ page }) => {
+	await page.goto('/templates/email-client');
+	await expect(page.locator('.mail-app')).toHaveAttribute('data-ready', 'true');
+	await page
+		.getByRole('navigation', { name: 'Productivity screens' })
+		.getByRole('link', { name: 'Calendar', exact: true })
+		.click();
+	await page.getByRole('button', { name: 'New event', exact: true }).click();
+	await expect(page.getByRole('dialog')).toBeVisible();
+	await page.goBack();
+	await expect(page.getByRole('dialog')).toHaveCount(0);
+	await expect(page.getByRole('heading', { name: 'inbox', exact: true })).toBeVisible();
+	await page.goForward();
+	await expect(page.getByRole('heading', { name: 'Calendar', exact: true })).toBeVisible();
+	await expect(page.getByRole('dialog')).toHaveCount(0);
 });
