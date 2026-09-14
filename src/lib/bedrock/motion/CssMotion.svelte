@@ -1,10 +1,14 @@
 <script lang="ts" module>
-	import type { MotionProps, MotionTag } from 'astra-motion';
+	import type { MotionTag } from 'astra-motion';
+	import type { SvelteHTMLElements } from 'svelte/elements';
 	import type { CssMotionOptions } from 'astra-motion/css';
 
 	/** Astra's native-element API, restricted to its finite CSS backend. */
-	export type CssMotionProps<Tag extends MotionTag = 'div'> = Omit<MotionProps<Tag>, 'motion'> & {
+	type NativeProps<Tag extends MotionTag> = Tag extends MotionTag ? SvelteHTMLElements[Tag] : never;
+	export type CssMotionProps<Tag extends MotionTag = 'div'> = NativeProps<Tag> & {
+		as?: Tag;
 		motion?: CssMotionOptions;
+		ref?: HTMLElement | null;
 	};
 	const voidTags = new Set([
 		'area',
