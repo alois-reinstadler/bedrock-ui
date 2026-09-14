@@ -7,6 +7,8 @@
 	import Benchmark from '#lib/site/motion-lab/Benchmark.svelte';
 	import { createLayout } from '#lib/bedrock/motion/engine.js';
 	import { cssTransition } from 'astra-motion/css';
+	import { useMotionLabState } from '#lib/site/motion-lab/context.svelte.js';
+	const lab = useMotionLabState();
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Checkbox } from '#lib/bedrock/ui/checkbox';
 	import { Switch } from '#lib/bedrock/ui/switch';
@@ -224,8 +226,16 @@
 				/>
 				{#if emailError}<div
 						class="validation-message"
-						in:cssTransition={{ duration: 180, opacity: 0 }}
-						out:cssTransition={{ duration: 120, opacity: 0 }}
+						in:cssTransition={{
+							reducedMotion: lab.preference === 'reduced' ? 'always' : 'user',
+							duration: 180,
+							opacity: 0
+						}}
+						out:cssTransition={{
+							reducedMotion: lab.preference === 'reduced' ? 'always' : 'user',
+							duration: 120,
+							opacity: 0
+						}}
 					>
 						{emailError}
 					</div>{:else if touched}<div class="success-message">Format gültig.</div>{/if}

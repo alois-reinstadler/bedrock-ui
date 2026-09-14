@@ -11,7 +11,7 @@
 	import XIcon from '@lucide/svelte/icons/x';
 	import { createLayout } from '#lib/bedrock/motion/engine.js';
 	import { cssTransition } from 'astra-motion/css';
-	import { Motion } from '#lib/bedrock/motion/css.js';
+	import { Motion, Size } from '#lib/bedrock/motion/css.js';
 	import Scene from './scene.svelte';
 
 	type Region = 'west' | 'north' | 'island';
@@ -89,9 +89,6 @@
 	const rowMark = project({ id: 'row-mark' });
 	const densityCard = project({ mode: 'position' });
 	const tagChip = project({ mode: 'position' });
-	const stackShell = project({ mode: 'size' });
-	const densityShell = project({ mode: 'size' });
-	const wrapShell = project({ mode: 'size' });
 	const uploadShell = project();
 	// Attachment caching is not render state.
 	// eslint-disable-next-line svelte/prefer-svelte-reactivity
@@ -322,10 +319,16 @@
 				</div>
 				<div class="relative grid grid-cols-2 gap-2 sm:grid-cols-3">
 					{#each visible as station (station.id)}
-						<article {@attach pack} class="rounded-2xl bg-muted/80 px-4 py-5">
-							<p class="font-mono text-[0.7rem] tracking-widest uppercase">{station.code}</p>
-							<p class="mt-2 text-lg tracking-tight">{station.name}</p>
-							<p class="mt-1 text-xs text-muted-foreground capitalize">{station.region}</p>
+						<article {@attach pack}>
+							<div
+								class="rounded-2xl bg-muted/80 px-4 py-5"
+								in:cssTransition={{ duration: 180, opacity: 0 }}
+								out:cssTransition={{ duration: 120, opacity: 0 }}
+							>
+								<p class="font-mono text-[0.7rem] tracking-widest uppercase">{station.code}</p>
+								<p class="mt-2 text-lg tracking-tight">{station.name}</p>
+								<p class="mt-1 text-xs text-muted-foreground capitalize">{station.region}</p>
+							</div>
 						</article>
 					{/each}
 				</div>
@@ -439,7 +442,7 @@
 			<Scene
 				index="06"
 				title="Stack"
-				hint="Notices enter and pack while the stack grows at its natural height."
+				hint="CSS fades the notices and resizes their shell without scaling text; Astra projection repositions persistent cards."
 			>
 				<button
 					type="button"
@@ -449,7 +452,7 @@
 					<PlusIcon class="size-3.5" />
 					Post notice
 				</button>
-				<div id="motion-stack-shell" {@attach stackShell} class="overflow-hidden">
+				<Size axis="block" id="motion-stack-shell" class="overflow-hidden">
 					<div
 						class="relative flex flex-col gap-2"
 						role="log"
@@ -458,28 +461,31 @@
 						aria-relevant="additions"
 					>
 						{#each toasts as toast (toast.id)}
-							<article
-								{@attach toastCard}
-								class="flex items-start justify-between gap-3 rounded-2xl bg-muted/80 px-4 py-3"
-							>
-								<div>
-									<p class="font-mono text-[0.7rem] tracking-widest uppercase">{toast.gate}</p>
-									<p class="mt-1 text-sm">{toast.body}</p>
-								</div>
-								<button
-									type="button"
-									class="rounded-full p-1 text-muted-foreground hover:text-foreground"
-									aria-label={`Dismiss notice for gate ${toast.gate}`}
-									onclick={() => dismissToast(toast.id)}
+							<article {@attach toastCard}>
+								<div
+									in:cssTransition={{ duration: 180, opacity: 0, y: 8 }}
+									out:cssTransition={{ duration: 120, opacity: 0, y: -8 }}
+									class="flex items-start justify-between gap-3 rounded-2xl bg-muted/80 px-4 py-3"
 								>
-									<XIcon class="size-3.5" />
-								</button>
+									<div>
+										<p class="font-mono text-[0.7rem] tracking-widest uppercase">{toast.gate}</p>
+										<p class="mt-1 text-sm">{toast.body}</p>
+									</div>
+									<button
+										type="button"
+										class="rounded-full p-1 text-muted-foreground hover:text-foreground"
+										aria-label={`Dismiss notice for gate ${toast.gate}`}
+										onclick={() => dismissToast(toast.id)}
+									>
+										<XIcon class="size-3.5" />
+									</button>
+								</div>
 							</article>
 						{:else}
 							<p class="px-1 py-4 text-sm text-muted-foreground">No live notices.</p>
 						{/each}
 					</div>
-				</div>
+				</Size>
 			</Scene>
 
 			<Scene index="07" title="Search morph" hint="A continuous shell keeps its content crisp.">
@@ -624,7 +630,7 @@
 			<Scene
 				index="10"
 				title="Density"
-				hint="Cards keep identity while the grid settles into its new natural height."
+				hint="Cards keep identity while Astra CSS resizes the shell to its measured natural height."
 			>
 				<button
 					type="button"
@@ -635,7 +641,7 @@
 				>
 					{dense ? 'Open grid' : 'Dense grid'}
 				</button>
-				<div id="motion-density-shell" {@attach densityShell} class="overflow-hidden">
+				<Size axis="block" id="motion-density-shell" class="overflow-hidden">
 					<div
 						id="motion-density-grid"
 						class={['grid gap-2', dense ? 'grid-cols-3' : 'grid-cols-2']}
@@ -647,7 +653,7 @@
 							</article>
 						{/each}
 					</div>
-				</div>
+				</Size>
 			</Scene>
 
 			<Scene
@@ -672,8 +678,8 @@
 						</button>
 					{/each}
 				</div>
-				<div
-					{@attach wrapShell}
+				<Size
+					axis="block"
 					class="box-border max-w-sm overflow-hidden rounded-[1.6rem] bg-muted/50 p-3"
 				>
 					<div class="relative flex flex-wrap gap-2">
@@ -686,7 +692,7 @@
 							</span>
 						{/each}
 					</div>
-				</div>
+				</Size>
 			</Scene>
 
 			<Scene index="12" title="Rail" hint="The main pane grows into the vacated column.">

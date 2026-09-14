@@ -184,3 +184,39 @@ test('Astra stress route retains 100 nodes and selection when interrupted', asyn
 	await expect(page.getByRole('status')).toContainText('100 participants');
 	expect(errors).toEqual([]);
 });
+
+test('intrinsic shell height animates through layout without scaling its text', async ({
+	page
+}) => {
+	await page.goto('/demo/ui');
+	const stack = scene(page, 'Stack');
+	await stack.getByRole('button', { name: 'Post notice' }).click();
+	const shell = page.locator('#motion-stack-shell');
+	await expect
+		.poll(() =>
+			shell.evaluate((node) =>
+				Math.abs(
+					node.getBoundingClientRect().height - (node.firstElementChild as HTMLElement).offsetHeight
+				)
+			)
+		)
+		.toBeLessThan(1);
+	const result = await stack.evaluate(async (root) => {
+		const shell = root.querySelector<HTMLElement>('#motion-stack-shell')!;
+		const from = shell.offsetHeight;
+		(root.querySelector('button') as HTMLButtonElement).click();
+		const heights: number[] = [];
+		let scalesText = false;
+		for (let frame = 0; frame < 24; frame += 1) {
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			heights.push(shell.offsetHeight);
+			scalesText ||= getComputedStyle(shell).transform !== 'none';
+		}
+		return { from, heights, scalesText };
+	});
+	expect(result.scalesText).toBe(false);
+	expect(result.heights.at(-1)).toBeGreaterThan(result.from);
+	expect(
+		result.heights.some((height) => height > result.from && height < result.heights.at(-1)!)
+	).toBe(true);
+});

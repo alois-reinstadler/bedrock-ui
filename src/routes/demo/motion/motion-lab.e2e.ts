@@ -128,3 +128,24 @@ test('interruptibility, no-motion, reduced loops, and scale probes are operable'
 	await expect(performance.getByText('Max gap')).toBeVisible({ timeout: 2_000 });
 	await expect(performance.getByText('Frames')).toBeVisible();
 });
+
+test('the reduced lab preference also disables low-level CSS disclosure transitions', async ({
+	page
+}) => {
+	await page.emulateMedia({ reducedMotion: 'no-preference' });
+	await page.goto('/demo/motion/continuity');
+	await page.getByRole('button', { name: 'Reduziert', exact: true }).click();
+	const disclosure = page.locator('.dynamic-disclosure');
+	await disclosure.getByRole('button', { name: 'Dynamischen Inhalt öffnen' }).click();
+	await expect(disclosure.getByText('Der erste Absatz ist sofort vorhanden.')).toBeVisible();
+	expect(
+		await disclosure.evaluate(
+			(node) =>
+				node
+					.getAnimations({ subtree: true })
+					.filter((animation) => animation.playState === 'running').length
+		)
+	).toBe(0);
+	await disclosure.getByRole('button', { name: 'Dynamischen Inhalt schließen' }).click();
+	await expect(disclosure.locator('.dynamic-copy')).toHaveCount(0);
+});
