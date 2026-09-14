@@ -71,8 +71,11 @@ describe('Astra provider policy', () => {
 		const translation = () => Number.parseFloat(getComputedStyle(panel).translate) || 0;
 		await expect.poll(translation).toBe(32);
 		await view.getByRole('button', { name: 'Change policy' }).click();
-		await expect.poll(translation).toBe(0);
+		await expect.poll(() => getComputedStyle(panel).transitionProperty).toBe('none');
+		expect(translation()).toBe(32);
+		expect(panel.getAnimations()).toHaveLength(0);
 		await view.getByRole('button', { name: 'Change policy' }).click();
+		await expect.poll(() => getComputedStyle(panel).transitionProperty).not.toBe('none');
 		await expect.poll(translation).toBe(32);
 	});
 });

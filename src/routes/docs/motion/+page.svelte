@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '#lib/bedrock/ui/button';
-	import CodeBlock from '#lib/site/CodeBlock.svelte';
+	import { CodeBlock } from '#lib/bedrock/ui/code-block';
 	import DocsPageHeader from '#lib/site/DocsPageHeader.svelte';
 
 	const install = 'pnpm install --frozen-lockfile\npnpm motion:verify\npnpm check\npnpm build';
@@ -58,7 +58,12 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 			Existing components and native Bedrock motion keep their public APIs. Add Astra where a
 			product interaction needs it; ordinary component imports do not opt into the engine.
 		</p>
-		<CodeBlock label="Import boundaries" language="typescript" code={imports} />
+		<CodeBlock
+			class="bg-background"
+			title="Import boundaries"
+			language="typescript"
+			code={imports}
+		/>
 		<p class="mt-4 text-sm text-muted-foreground">
 			<strong class="text-foreground">Timing is explicit.</strong> Bedrock's native durations use milliseconds.
 			Astra transition duration and delay use seconds: 200 milliseconds becomes 0.2 seconds. Spring stiffness
@@ -74,7 +79,7 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 			element and retains it through an ancestor conditional's exit transition. Keep interactive
 			content out of a departing panel, or move focus back to the trigger before closing it.
 		</p>
-		<CodeBlock label="Disclosure.svelte" language="svelte" code={example} />
+		<CodeBlock class="bg-background" title="Disclosure.svelte" language="svelte" code={example} />
 		<div class="mt-5">
 			<Button href="/motion" variant="outline">Open the motion comparison</Button>
 		</div>
@@ -85,9 +90,9 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 		</h2>
 		<p class="mt-3 text-muted-foreground">
 			Astra follows the operating system's reduced-motion preference by default. MotionConfig scopes
-			policy to its descendants: user follows the system, always requests reduced motion, and never
-			overrides that preference. Prefer user for normal use and always for an explicit reduce-motion
-			setting.
+			policy to its descendants: user follows the system, always requests reduced motion, and the
+			never setting permits full motion regardless of system preference. Prefer user for normal use
+			and always for an explicit reduce-motion setting.
 		</p>
 		<p class="mt-3 text-muted-foreground">
 			Both Astra backends consume this provider. Native Bedrock transitions continue to use their
@@ -136,7 +141,12 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 			sibling repository or unpublished registry release. Bedrock's #lib imports are local source
 			aliases, not a published Bedrock package.
 		</p>
-		<CodeBlock label="From the Bedrock repository" language="sh" code={install} />
+		<CodeBlock
+			class="bg-background"
+			title="From the Bedrock repository"
+			language="sh"
+			code={install}
+		/>
 		<p class="mt-3 text-sm text-muted-foreground">
 			The frozen-lockfile flag prevents installation from rewriting the dependency lock. Package
 			provenance and the refresh procedure live in docs/bedrock/motion.md.

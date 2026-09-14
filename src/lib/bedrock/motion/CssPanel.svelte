@@ -25,7 +25,7 @@
 	{@attach (node) => {
 		ref = node;
 		return () => {
-			ref = null;
+			if (ref === node) ref = null;
 		};
 	}}
 	{...props}

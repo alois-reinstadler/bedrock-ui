@@ -31,7 +31,8 @@ and `transition`, with **seconds** for duration/delay. `CssPanel` owns a native 
 and installs the global Svelte transition, so an ancestor conditional retains the
 panel during exit. `CssButton` forwards attachments through the existing Button
 and synchronizes its disabled state. Native `onclick` supplies pointer, Enter and
-Space activation. CssButton supplies state feedback, not exit retention for a
+Space activation for buttons. With `href`, it renders a native link, activated by
+pointer or Enter; Space retains browser scrolling behavior. CssButton supplies state feedback, not exit retention for a
 native element hidden inside another component.
 
 ## Public API and compatibility
@@ -106,11 +107,19 @@ Fresh checkouts install with `pnpm install --frozen-lockfile`;
 `--frozen-lockfile` prevents dependency-resolution changes. Run
 `pnpm motion:verify` to check the installed package contract.
 
-To refresh from a changed Astra checkout, run `pnpm pack` there, copy the resulting
-archive over this vendor file, then run `pnpm install --force` here. `--force`
+Archive provenance, its SHA-256 digest, and the prerequisite source state are recorded
+in `vendor/astra-motion.json`. The archive includes completed uncommitted upstream
+changes; the recorded base commit alone does not reproduce it. The verifier checks
+archive and installed metadata/content, export targets, and bundled entry points.
+CSS, configuration, and legacy imports must exclude rendered Motion runtime modules.
+
+To refresh from a reviewed Astra checkout, run `pnpm pack` there, copy the resulting
+archive into vendor, update its filename/version, SHA-256 digest and source state in
+`vendor/astra-motion.json` (and the dependency path if versioned), then run
+`pnpm install --force` here. `--force`
 refreshes the installed copy of the same-version file archive. Use this checkout's
 existing pnpm store when its node_modules was installed with a different global
-store setting. Re-run check/build and `/motion` browser assertions before accepting
+store setting. Re-run `pnpm motion:verify`, check/build and `/motion` browser assertions before accepting
 the refreshed package. For distribution outside this workspace, publish/version
 the package deliberately rather than assuming the registry name is this project.
 
@@ -121,3 +130,5 @@ consolidated criticism, supported contract and preprocessor assessment, and
 The upstream package currently does not declare a license. Resolve licensing
 with its owner before distributing it outside this project; this integration
 does not invent or grant a license.
+
+See the [integration verification report](astra-integration/verification.md) for architecture decisions, preserved work, test results, and known limitations.
