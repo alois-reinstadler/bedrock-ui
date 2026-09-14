@@ -17,7 +17,8 @@
 	import Root from '#lib/shadcn/ui/avatar/avatar.svelte';
 	import { onDestroy } from 'svelte';
 	import { createLayout } from '#lib/bedrock/motion/projection.js';
-	import { Motion, createMotion } from '#lib/bedrock/motion/css.js';
+	import { Motion, Size } from '#lib/bedrock/motion/css.js';
+	import { popLayout } from 'astra-motion/presence';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -66,13 +67,6 @@
 	// Astra projection handles measured member packing; the preview uses CSS motion.
 	const stackLayout = createLayout({ observationRoot: () => ref });
 	const memberLayout = stackLayout({ mode: 'position' });
-	const previewLayout = createLayout({ transition: { duration: 0.18 } });
-	const previewSize = previewLayout({ mode: 'size' });
-	const cardMotion = createMotion(() => ({
-		initial: { opacity: 0, y: 4 },
-		animate: { opacity: 1, y: 0 },
-		transition: { duration: 0.16 }
-	}));
 	onDestroy(() => clearTimeout(closeTimer));
 
 	function memberKey(item: AvatarStackItem): string {
@@ -138,37 +132,41 @@
 	</Group>
 	{#if active !== null}
 		<div
-			{...cardMotion.props}
 			data-slot="avatar-stack-card"
 			role="status"
-			class="bedrock-avatar-card absolute bottom-full z-50 mb-2 w-max rounded-lg border border-border bg-popover p-2 text-popover-foreground shadow-md"
+			class="bedrock-avatar-card absolute bottom-full z-50 mb-2 w-max"
 			style:left="{cardX}px"
 			onmouseenter={() => clearTimeout(closeTimer)}
 			onmouseleave={scheduleHide}
 		>
-			<div {@attach previewSize}>
-				{#key active}
-					<Motion
-						as="span"
-						class="block"
-						motion={{
-							initial: { opacity: 0 },
-							animate: { opacity: 1 },
-							transition: { duration: 0.16 }
-						}}
-					>
-						{#if active < visible.length}
-							{@render memberRow(visible[active])}
-						{:else}
-							<span class="flex flex-col gap-1.5">
-								{#each hidden as item, index (index)}
-									{@render memberRow(item)}
-								{/each}
-							</span>
-						{/if}
-					</Motion>
-				{/key}
-			</div>
+			<Size
+				class="overflow-hidden rounded-lg border border-border bg-popover text-popover-foreground shadow-md"
+			>
+				<div class="relative grid p-2">
+					{#key active}
+						<Motion
+							{@attach popLayout()}
+							as="span"
+							class="col-start-1 row-start-1 block"
+							motion={{
+								initial: { opacity: 0 },
+								animate: { opacity: 1 },
+								transition: { duration: 0.16 }
+							}}
+						>
+							{#if active < visible.length}
+								{@render memberRow(visible[active])}
+							{:else}
+								<span class="flex flex-col gap-1.5">
+									{#each hidden as item, index (index)}
+										{@render memberRow(item)}
+									{/each}
+								</span>
+							{/if}
+						</Motion>
+					{/key}
+				</div>
+			</Size>
 		</div>
 	{/if}
 </div>

@@ -11,9 +11,9 @@
 </script>
 
 <script lang="ts">
-	import { onDestroy } from 'svelte';
-	import { Motion } from '#lib/bedrock/motion/css.js';
-	import { createLayout } from '#lib/bedrock/motion/projection.js';
+	import { onDestroy, onMount } from 'svelte';
+	import { Motion, Size } from '#lib/bedrock/motion/css.js';
+	import { popLayout } from 'astra-motion/presence';
 	import { Button, type ButtonProps } from '#lib/bedrock/ui/button';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import { cn } from '#lib/utils.js';
@@ -73,9 +73,10 @@
 	const statusMessage = $derived(buttonState === 'idle' ? '' : text[buttonState]);
 	const statusId = $props.id();
 
-	// Intrinsic label dimensions need measured projection; entrances remain CSS.
-	const labelLayout = createLayout({ transition: { duration: 0.18 } });
-	const labelSize = labelLayout({ mode: 'size' });
+	let mounted = $state(false);
+	onMount(() => {
+		mounted = true;
+	});
 
 	async function invoke() {
 		clearTimeout(resetTimer);
@@ -131,35 +132,44 @@
 	onclick={handleClick}
 	{...restProps}
 >
-	<span {@attach labelSize} class="inline-grid items-center justify-center overflow-hidden">
-		{#key buttonState}
-			<Motion
-				as="span"
-				class="col-start-1 row-start-1 inline-flex items-center justify-center gap-2 whitespace-nowrap"
-				motion={{
-					initial: {
-						opacity: 0,
-						y: swapEffect === 'slide-up' ? (swapDirection === 'forward' ? 12 : -12) : 0
-					},
-					animate: { opacity: 1, y: 0 },
-					transition: { duration: 0.18 }
-				}}
-			>
-				{#if buttonState === 'idle'}
-					{@render children?.()}
-				{:else if buttonState === 'pending'}
-					<Icon icon="loading" class="animate-spin motion-reduce:animate-none" />
-					{text.pending}
-				{:else if buttonState === 'success'}
-					<Icon icon="success" />
-					{text.success}
-				{:else}
-					<Icon icon="error" />
-					{text.error}
-				{/if}
-			</Motion>
-		{/key}
-	</span>
+	<Size as="span" class="inline-flex items-center justify-center overflow-hidden">
+		<span class="relative inline-grid items-center justify-center">
+			{#key buttonState}
+				<Motion
+					{@attach popLayout()}
+					as="span"
+					class="col-start-1 row-start-1 inline-flex items-center justify-center gap-2 whitespace-nowrap"
+					motion={{
+						initial: mounted
+							? {
+									opacity: 0,
+									y: swapEffect === 'slide-up' ? (swapDirection === 'forward' ? 12 : -12) : 0
+								}
+							: false,
+						exit: {
+							opacity: 0,
+							y: swapEffect === 'slide-up' ? (swapDirection === 'forward' ? -12 : 12) : 0
+						},
+						animate: { opacity: 1, y: 0 },
+						transition: { duration: 0.18 }
+					}}
+				>
+					{#if buttonState === 'idle'}
+						{@render children?.()}
+					{:else if buttonState === 'pending'}
+						<Icon icon="loading" class="animate-spin motion-reduce:animate-none" />
+						{text.pending}
+					{:else if buttonState === 'success'}
+						<Icon icon="success" />
+						{text.success}
+					{:else}
+						<Icon icon="error" />
+						{text.error}
+					{/if}
+				</Motion>
+			{/key}
+		</span>
+	</Size>
 </Button>
 <span id={statusId} class="sr-only" role="status" data-slot="async-button-status">
 	{statusMessage}

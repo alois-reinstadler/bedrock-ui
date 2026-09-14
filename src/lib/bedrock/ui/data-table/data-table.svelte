@@ -83,6 +83,7 @@
 	import Settings2Icon from '@lucide/svelte/icons/settings-2';
 	import XIcon from '@lucide/svelte/icons/x';
 	import { createTable } from '@tanstack/svelte-table';
+	import { onMount } from 'svelte';
 	import { Motion, createMotion } from '#lib/bedrock/motion/css.js';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Button } from '#lib/bedrock/ui/button';
@@ -216,6 +217,10 @@
 
 	let tablistEl = $state<HTMLDivElement | null>(null);
 	let tabIndicator = $state({ x: 0, width: 0 });
+	let mounted = $state(false);
+	onMount(() => {
+		mounted = true;
+	});
 	const indicatorMotion = createMotion(() => ({
 		animate: { x: tabIndicator.x, width: tabIndicator.width },
 		transition: { duration: 0.2 }
@@ -634,15 +639,18 @@
 			class="bedrock-selection-bar sticky bottom-4 z-10 mx-auto flex items-center gap-2 rounded-full border border-border bg-background/95 py-1.5 pr-1.5 pl-4 shadow-lg supports-backdrop-filter:backdrop-blur-sm"
 		>
 			<span class="flex items-center gap-1 text-sm font-medium tabular-nums">
-				{#key selectedRows.length}<Motion
-						as="span"
-						class="inline-block"
-						motion={{
-							initial: { opacity: 0, y: 4 },
-							animate: { opacity: 1, y: 0 },
-							transition: { duration: 0.16 }
-						}}>{selectedRows.length}</Motion
-					>{/key}
+				<span class="grid">
+					{#key selectedRows.length}<Motion
+							as="span"
+							class="col-start-1 row-start-1 inline-block"
+							motion={{
+								initial: mounted ? { opacity: 0, y: 4 } : false,
+								exit: { opacity: 0, y: -4 },
+								animate: { opacity: 1, y: 0 },
+								transition: { duration: 0.16 }
+							}}>{selectedRows.length}</Motion
+						>{/key}
+				</span>
 				{l.selected}
 			</span>
 			{@render actions?.(selectedRows)}
