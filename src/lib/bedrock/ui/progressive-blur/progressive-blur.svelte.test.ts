@@ -5,21 +5,28 @@ import Fixture from './progressive-blur.test.svelte';
 afterEach(() => cleanup());
 
 describe('ProgressiveBlur', () => {
-	it('exposes orientation, edge, visibility, and visual custom properties', async () => {
+	it('exposes a physical side, compatibility attributes, and bounded blur layers', async () => {
 		const view = await render(Fixture);
 		const blur = view.container.querySelector<HTMLElement>(
 			'[data-testid="standalone"] [data-slot="progressive-blur"]'
 		);
 
+		expect(blur?.dataset.side).toBe('left');
 		expect(blur?.dataset.orientation).toBe('horizontal');
 		expect(blur?.dataset.edge).toBe('start');
 		expect(blur?.dataset.visible).toBe('false');
 		expect(blur?.getAttribute('aria-hidden')).toBe('true');
 		expect(blur?.style.getPropertyValue('--progressive-blur-size').trim()).toBe('3rem');
 		expect(blur?.style.getPropertyValue('--progressive-blur-strength').trim()).toBe('20px');
+		expect(blur?.querySelectorAll('[data-blur-layer]')).toHaveLength(5);
+		expect(
+			view.container.querySelector<HTMLElement>(
+				'[data-testid="legacy"] [data-slot="progressive-blur"]'
+			)?.dataset.side
+		).toBe('top');
 	});
 
-	it('adds both logical edge pairs to a scroll area and updates its scroll state', async () => {
+	it('shows only physical edges with hidden overflow content', async () => {
 		const view = await render(Fixture);
 		const root = view.container.querySelector<HTMLElement>('[data-testid="scroll-area"]');
 		const viewport = root?.querySelector<HTMLElement>('[data-slot="scroll-area-viewport"]');
@@ -33,8 +40,12 @@ describe('ProgressiveBlur', () => {
 			scrollWidth: { configurable: true, value: 480 }
 		});
 		viewport.dispatchEvent(new Event('scroll'));
-		await vi.waitFor(() => expect(root?.dataset.scrollVerticalEnd).toBe('true'));
-		await vi.waitFor(() => expect(root?.dataset.scrollHorizontalEnd).toBe('true'));
+		await vi.waitFor(() => expect(root?.dataset.overflowVertical).toBe('true'));
+		await vi.waitFor(() => expect(root?.dataset.overflowHorizontal).toBe('true'));
+		await vi.waitFor(() => expect(root?.dataset.scrollBottomHidden).toBe('true'));
+		await vi.waitFor(() => expect(root?.dataset.scrollRightHidden).toBe('true'));
+		expect(root?.dataset.scrollTopHidden).toBe('false');
+		expect(root?.dataset.scrollLeftHidden).toBe('false');
 
 		Object.defineProperties(viewport, {
 			scrollTop: { configurable: true, value: 24 },
@@ -42,7 +53,43 @@ describe('ProgressiveBlur', () => {
 		});
 		viewport.dispatchEvent(new Event('scroll'));
 
-		await vi.waitFor(() => expect(root?.dataset.scrollVerticalStart).toBe('true'));
-		await vi.waitFor(() => expect(root?.dataset.scrollHorizontalStart).toBe('true'));
+		await vi.waitFor(() => expect(root?.dataset.scrollTopHidden).toBe('true'));
+		await vi.waitFor(() => expect(root?.dataset.scrollLeftHidden).toBe('true'));
+	});
+
+	it('keeps edge treatments inactive without overflow and while focus is inside', async () => {
+		const view = await render(Fixture);
+		const fittingRoot = view.container.querySelector<HTMLElement>('[data-testid="no-overflow"]');
+		const fittingViewport = fittingRoot?.querySelector<HTMLElement>(
+			'[data-slot="scroll-area-viewport"]'
+		);
+		if (!fittingViewport) throw new Error('Non-overflowing viewport was not rendered');
+
+		Object.defineProperties(fittingViewport, {
+			clientHeight: { configurable: true, value: 96 },
+			clientWidth: { configurable: true, value: 160 },
+			scrollHeight: { configurable: true, value: 48 },
+			scrollWidth: { configurable: true, value: 80 }
+		});
+		fittingViewport.dispatchEvent(new Event('scroll'));
+		await vi.waitFor(() => expect(fittingRoot?.dataset.overflowVertical).toBe('false'));
+		expect(fittingRoot?.dataset.overflowHorizontal).toBe('false');
+		expect(
+			Array.from(fittingRoot?.querySelectorAll<HTMLElement>('[data-scroll-edge]') ?? []).every(
+				(edge) => getComputedStyle(edge).opacity === '0'
+			)
+		).toBe(true);
+
+		const scrollRoot = view.container.querySelector<HTMLElement>('[data-testid="scroll-area"]');
+		const focusTarget = scrollRoot?.querySelector<HTMLButtonElement>(
+			'[data-testid="focus-target"]'
+		);
+		focusTarget?.focus();
+		expect(document.activeElement).toBe(focusTarget);
+		expect(
+			Array.from(scrollRoot?.querySelectorAll<HTMLElement>('[data-scroll-edge]') ?? []).every(
+				(edge) => getComputedStyle(edge).opacity === '0'
+			)
+		).toBe(true);
 	});
 });

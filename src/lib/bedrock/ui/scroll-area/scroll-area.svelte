@@ -17,8 +17,8 @@
 		scrollbarXClasses = '',
 		scrollbarYClasses = '',
 		edgeBlur = false,
-		edgeBlurSize = 48,
-		edgeBlurStrength = 14,
+		edgeBlurSize = 64,
+		edgeBlurStrength = 16,
 		children,
 		...restProps
 	}: WithoutChild<ScrollAreaPrimitive.RootProps> & {
@@ -31,34 +31,74 @@
 		edgeBlurStrength?: number;
 	} = $props();
 
+	function setScrollState(root: HTMLElement, viewport: HTMLElement, mode: ScrollAreaEdgeBlur) {
+		const verticalEnabled = mode === 'vertical' || mode === 'both';
+		const horizontalEnabled = mode === 'horizontal' || mode === 'both';
+		const verticalOverflow = viewport.scrollHeight > viewport.clientHeight + 1;
+		const horizontalOverflow = viewport.scrollWidth > viewport.clientWidth + 1;
+		const maxX = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+		const x = Math.min(maxX, Math.abs(viewport.scrollLeft));
+		const isRtl = getComputedStyle(viewport).direction === 'rtl';
+
+		const topHidden = verticalEnabled && verticalOverflow && viewport.scrollTop > 1;
+		const bottomHidden =
+			verticalEnabled &&
+			verticalOverflow &&
+			viewport.scrollTop + viewport.clientHeight < viewport.scrollHeight - 1;
+		const leftHidden = horizontalEnabled && horizontalOverflow && (isRtl ? x < maxX - 1 : x > 1);
+		const rightHidden = horizontalEnabled && horizontalOverflow && (isRtl ? x > 1 : x < maxX - 1);
+
+		root.dataset.overflowVertical = String(verticalOverflow);
+		root.dataset.overflowHorizontal = String(horizontalOverflow);
+		root.dataset.scrollTopHidden = String(topHidden);
+		root.dataset.scrollBottomHidden = String(bottomHidden);
+		root.dataset.scrollLeftHidden = String(leftHidden);
+		root.dataset.scrollRightHidden = String(rightHidden);
+	}
+
+	function clearScrollState(root: HTMLElement) {
+		root.dataset.overflowVertical = 'false';
+		root.dataset.overflowHorizontal = 'false';
+		root.dataset.scrollTopHidden = 'false';
+		root.dataset.scrollBottomHidden = 'false';
+		root.dataset.scrollLeftHidden = 'false';
+		root.dataset.scrollRightHidden = 'false';
+	}
+
 	onMount(() => {
 		let disposed = false;
 		let cleanup: (() => void) | undefined;
 
 		void tick().then(() => {
-			const viewport = viewportRef;
 			const root = ref;
-			if (disposed || !viewport || !root || !edgeBlur) return;
+			const viewport = viewportRef;
+			if (disposed || !root || !viewport) return;
 
 			const update = () => {
-				const x = Math.abs(viewport.scrollLeft);
-				root.dataset.scrollVerticalStart = String(viewport.scrollTop > 1);
-				root.dataset.scrollVerticalEnd = String(
-					viewport.scrollTop + viewport.clientHeight < viewport.scrollHeight - 1
-				);
-				root.dataset.scrollHorizontalStart = String(x > 1);
-				root.dataset.scrollHorizontalEnd = String(
-					x + viewport.clientWidth < viewport.scrollWidth - 1
-				);
+				if (edgeBlur) setScrollState(root, viewport, edgeBlur);
+				else clearScrollState(root);
 			};
-
+			const observeChildren = (observer: ResizeObserver) => {
+				for (const child of viewport.children) observer.observe(child);
+			};
 			const resizeObserver = new ResizeObserver(update);
+			const mutationObserver = new MutationObserver(() => {
+				resizeObserver.disconnect();
+				resizeObserver.observe(viewport);
+				observeChildren(resizeObserver);
+				update();
+			});
+
 			resizeObserver.observe(viewport);
-			if (viewport.firstElementChild) resizeObserver.observe(viewport.firstElementChild);
+			observeChildren(resizeObserver);
+			mutationObserver.observe(viewport, { childList: true });
+			mutationObserver.observe(root, { attributeFilter: ['data-edge-blur'] });
 			viewport.addEventListener('scroll', update, { passive: true });
 			update();
+
 			cleanup = () => {
 				resizeObserver.disconnect();
+				mutationObserver.disconnect();
 				viewport.removeEventListener('scroll', update);
 			};
 		});
@@ -74,7 +114,7 @@
 	bind:ref
 	data-slot="scroll-area"
 	data-edge-blur={edgeBlur || undefined}
-	class={cn('relative', className)}
+	class={cn('relative overflow-hidden', className)}
 	{...restProps}
 >
 	<ScrollAreaPrimitive.Viewport
@@ -84,6 +124,36 @@
 	>
 		{@render children?.()}
 	</ScrollAreaPrimitive.Viewport>
+
+	{#if edgeBlur === 'vertical' || edgeBlur === 'both'}
+		<ProgressiveBlur
+			side="top"
+			data-scroll-edge="top"
+			size={edgeBlurSize}
+			strength={edgeBlurStrength}
+		/>
+		<ProgressiveBlur
+			side="bottom"
+			data-scroll-edge="bottom"
+			size={edgeBlurSize}
+			strength={edgeBlurStrength}
+		/>
+	{/if}
+	{#if edgeBlur === 'horizontal' || edgeBlur === 'both'}
+		<ProgressiveBlur
+			side="left"
+			data-scroll-edge="left"
+			size={edgeBlurSize}
+			strength={edgeBlurStrength}
+		/>
+		<ProgressiveBlur
+			side="right"
+			data-scroll-edge="right"
+			size={edgeBlurSize}
+			strength={edgeBlurStrength}
+		/>
+	{/if}
+
 	{#if orientation === 'vertical' || orientation === 'both'}
 		<Scrollbar orientation="vertical" class={scrollbarYClasses} />
 	{/if}
@@ -91,39 +161,6 @@
 		<Scrollbar orientation="horizontal" class={scrollbarXClasses} />
 	{/if}
 	<ScrollAreaPrimitive.Corner />
-
-	{#if edgeBlur === 'vertical' || edgeBlur === 'both'}
-		<ProgressiveBlur
-			orientation="vertical"
-			edge="start"
-			data-scroll-edge="vertical-start"
-			size={edgeBlurSize}
-			strength={edgeBlurStrength}
-		/>
-		<ProgressiveBlur
-			orientation="vertical"
-			edge="end"
-			data-scroll-edge="vertical-end"
-			size={edgeBlurSize}
-			strength={edgeBlurStrength}
-		/>
-	{/if}
-	{#if edgeBlur === 'horizontal' || edgeBlur === 'both'}
-		<ProgressiveBlur
-			orientation="horizontal"
-			edge="start"
-			data-scroll-edge="horizontal-start"
-			size={edgeBlurSize}
-			strength={edgeBlurStrength}
-		/>
-		<ProgressiveBlur
-			orientation="horizontal"
-			edge="end"
-			data-scroll-edge="horizontal-end"
-			size={edgeBlurSize}
-			strength={edgeBlurStrength}
-		/>
-	{/if}
 </ScrollAreaPrimitive.Root>
 
 <style>
@@ -131,30 +168,18 @@
 		opacity: 0;
 	}
 
+	:global([data-slot='scroll-area'][data-scroll-top-hidden='true'] > [data-scroll-edge='top']),
 	:global(
-		[data-slot='scroll-area'][data-scroll-vertical-start='true']
-			> [data-scroll-edge='vertical-start']
-	) {
+		[data-slot='scroll-area'][data-scroll-bottom-hidden='true'] > [data-scroll-edge='bottom']
+	),
+	:global([data-slot='scroll-area'][data-scroll-left-hidden='true'] > [data-scroll-edge='left']),
+	:global([data-slot='scroll-area'][data-scroll-right-hidden='true'] > [data-scroll-edge='right']) {
 		opacity: 1;
 	}
 
-	:global(
-		[data-slot='scroll-area'][data-scroll-vertical-end='true'] > [data-scroll-edge='vertical-end']
-	) {
-		opacity: 1;
-	}
-
-	:global(
-		[data-slot='scroll-area'][data-scroll-horizontal-start='true']
-			> [data-scroll-edge='horizontal-start']
-	) {
-		opacity: 1;
-	}
-
-	:global(
-		[data-slot='scroll-area'][data-scroll-horizontal-end='true']
-			> [data-scroll-edge='horizontal-end']
-	) {
-		opacity: 1;
+	/* A focused control must never sit underneath a decorative blur. */
+	:global([data-slot='scroll-area']:focus-within > [data-scroll-edge]) {
+		opacity: 0;
+		transition: none;
 	}
 </style>

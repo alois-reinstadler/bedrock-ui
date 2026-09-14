@@ -437,7 +437,8 @@ export const layoutGuides = {
 		],
 		behavior: [
 			'Root orientation defaults to vertical. Horizontal content must have an intrinsic or minimum width greater than the viewport, and both mode renders a corner where the bars meet.',
-			'edgeBlur accepts vertical, horizontal, both, or false. Each requested logical edge fades in only while more content exists beyond that edge; edgeBlurSize and edgeBlurStrength tune the treatment.',
+			'edgeBlur accepts vertical, horizontal, both, or false. Each requested physical edge fades in only while overflow content remains beyond it; edgeBlurSize and edgeBlurStrength tune the treatment.',
+			'All edge treatments disappear while focus is inside the scroll area so a focus indicator or focused control is never obscured.',
 			'The underlying type defaults to hover and hides idle scrollbars after a 600 ms delay; type can request scroll, auto, or always behavior instead.',
 			'The internal viewport retains native wheel, touch, and trackpad scrolling. Keyboard scrolling depends on focus reaching suitable content because Root does not make the viewport a tab stop by default.',
 			'scrollbarXClasses and scrollbarYClasses target the generated bars independently. The component does not virtualize children or reduce their rendering cost.'
@@ -480,14 +481,15 @@ export const layoutGuides = {
 			{
 				name: 'ProgressiveBlur',
 				description:
-					'The single decorative overlay, also exported as Root. orientation chooses the vertical or horizontal axis, edge chooses its logical start or end, size and strength tune the effect, and visible controls its motion-token-driven opacity.',
+					'The decorative overlay, also exported as Root. side selects top, right, bottom, or left; size and strength tune the effect; visible controls its motion-token-driven opacity. The older orientation and edge pair remains as a compatibility alias, with side taking precedence.',
 				required: true
 			}
 		],
 		behavior: [
 			'The overlay is absolutely positioned and pointer-events-none, so its containing surface must establish positioning and it never intercepts scrolling or clicks.',
-			'orientation defaults to vertical and edge defaults to end. Start and end map to top and bottom vertically, or left and right horizontally.',
+			'side defaults to bottom and names the physical edge directly. The compatibility orientation and edge pair maps vertical start/end to top/bottom and horizontal start/end to left/right.',
 			'size accepts a CSS length or a pixel number. strength is a pixel blur radius, while visible only changes opacity and uses Bedrock motion tokens.',
+			'Five overlapping, softly masked backdrop layers create a continuous falloff without an opaque tint. Reduced-transparency and increased-contrast preferences receive a gradient fallback; --progressive-blur-fallback can match a nested surface.',
 			'The component is aria-hidden because it communicates presentation, not structure or state.'
 		],
 		examplePlan: [
