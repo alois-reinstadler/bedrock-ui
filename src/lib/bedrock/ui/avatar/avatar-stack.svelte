@@ -90,7 +90,12 @@
 {/snippet}
 
 <div
-	bind:this={ref}
+	{@attach (node) => {
+		ref = node;
+		return () => {
+			ref = null;
+		};
+	}}
 	data-slot="avatar-stack"
 	class={cn('relative inline-block', className)}
 	{...restProps}
@@ -142,7 +147,7 @@
 			<Size
 				class="overflow-hidden rounded-lg border border-border bg-popover text-popover-foreground shadow-md"
 			>
-				<div class="relative grid p-2">
+				<div class="relative grid p-2" style:position="relative">
 					{#key active}
 						<Motion
 							{@attach popLayout()}

@@ -79,3 +79,22 @@ describe('Astra provider policy', () => {
 		await expect.poll(translation).toBe(32);
 	});
 });
+
+describe('CSS-first native Motion API', () => {
+	it('forwards native tags and refs and retains an exiting label until completion', async () => {
+		const { default: NativeFixture } = await import('./css-native.test.svelte');
+		const view = await render(NativeFixture);
+		const label = view.container.querySelector<HTMLElement>('[data-testid="native-label"]')!;
+		expect(label.tagName).toBe('SPAN');
+		await expect.poll(() => view.component.getRef()).toBe(label);
+		await expect.poll(() => getComputedStyle(label).opacity).toBe('1');
+		expect(label.style.color).toBe('rgb(12, 34, 56)');
+		const input = view.container.querySelector<HTMLInputElement>('input')!;
+		expect(input.value).toBe('Read me');
+		expect(input.readOnly).toBe(true);
+		view.container.querySelector('button')!.click();
+		expect(label.isConnected).toBe(true);
+		await expect.poll(() => label.isConnected).toBe(false);
+		expect(view.component.getRef()).toBeNull();
+	});
+});

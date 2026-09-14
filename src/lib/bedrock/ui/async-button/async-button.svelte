@@ -133,11 +133,13 @@
 	{...restProps}
 >
 	<Size as="span" class="inline-flex items-center justify-center overflow-hidden">
-		<span class="relative inline-grid items-center justify-center">
+		<span class="relative inline-grid items-center justify-center" style:position="relative">
 			{#key buttonState}
 				<Motion
 					{@attach popLayout()}
 					as="span"
+					data-slot="async-button-label"
+					data-direction={swapDirection}
 					class="col-start-1 row-start-1 inline-flex items-center justify-center gap-2 whitespace-nowrap"
 					motion={{
 						initial: mounted
