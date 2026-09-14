@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import { ProgressiveBlur, type ProgressiveBlurSide } from '#lib/bedrock/ui/progressive-blur';
 
 	const sides: Array<{ side: ProgressiveBlurSide; label: string }> = [
@@ -52,6 +53,7 @@
 				</div>
 			{/each}
 		</div>
+		<Button variant="outline" class="absolute right-4 bottom-4">Inspect samples</Button>
 		<ProgressiveBlur side="bottom" size="5.5rem" strength={22} />
 	</div>
 </div>

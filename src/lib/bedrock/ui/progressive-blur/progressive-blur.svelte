@@ -98,7 +98,14 @@
 <style>
 	[data-slot='progressive-blur'] {
 		contain: paint;
+		pointer-events: none;
 		--progressive-blur-direction: to top;
+	}
+
+	/* Protect controls sharing this decorative layer's positioned parent. */
+	:global(*:focus-within > [data-slot='progressive-blur']) {
+		opacity: 0;
+		transition: none;
 	}
 
 	[data-visible='false'] {

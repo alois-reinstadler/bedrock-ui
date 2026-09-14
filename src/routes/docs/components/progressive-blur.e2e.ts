@@ -44,3 +44,18 @@ for (const colorScheme of ['light', 'dark'] as const) {
 		});
 	}
 }
+
+test('standalone blur immediately clears for keyboard focus within its surface', async ({
+	page
+}) => {
+	await page.goto('/docs/components/progressive-blur');
+	const button = page.getByRole('button', { name: 'Inspect samples' });
+	await expect(button).toBeVisible();
+	const blur = button.locator('..').locator('[data-slot="progressive-blur"]');
+	await expect(blur).toHaveCSS('opacity', '1');
+	await button.focus();
+	await expect(button).toBeFocused();
+	await expect(blur).toHaveCSS('opacity', '0');
+	await expect(blur).toHaveCSS('transition-duration', '0s');
+	await expect(blur).toHaveCSS('pointer-events', 'none');
+});

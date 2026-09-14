@@ -8,6 +8,7 @@
 </div>
 
 <div data-testid="legacy" class="relative h-24 w-40">
+	<button type="button" data-testid="standalone-focus">Inspect surface</button>
 	<ProgressiveBlur orientation="vertical" edge="start" />
 </div>
 

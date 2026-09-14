@@ -26,6 +26,20 @@ describe('ProgressiveBlur', () => {
 		).toBe('top');
 	});
 
+	it('immediately clears standalone decoration when a sibling control receives focus', async () => {
+		const view = await render(Fixture);
+		const parent = view.container.querySelector<HTMLElement>('[data-testid="legacy"]');
+		const blur = parent?.querySelector<HTMLElement>('[data-slot="progressive-blur"]');
+		const button = parent?.querySelector<HTMLButtonElement>('button');
+		if (!blur || !button) throw new Error('Standalone focus fixture missing');
+		expect(getComputedStyle(blur).opacity).toBe('1');
+		button.focus();
+		expect(document.activeElement).toBe(button);
+		expect(getComputedStyle(blur).opacity).toBe('0');
+		expect(getComputedStyle(blur).transitionDuration).toBe('0s');
+		expect(getComputedStyle(blur).pointerEvents).toBe('none');
+	});
+
 	it('shows only physical edges with hidden overflow content', async () => {
 		const view = await render(Fixture);
 		const root = view.container.querySelector<HTMLElement>('[data-testid="scroll-area"]');
