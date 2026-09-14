@@ -166,4 +166,117 @@ describe('Stepped Form', () => {
 		expect(panel.getAttribute('aria-hidden')).toBe('true');
 		expect(panel.querySelector('input')).not.toBeNull();
 	});
+	for (const action of ['disable', 'remove']) {
+		it(`omits ${action}d mounted panels without deleting same-name enabled values`, async () => {
+			const onSubmit = vi.fn();
+			const validateStep = vi.fn<import('./context.js').SteppedFormValidator>(() => true);
+			const view = await render(Fixture, { onSubmit, validateStep, keepDetailsMounted: true });
+			const email = view.container.querySelector<HTMLInputElement>('#email')!;
+			email.value = 'ada@example.com';
+			const team = view.container.querySelector<HTMLInputElement>('#team')!;
+			team.value = 'Excluded value';
+			team.name = 'email';
+			view.container.querySelector<HTMLButtonElement>(`[data-testid="${action}-details"]`)!.click();
+			await tick();
+			const form = view.container.querySelector('form')!;
+			expect(new FormData(form).getAll('email')).toEqual(['ada@example.com']);
+			expect(team.value).toBe('Excluded value');
+			expect(team.matches(':disabled')).toBe(true);
+			view.container.querySelector<HTMLButtonElement>('[data-testid="control-review"]')!.click();
+			await tick();
+			view.container.querySelector<HTMLButtonElement>('[data-slot="stepped-form-submit"]')!.click();
+			await vi.waitFor(() => expect(onSubmit).toHaveBeenCalledOnce());
+			expect(onSubmit.mock.calls[0][0].formData.getAll('email')).toEqual(['ada@example.com']);
+			expect(
+				validateStep.mock.calls.every((args) => args[0].formData.getAll('email').length === 1)
+			).toBe(true);
+		});
+	}
+
+	it('restores preserved controls when a disabled step is enabled again', async () => {
+		const view = await render(Fixture);
+		const team = view.container.querySelector<HTMLInputElement>('#team')!;
+		team.value = 'Field notes';
+		view.container.querySelector<HTMLButtonElement>('[data-testid="disable-details"]')!.click();
+		await tick();
+		expect(new FormData(view.container.querySelector('form')!).has('team')).toBe(false);
+		view.container.querySelector<HTMLButtonElement>('[data-testid="enable-details"]')!.click();
+		await tick();
+		expect(new FormData(view.container.querySelector('form')!).get('team')).toBe('Field notes');
+		expect(
+			view.container.querySelector<HTMLElement>('[data-stepped-form-step="details"]')!.hidden
+		).toBe(true);
+	});
+
+	it('announces async submission failure, prevents duplicates and retries with retained data', async () => {
+		let reject!: (error: Error) => void;
+		const onSubmit = vi
+			.fn()
+			.mockImplementationOnce(() => new Promise<void>((_, fail) => (reject = fail)))
+			.mockResolvedValue(undefined);
+		const view = await render(Fixture, { onSubmit });
+		view.container.querySelector<HTMLInputElement>('#email')!.value = 'ada@example.com';
+		view.container.querySelector<HTMLButtonElement>('[data-testid="control-review"]')!.click();
+		await tick();
+		const submit = view.container.querySelector<HTMLButtonElement>(
+			'[data-slot="stepped-form-submit"]'
+		)!;
+		submit.click();
+		await vi.waitFor(() => expect(onSubmit).toHaveBeenCalledOnce());
+		expect(view.container.querySelector('form')?.getAttribute('data-status')).toBe('submitting');
+		expect(submit.disabled).toBe(true);
+		submit.click();
+		expect(onSubmit).toHaveBeenCalledOnce();
+		reject(new Error('Temporary connection failure'));
+		await vi.waitFor(() =>
+			expect(
+				view.container.querySelector('[data-slot="stepped-form-status"]')?.textContent
+			).toContain('Temporary connection failure')
+		);
+		view.container
+			.querySelector<HTMLButtonElement>('[data-slot="stepped-form-status"] button')!
+			.click();
+		await vi.waitFor(() =>
+			expect(view.container.querySelector('form')?.getAttribute('data-status')).toBe('success')
+		);
+		expect(onSubmit).toHaveBeenCalledTimes(2);
+		expect(onSubmit.mock.calls[1][0].formData.get('email')).toBe('ada@example.com');
+	});
+
+	it('synchronizes bound value and honors the nonlinear domain guard', async () => {
+		const canNavigate = vi.fn().mockResolvedValueOnce(false).mockResolvedValue(true);
+		const onValueChange = vi.fn();
+		const view = await render(Fixture, { canNavigate, onValueChange });
+		view.container.querySelector<HTMLInputElement>('#email')!.value = 'ada@example.com';
+		const progress = view.container.querySelectorAll<HTMLButtonElement>(
+			'[data-slot="stepped-form-progress"] button'
+		);
+		progress[2].click();
+		await tick();
+		expect(canNavigate).not.toHaveBeenCalled();
+		expect(
+			view.container.querySelector<HTMLElement>('[data-stepped-form-step="account"]')!.hidden
+		).toBe(false);
+		view.container
+			.querySelectorAll<HTMLButtonElement>('[data-slot="stepped-form-progress"] button')[1]
+			.click();
+		await vi.waitFor(() => expect(canNavigate).toHaveBeenCalledOnce());
+		await tick();
+		expect(onValueChange).not.toHaveBeenCalled();
+		view.container
+			.querySelectorAll<HTMLButtonElement>('[data-slot="stepped-form-progress"] button')[1]
+			.click();
+		await vi.waitFor(() =>
+			expect(view.container.querySelector('[data-testid="controlled-value"]')?.textContent).toBe(
+				'details'
+			)
+		);
+		expect(onValueChange).toHaveBeenCalledWith('details', 'account', 'progress');
+		view.container.querySelector<HTMLButtonElement>('[data-testid="control-review"]')!.click();
+		await tick();
+		expect(
+			view.container.querySelector<HTMLElement>('[data-stepped-form-step="review"]')!.hidden
+		).toBe(false);
+		expect(canNavigate).toHaveBeenCalledTimes(2);
+	});
 });

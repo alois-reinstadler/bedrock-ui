@@ -28,3 +28,9 @@ Known limits: this JavaScript coordination component does not provide a no-JavaS
 ## Forms guide verification
 
 Official Svelte MCP `kit/remote-functions` fetched during takeover. Verified schema-based form/command, nullable issues()/allIssues(), numeric pending, validate({includeUntouched:true}), preflight(schema), result lifetime, enhance callback form instance and boolean submit(). Documentation source uses a dependency-free Standard Schema, not an absent validation package. Static demo explicitly stores no server data.
+
+## Excluded step data contract
+
+Step renders a native fieldset. Only definitions present in Root.steps and not disabled participate in validation and FormData. A mounted Step whose id is absent or disabled gets a disabled fieldset, so the browser omits its successful controls from both callback formData and consumer-created `new FormData(form)`. Inactive **enabled** steps are hidden/inert but remain enabled, retaining their data for final submission. Enabling an excluded step restores its retained values; removing its DOM remains application-owned data disposal. Native disabled rules also preserve duplicate names in other steps and file controls without lossy FormData filtering. Do not place input controls inside a custom first legend: HTML exempts those descendants from a disabled fieldset. Use the provided Title instead. Controls outside any Step follow ordinary HTML successful-control rules.
+
+Follow-up coverage: mounted disabled/absent panels with duplicate field names; re-enable preservation; validator and submission payloads; pending submission duplicate prevention, rejected submission and retry; controlled parent navigation and nonlinear canNavigate rejection. Parent assignments to bind:value remain trusted programmatic navigation, while final submission revalidates every enabled step.
