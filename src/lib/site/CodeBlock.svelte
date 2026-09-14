@@ -3,8 +3,25 @@
 	let {
 		code,
 		label = 'Code',
-		language = 'plaintext'
-	}: { code: string; label?: string; language?: string } = $props();
+		language = 'plaintext',
+		lineNumbers = false,
+		maxHeight
+	}: {
+		code: string;
+		label?: string;
+		language?: string;
+		lineNumbers?: boolean;
+		maxHeight?: number | string;
+	} = $props();
+
+	let repeatsLanguage = $derived(label.trim().toLowerCase() === language.trim().toLowerCase());
 </script>
 
-<CodeBlock {code} title={label} {language} />
+<CodeBlock
+	{code}
+	title={repeatsLanguage ? undefined : label}
+	{language}
+	{lineNumbers}
+	{maxHeight}
+	labels={repeatsLanguage ? { language: () => label } : undefined}
+/>

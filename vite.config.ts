@@ -9,6 +9,26 @@ const runtimeEnvironment = process.env.NODE_ENV ?? 'development';
 
 export default defineConfig({
 	cacheDir: `node_modules/.vite-${runtimeEnvironment}`,
+	// Component examples are route-level lazy chunks. Pre-bundle their bare
+	// dependencies once so opening a new example in dev does not trigger Vite's
+	// optimizer restart (which can briefly serve a stale route or a 500).
+	optimizeDeps: {
+		include: [
+			'@internationalized/date',
+			'@lucide/svelte/icons/**',
+			'@tanstack/svelte-table',
+			'bits-ui',
+			'formsnap',
+			'layerchart',
+			'marked',
+			'paneforge',
+			'pdfjs-dist',
+			'shiki',
+			'svelte-sonner',
+			'sveltekit-superforms',
+			'tailwind-variants'
+		]
+	},
 	plugins: [
 		tailwindcss(),
 		sveltekit({

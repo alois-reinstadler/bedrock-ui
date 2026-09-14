@@ -7,5 +7,5 @@
 
 <div class="grid max-w-sm gap-2">
 	<Label>Depth {value}m</Label>
-	<Slider type="single" bind:value min={8} max={92} />
+	<Slider type="single" {value} onValueChange={(next) => (value = next)} min={8} max={92} />
 </div>

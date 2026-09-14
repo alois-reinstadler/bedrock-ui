@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
+	import * as ScrollArea from '#lib/bedrock/ui/scroll-area';
 	import * as Sidebar from '#lib/bedrock/ui/sidebar';
 	import { components, gettingStarted } from './registry';
 	import Logo from './Logo.svelte';
@@ -24,44 +25,55 @@
 		</a>
 		<Sidebar.Input
 			bind:value={query}
+			name="component-search"
 			placeholder="Find a component"
 			aria-label="Find a component"
 		/>
 	</Sidebar.Header>
-	<Sidebar.Content>
-		<Sidebar.Group>
-			<Sidebar.GroupLabel>Start</Sidebar.GroupLabel>
-			<Sidebar.GroupContent>
-				<Sidebar.Menu>
-					{#each gettingStarted as item (item.href)}
-						<Sidebar.MenuItem>
-							<Sidebar.MenuButton isActive={path === item.href}>
-								{#snippet child({ props })}
-									<a href={resolve(item.href)} {...props}>{item.title}</a>
-								{/snippet}
-							</Sidebar.MenuButton>
-						</Sidebar.MenuItem>
-					{/each}
-				</Sidebar.Menu>
-			</Sidebar.GroupContent>
-		</Sidebar.Group>
-		<Sidebar.Group>
-			<Sidebar.GroupLabel>Components</Sidebar.GroupLabel>
-			<Sidebar.GroupContent>
-				<Sidebar.Menu>
-					{#each filtered as component (component.slug)}
-						<Sidebar.MenuItem>
-							<Sidebar.MenuButton isActive={path === `/docs/components/${component.slug}`}>
-								{#snippet child({ props })}
-									<a href={resolve('/docs/components/[slug]', { slug: component.slug })} {...props}
-										>{component.title}</a
-									>
-								{/snippet}
-							</Sidebar.MenuButton>
-						</Sidebar.MenuItem>
-					{/each}
-				</Sidebar.Menu>
-			</Sidebar.GroupContent>
-		</Sidebar.Group>
+	<Sidebar.Content class="overflow-hidden">
+		<ScrollArea.Root edgeBlur="vertical" class="min-h-0 flex-1">
+			<Sidebar.Group>
+				<Sidebar.GroupLabel>Start</Sidebar.GroupLabel>
+				<Sidebar.GroupContent>
+					<Sidebar.Menu>
+						{#each gettingStarted as item (item.href)}
+							<Sidebar.MenuItem>
+								<Sidebar.MenuButton isActive={path === item.href}>
+									{#snippet child({ props })}
+										<a
+											href={resolve(item.href)}
+											data-sveltekit-preload-data="hover"
+											data-sveltekit-reload
+											{...props}>{item.title}</a
+										>
+									{/snippet}
+								</Sidebar.MenuButton>
+							</Sidebar.MenuItem>
+						{/each}
+					</Sidebar.Menu>
+				</Sidebar.GroupContent>
+			</Sidebar.Group>
+			<Sidebar.Group>
+				<Sidebar.GroupLabel>Components</Sidebar.GroupLabel>
+				<Sidebar.GroupContent>
+					<Sidebar.Menu>
+						{#each filtered as component (component.slug)}
+							<Sidebar.MenuItem>
+								<Sidebar.MenuButton isActive={path === `/docs/components/${component.slug}`}>
+									{#snippet child({ props })}
+										<a
+											href={resolve('/docs/components/[slug]', { slug: component.slug })}
+											data-sveltekit-preload-data="hover"
+											data-sveltekit-reload
+											{...props}>{component.title}</a
+										>
+									{/snippet}
+								</Sidebar.MenuButton>
+							</Sidebar.MenuItem>
+						{/each}
+					</Sidebar.Menu>
+				</Sidebar.GroupContent>
+			</Sidebar.Group>
+		</ScrollArea.Root>
 	</Sidebar.Content>
 </Sidebar.Root>

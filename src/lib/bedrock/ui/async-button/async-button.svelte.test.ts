@@ -56,6 +56,9 @@ describe('AsyncButton', () => {
 
 		await settle(200);
 		expect(button.dataset.state).toBe('idle');
+		expect(button.querySelector('[data-slot="swap"]')?.getAttribute('data-direction')).toBe(
+			'backward'
+		);
 		expect(button.getAttribute('aria-busy')).toBeNull();
 		expect(button.getAttribute('aria-disabled')).toBeNull();
 	});

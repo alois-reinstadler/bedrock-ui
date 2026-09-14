@@ -426,7 +426,7 @@ export const layoutGuides = {
 			{
 				name: 'ScrollArea.Root',
 				description:
-					'Required outer context. It creates the internal native viewport and corner, renders a vertical scrollbar by default, and selects vertical, horizontal, or both axes through orientation. Also exported as ScrollArea.',
+					'Required outer context. It creates the internal native viewport and corner, renders a vertical scrollbar by default, selects axes through orientation, and can add scroll-aware progressive edge blurs. Also exported as ScrollArea.',
 				required: true
 			},
 			{
@@ -437,6 +437,7 @@ export const layoutGuides = {
 		],
 		behavior: [
 			'Root orientation defaults to vertical. Horizontal content must have an intrinsic or minimum width greater than the viewport, and both mode renders a corner where the bars meet.',
+			'edgeBlur accepts vertical, horizontal, both, or false. Each requested logical edge fades in only while more content exists beyond that edge; edgeBlurSize and edgeBlurStrength tune the treatment.',
 			'The underlying type defaults to hover and hides idle scrollbars after a 600 ms delay; type can request scroll, auto, or always behavior instead.',
 			'The internal viewport retains native wheel, touch, and trackpad scrolling. Keyboard scrolling depends on focus reaching suitable content because Root does not make the viewport a tab stop by default.',
 			'scrollbarXClasses and scrollbarYClasses target the generated bars independently. The component does not virtualize children or reduce their rendering cost.'
@@ -455,9 +456,57 @@ export const layoutGuides = {
 				priority: 'secondary'
 			},
 			{
-				title: 'Two-axis viewport',
+				title: 'Two-axis viewport with edge blur',
 				demonstrates:
-					'Use orientation="both", keep a bounded width and height, and distinguish the X and Y scrollbar classes so the generated corner and dual-axis behavior are visible.',
+					'Use orientation="both" and edgeBlur="both", keep a bounded width and height, and show each logical blur disappearing when its corresponding scroll boundary is reached.',
+				priority: 'edge-case'
+			}
+		]
+	},
+	'progressive-blur': {
+		purpose:
+			'Progressive Blur places a directional backdrop blur over the start or end of a surface. It is a visual affordance for layered content and is also the primitive used by Scroll Area to hint that more content exists beyond a scroll boundary.',
+		useWhen: [
+			'A clipped or layered surface needs a soft transition into content beneath it.',
+			'A custom scroller needs a directional edge treatment outside Scroll Area’s built-in edgeBlur behavior.',
+			'A sticky header or footer should visually separate itself without a hard opaque block.'
+		],
+		avoidWhen: [
+			'Use Scroll Area with edgeBlur for ordinary scroll-boundary cues; it manages edge visibility automatically.',
+			'Use a solid gradient when content behind the layer must remain visually hidden rather than blurred.',
+			'Do not use blur as the only signal that content is scrollable; preserve native scrolling and visible content clipping.'
+		],
+		anatomy: [
+			{
+				name: 'ProgressiveBlur',
+				description:
+					'The single decorative overlay, also exported as Root. orientation chooses the vertical or horizontal axis, edge chooses its logical start or end, size and strength tune the effect, and visible controls its motion-token-driven opacity.',
+				required: true
+			}
+		],
+		behavior: [
+			'The overlay is absolutely positioned and pointer-events-none, so its containing surface must establish positioning and it never intercepts scrolling or clicks.',
+			'orientation defaults to vertical and edge defaults to end. Start and end map to top and bottom vertically, or left and right horizontally.',
+			'size accepts a CSS length or a pixel number. strength is a pixel blur radius, while visible only changes opacity and uses Bedrock motion tokens.',
+			'The component is aria-hidden because it communicates presentation, not structure or state.'
+		],
+		examplePlan: [
+			{
+				title: 'Directional surface fades',
+				demonstrates:
+					'Compare vertical-end and horizontal-end overlays on patterned surfaces so orientation, edge, size, and blur strength are immediately visible.',
+				priority: 'primary'
+			},
+			{
+				title: 'Sticky header separation',
+				demonstrates:
+					'Place a vertical-start blur beneath a sticky toolbar and toggle visible to show the semantic motion timing without intercepting controls.',
+				priority: 'secondary'
+			},
+			{
+				title: 'Scroll-aware alternative',
+				demonstrates:
+					'Contrast manual Progressive Blur composition with Scroll Area edgeBlur and explain why the latter is preferred when visibility depends on scroll position.',
 				priority: 'edge-case'
 			}
 		]

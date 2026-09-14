@@ -8,6 +8,8 @@ export type ComponentDoc = {
 	title: string;
 	description: string;
 	category: 'form' | 'layout' | 'overlay' | 'display' | 'navigation' | 'content' | 'data';
+	/** Named export when it intentionally differs from the display title. */
+	importName?: string;
 };
 
 export const gettingStarted: DocsNavItem[] = [
@@ -234,6 +236,12 @@ export const components: ComponentDoc[] = [
 		category: 'display'
 	},
 	{
+		slug: 'progressive-blur',
+		title: 'Progressive Blur',
+		description: 'A directional backdrop blur for scroll edges and layered surfaces.',
+		category: 'layout'
+	},
+	{
 		slug: 'radio-group',
 		title: 'Radio Group',
 		description: 'Pick exactly one option from a set.',
@@ -297,7 +305,8 @@ export const components: ComponentDoc[] = [
 		slug: 'sonner',
 		title: 'Sonner',
 		description: 'A toast queue for brief messages.',
-		category: 'overlay'
+		category: 'overlay',
+		importName: 'Toaster'
 	},
 	{
 		slug: 'spinner',

@@ -57,7 +57,8 @@
 		onError?: (error: unknown) => void;
 	} = $props();
 
-	let state = $state<AsyncButtonState>('idle');
+	let buttonState = $state<AsyncButtonState>('idle');
+	let swapDirection = $state<'forward' | 'backward'>('forward');
 	let run = 0;
 	let resetTimer: ReturnType<typeof setTimeout> | undefined;
 
@@ -67,8 +68,8 @@
 		success: successLabel ?? labels.success,
 		error: errorLabel ?? labels.error
 	});
-	const locked = $derived(!interruptible && state !== 'idle');
-	const statusMessage = $derived(state === 'idle' ? '' : text[state]);
+	const locked = $derived(!interruptible && buttonState !== 'idle');
+	const statusMessage = $derived(buttonState === 'idle' ? '' : text[buttonState]);
 	const statusId = $props.id();
 
 	// Same shell pattern as AvatarStack's hover card: autoSize animates the
@@ -78,18 +79,20 @@
 	async function invoke() {
 		clearTimeout(resetTimer);
 		const id = ++run;
-		state = 'pending';
+		swapDirection = 'forward';
+		buttonState = 'pending';
 		try {
 			await action();
 			if (id !== run) return;
-			state = 'success';
+			buttonState = 'success';
 		} catch (error) {
 			onError?.(error);
 			if (id !== run) return;
-			state = 'error';
+			buttonState = 'error';
 		}
 		resetTimer = setTimeout(() => {
-			state = 'idle';
+			swapDirection = 'backward';
+			buttonState = 'idle';
 		}, resetAfter);
 	}
 
@@ -115,23 +118,23 @@
 <Button
 	{@attach setRef}
 	data-slot="async-button"
-	data-state={state}
+	data-state={buttonState}
 	{disabled}
 	class={cn(className)}
-	aria-busy={state === 'pending' || undefined}
+	aria-busy={buttonState === 'pending' || undefined}
 	aria-disabled={!disabled && locked ? true : undefined}
 	aria-describedby={statusId}
 	onclick={handleClick}
 	{...restProps}
 >
 	<span {@attach shell} class="inline-flex items-center justify-center">
-		<Swap key={state} effect={swapEffect} class="whitespace-nowrap">
-			{#if state === 'idle'}
+		<Swap key={buttonState} effect={swapEffect} direction={swapDirection} class="whitespace-nowrap">
+			{#if buttonState === 'idle'}
 				{@render children?.()}
-			{:else if state === 'pending'}
+			{:else if buttonState === 'pending'}
 				<Icon icon="loading" class="animate-spin motion-reduce:animate-none" />
 				{text.pending}
-			{:else if state === 'success'}
+			{:else if buttonState === 'success'}
 				<Icon icon="success" />
 				{text.success}
 			{:else}

@@ -10,3 +10,11 @@
 </script>
 
 <Sidebar {...props} />
+
+<style>
+	:global([data-slot='sidebar-gap']),
+	:global([data-slot='sidebar-container']) {
+		transition-duration: var(--motion-reveal);
+		transition-timing-function: var(--motion-ease-move);
+	}
+</style>

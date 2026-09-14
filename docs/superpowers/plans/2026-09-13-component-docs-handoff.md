@@ -74,3 +74,57 @@ the assigned file has been verified and committed.
 The renderer owns visual consistency. Category workers own factual accuracy and
 example intent. A later example pass may alter live demos, but it must preserve the
 teaching goal recorded in each guide rather than merely making the preview busier.
+
+## Page-by-page example review handoff
+
+Use this follow-up prompt when turning the reviewed guidance into final live examples.
+Assign a small, contiguous slug set so every page receives visual and interaction review.
+
+```text
+## Task
+
+Finish the Bedrock component documentation pages for [SLUGS] in [WORKTREE]. Read
+the corresponding entries in `src/lib/site/component-guides/` before changing an
+example. Inspect the public index, implementation, tests, and frozen upstream
+implementation where applicable. Do not delegate.
+
+Every rendered page must keep this shared information architecture:
+
+1. Installation — a valid, TypeScript-correct import near the top.
+2. Usage — what the component is, what it is not, when to use it, complete anatomy,
+   and important behavior. Compound parts must be named and explained individually.
+3. Examples — a primary live example followed only by secondary or edge-case examples
+   that teach a materially different state, composition, or boundary.
+4. A right-hand On this page outline on wide screens, built from the shared Outline
+   component and linked to stable section ids.
+
+For every assigned example:
+
+- Decide whether the current scenario actually teaches the primary job recorded in
+  `examplePlan`; replace it when it is generic, decorative, incomplete, or misleading.
+- Make every shown interaction work. Do not add inert buttons, fake links, unexplained
+  controls, or success/error states that cannot be reached.
+- Include the minimum realistic data needed to expose layout, state, overflow,
+  keyboard, focus, and accessibility behavior.
+- Prefer Bedrock Heading, Text, Card, Badge, CodeBlock, Outline, Empty, and other shared
+  primitives for documentation chrome. Native article, section, list, dl/dt/dd, and
+  form semantics remain native HTML.
+- Keep visible documentation copy in English and code identifiers in English.
+- Preserve lazy example loading. Do not eagerly import the examples registry or heavy
+  dependencies such as LayerChart, PDF.js, Shiki, Formsnap, or Superforms into the
+  shared documentation route.
+
+Verification for each slug:
+
+1. Run the Svelte autofixer on every changed `.svelte` file until it reports no issues.
+2. Run Prettier, `pnpm check`, and the relevant unit tests.
+3. Navigate to the page from another component page (do not only load it directly).
+4. Confirm the URL, h1, Installation import, Usage copy, anatomy, and live example all
+   update to the selected slug.
+5. Exercise every interactive example state, inspect console and network errors, and
+   check the right-hand outline at desktop width plus the content at a narrow width.
+6. Commit only the assigned examples/tests with `docs: finish [SLUGS] examples`.
+
+Every progress update must use the exact ten-character ASCII bar format. Report 100%
+only after browser verification succeeds.
+```
