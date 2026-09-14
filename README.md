@@ -1,42 +1,37 @@
-# sv
+# Bedrock UI
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+An in-tree Svelte 5 design system and SvelteKit documentation site with accessible components, reusable blocks, and complete application templates. Product code imports the local `#lib/bedrock` surface.
 
-## Creating a project
+## Development
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project
-npx sv create my-app
-```
-
-To recreate this project with the same configuration:
+Use the pinned pnpm version in `package.json`:
 
 ```sh
-# recreate this project
-pnpm dlx sv@0.17.0 create --template minimal --types ts --add prettier eslint vitest="usages:unit,component" playwright tailwindcss="plugins:none" sveltekit-adapter="adapter:static" mdsvex ai-tools="ide:claude-code,opencode,other+delivery:plugin" experimental="versions:kit+features:async,remoteFunctions,explicitEnvironmentVariables,handleRenderingErrors,forkPreloads" --install pnpm bedrock-ui
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-## Developing
+`--frozen-lockfile` preserves the checked-in dependency resolution. For shared-container previews, follow the repository's `AGENTS.md` preview-manager instructions.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Motion
+
+Astra Motion is installed from the checked-in `vendor/astra-motion-0.0.1.tgz` archive. No sibling checkout is needed to install or build Bedrock.
+
+- `#lib/bedrock/motion/index.js`: existing native Bedrock APIs, with millisecond durations.
+- `#lib/bedrock/motion/css.js`: finite CSS motion and the `CssButton` / `CssPanel` wrappers, with second-based Astra transitions.
+- `#lib/bedrock/motion/engine.js`: Astra physics, gestures, and projection.
+- `#lib/bedrock/motion/config.js`: shared Astra `MotionConfig` policy without the engine entry.
+
+The normal component imports remain stable. Read the [motion integration contract](docs/bedrock/motion.md), browse `/docs/motion`, and exercise the examples at `/motion`. Astra's optional route adapter is not qualified for this site's SvelteKit 3 version.
+
+## Verification
 
 ```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+pnpm motion:verify
+pnpm check
+pnpm lint
+pnpm test:unit --run
+pnpm build
 ```
 
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+`--run` makes Vitest finish after one pass. Browser checks require the shared Chrome and a managed local preview; see [agent instructions](AGENTS.md). Package maintenance instructions and motion-specific verification are in the [motion guide](docs/bedrock/motion.md).

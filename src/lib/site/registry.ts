@@ -1,10 +1,12 @@
 export type DocsNavItem = {
 	title: string;
+	keywords?: string;
 	href:
 		| '/docs'
 		| '/docs/components'
 		| '/docs/installation'
 		| '/docs/theming'
+		| '/docs/motion'
 		| '/docs/skills'
 		| '/docs/forms';
 };
@@ -23,6 +25,11 @@ export const gettingStarted: DocsNavItem[] = [
 	{ title: 'Components', href: '/docs/components' },
 	{ title: 'Installation', href: '/docs/installation' },
 	{ title: 'Theming', href: '/docs/theming' },
+	{
+		title: 'Motion',
+		href: '/docs/motion',
+		keywords: 'astra animation css spring reduced motion accessibility'
+	},
 	{ title: 'Skills', href: '/docs/skills' },
 	{ title: 'Forms', href: '/docs/forms' }
 ];

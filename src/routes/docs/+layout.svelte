@@ -21,7 +21,7 @@
 		if (path === '/docs') {
 			return [{ href: '/docs', label: 'Docs', current: true }];
 		}
-		if (/^\/docs\/(installation|theming|skills|forms|changelog)$/.test(path)) {
+		if (/^\/docs\/(installation|theming|motion|skills|forms|changelog)$/.test(path)) {
 			const label = path.split('/').at(-1) ?? 'Docs';
 			return [
 				{ href: '/docs', label: 'Docs', current: false },

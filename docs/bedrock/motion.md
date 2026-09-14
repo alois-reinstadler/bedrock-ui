@@ -1,6 +1,8 @@
-# Opt-in Astra Motion integration
+# Bedrock and Astra Motion
 
-The `/motion` comparison uses the real packed Astra package from
+The `/docs/motion` guide documents the public integration, and `/motion` provides
+interactive comparisons. Bedrock keeps Astra behind explicit local entry points.
+The comparison uses the real packed Astra package from
 `vendor/astra-motion-0.0.1.tgz`. It does not alias sibling repository source.
 Ordinary Bedrock primitives remain unchanged. Import these wrappers only where
 animation is wanted:
@@ -32,6 +34,26 @@ and synchronizes its disabled state. Native `onclick` supplies pointer, Enter an
 Space activation. CssButton supplies state feedback, not exit retention for a
 native element hidden inside another component.
 
+## Public API and compatibility
+
+`#lib/bedrock/motion/index.js` remains the native Bedrock entry: `appear`,
+`reveal`, `drawer`, `vanish`, `LayoutGroup`, `Swap`, and related utilities keep
+their existing signatures and **millisecond** durations. There is no automatic
+migration or substitution of these APIs. Astra duration and delay use seconds;
+convert 200 milliseconds to 0.2 seconds when explicitly adopting its APIs.
+
+Use `#lib/bedrock/motion/config.js` for `MotionConfig` without importing the
+engine. Ordinary UI imports do not opt into the Astra engine. Bedrock is an
+in-tree design system: these `#lib` paths are source aliases in this repository,
+not exports from a published Bedrock package.
+
+Narrow Astra capabilities are available through `projection.js` (layout),
+`values.js` (MotionValues), and `scroll.js`. These remain explicit opt-ins;
+`projection.js` avoids colliding with Bedrock’s existing `layout.svelte.js`.
+`CssPanel` defaults to visible server-rendered content (`initial: false`); set
+`initial` explicitly when an entrance is needed. Both wrappers support `bind:ref`
+for application focus management.
+
 For native markup, import `createMotion` directly from `astra-motion/css` and spread
 `binding.props`; install `transition:bindingTransition` using a local alias for
 `binding.transition`. For springs/projection, import from
@@ -49,7 +71,18 @@ rejects during an intro or retained exit; stop() freezes state interpolation onl
 Keep positioning primitives and their animation surfaces separate when they own
 the same CSS properties.
 
-`MotionConfig` can supply reduced-motion policy to both backends. The comparison's
+## Accessibility and ownership
+
+Astra defaults to the operating system preference (`reducedMotion="user"`).
+`MotionConfig` can supply reduced-motion policy to both Astra backends.
+`always` requests reduced motion regardless of OS settings; `never` overrides
+the OS preference and should not be a normal product default. The provider is
+scoped to its descendants and does not reconfigure native Bedrock transitions.
+Keep focus restoration and semantic state independent of animation completion.
+A retained exiting panel may still contain focusable children: move focus to its
+trigger and disable departing controls where the interaction requires it.
+
+The comparison's
 Reduce motion control wraps both columns in this provider. Provider spring defaults
 need a local finite tween override on CSS bindings. The optional
 `astra-motion/css/styles.css` presets are available for CSS-only starting styles,
@@ -69,6 +102,10 @@ and state/layout entries do not import Kit. This integration qualifies those pat
 it does not claim Kit 3 support for `astra-motion/routes`. Keep route transitions
 on the app's current mechanism until the route entry is separately qualified.
 
+Fresh checkouts install with `pnpm install --frozen-lockfile`;
+`--frozen-lockfile` prevents dependency-resolution changes. Run
+`pnpm motion:verify` to check the installed package contract.
+
 To refresh from a changed Astra checkout, run `pnpm pack` there, copy the resulting
 archive over this vendor file, then run `pnpm install --force` here. `--force`
 refreshes the installed copy of the same-version file archive. Use this checkout's
@@ -80,3 +117,7 @@ the package deliberately rather than assuming the registry name is this project.
 See the sibling Astra repository's `docs/research/css-native-review.md` for the
 consolidated criticism, supported contract and preprocessor assessment, and
 `docs/research/css-native-validation.md` for actual checks and limitations.
+
+The upstream package currently does not declare a license. Resolve licensing
+with its owner before distributing it outside this project; this integration
+does not invent or grant a license.
