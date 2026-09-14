@@ -4,16 +4,25 @@
 	import { labPages } from '#lib/site/motion-lab/types.js';
 
 	const architecture = [
-		['Semantische Tokens', 'press 130 · state/exit 175 · enter 230 · reveal 310 · overlay 410 ms'],
 		[
-			'Layout-Engine',
-			'FLIP + WAAPI, Federabtastung, Shared IDs, Retargeting vom sichtbaren Zustand'
+			'CSS first',
+			'Astra CSS handles finite opacity and transform feedback without loading the physics engine.'
 		],
-		['Presence', 'appear, vanish, reveal, drawer, autoSize und Swap'],
-		['Komponenten-CSS', 'Größtenteils tw-animate-css und Tailwind-Defaults statt Bedrock-Tokens'],
 		[
-			'Reduced Motion',
-			'Bedrock-Helfer: 0 ms; Komponenten und Endlosschleifen: nicht zentral geregelt'
+			'JavaScript when needed',
+			'Astra createLayout measures geometry, projects shared identities, and preserves spring continuity.'
+		],
+		[
+			'Presence',
+			'Astra cssTransition delegates entering, reversal, and outro retention to Svelte.'
+		],
+		[
+			'Accessibility',
+			'Native semantics, focus restoration, and reduced-motion policy remain part of each interaction.'
+		],
+		[
+			'Inspection controls',
+			'Slow motion and pause apply to the CSS probes. Reduced motion also controls JavaScript projection; Normal respects the system preference.'
 		]
 	] as const;
 
@@ -31,11 +40,11 @@
 
 <div class="page-stack">
 	<section class="intro">
-		<p class="kicker">Diagnose vor Demonstration</p>
-		<h2>Kann das System Bewegung als Sprache sprechen?</h2>
+		<p class="kicker">Astra motion in practice</p>
+		<h2>CSS for feedback. JavaScript for continuity.</h2>
 		<p>
-			Jeder Test zeigt den entscheidenden Härtefall, technische Motion-Daten und einen Befund. Die
-			Steuerleiste verlangsamt, reduziert und belastet dieselben Szenarien global.
+			Jeder Test zeigt den entscheidenden Härtefall, technische Motion-Daten und einen Befund. The
+			control rail adjusts CSS probes; reduced motion also controls Astra projection.
 		</p>
 		<div class="question-grid">
 			{#each questions as question, index (question)}
@@ -47,7 +56,7 @@
 	<section class="architecture">
 		<header>
 			<p>Ist-Zustand</p>
-			<h2>Aktuelle Motion-Architektur</h2>
+			<h2>Astra motion architecture</h2>
 		</header>
 		<dl>
 			{#each architecture as [term, description] (term)}
@@ -58,11 +67,11 @@
 			{/each}
 		</dl>
 		<div class="truth">
-			<strong>Systemwahrheit</strong>
+			<strong>Choose the smallest capable engine</strong>
 			<p>
-				Die Layout-Engine ist bereits unterbrechbar und leistungsbewusst. Die sichtbaren Komponenten
-				sprechen jedoch noch eine zweite, ad-hoc definierte Motion-Sprache. Das Lab macht diese
-				Trennung absichtlich sichtbar.
+				Use CSS for finite, interruptible feedback. Choose Astra JavaScript when geometry must be
+				measured or a physical spring must preserve velocity. The examples keep those
+				responsibilities explicit.
 			</p>
 		</div>
 	</section>

@@ -273,7 +273,7 @@
 		summary="Ein Consumer-Transform auf einem Wrapper bleibt sicher. Derselbe Transform direkt auf Button/Card kollidiert mit Library-Press, Layout oder Entry-Utilities."
 		hardCase="Externe Transform-Animation laufen lassen und Button währenddessen drücken beziehungsweise Slider ziehen. Prüfen, welche Transform-Quelle gewinnt."
 		verdict="problem"
-		finding="Bedrock layout() warnt bei authored transforms, kann sie aber nicht komponieren. Progress, Vaul, tw-animate-css und Consumer-Motion beanspruchen dieselbe CSS-Eigenschaft. Ein dokumentiertes Wrapper-Muster ist derzeit nötig."
+		finding="Astra projection owns its element transform. Keep authored transforms, CSS gestures and projection on separate wrapper elements to avoid competing writers."
 		metadata={{
 			role: 'Bewegung / Kontinuität',
 			duration: 'Consumer 900 ms · Library press/default',
