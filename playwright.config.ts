@@ -1,14 +1,14 @@
 import { defineConfig } from '@playwright/test';
 
-const port = 4174;
-const baseURL = `http://127.0.0.1:${port}`;
+// Build first, then start a persistent managed preview. Tests never claim an
+// arbitrary port or start a second server alongside the user's preview.
+const baseURL = process.env.DEV_LOCAL_URL;
+if (!baseURL) {
+	throw new Error('Set DEV_LOCAL_URL from dev-preview env before running production E2E.');
+}
 
 export default defineConfig({
 	use: { baseURL },
-	webServer: {
-		command: `pnpm run build && pnpm exec vite preview --host 127.0.0.1 --port ${port} --strictPort`,
-		url: baseURL,
-		reuseExistingServer: false
-	},
+	workers: 2,
 	testMatch: '**/*.e2e.{ts,js}'
 });
