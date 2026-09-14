@@ -1,3 +1,6 @@
+> Historical report: the legacy engine and optional-integration architecture have
+> been superseded by the CSS-first Astra migration. See [current contract](../motion.md).
+
 # Astra Motion integration verification
 
 ## Architecture and preserved work
