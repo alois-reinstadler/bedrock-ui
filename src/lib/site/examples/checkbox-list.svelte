@@ -1,22 +1,38 @@
 <script lang="ts">
-	import { Badge } from '#lib/bedrock/ui/badge';
 	import { CheckboxList, CheckboxListItem } from '#lib/bedrock/ui/checkbox-list';
-
-	let value = $state(['core-photos']);
+	import { Button } from '#lib/bedrock/ui/button';
+	let value = $state(['prototype']);
+	let summary = $state('');
 </script>
 
-<CheckboxList bind:value label="Include in the handover" dividers class="max-w-md">
-	<CheckboxListItem
-		value="core-photos"
-		label="Core photos"
-		description="Include the latest marked sample images."
-	>
-		{#snippet endContent()}<Badge variant="secondary">12 files</Badge>{/snippet}
-	</CheckboxListItem>
-	<CheckboxListItem
-		value="shift-notes"
-		label="Shift notes"
-		description="Attach the signed notes from the current shift."
-	/>
-	<CheckboxListItem value="survey" label="Survey export" disabled />
-</CheckboxList>
+<section class="w-full max-w-2xl space-y-5">
+	<header class="space-y-1">
+		<h3 class="text-lg font-semibold">Prepare a client handover</h3>
+		<p class="text-sm text-muted-foreground">
+			Selection changes the export summary; unavailable material explains why it cannot be included.
+		</p>
+	</header>
+	<div class="space-y-4 rounded-xl border bg-card p-5">
+		<CheckboxList bind:value label="Include in the handover" dividers
+			><CheckboxListItem
+				value="prototype"
+				label="Interactive prototype"
+				description="A review link and notes for the current version."
+			/><CheckboxListItem
+				value="research"
+				label="Research summary"
+				description="Anonymized findings and design decisions."
+			/><CheckboxListItem
+				value="assets"
+				label="Production assets"
+				description="Unavailable until the final artwork is approved."
+				disabled
+			/></CheckboxList
+		><Button
+			disabled={value.length === 0}
+			onclick={() => (summary = `Prepared a local handover with ${value.length} sections.`)}
+			>Prepare handover ({value.length})</Button
+		>
+		<p role="status" class="text-sm">{summary}</p>
+	</div>
+</section>

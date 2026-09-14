@@ -24,17 +24,33 @@
 	}
 </script>
 
-<Chat.Root class="h-80 max-w-xl rounded-lg border">
-	<Chat.MessageList>
-		<Chat.SystemMessage>Today</Chat.SystemMessage>
-		{#each messages as message (message.id)}
-			<Chat.Message role={message.role}>
-				<Chat.MessageBubble>{message.text}</Chat.MessageBubble>
-				<Chat.MessageMetadata><Timestamp date={message.at} /></Chat.MessageMetadata>
-			</Chat.Message>
-		{/each}
-	</Chat.MessageList>
-	<div class="p-3 pt-0">
-		<Chat.Composer onSend={send} />
+<section class="w-full max-w-2xl space-y-5">
+	<header class="space-y-1">
+		<h3 class="text-lg font-semibold">Delivery support conversation</h3>
+		<p class="text-sm text-muted-foreground">
+			Keep the order context beside the conversation. Messages stay local and no automated reply is
+			implied.
+		</p>
+	</header>
+	<div class="rounded-lg border bg-muted/30 p-3 text-sm">
+		<p class="font-medium">Order FN-2048 · Delivery support</p>
+		<p class="text-muted-foreground">
+			This is a local conversation example. Sending adds your message to the thread.
+		</p>
 	</div>
-</Chat.Root>
+
+	<Chat.Root class="h-80 max-w-xl rounded-lg border">
+		<Chat.MessageList>
+			<Chat.SystemMessage>Today</Chat.SystemMessage>
+			{#each messages as message (message.id)}
+				<Chat.Message role={message.role}>
+					<Chat.MessageBubble>{message.text}</Chat.MessageBubble>
+					<Chat.MessageMetadata><Timestamp date={message.at} /></Chat.MessageMetadata>
+				</Chat.Message>
+			{/each}
+		</Chat.MessageList>
+		<div class="p-3 pt-0">
+			<Chat.Composer onSend={send} />
+		</div>
+	</Chat.Root>
+</section>
