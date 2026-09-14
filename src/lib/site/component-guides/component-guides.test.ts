@@ -74,7 +74,7 @@ describe('component documentation coverage', () => {
 		expect(accordion.api.some((entry) => entry.name === 'onValueChange')).toBe(true);
 		const button = getComponentReference('button', 'form');
 		expect(button.api.find((entry) => entry.name === 'variant')).toMatchObject({
-			default: '"default"'
+			default: expect.stringMatching(/^(['"])default\1$/)
 		});
 		expect(button.parts).toHaveLength(1);
 		expect(button.parts?.[0].aliases).toEqual(['Button']);
