@@ -1,33 +1,37 @@
 <script lang="ts">
 	import { Markdown } from '#lib/bedrock/ui/markdown';
 
-	const content = `# Rendering markdown
+	const content = `## September workspace update
 
-Bedrock renders markdown **safely** through its own components — raw HTML is
-shown as escaped text, never injected [guide]. Inline \`code\` and
-[links](https://example.com) map onto Bedrock primitives.
+The pilot is ready for **team review**. Start with the [installation guide](/docs/installation) if you are joining this week.
 
-## Checklist
+### Ready to review
 
-- Headings receive stable, deduped ids
-- Ordered and task lists are supported
-- [x] Lexer-only \`marked\` usage
-- [ ] Component override prop (backlog)
+- [x] Project invitation flow
+- [x] Document ownership labels
+- [ ] Final mobile keyboard review
 
-\`\`\`ts
-import { Markdown } from '#lib/bedrock/ui/markdown';
-\`\`\`
+> Keep the invitation reversible until the recipient accepts it.
 
-> Blockquotes, tables, and separators render through the same families used
-> everywhere else in the system.
+### Next steps
 
-| Token | Component |
-| --- | ---: |
-| heading | Heading |
-| code | CodeBlock |`;
+1. Invite two colleagues to the sample workspace.
+2. Capture any confusing labels in the review document.
+3. Send feedback before Friday.
+
+| Owner | Responsibility |
+| --- | --- |
+| Mira | Interaction review |
+| Theo | Keyboard checks |`;
 </script>
 
-<Markdown
-	{content}
-	sources={{ guide: { title: 'Markdown guide', url: 'https://example.com/markdown' } }}
-/>
+<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+	<header>
+		<h3 class="text-lg font-semibold">Project update from an editor</h3>
+		<p class="mt-1 text-sm text-muted-foreground">
+			Render authored release notes with headings, task lists, links, and quoted decisions.
+		</p>
+	</header>
+
+	<Markdown {content} />
+</section>

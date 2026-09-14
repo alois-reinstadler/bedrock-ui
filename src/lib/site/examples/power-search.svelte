@@ -92,20 +92,30 @@
 	const currency = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR' });
 </script>
 
-<div class="flex w-full max-w-xl flex-col gap-3">
-	<PowerSearch {config} bind:filters resultCount={visible.length} placeholder="Filter orders…" />
-	<ul class="flex flex-col gap-1 text-sm">
-		{#each visible as order (order.id)}
-			<li class="flex items-center gap-3 rounded-md border px-3 py-1.5">
-				<span class="font-code text-xs text-muted-foreground">{order.id}</span>
-				<span class="flex-1 truncate">{order.customer}</span>
-				<span class="text-xs text-muted-foreground capitalize">{order.status}</span>
-				<span class="tabular-nums">{currency.format(order.total)}</span>
-			</li>
-		{:else}
-			<li class="rounded-md border border-dashed px-3 py-4 text-center text-muted-foreground">
-				No matching orders.
-			</li>
-		{/each}
-	</ul>
-</div>
+<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+	<header>
+		<h3 class="text-lg font-semibold">Orders requiring attention</h3>
+		<p class="mt-1 text-sm text-muted-foreground">
+			Combine customer search with structured status, date, and total filters. The result list uses
+			the same filter expression as the search summary.
+		</p>
+	</header>
+
+	<div class="flex w-full max-w-xl flex-col gap-3">
+		<PowerSearch {config} bind:filters resultCount={visible.length} placeholder="Filter orders…" />
+		<ul class="flex flex-col gap-1 text-sm">
+			{#each visible as order (order.id)}
+				<li class="flex items-center gap-3 rounded-md border px-3 py-1.5">
+					<span class="font-code text-xs text-muted-foreground">{order.id}</span>
+					<span class="flex-1 truncate">{order.customer}</span>
+					<span class="text-xs text-muted-foreground capitalize">{order.status}</span>
+					<span class="tabular-nums">{currency.format(order.total)}</span>
+				</li>
+			{:else}
+				<li class="rounded-md border border-dashed px-3 py-4 text-center text-muted-foreground">
+					No matching orders.
+				</li>
+			{/each}
+		</ul>
+	</div>
+</section>

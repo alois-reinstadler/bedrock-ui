@@ -12,9 +12,27 @@
 	];
 </script>
 
-<Lightbox {items}>
-	<span class="inline-flex items-center gap-2 text-sm">
-		<Thumbnail src={items[0].src} alt={items[0].alt} size="lg" />
-		Open gallery (image + PDF)
-	</span>
-</Lightbox>
+<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+	<header>
+		<h3 class="text-lg font-semibold">Inspection evidence</h3>
+		<p class="mt-1 text-sm text-muted-foreground">
+			Review image and document attachments without losing the inspection summary.
+		</p>
+	</header>
+	<div class="flex flex-wrap items-center justify-between gap-4">
+		<div>
+			<h4 class="font-medium">North entrance inspection</h4>
+			<p class="text-sm text-muted-foreground">Two attachments · Ready for review</p>
+		</div>
+
+		<Lightbox {items}>
+			<span class="inline-flex items-center gap-2 text-sm">
+				<Thumbnail src={items[0].src} alt={items[0].alt} size="lg" />
+				Open gallery (image + PDF)
+			</span>
+		</Lightbox>
+	</div>
+	<p class="text-sm text-muted-foreground">
+		Open the evidence, move between attachments, then press Escape to return to the report.
+	</p>
+</section>
