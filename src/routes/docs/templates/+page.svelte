@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Input } from '#lib/bedrock/ui/input';
-	import { templates } from '#lib/site/templates';
+	import { templates } from '#lib/site/templates.js';
 	let query = $state('');
 	const visible = $derived(
 		templates.filter((item) =>
@@ -18,7 +18,7 @@
 	/>
 </svelte:head>
 
-<main class="mx-auto max-w-7xl px-4 py-10 md:px-8" data-doc-slug="templates">
+<article class="mx-auto max-w-7xl px-4 py-10 md:px-8" data-doc-slug="templates">
 	<p class="mb-3 text-xs font-medium tracking-widest text-muted-foreground uppercase">
 		From primitives to products
 	</p>
@@ -96,4 +96,4 @@
 			</p>
 		{/each}
 	</div>
-</main>
+</article>

@@ -1,0 +1,1185 @@
+{
+	"method": "Computed CSS colors converted to sRGB through canvas; alpha composited through ancestor solid backgrounds. Text AA diagnostic, not a complete accessibility conformance test.",
+	"badgePairs": 72,
+	"buttonPairs": 72,
+	"failures": [
+		{
+			"id": "badge-page-destructive",
+			"ratio": 3.9729275975370095,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 3.9729275975370095,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-outline",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-outline",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-ghost",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-ghost",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-destructive",
+			"ratio": 3.9729275975370095,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.9729275975370095,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-outline",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-outline",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-ghost",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-ghost",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 4.374341882939976,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 4.374341882939976,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.8418548514572275,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.8418548514572275,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": false
+		}
+	],
+	"results": [
+		{
+			"id": "badge-page-default",
+			"ratio": 17.176123405576867,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-default",
+			"ratio": 9.243917013242612,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-default",
+			"ratio": 9.243917013242612,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-default",
+			"ratio": 17.176123405576867,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-default",
+			"ratio": 17.176123405576867,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-default",
+			"ratio": 17.176123405576867,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-secondary",
+			"ratio": 16.44407502596064,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-secondary",
+			"ratio": 16.734543713535576,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-secondary",
+			"ratio": 16.734543713535576,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-secondary",
+			"ratio": 16.44407502596064,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-secondary",
+			"ratio": 16.734543713535576,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-secondary",
+			"ratio": 16.734543713535576,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-destructive",
+			"ratio": 3.9729275975370095,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 3.9729275975370095,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-outline",
+			"ratio": 19.79814571052481,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-outline",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-outline",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-outline",
+			"ratio": 19.79814571052481,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-outline",
+			"ratio": 18.159588039824865,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-outline",
+			"ratio": 18.159588039824865,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-ghost",
+			"ratio": 19.79814571052481,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-ghost",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-ghost",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-ghost",
+			"ratio": 19.79814571052481,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-ghost",
+			"ratio": 18.159588039824865,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-ghost",
+			"ratio": 18.159588039824865,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-default",
+			"ratio": 17.176123405576867,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-default",
+			"ratio": 9.243917013242612,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-default",
+			"ratio": 9.243917013242612,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-default",
+			"ratio": 17.176123405576867,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-default",
+			"ratio": 17.176123405576867,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-default",
+			"ratio": 17.176123405576867,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-secondary",
+			"ratio": 16.44407502596064,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-secondary",
+			"ratio": 16.734543713535576,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-secondary",
+			"ratio": 16.734543713535576,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-secondary",
+			"ratio": 16.44407502596064,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-secondary",
+			"ratio": 16.734543713535576,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-secondary",
+			"ratio": 16.734543713535576,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-destructive",
+			"ratio": 3.9729275975370095,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.9729275975370095,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.314662718714168,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-outline",
+			"ratio": 19.79814571052481,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-outline",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-outline",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-outline",
+			"ratio": 19.79814571052481,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-outline",
+			"ratio": 18.159588039824865,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-outline",
+			"ratio": 18.159588039824865,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-ghost",
+			"ratio": 19.79814571052481,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-ghost",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-ghost",
+			"ratio": 4.34923168556426,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-ghost",
+			"ratio": 19.79814571052481,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-ghost",
+			"ratio": 18.159588039824865,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-ghost",
+			"ratio": 18.159588039824865,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-link",
+			"ratio": 17.9278402530276,
+			"theme": "light",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-default",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-default",
+			"ratio": 9.15721344129455,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-default",
+			"ratio": 9.15721344129455,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-default",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-default",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-default",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-secondary",
+			"ratio": 14.498978405673947,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-secondary",
+			"ratio": 15.68294867096436,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-secondary",
+			"ratio": 15.68294867096436,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-secondary",
+			"ratio": 14.498978405673947,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-secondary",
+			"ratio": 15.68294867096436,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-secondary",
+			"ratio": 15.68294867096436,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-destructive",
+			"ratio": 5.3078542510922,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-destructive",
+			"ratio": 5.3078542510922,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-destructive",
+			"ratio": 5.3078542510922,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 5.3078542510922,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 4.374341882939976,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "button-page-destructive",
+			"ratio": 4.374341882939976,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-page-outline",
+			"ratio": 18.96800669384249,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-outline",
+			"ratio": 5.857398603056878,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-outline",
+			"ratio": 5.857398603056878,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-outline",
+			"ratio": 17.562605291896933,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-outline",
+			"ratio": 16.282627220746097,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-outline",
+			"ratio": 16.282627220746097,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-ghost",
+			"ratio": 18.96800669384249,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-ghost",
+			"ratio": 6.86884216034392,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-ghost",
+			"ratio": 6.86884216034392,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-ghost",
+			"ratio": 18.96800669384249,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-ghost",
+			"ratio": 17.002632209942874,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-ghost",
+			"ratio": 17.002632209942874,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-link",
+			"ratio": 15.71666919225203,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-link",
+			"ratio": 15.71666919225203,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-page-link",
+			"ratio": 15.71666919225203,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-link",
+			"ratio": 15.71666919225203,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-link",
+			"ratio": 15.71666919225203,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-page-link",
+			"ratio": 15.71666919225203,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-default",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-default",
+			"ratio": 9.419670686940938,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-default",
+			"ratio": 9.419670686940938,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-default",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-default",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-default",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-secondary",
+			"ratio": 14.498978405673947,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-secondary",
+			"ratio": 15.205931906153397,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-secondary",
+			"ratio": 15.205931906153397,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-secondary",
+			"ratio": 14.498978405673947,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-secondary",
+			"ratio": 15.205931906153397,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-secondary",
+			"ratio": 15.205931906153397,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-destructive",
+			"ratio": 4.636360653505736,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-destructive",
+			"ratio": 4.636360653505736,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-destructive",
+			"ratio": 4.636360653505736,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 4.636360653505736,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.8418548514572275,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": false
+		},
+		{
+			"id": "button-surface-destructive",
+			"ratio": 3.8418548514572275,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": false
+		},
+		{
+			"id": "badge-surface-outline",
+			"ratio": 17.176123405576867,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-outline",
+			"ratio": 5.857398603056878,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-outline",
+			"ratio": 5.857398603056878,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-outline",
+			"ratio": 15.425584275347115,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-outline",
+			"ratio": 14.071552364966626,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-outline",
+			"ratio": 14.071552364966626,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-ghost",
+			"ratio": 17.176123405576867,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-ghost",
+			"ratio": 6.414053625537247,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-ghost",
+			"ratio": 6.414053625537247,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-ghost",
+			"ratio": 17.176123405576867,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-ghost",
+			"ratio": 15.876881754464435,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-ghost",
+			"ratio": 15.876881754464435,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-link",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-link",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "badge-surface-link",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-link",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "rest",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-link",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "hover",
+			"meetsAA": true
+		},
+		{
+			"id": "button-surface-link",
+			"ratio": 14.231935591755258,
+			"theme": "dark",
+			"state": "pointer-down",
+			"meetsAA": true
+		}
+	]
+}

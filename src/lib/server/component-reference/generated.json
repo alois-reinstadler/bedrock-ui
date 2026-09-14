@@ -22984,6 +22984,14 @@
 					"source": "src/lib/shadcn/utils.ts"
 				},
 				{
+					"name": "side",
+					"kind": "prop",
+					"type": "ProgressiveBlurSide | undefined",
+					"required": false,
+					"description": "The physical edge the blur grows from. Takes precedence over orientation and edge.",
+					"source": "src/lib/bedrock/ui/progressive-blur/progressive-blur.svelte"
+				},
+				{
 					"name": "orientation",
 					"kind": "prop",
 					"type": "ProgressiveBlurOrientation | undefined",
@@ -23005,7 +23013,7 @@
 					"name": "size",
 					"kind": "prop",
 					"type": "string | number | undefined",
-					"default": "48",
+					"default": "64",
 					"required": false,
 					"description": "Accepted by ProgressiveBlur; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/progressive-blur/progressive-blur.svelte"
@@ -23014,7 +23022,7 @@
 					"name": "strength",
 					"kind": "prop",
 					"type": "number | undefined",
-					"default": "14",
+					"default": "16",
 					"required": false,
 					"description": "Accepted by ProgressiveBlur; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/progressive-blur/progressive-blur.svelte"
@@ -23035,21 +23043,33 @@
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				},
 				{
+					"name": "data-side",
+					"kind": "data-attribute",
+					"type": "resolvedSide",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
 					"name": "data-orientation",
 					"kind": "data-attribute",
-					"type": "orientation",
+					"type": "resolvedOrientation",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				},
 				{
 					"name": "data-edge",
 					"kind": "data-attribute",
-					"type": "edge",
+					"type": "resolvedEdge",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				},
 				{
 					"name": "data-visible",
 					"kind": "data-attribute",
 					"type": "visible",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-blur-layer",
+					"kind": "data-attribute",
+					"type": "index + 1",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
@@ -28087,7 +28107,7 @@
 					"name": "edgeBlurSize",
 					"kind": "prop",
 					"type": "string | number | undefined",
-					"default": "48",
+					"default": "64",
 					"required": false,
 					"description": "Accepted by Root; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/scroll-area/scroll-area.svelte"
@@ -28096,7 +28116,7 @@
 					"name": "edgeBlurStrength",
 					"kind": "prop",
 					"type": "number | undefined",
-					"default": "14",
+					"default": "16",
 					"required": false,
 					"description": "Accepted by Root; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/scroll-area/scroll-area.svelte"
@@ -28116,7 +28136,7 @@
 				{
 					"name": "data-scroll-edge",
 					"kind": "data-attribute",
-					"type": "\"vertical-start\"",
+					"type": "\"top\"",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
@@ -32272,6 +32292,586 @@
 					"name": "data-status",
 					"kind": "data-attribute",
 					"type": "status",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		}
+	],
+	"stepped-form": [
+		{
+			"name": "Root",
+			"aliases": ["SteppedForm"],
+			"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte",
+			"entries": [
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "steps",
+					"kind": "prop",
+					"type": "SteppedFormStep[]",
+					"required": true,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "value",
+					"kind": "bindable",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "defaultValue",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "nonlinear",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "validateStep",
+					"kind": "prop",
+					"type": "SteppedFormValidator | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "canNavigate",
+					"kind": "prop",
+					"type": "((detail: { from: SteppedFormStep; to: SteppedFormStep; completed: string[]; }) => boolean | Promise<boolean>) | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "onSubmit",
+					"kind": "event",
+					"type": "((context: SteppedFormSubmitContext) => void | Promise<void>) | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "onValueChange",
+					"kind": "event",
+					"type": "((value: string, previous: string, reason: \"next\" | \"previous\" | \"progress\" | \"programmatic\") => void) | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "persistence",
+					"kind": "prop",
+					"type": "SteppedFormPersistence | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLFormElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/stepped-form.svelte"
+				},
+				{
+					"name": "data-stepped-form-step",
+					"kind": "data-attribute",
+					"type": "\"${CSS.escape(id)}\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-title\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-status",
+					"kind": "data-attribute",
+					"type": "status",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-ready",
+					"kind": "data-attribute",
+					"type": "!!ref",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Progress",
+			"aliases": ["SteppedFormProgress"],
+			"source": "src/lib/bedrock/ui/stepped-form/progress.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Progress; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "label",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Form progress'",
+					"required": false,
+					"description": "Accepted by Progress; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/progress.svelte"
+				},
+				{
+					"name": "orientation",
+					"kind": "prop",
+					"type": "\"horizontal\" | \"vertical\" | undefined",
+					"default": "'horizontal'",
+					"required": false,
+					"description": "Accepted by Progress; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/progress.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-progress\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Step",
+			"aliases": ["SteppedFormStep"],
+			"source": "src/lib/bedrock/ui/stepped-form/step.svelte",
+			"entries": [
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Step; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "id",
+					"kind": "prop",
+					"type": "string",
+					"required": true,
+					"description": "Accepted by Step; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Step; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "validate",
+					"kind": "prop",
+					"type": "SteppedFormValidator | undefined",
+					"required": false,
+					"description": "Accepted by Step; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/step.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-step\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-stepped-form-step",
+					"kind": "data-attribute",
+					"type": "id",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-direction",
+					"kind": "data-attribute",
+					"type": "active ? direction : undefined",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Title",
+			"aliases": ["SteppedFormTitle"],
+			"source": "src/lib/bedrock/ui/stepped-form/title.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Title; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Title; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-title\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Description",
+			"aliases": ["SteppedFormDescription"],
+			"source": "src/lib/bedrock/ui/stepped-form/description.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Description; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Description; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-description\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Content",
+			"aliases": ["SteppedFormContent"],
+			"source": "src/lib/bedrock/ui/stepped-form/content.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-content\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Actions",
+			"aliases": ["SteppedFormActions"],
+			"source": "src/lib/bedrock/ui/stepped-form/actions.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Actions; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Actions; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-actions\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Previous",
+			"aliases": ["SteppedFormPrevious"],
+			"source": "src/lib/bedrock/ui/stepped-form/previous.svelte",
+			"entries": [
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Previous; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | null | undefined",
+					"required": false,
+					"description": "Accepted by Previous; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "ref",
+					"type": "HTMLElement | null | undefined",
+					"required": false,
+					"description": "Accepted by Previous; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "variant",
+					"kind": "prop",
+					"type": "\"link\" | \"default\" | \"destructive\" | \"outline\" | \"secondary\" | \"ghost\" | undefined",
+					"required": false,
+					"description": "Accepted by Previous; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/button/button.svelte"
+				},
+				{
+					"name": "size",
+					"kind": "prop",
+					"type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | undefined",
+					"required": false,
+					"description": "Accepted by Previous; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/button/button.svelte"
+				},
+				{
+					"name": "onclick",
+					"kind": "event",
+					"type": "((event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Previous; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/previous.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-previous\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Next",
+			"aliases": ["SteppedFormNext"],
+			"source": "src/lib/bedrock/ui/stepped-form/next.svelte",
+			"entries": [
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Next; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | null | undefined",
+					"required": false,
+					"description": "Accepted by Next; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "ref",
+					"type": "HTMLElement | null | undefined",
+					"required": false,
+					"description": "Accepted by Next; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "variant",
+					"kind": "prop",
+					"type": "\"link\" | \"default\" | \"destructive\" | \"outline\" | \"secondary\" | \"ghost\" | undefined",
+					"required": false,
+					"description": "Accepted by Next; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/button/button.svelte"
+				},
+				{
+					"name": "size",
+					"kind": "prop",
+					"type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | undefined",
+					"required": false,
+					"description": "Accepted by Next; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/button/button.svelte"
+				},
+				{
+					"name": "onclick",
+					"kind": "event",
+					"type": "((event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement; }) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Next; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/stepped-form/next.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-next\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Submit",
+			"aliases": ["SteppedFormSubmit"],
+			"source": "src/lib/bedrock/ui/stepped-form/submit.svelte",
+			"entries": [
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | null | undefined",
+					"required": false,
+					"description": "Accepted by Submit; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Submit; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "ref",
+					"type": "HTMLElement | null | undefined",
+					"required": false,
+					"description": "Accepted by Submit; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "variant",
+					"kind": "prop",
+					"type": "\"link\" | \"default\" | \"destructive\" | \"outline\" | \"secondary\" | \"ghost\" | undefined",
+					"required": false,
+					"description": "Accepted by Submit; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/button/button.svelte"
+				},
+				{
+					"name": "size",
+					"kind": "prop",
+					"type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | undefined",
+					"required": false,
+					"description": "Accepted by Submit; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/button/button.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-submit\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Status",
+			"aliases": ["SteppedFormStatus"],
+			"source": "src/lib/bedrock/ui/stepped-form/status.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Status; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.56.10/elements.d.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"stepped-form-status\"",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],

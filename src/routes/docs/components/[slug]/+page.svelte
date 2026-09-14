@@ -1,4 +1,9 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	let mounted = $state(false);
+	onMount(() => {
+		mounted = true;
+	});
 	import { page } from '$app/state';
 	import BoxIcon from '@lucide/svelte/icons/box';
 	import { Badge } from '#lib/bedrock/ui/badge';
@@ -27,7 +32,7 @@
 	let slug = $derived(component?.slug ?? '');
 	let guide = $derived(component ? data.guide : undefined);
 	let reference = $derived(component ? data.reference : undefined);
-	let requestedTab = $derived(page.url.searchParams.get('tab'));
+	let requestedTab = $derived(mounted ? page.url.searchParams.get('tab') : null);
 	let activeTab = $derived.by<ComponentDocTab>(() =>
 		requestedTab === 'properties' || requestedTab === 'accessibility' ? requestedTab : 'overview'
 	);

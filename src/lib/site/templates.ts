@@ -16,9 +16,9 @@ export const templates: TemplateDoc[] = [
 		title: 'Music Player',
 		description: 'A listening workspace with collections, a queue, and compact playback controls.',
 		layouts: ['Mobile', 'Tablet', 'Desktop'],
-		components: ['Button', 'Input', 'Scroll Area', 'Avatar', 'Slider'],
+		components: ['Avatar', 'Badge', 'Button', 'Icon', 'Icon Button', 'Input', 'Scroll Area'],
 		blocks: [],
-		thumbnail: '/templates/music-player.webp'
+		thumbnail: '/templates/music-player.png'
 	},
 	{
 		slug: 'video-library',
@@ -26,26 +26,65 @@ export const templates: TemplateDoc[] = [
 		description:
 			'Discover fictional films, build a watchlist, and explore a focused viewing surface.',
 		layouts: ['Mobile', 'Tablet', 'Desktop'],
-		components: ['Button', 'Dialog', 'Badge'],
+		components: [
+			'Avatar',
+			'Badge',
+			'Button',
+			'Dialog',
+			'Heading',
+			'Icon',
+			'Icon Button',
+			'Input',
+			'Scroll Area',
+			'Text',
+			'Video Player'
+		],
 		blocks: [],
-		thumbnail: '/templates/video-library.webp'
+		thumbnail: '/templates/video-library.png'
 	},
 	{
 		slug: 'email-client',
 		title: 'Email Client',
 		description: 'A calm inbox with folders, message reading, composition, and calendar context.',
 		layouts: ['Mobile', 'Tablet', 'Desktop'],
-		components: ['Button', 'Input', 'Avatar'],
+		components: [
+			'Avatar',
+			'Badge',
+			'Button',
+			'Checkbox',
+			'Dialog',
+			'Dropdown Menu',
+			'Icon',
+			'Icon Button',
+			'Input',
+			'Input Group',
+			'Label',
+			'Scroll Area',
+			'Separator',
+			'Sheet',
+			'Textarea'
+		],
 		blocks: [],
-		thumbnail: '/templates/email-client.webp'
+		thumbnail: '/templates/email-client.png'
 	},
 	{
 		slug: 'social-network',
 		title: 'Social Network',
 		description: 'A community workspace for conversations, profiles, reactions, and notifications.',
 		layouts: ['Mobile', 'Tablet', 'Desktop'],
-		components: ['Button', 'Avatar', 'Textarea'],
+		components: [
+			'Avatar',
+			'Badge',
+			'Button',
+			'Card',
+			'Icon Button',
+			'Input',
+			'Scroll Area',
+			'Separator',
+			'Sheet',
+			'Textarea'
+		],
 		blocks: [],
-		thumbnail: '/templates/social-network.webp'
+		thumbnail: '/templates/social-network.png'
 	}
 ];

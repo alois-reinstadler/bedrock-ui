@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import ts from 'typescript';
+import { format, resolveConfig } from 'prettier';
 
 const root = process.cwd();
 const files = fs
@@ -244,7 +245,10 @@ for (const directory of fs.readdirSync('src/lib/bedrock/ui')) {
 }
 fs.writeFileSync(
 	'src/lib/server/component-reference/generated.json',
-	JSON.stringify(output, null, 2) + '\n'
+	await format(JSON.stringify(output), {
+		...(await resolveConfig('src/lib/server/component-reference/generated.json')),
+		parser: 'json'
+	})
 );
 console.log(
 	`Extracted ${Object.keys(output).length} families, ${Object.values(output).flat().length} parts, ${Object.values(

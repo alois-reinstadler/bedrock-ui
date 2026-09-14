@@ -1,0 +1,23 @@
+
+Running 12 tests using 2 workers
+
+(node:1502470) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1502469) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 src/routes/docs/components/docs-navigation.e2e.ts:4:2 › component documentation navigation › keeps page content in sync across rapid docs navigation (2.5s)
+  ✓   1 src/routes/docs/components/docs-navigation.e2e.ts:4:2 › component documentation navigation › keeps page content in sync across rapid docs navigation (2.9s)
+  ✓   3 src/routes/docs/components/docs-navigation.e2e.ts:37:2 › component documentation navigation › uses Bedrock timing tokens and avoids a duplicate TypeScript label (718ms)
+  ✓   4 src/routes/docs/components/docs-navigation.e2e.ts:37:2 › component documentation navigation › uses Bedrock timing tokens and avoids a duplicate TypeScript label (652ms)
+  ✓   5 src/routes/docs/components/docs-navigation.e2e.ts:55:2 › component documentation navigation › keeps component reference tabs addressable across navigation and reload (1.3s)
+  ✓   6 src/routes/docs/components/docs-navigation.e2e.ts:55:2 › component documentation navigation › keeps component reference tabs addressable across navigation and reload (1.5s)
+  ✓   7 src/routes/docs/components/docs-navigation.e2e.ts:90:2 › component documentation navigation › exposes component-specific known accessibility gaps (1.2s)
+  ✓   8 src/routes/docs/components/docs-navigation.e2e.ts:90:2 › component documentation navigation › exposes component-specific known accessibility gaps (1.2s)
+(node:1502730) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 src/routes/docs/components/docs-navigation.e2e.ts:4:2 › component documentation navigation › keeps page content in sync across rapid docs navigation (1.7s)
+  ✓  10 src/routes/docs/components/docs-navigation.e2e.ts:37:2 › component documentation navigation › uses Bedrock timing tokens and avoids a duplicate TypeScript label (460ms)
+  ✓  11 src/routes/docs/components/docs-navigation.e2e.ts:55:2 › component documentation navigation › keeps component reference tabs addressable across navigation and reload (1.1s)
+  ✓  12 src/routes/docs/components/docs-navigation.e2e.ts:90:2 › component documentation navigation › exposes component-specific known accessibility gaps (894ms)
+
+  12 passed (11.9s)

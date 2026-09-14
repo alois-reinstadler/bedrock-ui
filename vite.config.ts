@@ -21,12 +21,14 @@ export default defineConfig({
 			'formsnap',
 			'layerchart',
 			'marked',
+			'mode-watcher',
 			'paneforge',
 			'pdfjs-dist',
 			'shiki',
 			'svelte-sonner',
 			'sveltekit-superforms',
-			'tailwind-variants'
+			'tailwind-variants',
+			'tailwind-merge'
 		]
 	},
 	plugins: [

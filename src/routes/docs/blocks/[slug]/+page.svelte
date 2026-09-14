@@ -1,16 +1,22 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	let mounted = $state(false);
+	onMount(() => {
+		mounted = true;
+	});
 	import { page } from '$app/state';
-	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Button } from '#lib/bedrock/ui/button';
 	import * as Card from '#lib/bedrock/ui/card';
-	import * as Table from '#lib/bedrock/ui/table';
+	import ApiTable from '#lib/site/component-docs/ApiTable.svelte';
 	import BlockPreview from '#lib/site/BlockPreview.svelte';
 	import CodeBlock from '#lib/site/CodeBlock.svelte';
 	import DocsPageHeader from '#lib/site/DocsPageHeader.svelte';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
-	let tab = $derived(page.url.searchParams.get('tab') === 'properties' ? 'properties' : 'overview');
+	let tab = $derived(
+		mounted && page.url.searchParams.get('tab') === 'properties' ? 'properties' : 'overview'
+	);
 	let importCode = $derived(
 		`import { ${data.block.importName} } from '#lib/bedrock/blocks/${data.block.slug}/index.js';`
 	);
@@ -46,32 +52,13 @@
 			<p class="mt-2 text-muted-foreground">
 				The public configuration surface. Product data remains owned by the consuming application.
 			</p>
-			<div class="mt-6 overflow-hidden rounded-xl border">
-				<Table.Root>
-					<Table.Header
-						><Table.Row
-							><Table.Head>Name</Table.Head><Table.Head>Type</Table.Head><Table.Head
-								>Default</Table.Head
-							><Table.Head>Required</Table.Head><Table.Head>Description</Table.Head></Table.Row
-						></Table.Header
-					>
-					<Table.Body>
-						{#each data.block.properties as property (property.name)}
-							<Table.Row>
-								<Table.Cell class="font-mono text-xs font-medium">{property.name}</Table.Cell>
-								<Table.Cell><code class="text-xs">{property.type}</code></Table.Cell>
-								<Table.Cell
-									><Badge variant="outline" class="font-mono text-[11px]">{property.default}</Badge
-									></Table.Cell
-								>
-								<Table.Cell>{property.required ? 'Yes' : 'No'}</Table.Cell>
-								<Table.Cell class="min-w-64 text-muted-foreground"
-									>{property.description}</Table.Cell
-								>
-							</Table.Row>
-						{/each}
-					</Table.Body>
-				</Table.Root>
+			<div class="mt-6">
+				<ApiTable
+					entries={data.block.properties.map((property) => ({
+						...property,
+						kind: property.kind === 'callback' ? 'event' : (property.kind ?? 'prop')
+					}))}
+				/>
 			</div>
 		</section>
 	{:else}

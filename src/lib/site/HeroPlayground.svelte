@@ -50,6 +50,15 @@
 	}
 </script>
 
+<svelte:window
+	onkeydown={(event) => {
+		if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+			event.preventDefault();
+			document.getElementById('hero-component-search')?.focus();
+		}
+	}}
+/>
+
 <section
 	class="constellation"
 	aria-label="Interactive Bedrock component constellation"
@@ -67,6 +76,7 @@
 					<Kbd class="ms-auto">⌘ K</Kbd>
 				</div>
 				<Input
+					id="hero-component-search"
 					value={query}
 					oninput={(event) => (query = event.currentTarget.value)}
 					aria-label="Search components"
@@ -75,10 +85,11 @@
 				{#if searchResults.length}
 					<div class="mt-2 space-y-1" aria-live="polite">
 						{#each searchResults as result (result)}
-							<button
-								type="button"
+							<a
+								href={`/docs/components/${result.toLowerCase().replaceAll(' ', '-')}`}
+								data-sveltekit-reload
 								class="w-full rounded-md px-2 py-1.5 text-left text-xs motion-state hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-								>{result}</button
+								>{result}</a
 							>
 						{/each}
 					</div>
@@ -229,24 +240,6 @@
 
 	.float {
 		position: absolute;
-		animation: drift 5.8s ease-in-out infinite alternate;
-	}
-
-	.float-b {
-		animation-delay: -1.7s;
-		animation-duration: 6.6s;
-	}
-	.float-c {
-		animation-delay: -3.1s;
-		animation-duration: 7.2s;
-	}
-	.float-d {
-		animation-delay: -4.2s;
-		animation-duration: 6.1s;
-	}
-	.float-e {
-		animation-delay: -2.4s;
-		animation-duration: 5.4s;
 	}
 
 	.plane {
@@ -306,15 +299,6 @@
 	.plane-note:hover,
 	.plane-note:focus-within {
 		transform: translate3d(120%, 355%, 95px) rotateY(-2deg) rotateZ(-1deg) scale(1.025);
-	}
-
-	@keyframes drift {
-		from {
-			translate: 0 -4px;
-		}
-		to {
-			translate: 0 5px;
-		}
 	}
 
 	@media (max-width: 767px) {

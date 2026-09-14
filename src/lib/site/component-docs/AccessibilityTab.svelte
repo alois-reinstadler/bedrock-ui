@@ -21,6 +21,18 @@
 	] as const;
 
 	const criterionLinks: Record<string, string> = {
+		'WCAG 1.3.1: Info and Relationships':
+			'https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html',
+		'WCAG 2.4.3: Focus Order': 'https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html',
+		'WCAG 3.3.1: Error Identification':
+			'https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html',
+		'WCAG 3.3.2: Labels or Instructions':
+			'https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html',
+		'WCAG 4.1.3: Status Messages':
+			'https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html',
+		'WCAG 2.3.3: Animation from Interactions (AAA)':
+			'https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html',
+
 		'WCAG 4.1.2: Name, Role, Value':
 			'https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html',
 		'WCAG 2.1.1: Keyboard': 'https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html',
@@ -90,7 +102,7 @@
 										class="font-medium text-foreground underline underline-offset-4"
 										>{requirement.criteria}<span class="sr-only"> (opens in a new tab)</span></a
 									>
-									{#if requirement.criteria === 'WCAG 1.4.3 and 1.4.11'}<a
+									{#if requirement.requirement === 'Disabled appearance'}<a
 											class="block underline underline-offset-4"
 											href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html"
 											>WCAG 1.4.11 disabled-control exemption</a

@@ -20,7 +20,7 @@
 	<SiteHeader />
 	<main>
 		<section
-			class="mx-auto grid max-w-[1400px] gap-12 px-4 py-16 md:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] md:items-center md:gap-16 md:px-8 md:py-24 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,32rem)]"
+			class="mx-auto grid max-w-[1400px] grid-cols-1 gap-12 px-4 py-16 md:grid-cols-[minmax(0,1fr)_minmax(0,28rem)] md:items-center md:gap-16 md:px-8 md:py-24 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,32rem)]"
 		>
 			<div class="max-w-xl">
 				<Badge variant="outline" class="mb-5">Svelte 5 · bits-ui · Tailwind 4</Badge>
@@ -50,7 +50,7 @@
 
 		<section class="border-t">
 			<div
-				class="mx-auto grid max-w-[1400px] gap-10 px-4 py-16 md:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] md:gap-16 md:px-8 md:py-20"
+				class="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-4 py-16 md:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] md:gap-16 md:px-8 md:py-20"
 			>
 				<div>
 					<p class="font-mono text-xs tracking-wide text-muted-foreground uppercase">The kit</p>
@@ -77,7 +77,7 @@
 
 		<section class="border-t">
 			<div
-				class="mx-auto grid max-w-[1400px] items-start gap-12 px-4 py-16 md:grid-cols-2 md:px-8 md:py-20"
+				class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-12 px-4 py-16 md:grid-cols-2 md:px-8 md:py-20"
 			>
 				<div class="md:sticky md:top-24">
 					<p class="font-mono text-xs tracking-wide text-muted-foreground uppercase">Usage</p>

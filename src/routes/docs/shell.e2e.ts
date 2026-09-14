@@ -23,9 +23,11 @@ test('documentation navigation searches every artifact and preserves its reload 
 	await page.keyboard.press('Enter');
 	await expect(page.locator('[data-doc-slug="authentication-panel"]')).toBeVisible();
 	await page.getByRole('link', { name: 'Properties', exact: true }).click();
+	await expect(page).toHaveURL(/\?tab=properties$/);
+	await expect(page.locator('[data-doc-tab="properties"]')).toBeVisible();
 	await page.reload();
 	await expect(page.locator('[data-doc-tab="properties"]')).toBeVisible();
-	await expect(page.getByRole('cell', { name: 'onSubmit', exact: true })).toBeVisible();
+	await expect(page.getByRole('rowheader', { name: /^onSubmit/ })).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Changelog', exact: true })).toHaveCount(0);
 });
 

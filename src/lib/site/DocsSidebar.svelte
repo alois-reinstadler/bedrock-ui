@@ -4,19 +4,13 @@
 	import * as ScrollArea from '#lib/bedrock/ui/scroll-area';
 	import * as Sidebar from '#lib/bedrock/ui/sidebar';
 	import { blocks } from './blocks';
+	import { templates } from './templates.js';
 	import { components, gettingStarted } from './registry';
 	import Logo from './Logo.svelte';
 
 	const catalogueLinks = [
 		{ title: 'Blocks', href: '/docs/blocks', keywords: 'patterns compositions' },
 		{ title: 'Templates', href: '/docs/templates', keywords: 'full pages applications' }
-	] as const;
-
-	const templateLinks = [
-		{ title: 'Music Player', href: '/templates/music-player' },
-		{ title: 'Video Library', href: '/templates/video-library' },
-		{ title: 'Email Client', href: '/templates/email-client' },
-		{ title: 'Social Network', href: '/templates/social-network' }
 	] as const;
 
 	let query = $state('');
@@ -47,9 +41,10 @@
 				keywords: `${item.slug} ${item.description} ${item.category}`,
 				kind: 'Block'
 			})),
-			...templateLinks.map((item) => ({
+			...templates.map((item) => ({
 				...item,
-				keywords: 'template full page',
+				href: `/templates/${item.slug}`,
+				keywords: `${item.description} template full page`,
 				kind: 'Template'
 			}))
 		].filter((item) =>

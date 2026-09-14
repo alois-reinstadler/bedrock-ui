@@ -6,7 +6,7 @@
 	"packageManager": "pnpm@11.24.0",
 	"scripts": {
 		"dev": "NODE_ENV=development vite dev",
-		"build": "vite build",
+		"build": "pnpm run reference:generate && vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -15,7 +15,8 @@
 		"format": "prettier --write .",
 		"test:unit": "NODE_ENV=test vitest",
 		"test": "pnpm run test:unit -- --run && pnpm run test:e2e",
-		"test:e2e": "playwright install chromium && playwright test"
+		"test:e2e": "playwright install chromium && playwright test",
+		"reference:generate": "node scripts/extract-component-reference.mjs"
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.13.0",

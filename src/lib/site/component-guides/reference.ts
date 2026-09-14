@@ -67,6 +67,10 @@ function buttonAccessibility(): ComponentAccessibilityGuide {
 			'The one-pixel pressed translation is non-essential and must not be required to understand activation.',
 			'Animated labels or spinners added by consumers must honor reduced motion while preserving a visible pending state.'
 		],
+		knownGaps: [
+			'The enabled destructive Button retains inherited contrast failures: the local solid-background diagnostic measured approximately 3.97:1 at light-theme rest and 3.31:1 on hover/press. Dark hover/press measured 4.37:1 on page and 3.84:1 on card surfaces. The frozen primitive is unchanged; these are unresolved, not AA passes.',
+			'The diagnostic covers native Button text and anchor Badge text only: six variants × two themes × two surfaces × three states, or 72 samples each. It does not establish icon, spinner, focus-ring, disabled, gradient, or complete rendered-pixel conformance.'
+		],
 		requirements: [
 			{
 				requirement: 'Text label',
@@ -117,8 +121,8 @@ function steppedFormAccessibility(): ComponentAccessibilityGuide {
 	return {
 		semantics: [
 			'Root renders one native form. Stepper communicates progress; Stepped Form coordinates validation, navigation, focus, and submission. Do not nest forms inside Step.',
-			'Every Step requires its matching stable definition ID and a Title. The section uses an instance-unique aria-labelledby relationship to that h2; preserve the generated title ID and the hidden, inert, and aria-hidden attributes.',
-			'Inactive sections stay mounted, preserving entered values. They are hidden and inert and must remain outside the tab order and accessibility tree; their named controls still contribute to FormData unless separately disabled.'
+			'Every Step requires its matching stable definition ID and a Title. The fieldset uses an instance-unique aria-labelledby relationship to that h2; preserve the generated title ID and the hidden, inert, and aria-hidden attributes.',
+			'Inactive sections stay mounted, preserving entered values. They are hidden and inert and must remain outside the tab order and accessibility tree; their named controls still contribute to FormData while the step is enabled. Disabled or removed step definitions disable the mounted fieldset, excluding its values from native FormData.'
 		],
 		keyboard: [
 			'Previous and Next are native type=button controls; Submit is type=submit. Keep these types intact. Native implicit submission, such as Enter in a single-line field, advances before the final step and submits on the final step; Enter in a textarea still inserts a newline.',
@@ -258,7 +262,8 @@ export function createComponentReference(slug: string, category: Category): Comp
 
 	if (slug === 'badge') {
 		accessibility.knownGaps = [
-			'The tinted destructive Badge contrast exception is currently allowlisted in the frozen shadcn layer. Treat it as unresolved, not compliant.'
+			'The tinted destructive Badge contrast exception is currently allowlisted in the frozen shadcn layer. Treat it as unresolved, not compliant.',
+			'The anchor Badge diagnostic also measured light-theme outline and ghost hover/press text near 4.35:1, below the 4.5:1 text threshold. These inherited treatments remain unchanged. Static badges, icons, and focus rings require separate checks.'
 		];
 	}
 	if (slug === 'avatar') {
