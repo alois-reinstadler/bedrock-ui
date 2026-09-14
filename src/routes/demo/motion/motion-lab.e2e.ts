@@ -138,14 +138,17 @@ test('the reduced lab preference also disables low-level CSS disclosure transiti
 	const disclosure = page.locator('.dynamic-disclosure');
 	await disclosure.getByRole('button', { name: 'Dynamischen Inhalt öffnen' }).click();
 	await expect(disclosure.getByText('Der erste Absatz ist sofort vorhanden.')).toBeVisible();
-	expect(
-		await disclosure.evaluate(
-			(node) =>
-				node
-					.getAnimations({ subtree: true })
-					.filter((animation) => animation.playState === 'running').length
-		)
-	).toBe(0);
+	// Inspect the element that owns cssTransition. The sibling native Button
+	// legitimately retains color/press transitions when the OS allows motion.
+	const entrance = await disclosure.locator('.dynamic-copy').evaluate((node) => {
+		const surface = node.parentElement!;
+		return {
+			opacity: getComputedStyle(surface).opacity,
+			running: surface.getAnimations().filter((animation) => animation.playState === 'running')
+				.length
+		};
+	});
+	expect(entrance).toEqual({ opacity: '1', running: 0 });
 	await disclosure.getByRole('button', { name: 'Dynamischen Inhalt schließen' }).click();
 	await expect(disclosure.locator('.dynamic-copy')).toHaveCount(0);
 });
