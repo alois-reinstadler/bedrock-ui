@@ -2,17 +2,19 @@
 	import { onDestroy } from 'svelte';
 	import { SvelteSet } from 'svelte/reactivity';
 	import Benchmark from '#lib/site/motion-lab/Benchmark.svelte';
-	import { createLayout } from '#lib/bedrock/motion/engine.js';
-	import { cssTransition } from 'astra-motion/css';
-	import { useMotionLabState } from '#lib/site/motion-lab/context.svelte.js';
-	const lab = useMotionLabState();
+	import {
+		LayoutGroup,
+		layout,
+		motionEasings,
+		motionPresets,
+		reveal
+	} from '#lib/bedrock/motion/index.js';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Slider } from '#lib/bedrock/ui/slider';
 	import * as Tabs from '#lib/bedrock/ui/tabs';
 	import * as Accordion from '#lib/bedrock/ui/accordion';
 	import * as Resizable from '#lib/bedrock/ui/resizable';
 
-	const project = createLayout({ transition: { type: 'spring', stiffness: 420, damping: 38 } });
 	const tabItems = [
 		['signal', 'Signal'],
 		['operations', 'Betrieb & Einsatzplanung'],
@@ -38,8 +40,8 @@
 	let pointerOrigin = 0;
 	let sortable = $state(['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo']);
 
-	const indicator = project();
-	const reorderItem = project({ mode: 'position' });
+	const indicator = layout({ transition: motionPresets.swap });
+	const reorderItem = layout({ type: 'position', transition: motionPresets.layout });
 
 	function chooseTab(value: string) {
 		activeTab = value;
@@ -125,7 +127,7 @@
 		finding="Die ausgelieferte Tabs-Komponente blendet einen Pseudo-Indikator aus und ein. Kontinuität ist mit der vorhandenen Layout-Engine möglich, aber nicht als Tabs-Primitive integriert."
 		metadata={{
 			role: 'Bewegung / Kontinuität',
-			duration: 'Shipped: Tailwind default · Probe: Astra transition 400 ms',
+			duration: 'Shipped: Tailwind default · Probe: motionPresets.swap 400 ms',
 			easing: 'Shipped: opacity default · Probe: swap spring 183/23/1',
 			distance: 'zwischen ungleichen Triggerboxen',
 			properties: 'opacity beziehungsweise transform + size projection',
@@ -151,7 +153,7 @@
 		</Tabs.Root>
 
 		<div class="comparison-label">Kontinuitätsprobe mit bestehender Layout-Primitive</div>
-		<div class="continuity-tabs">
+		<LayoutGroup class="continuity-tabs">
 			{#each tabItems as [value, label], index (value)}
 				<button
 					type="button"
@@ -167,7 +169,7 @@
 					<strong>{value === 'operations' && dynamicLabel ? `${label} · erweitert` : label}</strong>
 				</button>
 			{/each}
-		</div>
+		</LayoutGroup>
 	</Benchmark>
 
 	<Benchmark
@@ -178,7 +180,7 @@
 		verdict="beobachten"
 		metadata={{
 			role: 'Bewegung / Kontinuität',
-			duration: 'Astra transition / exit · 230 / 175 ms',
+			duration: 'motionPresets.enter / exit · 230 / 175 ms',
 			easing: 'enter / exit',
 			distance: '24 px richtungsabhängig',
 			origin: 'Navigationsachse',
@@ -219,7 +221,7 @@
 		summary="Kleine, mittlere und sehr hohe Inhalte nutzen die reale Accordion-Animation; die Zusatzprobe erhält asynchronen Inhalt während des Öffnens."
 		hardCase="Öffnen → vor Ende schließen; erneut öffnen und 220 ms später zusätzlichen Inhalt einfügen. Umliegender Content darf nicht springen oder abgeschnitten bleiben."
 		verdict="problem"
-		finding="Intrinsic height changes require layout work. Compare the shipped accordion with the Astra CSS presence probe; a fade does not interpolate height."
+		finding="Das ausgelieferte Accordion animiert height pro Frame mit einer generischen 200-ms-Kurve. Bedrocks reveal/autoSize existieren, sind aber nicht in das Component integriert."
 		metadata={{
 			role: 'Offenlegung',
 			duration: 'Accordion 200 ms · Bedrock reveal 310 ms',
@@ -259,16 +261,8 @@
 			>
 			{#if customOpen}
 				<div
-					in:cssTransition={{
-						reducedMotion: lab.preference === 'reduced' ? 'always' : 'user',
-						duration: 180,
-						opacity: 0
-					}}
-					out:cssTransition={{
-						reducedMotion: lab.preference === 'reduced' ? 'always' : 'user',
-						duration: 120,
-						opacity: 0
-					}}
+					in:reveal={{ duration: motionPresets.reveal.duration, easing: motionEasings.enter }}
+					out:reveal={{ duration: motionPresets.exit.duration, easing: motionEasings.exit }}
 				>
 					<div class="dynamic-copy">
 						<p>Der erste Absatz ist sofort vorhanden.</p>
@@ -291,8 +285,8 @@
 		finding="20 echte Höhenanimationen erzwingen Layout pro Frame. Für dichte Tabellen sind instant Expansion, ein einzelnes Detailpanel oder Virtualisierung meist sinnvoller."
 		metadata={{
 			role: 'Layout-Bewegung',
-			duration: 'Astra transition × 20',
-			easing: 'Astra CSS easing / exit',
+			duration: 'motionPresets.reveal × 20',
+			easing: 'motionEasings.enter / exit',
 			distance: '20 × 44 px Detailhöhe',
 			properties: 'height, opacity, padding',
 			layout: 'Pro Frame',
@@ -333,7 +327,7 @@
 		verdict="bestanden"
 		metadata={{
 			role: 'Direkte Manipulation',
-			duration: 'Drag 0 ms · Settle Astra transition 175 ms',
+			duration: 'Drag 0 ms · Settle motionPresets.state 175 ms',
 			easing: 'Drag linear/1:1 · Settle move',
 			distance: '0–240 px / Slider 0–100',
 			properties: 'transform (Drag), inline position intern',
@@ -381,7 +375,7 @@
 		verdict="bestanden"
 		metadata={{
 			role: 'Layout-Bewegung',
-			duration: 'Astra transition · 500 ms',
+			duration: 'motionPresets.layout · 500 ms',
 			easing: 'layout spring 117/18.4/1',
 			distance: 'durch Reorder-Geometrie',
 			properties: 'transform',
@@ -390,7 +384,7 @@
 			reduced: 'Reihenfolge ändert sich sofort; Buttons und Live-Reihenfolge bleiben zugänglich.'
 		}}
 	>
-		<div class="sortable-list">
+		<LayoutGroup class="sortable-list">
 			{#each sortable as item, index (item)}
 				<div {@attach reorderItem}>
 					<span>{index + 1}. {item}</span>
@@ -409,7 +403,7 @@
 					</div>
 				</div>
 			{/each}
-		</div>
+		</LayoutGroup>
 	</Benchmark>
 </div>
 

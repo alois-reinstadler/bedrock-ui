@@ -5,10 +5,15 @@
 	import CheckIcon from '@lucide/svelte/icons/check';
 	import LoaderCircleIcon from '@lucide/svelte/icons/loader-circle';
 	import Benchmark from '#lib/site/motion-lab/Benchmark.svelte';
-	import { createLayout } from '#lib/bedrock/motion/engine.js';
-	import { cssTransition } from 'astra-motion/css';
-	import { useMotionLabState } from '#lib/site/motion-lab/context.svelte.js';
-	const lab = useMotionLabState();
+	import {
+		LayoutGroup,
+		appear,
+		layout,
+		motionEasings,
+		motionPresets,
+		reveal,
+		vanish
+	} from '#lib/bedrock/motion/index.js';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Checkbox } from '#lib/bedrock/ui/checkbox';
 	import { Switch } from '#lib/bedrock/ui/switch';
@@ -44,9 +49,8 @@
 	let search = $state('mo');
 	let numericValue = $state(1482);
 
-	const project = createLayout({ transition: { type: 'spring', stiffness: 420, damping: 38 } });
-	const toastLayout = project({ mode: 'position' });
-	const listLayout = project({ mode: 'position' });
+	const toastLayout = layout({ type: 'position', transition: motionPresets.layout });
+	const listLayout = layout({ type: 'position', transition: motionPresets.layout });
 	const searchResults = $derived(
 		['Motion Lab', 'Motion Tokens', 'Motion Policy', 'Layout Motion', 'Reduced Motion'].filter(
 			(item) => item.toLowerCase().includes(search.toLowerCase())
@@ -177,9 +181,13 @@
 				>{toasts.length} / 5 aktiv</span
 			>
 		</div>
-		<div class="toast-stack" role="log" aria-live="polite" aria-relevant="additions">
+		<LayoutGroup class="toast-stack" role="log" aria-live="polite" aria-relevant="additions">
 			{#each toasts as toast (toast.id)}
-				<article {@attach toastLayout}>
+				<article
+					{@attach toastLayout}
+					in:appear={{ duration: motionPresets.enter.duration }}
+					out:vanish={{ duration: motionPresets.exit.duration }}
+				>
 					<div><small>Systemmeldung</small><strong>{toast.title}</strong></div>
 					<button
 						type="button"
@@ -188,7 +196,7 @@
 					>
 				</article>
 			{/each}
-		</div>
+		</LayoutGroup>
 	</Benchmark>
 
 	<Benchmark
@@ -226,16 +234,8 @@
 				/>
 				{#if emailError}<div
 						class="validation-message"
-						in:cssTransition={{
-							reducedMotion: lab.preference === 'reduced' ? 'always' : 'user',
-							duration: 180,
-							opacity: 0
-						}}
-						out:cssTransition={{
-							reducedMotion: lab.preference === 'reduced' ? 'always' : 'user',
-							duration: 120,
-							opacity: 0
-						}}
+						in:reveal={{ duration: motionPresets.reveal.duration, easing: motionEasings.enter }}
+						out:reveal={{ duration: motionPresets.exit.duration, easing: motionEasings.exit }}
 					>
 						{emailError}
 					</div>{:else if touched}<div class="success-message">Format gültig.</div>{/if}
@@ -271,9 +271,9 @@
 				onclick={clearItems}>Leeren</Button
 			><Button size="sm" variant="ghost" onclick={restoreItems}>Wiederherstellen</Button>
 		</div>
-		<div class="dynamic-list">
+		<LayoutGroup class="dynamic-list">
 			{#each filtered ? items.filter((item) => item.id % 2 === 0) : items as item (item.id)}
-				<div {@attach listLayout}>
+				<div {@attach listLayout} in:appear out:vanish>
 					<span>{item.label}</span><button
 						type="button"
 						aria-label={`${item.label} löschen`}
@@ -281,7 +281,7 @@
 					>
 				</div>
 			{:else}<p>Keine Ergebnisse. Hier wird nichts animiert, nur weil Daten fehlen.</p>{/each}
-		</div>
+		</LayoutGroup>
 	</Benchmark>
 
 	<Benchmark

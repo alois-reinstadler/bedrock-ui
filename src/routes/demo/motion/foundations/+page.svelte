@@ -1,24 +1,32 @@
 <script lang="ts">
 	import Benchmark from '#lib/site/motion-lab/Benchmark.svelte';
+	import { motionPresets, springEase, swapSpringEase } from '#lib/bedrock/motion/index.js';
 
 	let run = $state(0);
 	let groupSize = $state<3 | 10 | 50>(10);
 	let showGroup = $state(true);
 
 	const durations = [
-		['Press', 'press', 130],
-		['State', 'state', 175],
-		['Enter', 'enter', 230],
-		['Exit', 'exit', 175],
-		['Reveal', 'reveal', 310],
-		['Overlay', 'overlay', 410],
+		['Press', 'press', motionPresets.press.duration],
+		['State', 'state', motionPresets.state.duration],
+		['Enter', 'enter', motionPresets.enter.duration],
+		['Exit', 'exit', motionPresets.exit.duration],
+		['Reveal', 'reveal', motionPresets.reveal.duration],
+		['Overlay', 'overlay', motionPresets.overlay.duration],
 		['Continuous', '—', 900]
 	] as const;
 
+	function sampleEasing(easing: (time: number) => number) {
+		return `linear(${Array.from({ length: 25 }, (_, index) => easing(index / 24).toFixed(4)).join(', ')})`;
+	}
+
 	const curves = [
-		['Ease out', 'cubic-bezier(0.2, 0, 0, 1)'],
-		['Ease in', 'cubic-bezier(0.4, 0, 1, 1)'],
-		['Ease in out', 'cubic-bezier(0.4, 0, 0.2, 1)'],
+		['Enter', `cubic-bezier(${motionPresets.enter.easing.join(', ')})`],
+		['Exit', `cubic-bezier(${motionPresets.exit.easing.join(', ')})`],
+		['Movement', `cubic-bezier(${motionPresets.move.easing.join(', ')})`],
+		['Drawer', `cubic-bezier(${motionPresets.drawer.easing.join(', ')})`],
+		['Layout spring', sampleEasing(springEase)],
+		['Swap spring', sampleEasing(swapSpringEase)],
 		['Linear', 'linear']
 	] as const;
 
@@ -54,7 +62,7 @@
 		hardCase="Mehrere Rollen gleichzeitig starten. Prüfen, ob Press wie Feedback und Overlay wie visuelles Gewicht wirkt – nicht bloß schnell beziehungsweise langsam."
 		metadata={{
 			role: 'Zustandswechsel',
-			duration: '130 ms → overlay',
+			duration: 'motionPresets.press → overlay',
 			easing: 'linear (isolierter Dauervergleich)',
 			distance: '160 px',
 			properties: 'transform',
@@ -81,13 +89,13 @@
 
 	<Benchmark
 		id="easing-comparison"
-		title="CSS easing comparison"
-		summary="Finite CSS curves share a distance and duration. Physical springs live in the Astra JavaScript layout scenes; these curves do not simulate spring velocity."
+		title="Kurven- und Federvergleich"
+		summary="Gleiche Dauer und Distanz. Die beiden Federn werden direkt aus Bedrocks Easing-Funktionen als CSS linear()-Samples erzeugt."
 		hardCase="Bewegung nach der Hälfte umkehren. Kurven mit starkem Anlauf zeigen, ob eine neue Zielrichtung zunächst gegen die sichtbare Geschwindigkeit arbeitet."
 		metadata={{
 			role: 'Bewegung / Kontinuität',
-			duration: '500 · 500 ms',
-			easing: 'ease out, ease in, ease in out, linear',
+			duration: 'motionPresets.layout.duration · 500 ms',
+			easing: 'enter, exit, move, drawer, layout spring, swap spring, linear',
 			distance: '160 px',
 			properties: 'transform',
 			layout: 'Nein',
@@ -101,11 +109,15 @@
 			<div class="tracks">
 				{#each curves as [label, curve] (label)}
 					<div class="track-row">
-						<span><strong>{label}</strong><small>{curve}</small></span>
+						<span
+							><strong>{label}</strong><small
+								>{label.includes('spring') ? 'Bedrock spring' : curve}</small
+							></span
+						>
 						<div class="track">
 							<i
 								class="runner lab-animated lab-spatial"
-								style:--duration={`${500}ms`}
+								style:--duration={`${motionPresets.layout.duration}ms`}
 								style:--curve={curve}
 							></i>
 						</div>
@@ -124,8 +136,8 @@
 		finding="Bedrock besitzt keine gemeinsamen Distanz-Tokens. Die Werte im Lab sind Diagnosewerte, keine neue Systemvorgabe."
 		metadata={{
 			role: 'Eintritt',
-			duration: '230 ms · 230 ms',
-			easing: 'CSS ease out',
+			duration: 'motionPresets.enter · 230 ms',
+			easing: 'motionEasings.enter',
 			distance: '2 / 8 / 24 / 80 px (Lab-Probe)',
 			properties: 'transform, opacity',
 			layout: 'Nein',
@@ -155,8 +167,8 @@
 		verdict="beobachten"
 		metadata={{
 			role: 'Eintritt',
-			duration: '230 ms · 230 ms',
-			easing: 'CSS ease out',
+			duration: 'motionPresets.enter · 230 ms',
+			easing: 'motionEasings.enter',
 			distance: 'scale 0.96 → 1',
 			origin: 'Mitte / Trigger / Unterkante / rechte Kante',
 			properties: 'transform, opacity',
@@ -188,8 +200,8 @@
 		finding="Eine feste Staffelung skaliert nicht: Bei 50 Elementen beginnt das letzte erst nach mehr als einer Sekunde. Für dichte Ergebnisse sollte sie entfallen oder gedeckelt werden."
 		metadata={{
 			role: 'Gruppe / Staffelung',
-			duration: '230 ms · 230 ms',
-			easing: 'CSS ease out',
+			duration: 'motionPresets.enter · 230 ms',
+			easing: 'motionEasings.enter',
 			delay: 'index × 22 ms (Lab-Probe)',
 			distance: '8 px',
 			properties: 'transform, opacity',

@@ -16,10 +16,6 @@
 		</span>
 	</div>
 
-	<p class="scope-note">
-		Slow motion and pause affect CSS probes. Reduced motion also controls Astra projection; Normal
-		respects your system preference.
-	</p>
 	<fieldset>
 		<legend>Zeitlupe</legend>
 		<div class="options compact">
@@ -88,11 +84,6 @@
 </aside>
 
 <style>
-	.scope-note {
-		font-size: 0.72rem;
-		line-height: 1.5;
-		color: var(--muted-foreground);
-	}
 	.rail {
 		position: sticky;
 		top: 4.5rem;

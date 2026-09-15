@@ -1604,12 +1604,6 @@
 					"kind": "data-attribute",
 					"type": "buttonState",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
-				},
-				{
-					"name": "data-direction",
-					"kind": "data-attribute",
-					"type": "swapDirection",
-					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
 			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
@@ -33818,7 +33812,7 @@
 					"type": "boolean | undefined",
 					"default": "true",
 					"required": false,
-					"description": "One shared pill slides between triggers instead of each trigger\ntoggling its own background. The pill is repositioned to the measured\nactive trigger and animated by Astra CSS transitions, so it\nsurvives interruption and container scrolling. Applies to the default\nvariant in both orientations; the `line` variant keeps its\nper-trigger underline.",
+					"description": "One shared pill slides between triggers instead of each trigger\ntoggling its own background. The pill is repositioned to the measured\nactive trigger and animated by the shared-layout FLIP engine, so it\nsurvives interruption and container scrolling. Applies to the default\nvariant in both orientations; the `line` variant keeps its\nper-trigger underline.",
 					"source": "src/lib/bedrock/ui/tabs/tabs-list.svelte"
 				},
 				{

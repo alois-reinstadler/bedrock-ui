@@ -1,9 +1,23 @@
 <script lang="ts">
-	import StressFixture from '#lib/site/motion-lab/StressFixture.svelte';
+	import MotionStressFixture from '#lib/bedrock/motion/motion-stress-fixture.svelte';
 </script>
 
-<svelte:head><title>Astra motion stress test · Bedrock UI</title></svelte:head>
-<main class="mx-auto min-h-screen max-w-6xl px-5 py-12">
-	<h1 class="mb-6 text-3xl font-semibold tracking-tight">Astra motion stress test</h1>
-	<StressFixture />
+<svelte:head>
+	<title>Bedrock Bewegungstest</title>
+</svelte:head>
+
+<main>
+	<h1>Bedrock Bewegungstest</h1>
+	<MotionStressFixture />
 </main>
+
+<style>
+	main {
+		padding: 1rem;
+	}
+
+	h1 {
+		margin-bottom: 1rem;
+		font-size: 1.25rem;
+	}
+</style>

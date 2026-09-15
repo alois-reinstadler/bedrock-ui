@@ -1,4 +1,4 @@
-import { shouldReduceMotion } from 'astra-motion/policy';
+import { prefersReducedMotion } from '#lib/bedrock/motion/index.js';
 
 export type StreamTextSpeed = 'natural' | 'fast' | 'instant';
 export type StreamTextOptions = { speed?: StreamTextSpeed };
@@ -101,7 +101,11 @@ class InstantTextStream implements TextStream {
  */
 export function streamText(getTarget: () => string, options: StreamTextOptions = {}): TextStream {
 	const speed = options.speed ?? 'natural';
-	if (speed === 'instant' || typeof requestAnimationFrame === 'undefined' || shouldReduceMotion()) {
+	if (
+		speed === 'instant' ||
+		typeof requestAnimationFrame === 'undefined' ||
+		prefersReducedMotion()
+	) {
 		return new InstantTextStream(getTarget);
 	}
 	return new RevealedTextStream(getTarget, speed);

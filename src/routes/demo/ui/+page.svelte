@@ -9,9 +9,18 @@
 	import ShuffleIcon from '@lucide/svelte/icons/shuffle';
 	import UploadIcon from '@lucide/svelte/icons/upload';
 	import XIcon from '@lucide/svelte/icons/x';
-	import { createLayout } from '#lib/bedrock/motion/engine.js';
-	import { cssTransition } from 'astra-motion/css';
-	import { Motion, Size } from '#lib/bedrock/motion/css.js';
+	import {
+		LayoutGroup,
+		Swap,
+		appear,
+		autoSize,
+		drawer,
+		layout,
+		motionEasings,
+		motionPresets,
+		reveal,
+		vanish
+	} from '#lib/bedrock/motion/index.js';
 	import Scene from './scene.svelte';
 
 	type Region = 'west' | 'north' | 'island';
@@ -36,12 +45,12 @@
 		{
 			id: 'slot',
 			q: 'Why not animate left and width?',
-			a: 'Those properties reflow every frame. FLIP measures the new box, then only animates transform to avoid continuously recomputing layout.'
+			a: 'Those properties reflow every frame. FLIP measures the new box, then only animates transform so the compositor can hold 60fps.'
 		},
 		{
 			id: 'id',
 			q: 'When do I need a shared id?',
-			a: 'When the moving piece is a different DOM node (unmount here, mount there). The same node changing place uses an Astra createLayout attachment.'
+			a: 'When the moving piece is a different DOM node (unmount here, mount there). The same node changing place only needs layout().'
 		},
 		{
 			id: 'nest',
@@ -78,18 +87,25 @@
 	);
 	const featuredStation = $derived(stations.find((station) => station.id === featured) ?? null);
 
-	const project = createLayout({ transition: { type: 'spring', stiffness: 420, damping: 38 } });
-	const searchTransitionDuration = '180ms';
-	const searchTransitionTiming = 'cubic-bezier(0.2, 0, 0, 1)';
-	const pill = project();
-	const chip = project({ mode: 'position' });
-	const pack = project({ mode: 'position' });
-	const tile = project();
-	const toastCard = project({ mode: 'position' });
-	const rowMark = project({ id: 'row-mark' });
-	const densityCard = project({ mode: 'position' });
-	const tagChip = project({ mode: 'position' });
-	const uploadShell = project();
+	const layoutTransition = motionPresets.layout;
+	const selectionTransition = {
+		duration: motionPresets.state.duration,
+		spring: motionPresets.swap.spring
+	};
+	const searchTransitionDuration = `${motionPresets.overlay.duration}ms`;
+	const searchTransitionTiming = `cubic-bezier(${motionPresets.drawer.easing.join(', ')})`;
+	const pill = layout({ transition: layoutTransition });
+	const chip = layout({ type: 'position', transition: layoutTransition });
+	const pack = layout({ type: 'position', transition: layoutTransition });
+	const tile = layout({ transition: layoutTransition });
+	const toastCard = layout({ type: 'position', transition: layoutTransition });
+	const rowMark = layout({ id: 'row-mark', transition: selectionTransition });
+	const densityCard = layout({ type: 'position', transition: layoutTransition });
+	const tagChip = layout({ type: 'position', transition: layoutTransition });
+	const stackShell = autoSize({ duration: motionPresets.reveal.duration });
+	const densityShell = autoSize({ duration: motionPresets.layout.duration });
+	const wrapShell = autoSize({ duration: motionPresets.reveal.duration });
+	const uploadShell = layout({ transition: layoutTransition });
 	// Attachment caching is not render state.
 	// eslint-disable-next-line svelte/prefer-svelte-reactivity
 	const sharedLayouts = new Map<string, Attachment<HTMLElement>>();
@@ -98,7 +114,7 @@
 		const cacheKey = `${type}:${id}`;
 		let attachment = sharedLayouts.get(cacheKey);
 		if (!attachment) {
-			const created = project({ id, mode: type });
+			const created = layout({ id, type, transition: layoutTransition });
 			sharedLayouts.set(cacheKey, created);
 			attachment = created;
 		}
@@ -241,14 +257,14 @@
 	>
 		<header class="md:sticky md:top-16 md:self-start">
 			<p class="mb-5 text-[10px] font-medium tracking-[0.22em] text-muted-foreground uppercase">
-				Astra motion · Bedrock UI
+				Bedrock motion
 			</p>
 			<h1 class="max-w-[14ch] font-heading text-4xl leading-none tracking-tight md:text-5xl">
 				Layout that interpolates
 			</h1>
 			<p class="mt-5 max-w-[36ch] text-sm leading-relaxed text-muted-foreground">
-				Astra CSS handles finite feedback and presence. Astra JavaScript measures layout changes,
-				projects shared identities, and retargets springs when you interrupt a move.
+				The pill is one node that changes box. Shared ids are only for unmount/remount. Detached
+				rects are ignored so nothing launches from the viewport origin.
 			</p>
 			<a
 				href={resolve('/demo')}
@@ -261,7 +277,7 @@
 		<main class="flex min-w-0 flex-col gap-16 pb-24">
 			<Scene index="01" title="Shared pill" hint="Same element, new box. Interrupt it mid-move.">
 				<div class="rounded-[1.75rem] bg-muted/60 p-1.5">
-					<div class="rounded-[calc(1.75rem-0.375rem)] bg-background p-1">
+					<LayoutGroup class="rounded-[calc(1.75rem-0.375rem)] bg-background p-1">
 						<div class="relative flex flex-wrap gap-1" {@attach trackPill}>
 							<span
 								{@attach pill}
@@ -285,7 +301,7 @@
 								</button>
 							{/each}
 						</div>
-					</div>
+					</LayoutGroup>
 				</div>
 			</Scene>
 
@@ -317,26 +333,34 @@
 						Shuffle
 					</button>
 				</div>
-				<div class="relative grid grid-cols-2 gap-2 sm:grid-cols-3">
+				<LayoutGroup class="relative grid grid-cols-2 gap-2 sm:grid-cols-3">
 					{#each visible as station (station.id)}
-						<article {@attach pack}>
-							<div
-								class="rounded-2xl bg-muted/80 px-4 py-5"
-								in:cssTransition={{ duration: 180, opacity: 0 }}
-								out:cssTransition={{ duration: 120, opacity: 0 }}
-							>
-								<p class="font-mono text-[0.7rem] tracking-widest uppercase">{station.code}</p>
-								<p class="mt-2 text-lg tracking-tight">{station.name}</p>
-								<p class="mt-1 text-xs text-muted-foreground capitalize">{station.region}</p>
-							</div>
+						<article
+							{@attach pack}
+							class="rounded-2xl bg-muted/80 px-4 py-5"
+							in:appear={{
+								delay: motionPresets.exit.duration,
+								duration: motionPresets.enter.duration,
+								easing: motionEasings.enter,
+								start: 0.98
+							}}
+							out:vanish={{
+								duration: motionPresets.exit.duration,
+								easing: motionEasings.exit,
+								end: 0.98
+							}}
+						>
+							<p class="font-mono text-[0.7rem] tracking-widest uppercase">{station.code}</p>
+							<p class="mt-2 text-lg tracking-tight">{station.name}</p>
+							<p class="mt-1 text-xs text-muted-foreground capitalize">{station.region}</p>
 						</article>
 					{/each}
-				</div>
+				</LayoutGroup>
 			</Scene>
 
 			<Scene
 				index="03"
-				title="Layout beyond CSS"
+				title="Unanimatable CSS"
 				hint="justify-content cannot tween. The boxes still travel."
 			>
 				<div class="flex gap-2" role="group" aria-label="Align callsigns">
@@ -354,7 +378,7 @@
 						</button>
 					{/each}
 				</div>
-				<div
+				<LayoutGroup
 					class={[
 						'flex min-h-28 rounded-[1.75rem] bg-muted/50 p-3',
 						align === 'start' && 'justify-start',
@@ -370,7 +394,7 @@
 							{callsign}
 						</div>
 					{/each}
-				</div>
+				</LayoutGroup>
 			</Scene>
 
 			<Scene
@@ -378,7 +402,7 @@
 				title="Size"
 				hint="The box scales. Type counter-scales so it does not squash."
 			>
-				<div class="grid grid-cols-2 gap-2 md:grid-cols-4">
+				<LayoutGroup class="grid grid-cols-2 gap-2 md:grid-cols-4">
 					{#each stations.slice(0, 4) as station (station.id)}
 						<button
 							type="button"
@@ -392,23 +416,20 @@
 							aria-pressed={expanded === station.id}
 							onclick={() => (expanded = expanded === station.id ? null : station.id)}
 						>
-							<span
-								{@attach project({ mode: 'position' })}
-								class="flex h-full flex-col justify-between p-4"
-							>
+							<span data-layout-invert class="flex h-full flex-col justify-between p-4">
 								<span class="font-mono text-[0.7rem] tracking-widest uppercase">{station.code}</span
 								>
 								<span class="text-lg tracking-tight">{station.name}</span>
 							</span>
 						</button>
 					{/each}
-				</div>
+				</LayoutGroup>
 			</Scene>
 
 			<Scene
 				index="05"
 				title="Accordion"
-				hint="Answers use native document flow; content enters with an Astra CSS fade."
+				hint="Height is a presence transition. Siblings follow the reflow natively — no layout() here at all."
 			>
 				<div class="flex flex-col gap-2">
 					{#each faqs as item (item.id)}
@@ -428,8 +449,14 @@
 							{#if openFaq === item.id}
 								<div
 									id={`motion-faq-${item.id}`}
-									in:cssTransition={{ duration: 180, opacity: 0 }}
-									out:cssTransition={{ duration: 120, opacity: 0 }}
+									in:reveal={{
+										duration: motionPresets.reveal.duration,
+										easing: motionEasings.enter
+									}}
+									out:reveal={{
+										duration: motionPresets.reveal.duration,
+										easing: motionEasings.enter
+									}}
 								>
 									<p class="px-4 pb-4 text-sm leading-relaxed text-muted-foreground">{item.a}</p>
 								</div>
@@ -442,7 +469,7 @@
 			<Scene
 				index="06"
 				title="Stack"
-				hint="CSS fades the notices and resizes their shell without scaling text; Astra projection repositions persistent cards."
+				hint="Notices enter and pack while the stack grows at its natural height."
 			>
 				<button
 					type="button"
@@ -452,8 +479,8 @@
 					<PlusIcon class="size-3.5" />
 					Post notice
 				</button>
-				<Size axis="block" id="motion-stack-shell" class="overflow-hidden">
-					<div
+				<div id="motion-stack-shell" {@attach stackShell} class="overflow-hidden">
+					<LayoutGroup
 						class="relative flex flex-col gap-2"
 						role="log"
 						aria-label="Live notices"
@@ -461,31 +488,38 @@
 						aria-relevant="additions"
 					>
 						{#each toasts as toast (toast.id)}
-							<article {@attach toastCard}>
-								<div
-									in:cssTransition={{ duration: 180, opacity: 0, y: 8 }}
-									out:cssTransition={{ duration: 120, opacity: 0, y: -8 }}
-									class="flex items-start justify-between gap-3 rounded-2xl bg-muted/80 px-4 py-3"
-								>
-									<div>
-										<p class="font-mono text-[0.7rem] tracking-widest uppercase">{toast.gate}</p>
-										<p class="mt-1 text-sm">{toast.body}</p>
-									</div>
-									<button
-										type="button"
-										class="rounded-full p-1 text-muted-foreground hover:text-foreground"
-										aria-label={`Dismiss notice for gate ${toast.gate}`}
-										onclick={() => dismissToast(toast.id)}
-									>
-										<XIcon class="size-3.5" />
-									</button>
+							<article
+								{@attach toastCard}
+								class="flex items-start justify-between gap-3 rounded-2xl bg-muted/80 px-4 py-3"
+								in:appear={{
+									duration: motionPresets.enter.duration,
+									easing: motionEasings.enter,
+									start: 0.98
+								}}
+								out:vanish={{
+									duration: motionPresets.exit.duration,
+									easing: motionEasings.exit,
+									end: 0.98
+								}}
+							>
+								<div>
+									<p class="font-mono text-[0.7rem] tracking-widest uppercase">{toast.gate}</p>
+									<p class="mt-1 text-sm">{toast.body}</p>
 								</div>
+								<button
+									type="button"
+									class="rounded-full p-1 text-muted-foreground hover:text-foreground"
+									aria-label={`Dismiss notice for gate ${toast.gate}`}
+									onclick={() => dismissToast(toast.id)}
+								>
+									<XIcon class="size-3.5" />
+								</button>
 							</article>
 						{:else}
 							<p class="px-1 py-4 text-sm text-muted-foreground">No live notices.</p>
 						{/each}
-					</div>
-				</Size>
+					</LayoutGroup>
+				</div>
 			</Scene>
 
 			<Scene index="07" title="Search morph" hint="A continuous shell keeps its content crisp.">
@@ -521,7 +555,12 @@
 									aria-label="Search stands, gates, or flights"
 									placeholder="Stand, gate, or flight"
 									bind:value={query}
-									in:cssTransition={{ duration: 180, opacity: 0 }}
+									in:appear={{
+										delay: motionPresets.state.duration,
+										duration: motionPresets.enter.duration,
+										easing: motionEasings.enter,
+										start: 1
+									}}
 								/>
 							{/if}
 						</span>
@@ -534,7 +573,7 @@
 				title="Row mark"
 				hint="Shared id on the highlight. It remounts under the selected row."
 			>
-				<div class="flex flex-col overflow-hidden rounded-[1.6rem] bg-muted/50">
+				<LayoutGroup class="flex flex-col overflow-hidden rounded-[1.6rem] bg-muted/50">
 					{#each stations as station (station.id)}
 						<button
 							type="button"
@@ -552,7 +591,7 @@
 							>
 						</button>
 					{/each}
-				</div>
+				</LayoutGroup>
 			</Scene>
 
 			<Scene
@@ -560,7 +599,7 @@
 				title="Card to stage"
 				hint="Surface and identity text transfer independently. Neighbors keep their seats."
 			>
-				<div class="relative min-h-56">
+				<LayoutGroup class="relative min-h-56">
 					<div class="grid grid-cols-3 gap-2" inert={featuredStation !== null}>
 						{#each stations.slice(0, 3) as station (station.id)}
 							{#if featured !== station.id}
@@ -618,19 +657,24 @@
 									>
 									<span
 										class="mt-2 block text-sm text-background/70"
-										in:cssTransition={{ duration: 180, opacity: 0 }}>Click to fold back</span
+										in:appear={{
+											delay: motionPresets.state.duration,
+											duration: motionPresets.enter.duration,
+											easing: motionEasings.enter,
+											start: 1
+										}}>Click to fold back</span
 									>
 								</span>
 							</span>
 						</button>
 					{/if}
-				</div>
+				</LayoutGroup>
 			</Scene>
 
 			<Scene
 				index="10"
 				title="Density"
-				hint="Cards keep identity while Astra CSS resizes the shell to its measured natural height."
+				hint="Cards keep identity while the grid settles into its new natural height."
 			>
 				<button
 					type="button"
@@ -641,8 +685,8 @@
 				>
 					{dense ? 'Open grid' : 'Dense grid'}
 				</button>
-				<Size axis="block" id="motion-density-shell" class="overflow-hidden">
-					<div
+				<div id="motion-density-shell" {@attach densityShell} class="overflow-hidden">
+					<LayoutGroup
 						id="motion-density-grid"
 						class={['grid gap-2', dense ? 'grid-cols-3' : 'grid-cols-2']}
 					>
@@ -652,8 +696,8 @@
 								<p class="mt-1 text-sm tracking-tight">{station.name}</p>
 							</article>
 						{/each}
-					</div>
-				</Size>
+					</LayoutGroup>
+				</div>
 			</Scene>
 
 			<Scene
@@ -678,21 +722,31 @@
 						</button>
 					{/each}
 				</div>
-				<Size
-					axis="block"
+				<div
+					{@attach wrapShell}
 					class="box-border max-w-sm overflow-hidden rounded-[1.6rem] bg-muted/50 p-3"
 				>
-					<div class="relative flex flex-wrap gap-2">
+					<LayoutGroup class="relative flex flex-wrap gap-2">
 						{#each activeTags as tag (tag)}
 							<span
 								{@attach tagChip}
+								in:appear={{
+									duration: motionPresets.enter.duration,
+									easing: motionEasings.enter,
+									start: 0.98
+								}}
+								out:vanish={{
+									duration: motionPresets.exit.duration,
+									easing: motionEasings.exit,
+									end: 0.98
+								}}
 								class="rounded-full bg-background px-3 py-1.5 text-xs font-medium"
 							>
 								{tag}
 							</span>
 						{/each}
-					</div>
-				</Size>
+					</LayoutGroup>
+				</div>
 			</Scene>
 
 			<Scene index="12" title="Rail" hint="The main pane grows into the vacated column.">
@@ -705,37 +759,31 @@
 				>
 					{railOpen ? 'Stow rail' : 'Show rail'}
 				</button>
-				<div class="flex min-h-48 overflow-hidden rounded-[1.6rem]">
+				<LayoutGroup class="flex min-h-48 overflow-hidden rounded-[1.6rem]">
 					{#if railOpen}
-						<Motion
-							as="aside"
+						<aside
 							id="motion-stand-rail"
-							class="shrink-0 overflow-hidden bg-muted"
+							class="w-40 shrink-0 bg-muted p-4"
 							aria-label="Stands"
-							motion={{
-								initial: { width: 0, opacity: 0 },
-								animate: { width: 160, opacity: 1 },
-								exit: { width: 0, opacity: 0 },
-								transition: { duration: 0.18 }
-							}}
+							transition:drawer
 						>
-							<div class="box-border w-40 shrink-0 p-4">
+							<div class="w-32 shrink-0">
 								<p class="font-mono text-[0.7rem] tracking-widest uppercase">Stands</p>
 								<p class="mt-3 text-sm leading-relaxed text-muted-foreground">B12, B14, T3</p>
 							</div>
-						</Motion>
+						</aside>
 					{/if}
 					<div class="flex flex-1 flex-col justify-between bg-muted/40 p-5">
 						<p class="font-mono text-[0.7rem] tracking-widest uppercase">Ground</p>
 						<p class="text-lg tracking-tight">Pushback window is open on Bravo.</p>
 					</div>
-				</div>
+				</LayoutGroup>
 			</Scene>
 
 			<Scene
 				index="13"
 				title="Content swap"
-				hint="A keyed Astra CSS transition changes the label while projection follows the button width."
+				hint="Swap can fade through or roll crisp single-line content upward; the shell still sees one clean resize."
 			>
 				<div class="flex gap-1" role="group" aria-label="Swap effect">
 					{#each [['fade', 'Fade'], ['slide-up', 'Slide up']] as option (option[0])}
@@ -749,7 +797,7 @@
 						</button>
 					{/each}
 				</div>
-				<div class="flex min-h-14 items-center">
+				<LayoutGroup class="flex min-h-14 items-center">
 					<button
 						type="button"
 						class="relative rounded-full text-sm font-medium text-background"
@@ -768,37 +816,30 @@
 							class="relative z-10 flex items-center justify-center px-5 py-2.5"
 							aria-hidden="true"
 						>
-							{#key uploadState}<span
-									class="inline-flex items-center gap-2 whitespace-nowrap"
-									transition:cssTransition={{
-										duration: 160,
-										opacity: 0,
-										y: uploadEffect === 'slide-up' ? 8 : 0
-									}}
-								>
-									{#if uploadState === 'idle'}
-										<UploadIcon class="size-4" />
-										Upload manifest
-									{:else if uploadState === 'busy'}
-										<LoaderCircleIcon class="size-4 animate-spin motion-reduce:animate-none" />
-										Uploading…
-									{:else}
-										<CheckIcon class="size-4" />
-										Done
-									{/if}
-								</span>{/key}
+							<Swap key={uploadState} effect={uploadEffect} class="whitespace-nowrap">
+								{#if uploadState === 'idle'}
+									<UploadIcon class="size-4" />
+									Upload manifest
+								{:else if uploadState === 'busy'}
+									<LoaderCircleIcon class="size-4 animate-spin motion-reduce:animate-none" />
+									Uploading…
+								{:else}
+									<CheckIcon class="size-4" />
+									Done
+								{/if}
+							</Swap>
 						</span>
 					</button>
 					<span id="motion-upload-status" class="sr-only" role="status">
 						{uploadStatusMessage}
 					</span>
-				</div>
+				</LayoutGroup>
 			</Scene>
 
 			<Scene
 				index="14"
 				title="Validation"
-				hint="Validation stays in document flow and fades into view. Astra CSS handles the feedback."
+				hint="Errors reveal with height, so the button below rides the reflow. No layout() needed."
 			>
 				<form class="flex max-w-sm flex-col gap-2" novalidate onsubmit={checkCallsign}>
 					<label class="text-xs font-medium text-muted-foreground" for="callsign">Callsign</label>
@@ -824,8 +865,14 @@
 					{#if callsignError}
 						<p
 							id="callsign-error"
-							in:cssTransition={{ duration: 180, opacity: 0 }}
-							out:cssTransition={{ duration: 120, opacity: 0 }}
+							in:reveal={{
+								duration: motionPresets.reveal.duration,
+								easing: motionEasings.enter
+							}}
+							out:reveal={{
+								duration: motionPresets.exit.duration,
+								easing: motionEasings.exit
+							}}
 							class="text-xs text-red-500"
 							role="alert"
 						>
@@ -835,8 +882,14 @@
 					{#if callsignOk}
 						<p
 							id="callsign-success"
-							in:cssTransition={{ duration: 180, opacity: 0 }}
-							out:cssTransition={{ duration: 120, opacity: 0 }}
+							in:reveal={{
+								duration: motionPresets.reveal.duration,
+								easing: motionEasings.enter
+							}}
+							out:reveal={{
+								duration: motionPresets.exit.duration,
+								easing: motionEasings.exit
+							}}
 							class="text-xs text-emerald-600"
 							role="status"
 						>

@@ -1,6 +1,3 @@
-> Historical report: the legacy engine and optional-integration architecture have
-> been superseded by the CSS-first Astra migration. See [current contract](motion.md).
-
 # Bedrock motion contract
 
 > **Maturity:** compatibility facade / stabilization candidate  

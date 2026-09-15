@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { MotionConfig } from '#lib/bedrock/motion/config.js';
 	import ControlRail from '#lib/site/motion-lab/ControlRail.svelte';
 	import { provideMotionLabState } from '#lib/site/motion-lab/context.svelte.js';
 	import { labPages } from '#lib/site/motion-lab/types.js';
@@ -53,11 +52,9 @@
 	<div class="lab-grid">
 		<ControlRail />
 		<main id="motion-lab-content" tabindex="-1">
-			<MotionConfig reducedMotion={state.preference === 'reduced' ? 'always' : 'user'}>
-				{#key state.replayKey}
-					{@render children()}
-				{/key}
-			</MotionConfig>
+			{#key state.replayKey}
+				{@render children()}
+			{/key}
 		</main>
 	</div>
 </div>

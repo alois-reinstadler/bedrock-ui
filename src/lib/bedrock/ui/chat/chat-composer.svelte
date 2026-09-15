@@ -1,18 +1,12 @@
 <script lang="ts">
 	import ArrowUpIcon from '@lucide/svelte/icons/arrow-up';
-	import { onMount } from 'svelte';
-	import { Motion } from '#lib/bedrock/motion/css.js';
+	import { Swap } from '#lib/bedrock/motion/index.js';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import TextareaPrimitive from '#lib/shadcn/ui/textarea/textarea.svelte';
 	import { cn } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
-
-	let mounted = $state(false);
-	onMount(() => {
-		mounted = true;
-	});
 
 	let {
 		value = $bindable(''),
@@ -138,43 +132,30 @@
 			class="[field-sizing:content] min-h-8 flex-1 resize-none border-0 bg-transparent px-2 py-1.5 text-sm shadow-none outline-none placeholder:text-muted-foreground focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50"
 		/>
 		{@render actions?.()}
-		<span class="relative grid shrink-0">
-			{#key busy}
-				<Motion
-					as="span"
-					class="col-start-1 row-start-1"
-					motion={{
-						initial: mounted ? { opacity: 0 } : false,
-						exit: { opacity: 0 },
-						animate: { opacity: 1 },
-						transition: { duration: 0.12 }
-					}}
+		<Swap key={busy} effect="fade" class="shrink-0">
+			{#if busy}
+				<Button
+					type="button"
+					size="icon-sm"
+					aria-label={stopLabel}
+					onclick={() => onStop?.()}
+					data-slot="chat-stop-button"
+					class="tap-target shrink-0 rounded-full motion-press motion-state"
 				>
-					{#if busy}
-						<Button
-							type="button"
-							size="icon-sm"
-							aria-label={stopLabel}
-							onclick={() => onStop?.()}
-							data-slot="chat-stop-button"
-							class="tap-target shrink-0 rounded-full motion-press motion-state"
-						>
-							<Icon icon="stop" class="size-4" />
-						</Button>
-					{:else}
-						<Button
-							type="submit"
-							size="icon-sm"
-							aria-label={sendLabel}
-							disabled={disabled || value.trim().length === 0}
-							data-slot="chat-send-button"
-							class="tap-target shrink-0 rounded-full motion-press motion-state"
-						>
-							<ArrowUpIcon class="size-4" />
-						</Button>
-					{/if}
-				</Motion>
-			{/key}
-		</span>
+					<Icon icon="stop" class="size-4" />
+				</Button>
+			{:else}
+				<Button
+					type="submit"
+					size="icon-sm"
+					aria-label={sendLabel}
+					disabled={disabled || value.trim().length === 0}
+					data-slot="chat-send-button"
+					class="tap-target shrink-0 rounded-full motion-press motion-state"
+				>
+					<ArrowUpIcon class="size-4" />
+				</Button>
+			{/if}
+		</Swap>
 	</div>
 </form>

@@ -765,7 +765,7 @@ export const overlayGuides = {
 			'items is a required LightboxItem array. Each item requires src and alt; caption, explicit image or pdf type, and downloadName are optional, and .pdf sources infer PDF rendering.',
 			'open and index are bindable. Supplying no children creates a programmatically controlled viewer; children become the Dialog.Trigger when present. Keep index within the current items bounds because item lookup is clamped but the displayed counter uses index directly.',
 			'Arrow Left and Arrow Right cycle through items with wraparound. Escape and Close dismiss through the underlying modal Dialog, and clicking the empty full-screen stage also closes.',
-			'The current item changes through a keyed Astra CSS transition; the full-screen Content and Overlay use semantic overlay motion and reduce immediately under reduced motion.',
+			'The current item changes through a keyed fade Swap; the full-screen Content and Overlay use semantic overlay motion and reduce immediately under reduced motion.',
 			'Images use their item alt text. PDFs pass the same accessible name to Pdf Viewer, while the current alt text also names the dialog through a visually hidden title.',
 			'LightboxLabels overrides download, close, previous, next, counter, imageView, and fileFallbackName strings. Downloads use downloadName or derive a filename from the source and alt text.',
 			'The current implementation does not provide the planned Thumbnail-to-Lightbox shared-element flight.'

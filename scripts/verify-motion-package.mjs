@@ -63,9 +63,9 @@ console.log(
 const directory = await mkdtemp(join(tmpdir(), 'bedrock-motion-'));
 try {
 	for (const [name, module, exports, forbidMotion] of [
-		['css', 'css.ts', ['Motion', 'Size', 'CssButton', 'CssPanel', 'createMotion'], true],
+		['css', 'css.ts', ['CssButton', 'CssPanel', 'createMotion'], true],
 		['config', 'config.ts', ['MotionConfig'], true],
-		['default', 'index.ts', ['Motion', 'Size', 'MotionConfig', 'createMotion'], true],
+		['legacy', 'index.ts', ['appear', 'LayoutGroup', 'Swap'], true],
 		['engine', 'engine.ts', ['Motion', 'createMotion', 'createLayout', 'motionStore'], false],
 		['projection', 'projection.ts', ['createLayout', 'updateLayout'], false],
 		['scroll', 'scroll.ts', ['createScroll'], false],

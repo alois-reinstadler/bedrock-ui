@@ -22,42 +22,41 @@
     }}>Your details remain mounted until the exit finishes.</CssPanel>
   {/if}
 </MotionConfig>`;
-	const imports = `// Default: Astra CSS, seconds
-import { Motion, MotionConfig, Size } from '#lib/bedrock/motion/index.js';
+	const imports = `// Existing Bedrock transitions and layout: milliseconds
+import { appear, reveal, LayoutGroup, Swap } from '#lib/bedrock/motion/index.js';
 
 // Finite CSS tweens and Bedrock wrappers: seconds
 import { createMotion, CssButton, CssPanel } from '#lib/bedrock/motion/css.js';
 
 // Physics, gestures and projection: seconds
-import { Motion as SpringMotion, Presence } from '#lib/bedrock/motion/engine.js';
+import { Motion, Presence } from '#lib/bedrock/motion/engine.js';
 
 // Narrow engine capabilities
 import { createLayout } from '#lib/bedrock/motion/projection.js';
 import { motionValue } from '#lib/bedrock/motion/values.js';
 
 // Shared Astra policy without importing the engine
-import { MotionConfig as ScopedMotionConfig } from '#lib/bedrock/motion/config.js';`;
+import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 </script>
 
 <svelte:head>
 	<title>Motion — Bedrock</title>
 	<meta
 		name="description"
-		content="Build purposeful interactions with Astra CSS and JavaScript motion, accessible defaults, and one consistent API."
+		content="Use Astra Motion through Bedrock's explicit CSS and engine APIs, with accessible defaults and compatible legacy transitions."
 	/>
 </svelte:head>
 
 <article class="mx-auto max-w-4xl px-4 py-10 md:px-8">
 	<DocsPageHeader
 		title="Motion"
-		description="CSS for feedback and finite transitions. JavaScript for physics and layout. One Astra API, with reduced-motion support built in."
+		description="Use motion to explain a state change. Bedrock keeps its native transitions stable and exposes Astra through explicit imports for CSS animation, physics, and layout."
 	/>
 	<section class="mt-10" aria-labelledby="choose-heading">
 		<h2 id="choose-heading" class="text-2xl font-medium tracking-tight">Choose an entry point</h2>
 		<p class="mt-3 mb-5 text-muted-foreground">
-			Start with the default CSS entry. Move to the JavaScript entry when an interaction needs
-			physics or shared layout. Use the CSS Size wrapper for intrinsic shells. Bedrock components
-			follow the same rule.
+			Existing components and native Bedrock motion keep their public APIs. Add Astra where a
+			product interaction needs it; ordinary component imports do not opt into the engine.
 		</p>
 		<CodeBlock
 			class="bg-background"
@@ -66,10 +65,9 @@ import { MotionConfig as ScopedMotionConfig } from '#lib/bedrock/motion/config.j
 			code={imports}
 		/>
 		<p class="mt-4 text-sm text-muted-foreground">
-			<strong class="text-foreground">Timing is explicit.</strong> Astra transition duration and delay
-			use seconds: 200 milliseconds becomes 0.2 seconds. Spring stiffness and damping are physics parameters,
-			not durations. The low-level Svelte cssTransition helper uses milliseconds and requires an explicit
-			reducedMotion option for application preferences.
+			<strong class="text-foreground">Timing is explicit.</strong> Bedrock's native durations use milliseconds.
+			Astra transition duration and delay use seconds: 200 milliseconds becomes 0.2 seconds. Spring stiffness
+			and damping are physics parameters, not durations.
 		</p>
 	</section>
 	<section class="mt-12" aria-labelledby="example-heading">
@@ -97,9 +95,10 @@ import { MotionConfig as ScopedMotionConfig } from '#lib/bedrock/motion/config.j
 			and always for an explicit reduce-motion setting.
 		</p>
 		<p class="mt-3 text-muted-foreground">
-			Both Astra backends consume this provider, including the migrated Bedrock components. Reduced
-			motion must preserve the final state, meaningful feedback, keyboard access, and focus. It is
-			not a substitute for testing an interaction with animation disabled.
+			Both Astra backends consume this provider. Native Bedrock transitions continue to use their
+			existing policy; MotionConfig does not reconfigure them. Reduced motion must preserve the
+			final state, meaningful feedback, keyboard access, and focus. It is not a substitute for
+			testing an interaction with animation disabled.
 		</p>
 		<p class="mt-3 text-muted-foreground">
 			Keep CSS bindings on finite tweens. If an ancestor provider defines a spring transition, give

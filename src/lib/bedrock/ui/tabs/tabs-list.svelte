@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts">
-	import { untrack } from 'svelte';
-	import { createMotion } from '#lib/bedrock/motion/css.js';
+	import { onDestroy, untrack } from 'svelte';
+	import { createLayoutGroup, layout } from '#lib/bedrock/motion/index.js';
 	import TabsList from '#lib/shadcn/ui/tabs/tabs-list.svelte';
 	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
@@ -18,7 +18,7 @@
 	}: ComponentProps<typeof TabsList> & {
 		/** One shared pill slides between triggers instead of each trigger
 		 * toggling its own background. The pill is repositioned to the measured
-		 * active trigger and animated by Astra CSS transitions, so it
+		 * active trigger and animated by the shared-layout FLIP engine, so it
 		 * survives interruption and container scrolling. Applies to the default
 		 * variant in both orientations; the `line` variant keeps its
 		 * per-trigger underline. */
@@ -30,10 +30,12 @@
 	// drives the data attribute the trigger styles key off.
 	let owned = $state(false);
 
-	const indicatorMotion = createMotion(() => ({
-		animate: { x: pill.x, y: pill.y, width: pill.width, height: pill.height },
-		transition: { duration: 0.2 }
-	}));
+	// The tablist itself is the layout group root; the pill is its only
+	// registered node, so discrete left/width updates below become spring
+	// projections while everything else in the list stays immediate.
+	const group = createLayoutGroup();
+	const pillLayout = layout();
+	onDestroy(() => group.destroy());
 
 	function measure() {
 		const list = ref;
@@ -67,8 +69,6 @@
 		mutations.observe(list, { subtree: true, attributes: true, attributeFilter: ['data-state'] });
 		const sizes = new ResizeObserver(() => measure());
 		sizes.observe(list);
-		for (const trigger of list.querySelectorAll<HTMLElement>('[role="tab"]'))
-			sizes.observe(trigger);
 		return () => {
 			mutations.disconnect();
 			sizes.disconnect();
@@ -78,16 +78,21 @@
 
 <TabsList
 	bind:ref
+	{@attach group.bindRoot}
 	data-bedrock-indicator={owned ? '' : undefined}
 	class={cn('relative', className)}
 	{...restProps}
 >
 	{#if pill.visible}
 		<span
-			{...indicatorMotion.props}
+			{@attach pillLayout}
 			aria-hidden="true"
 			data-slot="tabs-indicator"
-			class="absolute top-0 left-0 rounded-md border border-transparent bg-background shadow-sm dark:border-input dark:bg-input/30"
+			class="absolute rounded-md border border-transparent bg-background shadow-sm dark:border-input dark:bg-input/30"
+			style:left="{pill.x}px"
+			style:top="{pill.y}px"
+			style:width="{pill.width}px"
+			style:height="{pill.height}px"
 		></span>
 	{/if}
 	{@render children?.()}

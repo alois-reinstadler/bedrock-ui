@@ -1,130 +1,134 @@
-# Astra Motion in Bedrock
+# Bedrock and Astra Motion
 
-Bedrock uses Astra for motion. The default entry is CSS; use the JS entry for
-physics, automatic layout projection, shared elements, or MotionValues. There is
-no second Bedrock animation engine or compatibility layer.
+The `/docs/motion` guide documents the public integration, and `/motion` provides
+interactive comparisons. Bedrock keeps Astra behind explicit local entry points.
+The comparison uses the real packed Astra package from
+`vendor/astra-motion-0.0.1.tgz`. It does not alias sibling repository source.
+Ordinary Bedrock primitives remain unchanged. Import these wrappers only where
+animation is wanted:
 
 ```svelte
 <script lang="ts">
-	import { Motion, MotionConfig } from '#lib/bedrock/motion/index.js';
-	let open = $state(false);
+	import { CssButton, CssPanel } from '#lib/bedrock/motion/css.js';
+	let open = $state(true);
 </script>
 
-<MotionConfig reducedMotion="user">
-	<button aria-expanded={open} onclick={() => (open = !open)}>Show details</button>
-	{#if open}
-		<Motion
-			as="section"
-			motion={{
-				initial: { opacity: 0, y: 8 },
-				animate: { opacity: 1, y: 0 },
-				exit: { opacity: 0, y: -8 },
-				transition: { duration: 0.18 }
-			}}>Details</Motion
-		>
-	{/if}
-</MotionConfig>
+<CssButton onclick={() => (open = !open)}>Toggle</CssButton>
+{#if open}
+	<CssPanel
+		motion={{
+			initial: { opacity: 0, y: 12 },
+			animate: { opacity: 1, y: 0 },
+			exit: { opacity: 0, y: -12 },
+			transition: { duration: 0.2 }
+		}}>Content</CssPanel
+	>
+{/if}
 ```
 
-`Motion` from `index.js` or `css.js` is a thin native-element wrapper over
-`astra-motion/css`. It supports Astra's `as`, `motion`, native attributes, children,
-and `bind:ref` conventions. Changing `as` requires remounting with `{#key tag}`.
-`CssButton` retains Bedrock Button variants and sizes; `CssPanel` is a div convenience
-wrapper. Native button clicks own pointer, Enter, and Space activation. A button
-with `href` remains a native link: pointer and Enter activate; Space scrolls.
+The API and timing units match Astra's existing API: `initial`, `animate`, `exit`
+and `transition`, with **seconds** for duration/delay. `CssPanel` owns a native div
+and installs the global Svelte transition, so an ancestor conditional retains the
+panel during exit. `CssButton` forwards attachments through the existing Button
+and synchronizes its disabled state. Native `onclick` supplies pointer, Enter and
+Space activation for buttons. With `href`, it renders a native link, activated by
+pointer or Enter; Space retains browser scrolling behavior. CssButton supplies state feedback, not exit retention for a
+native element hidden inside another component.
 
-For a spring, import `Motion` from `#lib/bedrock/motion/engine.js` and pass
-`transition: { type: 'spring', stiffness: 380, damping: 28 }`. For automatic layout,
-use `createLayout` from `projection.js`; `scroll.js` and `values.js` provide their
-corresponding narrow Astra capabilities. `config.js` exposes shared MotionConfig.
-These are local source aliases, not a published Bedrock package.
+## Public API and compatibility
 
-## Choose by behavior
+`#lib/bedrock/motion/index.js` remains the native Bedrock entry: `appear`,
+`reveal`, `drawer`, `vanish`, `LayoutGroup`, `Swap`, and related utilities keep
+their existing signatures and **millisecond** durations. There is no automatic
+migration or substitution of these APIs. Astra duration and delay use seconds;
+convert 200 milliseconds to 0.2 seconds when explicitly adopting its APIs.
 
-| Behavior                                                   | Backend |
-| ---------------------------------------------------------- | ------- |
-| Opacity, translation, scale, rotation, finite numeric size | CSS     |
-| Hover, press, focus feedback; measured active indicators   | CSS     |
-| Enter/exit with native Svelte retention                    | CSS     |
-| Spring interruption and velocity                           | JS      |
-| Measured intrinsic shells (`Size`)                         | CSS     |
-| Reordering, shared-element projection                      | JS      |
-| Drag, MotionValues, scroll-linked motion                   | JS      |
+Use `#lib/bedrock/motion/config.js` for `MotionConfig` without importing the
+engine. Ordinary UI imports do not opt into the Astra engine. Bedrock is an
+in-tree design system: these `#lib` paths are source aliases in this repository,
+not exports from a published Bedrock package.
 
-Use `Size` from the default or CSS entry for bounded intrinsic shells. It measures
-natural content with ResizeObserver and gives numeric dimensions to Astra CSS.
-Use `axis="block"` with a constrained width for wrapping content; `both` measures
-max-content width. The axis is fixed per instance; use `{#key axis}` to change it.
-`contentClass` styles the inner content. It does not scale text.
+Narrow Astra capabilities are available through `projection.js` (layout),
+`values.js` (MotionValues), and `scroll.js`. These remain explicit opt-ins;
+`projection.js` avoids colliding with Bedrock’s existing `layout.svelte.js`.
+`CssPanel` defaults to visible server-rendered content (`initial: false`); set
+`initial` explicitly when an entrance is needed. Both wrappers support `bind:ref`
+for application focus management.
 
-Both binding APIs and Size use **seconds** for duration/delay. The low-level
-Svelte `cssTransition` helper instead uses **milliseconds** and needs an explicit
-`reducedMotion` option when using an application preference; it does not inherit
-MotionConfig. CSS theme variables such as
-`--motion-state` remain native CSS values; they are styling tokens, not another
-runtime. Component state timers (for example AsyncButton resetAfter) still use
-milliseconds because they schedule application state, not animation.
+For native markup, import `createMotion` directly from `astra-motion/css` and spread
+`binding.props`; install `transition:bindingTransition` using a local alias for
+`binding.transition`. For springs/projection, import from
+`#lib/bedrock/motion/engine.js`. Existing `Motion` also accepts
+`motion={{ engine: 'css', ...options }}`. A CSS-only application should use the
+separate CSS import to exclude Motion modules from its browser graph; the comparison
+page intentionally imports both backends.
 
-CSS rejects springs/inertia, projection, dynamic variants, keyframe arrays,
-MotionValues, repeats, stagger and per-frame callbacks instead of approximating them.
-A CSS intro snapshots its trajectory; reactive targets wait until intro completion.
-Imperative animate rejects during an intro or retained exit. The backend is fixed
-for a binding's lifetime: remount when changing it.
-
-## Migration from the removed Bedrock engine
-
-The old `appear`, `reveal`, `vanish`, `drawer`, `Swap`, `autoSize`, `layout`,
-`createLayoutGroup` and `LayoutGroup` exports have been removed deliberately.
-
-- Replace finite presence transitions with CSS Motion and `initial/animate/exit`.
-- Replace keyed Swap with native keyed blocks and CSS Motion. Use Astra Presence
-  for coordinated branches when needed.
-- Replace bounded intrinsic `autoSize` shells with CSS `Size`.
-- Replace shared-layout groups with Astra `createLayout`; attach its returned factory to participants. The controller has
-  `update` and `stats`, not the removed `bindRoot`/`destroy` APIs.
-- Replace measured finite indicators with reactive CSS `createMotion` targets.
-- Convert previous millisecond animation durations: 200 becomes 0.2 seconds.
-- Replace OS-only helpers with Astra policy or reactive binding policy as appropriate.
-
-The production components and lab routes have been migrated together. Historical
-motion reports describe the removed implementation and are not current API guidance.
+CSS supports finite scalar opacity, pixel x/y/width/height/borderRadius, scale,
+rotation, static variants and hover/tap/focus targets. It rejects spring/inertia,
+drag, projection, MotionValues, keyframe arrays, dynamic variants, repeats,
+transitionEnd, stagger and per-frame callbacks. A native intro snapshots its
+trajectory; reactive animate changes wait until introend. Imperative animate()
+rejects during an intro or retained exit; stop() freezes state interpolation only.
+Keep positioning primitives and their animation surfaces separate when they own
+the same CSS properties.
 
 ## Accessibility and ownership
 
-Motion follows the OS preference by default. `MotionConfig reducedMotion="always"`
-provides an application reduce-motion setting; `user` follows the OS; `never`
-overrides it and should not be a normal product default. Reduction settles the
-requested final state without interpolation; it must not reset meaningful geometry.
-Both backends respond to policy. CSS wrapper defaults keep essential SSR content
-visible; choose an explicit invisible entrance only when appropriate.
+Astra defaults to the operating system preference (`reducedMotion="user"`).
+`MotionConfig` can supply reduced-motion policy to both Astra backends.
+`always` requests reduced motion regardless of OS settings; `never` overrides
+the OS preference and should not be a normal product default. The provider is
+scoped to its descendants and does not reconfigure native Bedrock transitions.
+Keep focus restoration and semantic state independent of animation completion.
+A retained exiting panel may still contain focusable children: move focus to its
+trigger and disable departing controls where the interaction requires it.
 
-Focus and semantic state do not wait for animation. Move focus to a surviving
-control when removing focused content. Native Svelte transitions own exit retention.
-Keep positioning transforms and motion on separate surfaces. In particular, animate
-an inner surface of popovers/tooltips, and do not give CSS and JS projection ownership
-of the same property. Observers and attachments must clean up on unmount.
+The comparison's
+Reduce motion control wraps both columns in this provider. Provider spring defaults
+need a local finite tween override on CSS bindings. The optional
+`astra-motion/css/styles.css` presets are available for CSS-only starting styles,
+disclosures, Bits height keyframes and decorative scroll motion; the binding API
+does not need that stylesheet or a preprocessor.
 
-## Package maintenance
+## Dependency and refresh contract
 
-The pinned archive `vendor/astra-motion-0.0.1.tgz` is independently maintained Astra,
-not a copy of its implementation inside Bedrock. `vendor/astra-motion.json` records
-SHA-256 and source provenance. The prerequisite includes uncommitted upstream CSS
-work; its base commit alone does not reproduce the archive.
+Svelte is now `^5.57.0` to satisfy Astra's peer requirement and keep one host Svelte
+runtime. Kit remains the existing `3.0.0-next.25`, now pinned so adding the package
+does not silently advance the `next` tag. The checked-in generated component
+reference was regenerated against the new Svelte types.
 
-Install with `pnpm install --frozen-lockfile` (`--frozen-lockfile` prevents dependency
-resolution changes). Run `pnpm motion:verify` to validate archive and installed
-metadata/content, export targets, and all integration bundle boundaries. Default,
-CSS and config entries must contain no rendered Motion JS runtime modules.
+Astra's optional Kit peer is currently `^2.70.3`, so pnpm reports a peer warning
+in this Kit 3 app (other existing packages also report Kit peer warnings). The CSS
+and state/layout entries do not import Kit. This integration qualifies those paths;
+it does not claim Kit 3 support for `astra-motion/routes`. Keep route transitions
+on the app's current mechanism until the route entry is separately qualified.
 
-Refresh by packing a reviewed Astra checkout with `pnpm pack`, updating the archive,
-dependency path when versioned, and provenance hash/source state. Run
-`pnpm install --force` (`--force` refreshes a same-version archive), then package,
-unit, typecheck, lint, build and browser checks. Use the existing checkout's pnpm
-store instead of purging a shared installation.
+Fresh checkouts install with `pnpm install --frozen-lockfile`;
+`--frozen-lockfile` prevents dependency-resolution changes. Run
+`pnpm motion:verify` to check the installed package contract.
 
-Astra's optional route adapter declares Kit 2 support; this site uses Kit 3 and does
-not import that adapter. The upstream license remains unspecified. This integration
-does not publish a package or grant a license.
+Archive provenance, its SHA-256 digest, and the prerequisite source state are recorded
+in `vendor/astra-motion.json`. The archive includes completed uncommitted upstream
+changes; the recorded base commit alone does not reproduce it. The verifier checks
+archive and installed metadata/content, export targets, and bundled entry points.
+CSS, configuration, and legacy imports must exclude rendered Motion runtime modules.
 
-See the [migration verification report](astra-integration/migration.md) for decisions
-and verified outcomes, the `/docs/motion` guide, and the `/motion` interactive examples.
+To refresh from a reviewed Astra checkout, run `pnpm pack` there, copy the resulting
+archive into vendor, update its filename/version, SHA-256 digest and source state in
+`vendor/astra-motion.json` (and the dependency path if versioned), then run
+`pnpm install --force` here. `--force`
+refreshes the installed copy of the same-version file archive. Use this checkout's
+existing pnpm store when its node_modules was installed with a different global
+store setting. Re-run `pnpm motion:verify`, check/build and `/motion` browser assertions before accepting
+the refreshed package. For distribution outside this workspace, publish/version
+the package deliberately rather than assuming the registry name is this project.
+
+See the sibling Astra repository's `docs/research/css-native-review.md` for the
+consolidated criticism, supported contract and preprocessor assessment, and
+`docs/research/css-native-validation.md` for actual checks and limitations.
+
+The upstream package currently does not declare a license. Resolve licensing
+with its owner before distributing it outside this project; this integration
+does not invent or grant a license.
+
+See the [integration verification report](astra-integration/verification.md) for architecture decisions, preserved work, test results, and known limitations.

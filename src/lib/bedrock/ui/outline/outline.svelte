@@ -4,7 +4,8 @@
 </script>
 
 <script lang="ts">
-	import { createMotion } from '#lib/bedrock/motion/css.js';
+	import { onDestroy } from 'svelte';
+	import { createLayoutGroup, layout } from '#lib/bedrock/motion/index.js';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -153,10 +154,11 @@
 		return () => observer.disconnect();
 	});
 
-	const indicatorMotion = createMotion(() => ({
-		animate: { y: indicatorTop, height: indicatorHeight, opacity: indicatorHeight > 0 ? 1 : 0 },
-		transition: { duration: 0.2 }
-	}));
+	// The nav is its own layout group; the indicator is the only registered
+	// node, so discrete top/height updates below become spring projections.
+	const group = createLayoutGroup();
+	const indicatorLayout = layout();
+	onDestroy(() => group.destroy());
 
 	// Indicator geometry: the nav is the offsetParent of every item link.
 	$effect(() => {
@@ -173,16 +175,20 @@
 
 <nav
 	bind:this={ref}
+	{@attach group.bindRoot}
 	data-slot="outline"
 	aria-label={label}
 	class={cn('relative text-sm', className)}
 	{...restProps}
 >
 	<div
-		{...indicatorMotion.props}
+		{@attach indicatorLayout}
 		data-slot="outline-indicator"
 		aria-hidden="true"
-		class="absolute start-0 top-0 w-0.5 rounded-full bg-primary"
+		class="absolute start-0 w-0.5 rounded-full bg-primary"
+		style:top={`${indicatorTop}px`}
+		style:height={`${indicatorHeight}px`}
+		style:opacity={indicatorHeight > 0 ? '1' : '0'}
 	></div>
 	<ul class="m-0 list-none space-y-1 border-s border-border p-0">
 		{#each items as item, index (`${item.id}-${index}`)}

@@ -175,7 +175,7 @@
 		verdict="beobachten"
 		metadata={{
 			role: 'Zustandswechsel',
-			duration: 'Astra CSS finite state transition',
+			duration: 'motionPresets.state wäre 175 ms; Komponente verwendet Utility-Default',
 			easing: 'nicht semantisch gebunden',
 			properties: 'color, transform; Spinner-Schleife',
 			layout: 'Nein',

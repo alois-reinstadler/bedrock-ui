@@ -17,12 +17,12 @@ pnpm dev
 
 Astra Motion is installed from the checked-in `vendor/astra-motion-0.0.1.tgz` archive. No sibling checkout is needed to install or build Bedrock.
 
-- `#lib/bedrock/motion/index.js`: default Astra CSS Motion, Size, createMotion, and MotionConfig; animation durations use seconds.
+- `#lib/bedrock/motion/index.js`: existing native Bedrock APIs, with millisecond durations.
 - `#lib/bedrock/motion/css.js`: finite CSS motion and the `CssButton` / `CssPanel` wrappers, with second-based Astra transitions.
 - `#lib/bedrock/motion/engine.js`: Astra physics, gestures, and projection.
 - `#lib/bedrock/motion/config.js`: shared Astra `MotionConfig` policy without the engine entry.
 
-Production components use Astra CSS for finite motion, including measured intrinsic shells through Size. They use Astra JS for shared layout or physics. The former Bedrock motion engine and its exports have been removed. Read the [motion integration contract](docs/bedrock/motion.md), browse `/docs/motion`, and exercise the examples at `/motion`. Astra's optional route adapter is not qualified for this site's SvelteKit 3 version.
+The normal component imports remain stable. Read the [motion integration contract](docs/bedrock/motion.md), browse `/docs/motion`, and exercise the examples at `/motion`. Astra's optional route adapter is not qualified for this site's SvelteKit 3 version.
 
 ## Verification
 
