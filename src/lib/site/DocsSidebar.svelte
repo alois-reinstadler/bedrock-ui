@@ -117,7 +117,11 @@
 		/>
 	</Sidebar.Header>
 	<Sidebar.Content class="overflow-hidden">
-		<ScrollArea.Root edgeBlur="vertical" class="min-h-0 flex-1">
+		<ScrollArea.Root
+			edgeBlur="vertical"
+			class="min-h-0 flex-1"
+			style="--progressive-blur-surface: var(--sidebar)"
+		>
 			<div
 				data-docs-navigation
 				class="relative isolate"
@@ -144,7 +148,7 @@
 								{#each searchResults as result (result.href)}
 									<Sidebar.MenuItem>
 										<Sidebar.MenuButton
-											class="relative z-10 data-active:bg-transparent"
+											class="relative z-10 data-active:bg-transparent data-active:hover:bg-transparent"
 											isActive={path === result.href}
 											aria-current={path === result.href ? 'page' : undefined}
 										>
@@ -175,7 +179,7 @@
 								{#each gettingStarted as item (item.href)}
 									<Sidebar.MenuItem>
 										<Sidebar.MenuButton
-											class="relative z-10 data-active:bg-transparent"
+											class="relative z-10 data-active:bg-transparent data-active:hover:bg-transparent"
 											isActive={path === item.href}
 											aria-current={path === item.href ? 'page' : undefined}
 										>
@@ -197,7 +201,7 @@
 								{#each catalogueLinks as item (item.href)}
 									<Sidebar.MenuItem>
 										<Sidebar.MenuButton
-											class="relative z-10 data-active:bg-transparent"
+											class="relative z-10 data-active:bg-transparent data-active:hover:bg-transparent"
 											isActive={path === item.href || path.startsWith(`${item.href}/`)}
 											aria-current={path === item.href || path.startsWith(`${item.href}/`)
 												? 'page'
@@ -220,7 +224,7 @@
 								{#each filteredComponents as component (component.slug)}
 									<Sidebar.MenuItem>
 										<Sidebar.MenuButton
-											class="relative z-10 data-active:bg-transparent"
+											class="relative z-10 data-active:bg-transparent data-active:hover:bg-transparent"
 											isActive={path === `/docs/components/${component.slug}`}
 											aria-current={path === `/docs/components/${component.slug}`
 												? 'page'

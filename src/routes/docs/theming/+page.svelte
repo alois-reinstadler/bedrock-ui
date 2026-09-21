@@ -8,13 +8,22 @@
   --foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
   --radius: 0.625rem;
+  --corner-shape: squircle;
+}`;
+	const cornerCode = `:root {
+  --corner-shape: squircle; /* round, bevel, or superellipse(1.5) */
+}
+
+/* Override a section without changing component props. */
+.rounded-section {
+  --corner-shape: round;
 }`;
 </script>
 
 <svelte:head
 	><title>Theming — Bedrock</title><meta
 		name="description"
-		content="Customize Bedrock color, type, radius, and motion tokens."
+		content="Customize Bedrock color, type, radius, corner shape, and motion tokens."
 	/></svelte:head
 >
 
@@ -30,6 +39,22 @@
 			ring. Keep those roles meaningful in every theme.
 		</p>
 		<CodeBlock label="CSS" language="css" code={tokenCode} />
+	</section>
+	<section class="mt-14" aria-labelledby="corners-heading">
+		<h2 id="corners-heading" class="text-2xl font-medium tracking-tight">Corner shape</h2>
+		<p class="mt-2 mb-5 max-w-2xl text-muted-foreground">
+			<code>--radius</code> sets the corner size; <code>--corner-shape</code> sets its curve.
+			Buttons, cards, inputs, menus and other shared component surfaces use the same shape. The
+			default is <code>squircle</code>. Browsers without CSS corner-shape support keep the existing
+			rounded corners.
+		</p>
+		<CodeBlock label="CSS" language="css" code={cornerCode} />
+		<p class="mt-4 max-w-2xl text-sm text-muted-foreground">
+			Use <code>corner-theme</code> with a radius utility on custom surfaces. Use
+			<code>corner-round</code> for an intentional exception; <code>rounded-full</code> keeps circles
+			and pills round. Root overrides reach portaled menus and dialogs too; a local override follows the
+			DOM subtree containing the surface.
+		</p>
 	</section>
 	<section class="mt-14 grid gap-5 md:grid-cols-2" aria-label="Theme guidance">
 		<Card.Root
@@ -70,15 +95,15 @@
 			Customization boundary
 		</h2>
 		<ul class="mt-4 space-y-3 text-sm text-muted-foreground">
-			<li class="rounded-xl border p-4">
+			<li class="rounded-xl border p-4 corner-theme">
 				<strong class="text-foreground">Start with tokens.</strong> They preserve consistent intent across
 				every component.
 			</li>
-			<li class="rounded-xl border p-4">
+			<li class="rounded-xl border p-4 corner-theme">
 				<strong class="text-foreground">Extend Bedrock wrappers next.</strong> Keep app imports
 				pointed at <code>#lib/bedrock</code>.
 			</li>
-			<li class="rounded-xl border p-4">
+			<li class="rounded-xl border p-4 corner-theme">
 				<strong class="text-foreground">Fork a component deliberately.</strong> Document any changed keyboard,
 				focus, or accessibility contract.
 			</li>

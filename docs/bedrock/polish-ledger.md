@@ -208,3 +208,40 @@ Dependency internals were not patched or warnings hidden; see the
 [independent review](./polish-adversarial.md) for the stack and evidence. No
 introduced defect remains open. Timing-sensitive original motion tests required
 sequential test-file execution on this shared host, as recorded above.
+
+## Visual theme follow-up — 2026-09-21
+
+User feedback after the interaction pass requested a unified sidebar background,
+small item gaps, a smooth join between blur and its adjoining surface, lighter
+hover than active selection, and a shared CSS corner-shape theme variable.
+This follow-up intentionally changes the shared theme CSS; the motion engine
+and component public APIs remain unchanged.
+
+| Symptom / reproduction                                                         | Root cause and change                                                                                                                                                                                               | Evidence                                                                                                                                                                           |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Docs sidebar looks like a separate colored panel in either theme.              | `--sidebar` had a separate lightness. It now aliases `--background`.                                                                                                                                                | Before dark: 0.205 versus body 0.145 OKLCH; after: both 0.145. Light surfaces both 1.                                                                                              |
+| Neighboring sidebar targets touch.                                             | Inherited menu uses `gap-0`; Bedrock Menu supplies an overridable `gap-1`.                                                                                                                                          | Real menu gap is 4px on desktop and mobile; existing shared-indicator geometry/navigation regressions pass.                                                                        |
+| Scrolled text remains visible at the hard boundary beneath the sidebar header. | Backdrop masks soften text but cannot match an opaque adjoining surface. Added an optional, continuously masked `data-blur-tint` sibling above the filters; docs sets `--progressive-blur-surface: var(--sidebar)`. | Before/after scrolled screenshots reviewed in both themes at desktop and mobile sizes. Focus immediately clears the tint along with the filters.                                   |
+| Hover has the same fill as selection.                                          | Both states used sidebar-accent. Inactive hover now uses `--sidebar-hover`; active hover stays transparent over the persistent shared highlight.                                                                    | Light hover/active OKLCH lightness: 0.985/0.97; dark: 0.32/0.269. Actual pointer checks and regression tests cover both.                                                           |
+| Corner curvature cannot be changed through the theme.                          | Added `--corner-shape: squircle` to shared `[data-slot]` surfaces and the `corner-theme` utility for custom surfaces. `corner-round` and `rounded-full` preserve intentional round shapes.                          | Changing the root token updates real cards/buttons; a local override affects only its subtree. Card geometry remains 406×118px. Avatar and Music play-button circles remain round. |
+
+The theme guide documents radius versus shape, overrides and portal inheritance.
+CSS `corner-shape` refines the existing `border-radius`; browsers without support
+ignore it and retain rounded corners. No polyfill or dependency was added.
+Research: [MDN corner-shape reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/corner-shape)
+and [Chrome 139 release notes](https://developer.chrome.com/blog/new-in-chrome-139).
+
+All five modified Svelte components plus the Music exception pass Svelte
+autofixer. Typecheck has 0 errors/0 warnings; scoped ESLint/Prettier, production
+build and eight scroll/blur component tests pass. Four new production tests pass
+in light/dark modes. Chromium versions serialize equivalent corner values as
+keywords or `superellipse()`; assertions accept both equivalent serializations.
+Manual mobile drawer Escape returns focus to its trigger; console is clean.
+Final production browser suite: **259/259 passed in 3.1 minutes**, including
+all navigation, forced-colors, blur, responsive and new theme cases. The managed
+preview remains at `http://100.64.0.2:4086`. All owned Chrome pages were closed.
+Evidence is archived outside source at
+`/workspace/recordings/bedrock-theme-surfaces-20260921/evidence/`; before/after
+screenshots use the `sidebar-*`, `hover-*`, `cards-*` and `music-*` prefixes.
+Test-generated reference captures and an equivalent type-import serialization
+change were archived and restored rather than committed.

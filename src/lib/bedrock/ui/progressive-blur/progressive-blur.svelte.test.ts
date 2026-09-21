@@ -35,7 +35,9 @@ describe('ProgressiveBlur', () => {
 		expect(getComputedStyle(blur).opacity).toBe('1');
 		button.focus();
 		expect(document.activeElement).toBe(button);
-		for (const layer of blur.querySelectorAll('[data-blur-layer], [data-blur-fallback]')) {
+		for (const layer of blur.querySelectorAll(
+			'[data-blur-layer], [data-blur-fallback], [data-blur-tint]'
+		)) {
 			expect(getComputedStyle(layer).opacity).toBe('0');
 			expect(getComputedStyle(layer).transitionDuration).toBe('0s');
 		}

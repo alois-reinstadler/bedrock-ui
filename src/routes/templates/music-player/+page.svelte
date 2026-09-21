@@ -755,7 +755,7 @@
 				<IconButton
 					icon={isPlaying ? PauseIcon : PlayIcon}
 					label={isPlaying ? 'Pause' : 'Play'}
-					class="main-play"
+					class="main-play corner-round"
 					variant="default"
 					onclick={() => togglePlayback()}
 				/>

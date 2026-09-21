@@ -94,6 +94,7 @@
 			style={`--progressive-blur-factor: ${layer.factor}; --progressive-blur-solid: ${layer.solid}; --progressive-blur-fade: ${layer.fade};`}
 		></span>
 	{/each}
+	<span data-blur-tint></span>
 </div>
 
 <style>
@@ -136,7 +137,8 @@
 	/* Fade each filtered surface, never its parent: opacity below 1 on an
 	   ancestor creates a backdrop root and clips sampling to that ancestor. */
 	[data-blur-layer],
-	[data-blur-fallback] {
+	[data-blur-fallback],
+	[data-blur-tint] {
 		position: absolute;
 		inset: -1px;
 		opacity: var(--progressive-blur-opacity, 1);
@@ -144,11 +146,27 @@
 			var(--motion-ease-enter, ease-out);
 	}
 
+	/* Optional surface blend sits above the filters: the hard edge meets its
+	   adjoining surface exactly, then eases into transparent, blurred content.
+	   Keep it on a sibling, not the backdrop-filter ancestor. */
+	[data-blur-tint] {
+		background: var(--progressive-blur-surface, transparent);
+		mask-image: linear-gradient(
+			var(--progressive-blur-direction),
+			black 0%,
+			rgb(0 0 0 / 95%) 12%,
+			rgb(0 0 0 / 75%) 30%,
+			rgb(0 0 0 / 40%) 52%,
+			rgb(0 0 0 / 12%) 76%,
+			transparent 100%
+		);
+	}
+
 	[data-blur-fallback] {
 		display: none;
 		background: linear-gradient(
 			var(--progressive-blur-direction),
-			var(--progressive-blur-fallback, var(--background)) 0%,
+			var(--progressive-blur-fallback, var(--progressive-blur-surface, var(--background))) 0%,
 			transparent 100%
 		);
 	}
@@ -177,14 +195,16 @@
 			display: block;
 		}
 
-		[data-blur-layer] {
+		[data-blur-layer],
+		[data-blur-tint] {
 			display: none;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
 		[data-blur-layer],
-		[data-blur-fallback] {
+		[data-blur-fallback],
+		[data-blur-tint] {
 			transition: none;
 		}
 	}
