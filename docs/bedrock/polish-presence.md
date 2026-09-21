@@ -24,3 +24,10 @@ Owner: presence specialist. Scope: Bedrock AsyncButton, FieldError, accordion ve
 - No manual Chrome session or preview was opened by this worker. Manual visual review and final integrated checks remain orchestrator-owned.
 
 No speculative animations were added to Collapsible or validation rendering. Their public behavior remains unchanged except that message-less validation metadata no longer creates visible layout or an empty announcement.
+
+## Final integration verification
+
+Reviewed and integrated. The final production suite passed **255/255**; the full
+unit/component suite passed **374/374** with sequential test-file execution.
+Manual browser evidence, baseline limitations and the tested preview are recorded
+in the [integrated defect ledger](./polish-ledger.md).

@@ -24,3 +24,10 @@ The close control now transitions only background/color/border/shadow/opacity/tr
 - After-change production run and manual visual review are coordinated by the orchestrator after reviewed integration. Run `DEV_LOCAL_URL=<managed-local-url> pnpm exec playwright test src/routes/templates/responsive-polish.e2e.ts` (nine tests). No independent preview was started.
 
 No Mail/Video/docs content restyling was necessary based on the measured baseline. Shared-header reachability improves each journey. No claims of animation smoothness derive from these static layout fixes; root owns intermediate frame review of animated foundations.
+
+## Final integration verification
+
+Reviewed and integrated. The final production suite passed **255/255**; the full
+unit/component suite passed **374/374** with sequential test-file execution.
+Manual browser evidence, baseline limitations and the tested preview are recorded
+in the [integrated defect ledger](./polish-ledger.md).

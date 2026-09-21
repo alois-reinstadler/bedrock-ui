@@ -23,3 +23,10 @@ Owner: wave 2 interaction specialist. Scope: Bedrock Button, ClickableCard and S
 - Focus correction is immediate and has no added transition, layout owner, animation duration or geometry change. It repairs the paint boundary rather than changing overflow or enlarging the card.
 
 Manual after-review: keyboard-focus the main card trigger in both docs examples at 390px and 1440px, inspect the visible inner ring in light/dark themes, then repeat with forced colors enabled. Confirm nested Pin project remains independently operable and selection focus remains visible after Space. Close the review tab when finished.
+
+## Final integration verification
+
+Reviewed and integrated. The final production suite passed **255/255**; the full
+unit/component suite passed **374/374** with sequential test-file execution.
+Manual browser evidence, baseline limitations and the tested preview are recorded
+in the [integrated defect ledger](./polish-ledger.md).

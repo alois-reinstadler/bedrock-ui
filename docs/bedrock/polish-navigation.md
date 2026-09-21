@@ -16,3 +16,10 @@ The block route now uses the same outgoing-data guard as the component route: Sv
 The worker does not own preview/Chrome and has not claimed a production browser pass. The orchestrator runs these regressions against the integrated production build and records manual after-evidence. Existing mobile closure, reduced-motion and intermediate travel tests remain intact. No durations were changed.
 
 Worker validation: all six edited Svelte files passed the Svelte autofixer without issues or suggestions; scoped ESLint passed. Final `pnpm check` passed with 0 errors and 0 warnings.
+
+## Final integration verification
+
+Reviewed and integrated. The final production suite passed **255/255**; the full
+unit/component suite passed **374/374** with sequential test-file execution.
+Manual browser evidence, baseline limitations and the tested preview are recorded
+in the [integrated defect ledger](./polish-ledger.md).

@@ -31,3 +31,10 @@ The test attaches raw `fourfold-cpu-accordion-frames` and `observer-target-count
 - Shared headed Chrome and manual screenshots remain orchestrator-owned. Suggested manual challenge: quickly reverse the workshop accordion several times, inspect text while its height changes, navigate away with Sync now pending, then return and use sidebar search. This worker's evidence is automated real-browser measurement, not a substitute for the orchestrator's visual review.
 
 No introduced defect remains open from this specialist review. The baseline dependency warning remains documented with a minimal reproduction because changing dependency internals or the original motion engine would exceed the evidence for this polish pass.
+
+## Final integration verification
+
+Reviewed and integrated. The final production suite passed **255/255**; the full
+unit/component suite passed **374/374** with sequential test-file execution.
+Manual browser evidence, baseline limitations and the tested preview are recorded
+in the [integrated defect ledger](./polish-ledger.md).

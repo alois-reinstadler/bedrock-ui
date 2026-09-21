@@ -22,3 +22,10 @@ Owner: wave 1 scroll compositing. Scope: ScrollArea overflow observation and foc
 ## Boundaries
 
 Observations remain bounded to viewport/direct content-wrapper resize, descendant structure/text mutations, root direction/edge mode, and passive scroll. We do not observe every descendant resize or style mutation. Arbitrary absolutely positioned content whose size changes solely through CSS within a fixed-size shell remains outside this repair's demonstrated insertion/removal case. No new root CSS, duration changes, dependencies or motion primitives.
+
+## Final integration verification
+
+Reviewed and integrated. The final production suite passed **255/255**; the full
+unit/component suite passed **374/374** with sequential test-file execution.
+Manual browser evidence, baseline limitations and the tested preview are recorded
+in the [integrated defect ledger](./polish-ledger.md).
