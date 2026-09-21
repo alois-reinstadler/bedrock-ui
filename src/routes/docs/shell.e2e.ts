@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('documentation navigation searches every artifact and preserves its reload boundary', async ({
+test('documentation navigation searches every artifact and preserves the documentation shell', async ({
 	page
 }) => {
 	await page.goto('/docs/blocks');
@@ -18,7 +18,7 @@ test('documentation navigation searches every artifact and preserves its reload 
 	await expect(page.getByText('No documentation found.')).toBeVisible();
 	await search.fill('authentication');
 	const result = page.getByRole('link', { name: 'Authentication Panel Block' });
-	await expect(result).toHaveAttribute('data-sveltekit-reload', /^(true)?$/);
+	await expect(result).toHaveAttribute('data-sveltekit-reload', 'false');
 	await result.focus();
 	await page.keyboard.press('Enter');
 	await expect(page.locator('[data-doc-slug="authentication-panel"]')).toBeVisible();
