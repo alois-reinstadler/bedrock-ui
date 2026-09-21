@@ -59,8 +59,11 @@ describe('Accordion motion geometry', () => {
 		trigger(view.container).click();
 		flushSync();
 		expect(Math.abs(panel.getBoundingClientRect().height - closing)).toBeLessThan(2);
-		await sampleHeight(view.container);
-		expect(panel.getBoundingClientRect().height).toBeGreaterThanOrEqual(180);
+		const opening = await sampleHeight(view.container);
+		const naturalHeight = panel.firstElementChild!.getBoundingClientRect().height;
+		expect(panel.getBoundingClientRect().height).toBeCloseTo(naturalHeight, 1);
+		expect(opening.slice(-5).every((height) => Math.abs(height - naturalHeight) < 1)).toBe(true);
+		expect(getComputedStyle(panel.firstElementChild!).transform).toBe('none');
 		expect(panel.style.height).toBe('');
 		expect(
 			panel.getAnimations().filter((animation) => animation.playState === 'running')

@@ -60,6 +60,7 @@
 	let buttonState = $state<AsyncButtonState>('idle');
 	let swapDirection = $state<'forward' | 'backward'>('forward');
 	let run = 0;
+	let disposed = false;
 	let resetTimer: ReturnType<typeof setTimeout> | undefined;
 
 	const labels = $derived({ ...defaultLabels, ...labelOverrides });
@@ -86,6 +87,7 @@
 			if (id !== run) return;
 			buttonState = 'success';
 		} catch (error) {
+			if (disposed) return;
 			onError?.(error);
 			if (id !== run) return;
 			buttonState = 'error';
@@ -110,7 +112,11 @@
 		};
 	}
 
-	onDestroy(() => clearTimeout(resetTimer));
+	onDestroy(() => {
+		disposed = true;
+		run += 1;
+		clearTimeout(resetTimer);
+	});
 </script>
 
 <!-- Not natively disabled while pending: `aria-disabled` keeps the button

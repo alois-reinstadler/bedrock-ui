@@ -1,8 +1,11 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from 'vitest-browser-svelte';
 import Fixture from './async-button.test.svelte';
 
-afterEach(() => cleanup());
+afterEach(() => {
+	cleanup();
+	vi.restoreAllMocks();
+});
 
 function deferred() {
 	let resolve!: () => void;
@@ -145,5 +148,34 @@ describe('AsyncButton', () => {
 		await settle();
 		expect(calls).toBe(0);
 		expect(button.dataset.state).toBe('idle');
+	});
+	it('does not schedule a reset when an action resolves after unmount', async () => {
+		const gate = deferred();
+		const view = await render(Fixture, {
+			props: { action: () => gate.promise, resetAfter: 9876 }
+		});
+		parts(view.container).button.click();
+		await settle();
+		await view.unmount();
+		const timers = vi.spyOn(window, 'setTimeout');
+		gate.resolve();
+		await settle();
+		expect(timers.mock.calls.filter(([, delay]) => delay === 9876)).toHaveLength(0);
+	});
+
+	it('does not report an error or schedule a reset after unmount', async () => {
+		const gate = deferred();
+		const onError = vi.fn();
+		const view = await render(Fixture, {
+			props: { action: () => gate.promise, onError, resetAfter: 9876 }
+		});
+		parts(view.container).button.click();
+		await settle();
+		await view.unmount();
+		const timers = vi.spyOn(window, 'setTimeout');
+		gate.reject(new Error('The old route request failed'));
+		await settle();
+		expect(onError).not.toHaveBeenCalled();
+		expect(timers.mock.calls.filter(([, delay]) => delay === 9876)).toHaveLength(0);
 	});
 });
