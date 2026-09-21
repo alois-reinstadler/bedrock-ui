@@ -110,3 +110,50 @@ for (const contrast of ['no-preference', 'more'] as const) {
 		await expect(surface).toHaveCSS('opacity', '1');
 	});
 }
+
+test('horizontal scroll edges follow direction changes and RTL endpoints', async ({ page }) => {
+	await page.emulateMedia({ reducedMotion: 'reduce' });
+	await page.goto('/docs/components/scroll-area');
+	const area = page.locator('[data-blur-examples] [data-edge-blur="both"]');
+	await expect(area).toHaveAttribute('data-scroll-right-hidden', 'true');
+	await area.evaluate((node) => node.setAttribute('dir', 'rtl'));
+	await expect(area).toHaveAttribute('data-scroll-left-hidden', 'true');
+	await expect(area).toHaveAttribute('data-scroll-right-hidden', 'false');
+	const viewport = area.locator('[data-slot="scroll-area-viewport"]');
+	await viewport.evaluate((node) => node.scrollTo(-node.scrollWidth, node.scrollHeight));
+	await expect(area).toHaveAttribute('data-scroll-left-hidden', 'false');
+	await expect(area).toHaveAttribute('data-scroll-right-hidden', 'true');
+	await expect(area).toHaveAttribute('data-scroll-bottom-hidden', 'false');
+	await expect(area).toHaveAttribute('data-scroll-top-hidden', 'true');
+	await expect(area.locator('[data-scroll-edge="right"] [data-blur-layer="1"]')).toHaveCSS(
+		'opacity',
+		'1'
+	);
+	await area.evaluate((node) => node.setAttribute('dir', 'ltr'));
+	await expect(area).toHaveAttribute('data-scroll-left-hidden', 'false');
+	await expect(area).toHaveAttribute('data-scroll-right-hidden', 'true');
+});
+
+test('reduced transparency uses the fallback and immediately protects focused controls', async ({
+	page,
+	context
+}) => {
+	const session = await context.newCDPSession(page);
+	await session.send('Emulation.setEmulatedMedia', {
+		features: [
+			{ name: 'prefers-reduced-transparency', value: 'reduce' },
+			{ name: 'prefers-reduced-motion', value: 'reduce' }
+		]
+	});
+	await page.goto('/docs/components/progressive-blur');
+	const button = page.getByRole('button', { name: 'Inspect samples' });
+	const blur = button.locator('..').locator('[data-slot="progressive-blur"]');
+	const fallback = blur.locator('[data-blur-fallback]');
+	await expect(fallback).toHaveCSS('display', 'block');
+	await expect(fallback).toHaveCSS('opacity', '1');
+	await expect(fallback).toHaveCSS('transition-duration', '0s');
+	await expect(blur.locator('[data-blur-layer="1"]')).toHaveCSS('display', 'none');
+	await button.focus();
+	await expect(fallback).toHaveCSS('opacity', '0');
+	await session.detach();
+});

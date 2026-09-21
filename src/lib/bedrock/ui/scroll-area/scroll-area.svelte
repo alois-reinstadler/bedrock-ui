@@ -78,21 +78,37 @@
 				if (edgeBlur) setScrollState(root, viewport, edgeBlur);
 				else clearScrollState(root);
 			};
-			const observeChildren = (observer: ResizeObserver) => {
-				for (const child of viewport.children) observer.observe(child);
-			};
 			const resizeObserver = new ResizeObserver(update);
-			const mutationObserver = new MutationObserver(() => {
-				resizeObserver.disconnect();
-				resizeObserver.observe(viewport);
-				observeChildren(resizeObserver);
+			let observedChildren: Element[] = [];
+			const observeChildren = () => {
+				for (const child of observedChildren) {
+					if (child.parentElement !== viewport) {
+						resizeObserver.unobserve(child);
+					}
+				}
+				for (const child of viewport.children) {
+					if (observedChildren.includes(child)) continue;
+					resizeObserver.observe(child);
+				}
+				observedChildren = Array.from(viewport.children);
+			};
+			const mutationObserver = new MutationObserver((records) => {
+				// Only a replaced direct content wrapper changes resize subscriptions.
+				// Nested async content can change overflow without resizing that wrapper.
+				if (records.some((record) => record.type === 'childList' && record.target === viewport)) {
+					observeChildren();
+				}
 				update();
 			});
 
 			resizeObserver.observe(viewport);
-			observeChildren(resizeObserver);
-			mutationObserver.observe(viewport, { childList: true });
-			mutationObserver.observe(root, { attributeFilter: ['data-edge-blur'] });
+			observeChildren();
+			mutationObserver.observe(viewport, {
+				childList: true,
+				characterData: true,
+				subtree: true
+			});
+			mutationObserver.observe(root, { attributeFilter: ['data-edge-blur', 'dir'] });
 			viewport.addEventListener('scroll', update, { passive: true });
 			update();
 
