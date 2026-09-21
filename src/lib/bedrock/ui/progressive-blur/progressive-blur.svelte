@@ -79,7 +79,7 @@
 	data-visible={visible}
 	aria-hidden="true"
 	class={cn(
-		'pointer-events-none absolute isolate z-10 overflow-hidden transition-opacity duration-(--motion-state) ease-(--motion-ease-enter)',
+		'pointer-events-none absolute isolate z-10 overflow-hidden',
 		resolvedOrientation === 'vertical'
 			? 'inset-x-0 h-(--progressive-blur-size)'
 			: 'inset-y-0 w-(--progressive-blur-size)',
@@ -87,6 +87,7 @@
 	)}
 	style={resolvedStyle}
 >
+	<span data-blur-fallback></span>
 	{#each layers as layer, index (`${layer.factor}-${layer.fade}`)}
 		<span
 			data-blur-layer={index + 1}
@@ -104,12 +105,12 @@
 
 	/* Protect controls sharing this decorative layer's positioned parent. */
 	:global(*:focus-within > [data-slot='progressive-blur']) {
-		opacity: 0;
-		transition: none;
+		--progressive-blur-opacity: 0;
+		--progressive-blur-duration: 0s;
 	}
 
 	[data-visible='false'] {
-		opacity: 0;
+		--progressive-blur-opacity: 0;
 	}
 
 	[data-side='top'] {
@@ -132,9 +133,27 @@
 		--progressive-blur-direction: to right;
 	}
 
-	[data-blur-layer] {
+	/* Fade each filtered surface, never its parent: opacity below 1 on an
+	   ancestor creates a backdrop root and clips sampling to that ancestor. */
+	[data-blur-layer],
+	[data-blur-fallback] {
 		position: absolute;
 		inset: -1px;
+		opacity: var(--progressive-blur-opacity, 1);
+		transition: opacity var(--progressive-blur-duration, var(--motion-state, 160ms))
+			var(--motion-ease-enter, ease-out);
+	}
+
+	[data-blur-fallback] {
+		display: none;
+		background: linear-gradient(
+			var(--progressive-blur-direction),
+			var(--progressive-blur-fallback, var(--background)) 0%,
+			transparent 100%
+		);
+	}
+
+	[data-blur-layer] {
 		-webkit-backdrop-filter: blur(
 			calc(var(--progressive-blur-strength) * var(--progressive-blur-factor))
 		);
@@ -154,12 +173,8 @@
 	}
 
 	@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
-		[data-slot='progressive-blur'] {
-			background: linear-gradient(
-				var(--progressive-blur-direction),
-				var(--progressive-blur-fallback, var(--background)) 0%,
-				transparent 100%
-			);
+		[data-blur-fallback] {
+			display: block;
 		}
 
 		[data-blur-layer] {
@@ -168,7 +183,8 @@
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		[data-slot='progressive-blur'] {
+		[data-blur-layer],
+		[data-blur-fallback] {
 			transition: none;
 		}
 	}

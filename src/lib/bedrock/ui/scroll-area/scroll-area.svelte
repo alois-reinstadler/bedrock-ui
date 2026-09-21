@@ -165,7 +165,7 @@
 
 <style>
 	:global([data-slot='scroll-area'] > [data-scroll-edge]) {
-		opacity: 0;
+		--progressive-blur-opacity: 0;
 	}
 
 	:global([data-slot='scroll-area'][data-scroll-top-hidden='true'] > [data-scroll-edge='top']),
@@ -174,12 +174,12 @@
 	),
 	:global([data-slot='scroll-area'][data-scroll-left-hidden='true'] > [data-scroll-edge='left']),
 	:global([data-slot='scroll-area'][data-scroll-right-hidden='true'] > [data-scroll-edge='right']) {
-		opacity: 1;
+		--progressive-blur-opacity: 1;
 	}
 
 	/* A focused control must never sit underneath a decorative blur. */
 	:global([data-slot='scroll-area']:focus-within > [data-scroll-edge]) {
-		opacity: 0;
-		transition: none;
+		--progressive-blur-opacity: 0;
+		--progressive-blur-duration: 0s;
 	}
 </style>

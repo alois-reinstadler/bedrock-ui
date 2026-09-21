@@ -35,7 +35,11 @@ describe('ProgressiveBlur', () => {
 		expect(getComputedStyle(blur).opacity).toBe('1');
 		button.focus();
 		expect(document.activeElement).toBe(button);
-		expect(getComputedStyle(blur).opacity).toBe('0');
+		for (const layer of blur.querySelectorAll('[data-blur-layer], [data-blur-fallback]')) {
+			expect(getComputedStyle(layer).opacity).toBe('0');
+			expect(getComputedStyle(layer).transitionDuration).toBe('0s');
+		}
+		expect(getComputedStyle(blur).opacity).toBe('1');
 		expect(getComputedStyle(blur).transitionDuration).toBe('0s');
 		expect(getComputedStyle(blur).pointerEvents).toBe('none');
 	});
@@ -89,9 +93,9 @@ describe('ProgressiveBlur', () => {
 		await vi.waitFor(() => expect(fittingRoot?.dataset.overflowVertical).toBe('false'));
 		expect(fittingRoot?.dataset.overflowHorizontal).toBe('false');
 		expect(
-			Array.from(fittingRoot?.querySelectorAll<HTMLElement>('[data-scroll-edge]') ?? []).every(
-				(edge) => getComputedStyle(edge).opacity === '0'
-			)
+			Array.from(
+				fittingRoot?.querySelectorAll<HTMLElement>('[data-scroll-edge] [data-blur-layer]') ?? []
+			).every((edge) => getComputedStyle(edge).opacity === '0')
 		).toBe(true);
 
 		const scrollRoot = view.container.querySelector<HTMLElement>('[data-testid="scroll-area"]');
@@ -101,9 +105,9 @@ describe('ProgressiveBlur', () => {
 		focusTarget?.focus();
 		expect(document.activeElement).toBe(focusTarget);
 		expect(
-			Array.from(scrollRoot?.querySelectorAll<HTMLElement>('[data-scroll-edge]') ?? []).every(
-				(edge) => getComputedStyle(edge).opacity === '0'
-			)
+			Array.from(
+				scrollRoot?.querySelectorAll<HTMLElement>('[data-scroll-edge] [data-blur-layer]') ?? []
+			).every((edge) => getComputedStyle(edge).opacity === '0')
 		).toBe(true);
 	});
 });
