@@ -65,7 +65,7 @@
 		type="button"
 		role="checkbox"
 		data-slot="selectable-card-trigger"
-		class="absolute inset-0 z-0 cursor-pointer rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:cursor-not-allowed"
+		class="absolute inset-0 z-0 cursor-pointer rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-inset disabled:cursor-not-allowed"
 		aria-checked={selected}
 		aria-label={label}
 		{disabled}
@@ -84,5 +84,14 @@
 			)
 	) {
 		position: relative;
+	}
+
+	/* Box shadows are suppressed in forced colors. Keep the native outline
+	   inside the same clipped surface as the normal focus ring. */
+	@media (forced-colors: active) {
+		[data-slot='selectable-card-trigger']:focus-visible {
+			outline: 2px solid Highlight;
+			outline-offset: -2px;
+		}
 	}
 </style>

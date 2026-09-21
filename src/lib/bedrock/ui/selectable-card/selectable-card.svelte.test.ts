@@ -74,3 +74,14 @@ describe('SelectableCard', () => {
 		expect(bound.textContent).toBe('false');
 	});
 });
+
+it('paints keyboard focus inside the clipped selectable-card surface', async () => {
+	const view = await render(Fixture, { props: {} });
+	const card = view.container.querySelector<HTMLElement>('[data-slot="selectable-card"]')!;
+	const control = card.querySelector<HTMLButtonElement>('[data-slot="selectable-card-trigger"]')!;
+	await userEvent.keyboard('{Tab}');
+	control.focus();
+	expect(control.matches(':focus-visible')).toBe(true);
+	expect(getComputedStyle(card).overflow).toBe('hidden');
+	expect(getComputedStyle(control).boxShadow).toContain('inset');
+});

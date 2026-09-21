@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '../../../../routes/layout.css';
 	import ClickableCard from './clickable-card.svelte';
 
 	let {

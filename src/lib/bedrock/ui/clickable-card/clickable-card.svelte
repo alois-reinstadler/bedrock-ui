@@ -52,7 +52,7 @@
 	}
 
 	const triggerClasses =
-		'absolute inset-0 z-0 cursor-pointer rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 aria-disabled:cursor-not-allowed';
+		'absolute inset-0 z-0 cursor-pointer rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-inset aria-disabled:cursor-not-allowed';
 </script>
 
 <Card
@@ -104,5 +104,14 @@
 			)
 	) {
 		position: relative;
+	}
+
+	/* Box shadows are suppressed in forced colors. Keep the native outline
+	   inside the same clipped surface as the normal focus ring. */
+	@media (forced-colors: active) {
+		[data-slot='clickable-card-trigger']:focus-visible {
+			outline: 2px solid Highlight;
+			outline-offset: -2px;
+		}
 	}
 </style>

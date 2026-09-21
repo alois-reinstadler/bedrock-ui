@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, render } from 'vitest-browser-svelte';
+import { userEvent } from 'vitest/browser';
 import Fixture from './clickable-card.test.svelte';
 
 afterEach(() => cleanup());
@@ -59,4 +60,15 @@ describe('ClickableCard', () => {
 		await Promise.resolve();
 		expect(clicks).toBe(0);
 	});
+});
+
+it('paints keyboard focus inside the clipped clickable-card surface', async () => {
+	const view = await render(Fixture, { props: {} });
+	const card = view.container.querySelector<HTMLElement>('[data-slot="clickable-card"]')!;
+	const control = card.querySelector<HTMLButtonElement>('[data-slot="clickable-card-trigger"]')!;
+	await userEvent.keyboard('{Tab}');
+	control.focus();
+	expect(control.matches(':focus-visible')).toBe(true);
+	expect(getComputedStyle(card).overflow).toBe('hidden');
+	expect(getComputedStyle(control).boxShadow).toContain('inset');
 });

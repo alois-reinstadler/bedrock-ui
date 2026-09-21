@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '../../../../routes/layout.css';
 	import SelectableCard from './selectable-card.svelte';
 
 	let {
