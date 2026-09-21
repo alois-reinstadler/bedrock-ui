@@ -224,7 +224,7 @@
 	async function openQueue() {
 		returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 		queueOpen = true;
-		// Async rendering may still leave the panel hidden after tick().
+		// Wait for the open class before transferring focus; CSS owns immediate visibility.
 		await settled();
 		if (!queueOpen || !returnFocus?.isConnected) return;
 		document
@@ -1379,6 +1379,9 @@
 	}
 	.queue-heading > :global(button) {
 		display: none;
+		/* Inherited visibility must change immediately so opening can transfer focus. */
+		transition-property:
+			background-color, color, border-color, box-shadow, opacity, transform, translate;
 	}
 	:global(.queue-scroll) {
 		height: calc(100% - 4rem);

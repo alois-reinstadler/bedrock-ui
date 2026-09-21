@@ -124,6 +124,12 @@ for (const colorScheme of ['light', 'dark'] as const) {
 			node.click();
 			window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
 		});
+		await page.evaluate(
+			() =>
+				new Promise<void>((resolve) => {
+					requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+				})
+		);
 		await expect(close).not.toBeVisible();
 		await expect(trigger).toBeFocused();
 	});
