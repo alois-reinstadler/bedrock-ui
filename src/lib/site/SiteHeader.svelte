@@ -40,7 +40,7 @@
 			{#each links as link (link.href)}
 				<Button
 					href={link.href}
-					data-sveltekit-reload
+					data-sveltekit-reload={!link.href.startsWith('/docs')}
 					variant="ghost"
 					size="sm"
 					aria-current={activeHref === link.href ? 'page' : undefined}

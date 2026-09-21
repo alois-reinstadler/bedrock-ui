@@ -236,10 +236,8 @@ export const reviewOnboarding = command(profileSchema, async ({ name }) => {
 			requirement. Network failures reject onSubmit and appear in Status with Retry; real writes
 			should use server-side idempotency keys to avoid duplicates after uncertain responses.
 		</p>
-		<a
-			class="underline underline-offset-4"
-			href="/docs/components/stepped-form"
-			data-sveltekit-reload>Stepped Form anatomy and reference</a
+		<a class="underline underline-offset-4" href="/docs/components/stepped-form"
+			>Stepped Form anatomy and reference</a
 		>
 	</section>
 	<section class="space-y-4" aria-labelledby="states">

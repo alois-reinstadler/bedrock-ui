@@ -116,7 +116,6 @@
 			<li>
 				<a
 					href={resolve('/docs/components/[slug]', { slug: component.slug })}
-					data-sveltekit-reload
 					class="group flex h-full gap-4 rounded-xl border bg-card p-5 transition-colors duration-150 hover:border-foreground/30 hover:bg-muted/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none"
 				>
 					<span

@@ -77,7 +77,7 @@
 						height: box.height,
 						visible: true
 					}
-				: { x: 0, y: 0, width: 0, height: 0, visible: false };
+				: untrack(() => ({ ...highlight, visible: false }));
 			untrack(() => {
 				if (
 					Object.keys(next).some(
@@ -124,18 +124,17 @@
 				{@attach highlightGroup.bindRoot}
 				{@attach trackActiveLink}
 			>
-				{#if highlight.visible}
-					<span
-						data-slot="docs-active-highlight"
-						aria-hidden="true"
-						class="pointer-events-none absolute rounded-md bg-sidebar-accent"
-						style:left="{highlight.x}px"
-						style:top="{highlight.y}px"
-						style:width="{highlight.width}px"
-						style:height="{highlight.height}px"
-						{@attach highlightLayout}
-					></span>
-				{/if}
+				<span
+					data-slot="docs-active-highlight"
+					aria-hidden="true"
+					class="pointer-events-none absolute rounded-md bg-sidebar-accent"
+					style:visibility={highlight.visible ? 'visible' : 'hidden'}
+					style:left="{highlight.x}px"
+					style:top="{highlight.y}px"
+					style:width="{highlight.width}px"
+					style:height="{highlight.height}px"
+					{@attach highlightLayout}
+				></span>
 				{#if query.trim()}
 					<Sidebar.Group>
 						<Sidebar.GroupLabel>Search results</Sidebar.GroupLabel>

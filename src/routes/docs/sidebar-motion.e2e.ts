@@ -82,3 +82,129 @@ test('mobile sidebar closes after choosing a documentation page', async ({ page 
 	await page.keyboard.press('Escape');
 	await expect(drawer).not.toBeVisible();
 });
+
+test('search clearing retains the indicator and realigns it with the selected link', async ({
+	page
+}) => {
+	await page.setViewportSize({ width: 1440, height: 900 });
+	await page.goto('/docs/components/accordion');
+	const navigation = page.locator('[data-docs-navigation]');
+	const highlight = navigation.locator('[data-slot="docs-active-highlight"]');
+	await expect(highlight).toBeVisible();
+	const original = await highlight.elementHandle();
+	const search = page.getByRole('textbox', { name: 'Search documentation' });
+	await search.fill('zzmissing');
+	await expect(page.getByText('No documentation found.')).toBeVisible();
+	await expect(highlight).toBeHidden();
+	expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+	await search.fill('');
+	await expect(search).toBeFocused();
+	await expect(highlight).toBeVisible();
+	await expect
+		.poll(() =>
+			navigation.evaluate((root) => {
+				const active = root.querySelector('[aria-current="page"]')!.getBoundingClientRect();
+				const mark = root
+					.querySelector('[data-slot="docs-active-highlight"]')!
+					.getBoundingClientRect();
+				return Math.abs(active.top - mark.top);
+			})
+		)
+		.toBeLessThan(1);
+	expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+});
+
+test('breadcrumb, catalogue, and primary links preserve the docs document and sidebar scroll', async ({
+	page
+}) => {
+	const errors: string[] = [];
+	page.on('pageerror', (error) => errors.push(error.message));
+	await page.setViewportSize({ width: 1440, height: 900 });
+	await page.goto('/docs/components/accordion');
+	const original = await page.locator('[data-docs-navigation]').elementHandle();
+	const viewport = page.locator('[data-slot="sidebar-inner"] [data-slot="scroll-area-viewport"]');
+	await viewport.evaluate((node) => {
+		node.scrollTop = 300;
+	});
+	const scrollTop = await viewport.evaluate((node) => node.scrollTop);
+	await page
+		.getByRole('navigation', { name: 'breadcrumb' })
+		.getByRole('link', { name: 'Components', exact: true })
+		.click();
+	await expect(page).toHaveURL(/\/docs\/components$/);
+	expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+	expect(await viewport.evaluate((node) => node.scrollTop)).toBe(scrollTop);
+	const card = page.locator('main a[href="/docs/components/accordion"]');
+	await card.focus();
+	await page.keyboard.press('Enter');
+	await expect(page.locator('[data-doc-slug="accordion"]')).toBeVisible();
+	expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+	await page
+		.getByRole('navigation', { name: 'Primary' })
+		.getByRole('link', { name: 'Blocks', exact: true })
+		.click();
+	await expect(page).toHaveURL(/\/docs\/blocks$/);
+	expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+	await page.goBack();
+	await expect(page.locator('[data-doc-slug="accordion"]')).toBeVisible();
+	await page.goForward();
+	await expect(page).toHaveURL(/\/docs\/blocks$/);
+	expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+	expect(errors).toEqual([]);
+});
+
+for (const overlay of [
+	{ slug: 'dialog', trigger: 'Open dialog', selector: '[data-slot="dialog-content"]' },
+	{ slug: 'popover', trigger: 'Column widths', selector: '[data-slot="popover-content"]' }
+]) {
+	test(`history navigation tears down an open ${overlay.slug} without trapping focus`, async ({
+		page
+	}) => {
+		const errors: string[] = [];
+		page.on('pageerror', (error) => errors.push(error.message));
+		await page.goto('/docs/components/accordion');
+		const original = await page.locator('[data-docs-navigation]').elementHandle();
+		await page
+			.locator('[data-docs-navigation]')
+			.locator(`a[href="/docs/components/${overlay.slug}"]`)
+			.click();
+		await page
+			.locator('#preview')
+			.getByRole('button', { name: overlay.trigger, exact: true })
+			.click();
+		await expect(page.locator(overlay.selector)).toBeVisible();
+		await page.goBack();
+		await expect(page.locator('[data-doc-slug="accordion"]')).toBeVisible();
+		await expect(page.locator(overlay.selector)).toHaveCount(0);
+		expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+		const search = page.getByRole('textbox', { name: 'Search documentation' });
+		await search.focus();
+		await expect(search).toBeFocused();
+		await search.fill('alert');
+		await page.locator('[data-docs-navigation] a[href="/docs/components/alert"]').click();
+		await expect(page.locator('[data-doc-slug="alert"]')).toBeVisible();
+		expect(errors).toEqual([]);
+	});
+}
+
+test('block reference exits to the catalogue without reading another route data shape', async ({
+	page
+}) => {
+	const errors: string[] = [];
+	page.on('pageerror', (error) => errors.push(error.message));
+	await page.goto('/docs/blocks/authentication-panel');
+	const original = await page.locator('[data-docs-navigation]').elementHandle();
+	await expect(page.locator('[data-doc-slug="authentication-panel"]')).toBeVisible();
+	await page
+		.getByRole('navigation', { name: 'breadcrumb' })
+		.getByRole('link', { name: 'Blocks', exact: true })
+		.click();
+	await expect(page).toHaveURL(/\/docs\/blocks$/);
+	await expect(
+		page.locator('main').getByRole('heading', { name: 'Blocks', exact: true })
+	).toBeVisible();
+	expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+	await page.goBack();
+	await expect(page.locator('[data-doc-slug="authentication-panel"]')).toBeVisible();
+	expect(errors).toEqual([]);
+});
