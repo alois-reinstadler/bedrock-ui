@@ -28,7 +28,7 @@
 	import VolumeIcon from '@lucide/svelte/icons/volume-2';
 	import VolumeOffIcon from '@lucide/svelte/icons/volume-x';
 	import XIcon from '@lucide/svelte/icons/x';
-	import { onMount, tick } from 'svelte';
+	import { onMount, settled } from 'svelte';
 	import { page } from '$app/state';
 	import { pushState, replaceState } from '$app/navigation';
 
@@ -224,10 +224,12 @@
 	async function openQueue() {
 		returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 		queueOpen = true;
-		await tick();
+		// Async rendering may still leave the panel hidden after tick().
+		await settled();
+		if (!queueOpen || !returnFocus?.isConnected) return;
 		document
 			.querySelector<HTMLButtonElement>('.queue-panel button[aria-label="Close play queue"]')
-			?.focus();
+			?.focus({ preventScroll: true });
 	}
 
 	function closeQueue() {
@@ -1470,7 +1472,7 @@
 		grid-row: 3;
 		z-index: 30;
 		display: grid;
-		grid-template-columns: minmax(12rem, 1fr) minmax(20rem, 1.5fr) minmax(12rem, 1fr);
+		grid-template-columns: minmax(0, 1fr) minmax(15rem, 1.5fr) minmax(0, 1fr);
 		align-items: center;
 		gap: 1.5rem;
 		border-top: 1px solid var(--border);
@@ -1664,7 +1666,8 @@
 			display: none;
 		}
 		.queue-panel {
-			top: 0;
+			/* Keep the close control below the shared sticky site header. */
+			top: calc(3.5rem + 1px);
 			bottom: 10.4rem;
 			width: min(22rem, 100vw);
 			padding-top: 1rem;

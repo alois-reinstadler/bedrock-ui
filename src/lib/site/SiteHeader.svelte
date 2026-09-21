@@ -28,31 +28,33 @@
 </script>
 
 <header class="sticky top-0 z-40 border-b border-border/80 bg-background/80 backdrop-blur-md">
-	<div class="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-4 md:px-8">
+	<div class="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-2 px-4 md:px-8">
 		<a
 			href={resolve('/')}
-			class="hidden text-sm text-foreground sm:inline-flex"
+			class="hidden shrink-0 text-sm text-foreground sm:inline-flex"
 			aria-label="Bedrock home"
 		>
 			<Logo />
 		</a>
-		<nav aria-label="Primary" class="flex min-w-0 items-center gap-0.5 overflow-x-auto sm:gap-1">
-			{#each links as link (link.href)}
-				<Button
-					href={link.href}
-					data-sveltekit-reload={!link.href.startsWith('/docs')}
-					variant="ghost"
-					size="sm"
-					aria-current={activeHref === link.href ? 'page' : undefined}
-					class={[
-						'shrink-0 px-2 text-muted-foreground sm:px-3',
-						activeHref === link.href ? 'text-foreground' : ''
-					]}
-				>
-					{link.label}
-				</Button>
-			{/each}
-			<ThemeToggle />
-		</nav>
+		<div class="flex min-w-0 items-center gap-1">
+			<nav aria-label="Primary" class="flex min-w-0 items-center gap-0.5 overflow-x-auto sm:gap-1">
+				{#each links as link (link.href)}
+					<Button
+						href={link.href}
+						data-sveltekit-reload={!link.href.startsWith('/docs')}
+						variant="ghost"
+						size="sm"
+						aria-current={activeHref === link.href ? 'page' : undefined}
+						class={[
+							'shrink-0 px-2 text-muted-foreground sm:px-3',
+							activeHref === link.href ? 'text-foreground' : ''
+						]}
+					>
+						{link.label}
+					</Button>
+				{/each}
+			</nav>
+			<div class="shrink-0"><ThemeToggle /></div>
+		</div>
 	</div>
 </header>
