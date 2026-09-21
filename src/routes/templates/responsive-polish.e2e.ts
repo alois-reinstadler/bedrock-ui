@@ -120,7 +120,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
 		await expect(close).not.toBeVisible();
 		await expect(trigger).toBeFocused();
 		// Closing in the same task must cancel the pending async focus transfer.
-		await trigger.evaluate((node) => {
+		await trigger.evaluate((node: HTMLButtonElement) => {
 			node.click();
 			window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
 		});
