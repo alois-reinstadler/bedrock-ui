@@ -1,5 +1,11 @@
 # Layout motion implementation and hardening plan
 
+> Historical implementation/design record. For current motion architecture decisions, use the
+> [2026-09-22 component review](../../bedrock/motion-architecture-review.md) and
+> [route evaluation](../../bedrock/motion-architecture-evaluation.md). Their CSS-first recommendations
+> supersede earlier blanket primitive/FLIP rollout guidance and the View Transitions bridge choice
+> for complex shared motion. Existing API behavior remains documented in the local motion contract.
+
 > **Status:** The custom FLIP direction is accepted and the first M1 hardening pass is implemented.
 > The fourteen-scene motion lab and dedicated browser fixtures now exercise the core contract, but
 > the remaining production-exit gaps below are still explicit. The normative public behavior lives in

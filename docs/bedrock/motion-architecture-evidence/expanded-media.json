@@ -1,0 +1,50 @@
+[
+	{
+		"name": "actual slow image retains source visual",
+		"pass": true,
+		"complete": false,
+		"natural": 0,
+		"layers": 3
+	},
+	{
+		"name": "image budget reveals reserved placeholder",
+		"pass": true,
+		"elapsed": 955.6999998092651,
+		"events": [
+			{ "event": "capture", "generation": 53, "id": "a", "layers": 3 },
+			{ "event": "image-fallback", "generation": 53, "loaded": false, "naturalWidth": 0 },
+			{ "event": "readiness-budget", "generation": 53, "layers": 0 }
+		]
+	},
+	{
+		"name": "late decoded image preserves reserved layout",
+		"pass": true,
+		"box": {
+			"x": 32,
+			"y": 262.578125,
+			"width": 406,
+			"height": 190,
+			"top": 262.578125,
+			"right": 438,
+			"bottom": 452.578125,
+			"left": 32
+		},
+		"resource": [{ "duration": 2331.7999997138977, "transferSize": 15822 }]
+	},
+	{ "name": "within-budget network load keeps source", "pass": true },
+	{
+		"name": "within-budget decode gets shared playback",
+		"pass": true,
+		"resource": [{ "duration": 658.3000001907349, "transferSize": 15822 }],
+		"events": ["play", "complete"]
+	},
+	{
+		"name": "failed image reveals usable placeholder",
+		"pass": true,
+		"events": [
+			{ "event": "capture", "generation": 57, "id": "a", "layers": 3 },
+			{ "event": "image-fallback", "generation": 57, "loaded": true, "naturalWidth": 0 },
+			{ "event": "readiness-budget", "generation": 57, "layers": 0 }
+		]
+	}
+]

@@ -1,0 +1,9 @@
+$ NODE_ENV=test vitest --run --project server src/lib/bedrock/motion src/lib/site/motion-route-prototype
+
+ RUN  v4.1.11 /home/node/repos/bedrock-ui
+
+
+ Test Files  8 passed (8)
+      Tests  52 passed (52)
+   Start at  23:28:20
+   Duration  2.38s (transform 3.06s, setup 0ms, import 3.55s, tests 561ms, environment 6ms)

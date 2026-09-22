@@ -1,0 +1,571 @@
+{
+	"results": [
+		{
+			"name": "image aspect ratio 0.25",
+			"pass": true
+		},
+		{
+			"name": "unscaled text 0.25",
+			"pass": true
+		},
+		{
+			"name": "interrupt 0.25",
+			"pass": true,
+			"detail": {
+				"maxError": 0
+			}
+		},
+		{
+			"name": "image aspect ratio 0.5",
+			"pass": true
+		},
+		{
+			"name": "unscaled text 0.5",
+			"pass": true
+		},
+		{
+			"name": "interrupt 0.5",
+			"pass": true,
+			"detail": {
+				"maxError": 0
+			}
+		},
+		{
+			"name": "image aspect ratio 0.75",
+			"pass": true
+		},
+		{
+			"name": "unscaled text 0.75",
+			"pass": true
+		},
+		{
+			"name": "interrupt 0.75",
+			"pass": true,
+			"detail": {
+				"maxError": 0
+			}
+		},
+		{
+			"name": "history scroll restoration",
+			"pass": true,
+			"detail": {
+				"sourceScroll": 180,
+				"scrollY": 180
+			}
+		},
+		{
+			"name": "20 cycles cleaned",
+			"pass": true
+		}
+	],
+	"events": [
+		{
+			"event": "play",
+			"generation": 30,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 30,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 31,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 31,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 31,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 32,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 32,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 32,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 33,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 33,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 33,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 34,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 34,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 34,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 35,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 35,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 35,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 36,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 36,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 36,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 37,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 37,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 37,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 38,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 38,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 38,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 39,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 39,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 39,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 40,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 40,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 40,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 41,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 41,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 41,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 42,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 42,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 42,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 43,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 43,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 43,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 44,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 44,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 44,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 45,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 45,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 45,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 46,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 46,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 46,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 47,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 47,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 47,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 48,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 48,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 48,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 49,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 49,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 49,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 50,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 50,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 50,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 51,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 51,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 51,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 52,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 52,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 52,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 53,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 53,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 53,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 54,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 54,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 54,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 55,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 55,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 55,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 56,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 56,
+			"id": "b",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 56,
+			"layers": 0
+		}
+	],
+	"url": "/demo/motion-route-prototype/list"
+}

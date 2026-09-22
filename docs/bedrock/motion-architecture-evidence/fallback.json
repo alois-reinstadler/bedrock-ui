@@ -1,0 +1,9 @@
+{
+	"results": [
+		{
+			"name": "WAAPI rejection reveals destination",
+			"pass": true,
+			"url": "/demo/motion-route-prototype/detail/a"
+		}
+	]
+}

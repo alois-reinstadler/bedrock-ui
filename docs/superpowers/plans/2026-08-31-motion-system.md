@@ -1,5 +1,11 @@
 # Bedrock motion system v2
 
+> Historical implementation/design record. For current motion architecture decisions, use the
+> [2026-09-22 component review](../../bedrock/motion-architecture-review.md) and
+> [route evaluation](../../bedrock/motion-architecture-evaluation.md). Their CSS-first recommendations
+> supersede earlier blanket primitive/FLIP rollout guidance and the View Transitions bridge choice
+> for complex shared motion. Existing API behavior remains documented in the local motion contract.
+
 Date: 2026-08-31 · Status: design · Extends: 2026-08-29-layout-animations.md
 
 One semantic vocabulary, four implementation layers. Every layer is

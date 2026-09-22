@@ -1,5 +1,11 @@
 # Bedrock component expansion — implementation proposal
 
+> Historical implementation/design record. For current motion architecture decisions, use the
+> [2026-09-22 component review](../../bedrock/motion-architecture-review.md) and
+> [route evaluation](../../bedrock/motion-architecture-evaluation.md). Their CSS-first recommendations
+> supersede earlier blanket primitive/FLIP rollout guidance and the View Transitions bridge choice
+> for complex shared motion. Existing API behavior remains documented in the local motion contract.
+
 Date: 2026-09-01 · Status: completed and approved 2026-09-04 · Owner: Claude (orchestrator)
 Binding context: `docs/bedrock/component-contract.md`, `docs/bedrock/erp-standards.md`,
 `docs/superpowers/plans/2026-08-31-motion-system.md`, `2026-08-31-erp-primitives.md`.

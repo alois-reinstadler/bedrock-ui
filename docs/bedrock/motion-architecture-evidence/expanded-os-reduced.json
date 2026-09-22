@@ -1,0 +1,5 @@
+[
+	{ "name": "OS reduction cancels active playback", "pass": true },
+	{ "name": "CSS honors OS reduction", "pass": true },
+	{ "name": "OS reduction skips route capture", "pass": true }
+]

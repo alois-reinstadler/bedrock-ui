@@ -1,0 +1,6 @@
+{
+	"name": "actual late font load retargets typography",
+	"pass": true,
+	"copies": 2,
+	"events": ["capture", "play", "font-retarget"]
+}

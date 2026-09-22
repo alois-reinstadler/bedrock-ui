@@ -1,0 +1,39 @@
+{
+	"passed": 7,
+	"checks": [
+		{ "name": "position at 0.25", "pass": true, "detail": { "error": 0 } },
+		{
+			"name": "browser velocity at 0.25",
+			"pass": true,
+			"detail": {
+				"beforeVelocity": 0.3671875,
+				"afterVelocity": 0.361328125,
+				"error": 0.005859375,
+				"tolerance": 0.035
+			}
+		},
+		{ "name": "position at 0.5", "pass": true, "detail": { "error": 0 } },
+		{
+			"name": "browser velocity at 0.5",
+			"pass": true,
+			"detail": {
+				"beforeVelocity": 0.494140625,
+				"afterVelocity": 0.48046875,
+				"error": 0.013671875,
+				"tolerance": 0.035
+			}
+		},
+		{ "name": "position at 0.75", "pass": true, "detail": { "error": 0 } },
+		{
+			"name": "browser velocity at 0.75",
+			"pass": true,
+			"detail": {
+				"beforeVelocity": 0.375,
+				"afterVelocity": 0.35546875,
+				"error": 0.01953125,
+				"tolerance": 0.035
+			}
+		},
+		{ "name": "20 complete round trips cleaned", "pass": true }
+	]
+}

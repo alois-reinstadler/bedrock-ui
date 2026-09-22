@@ -1,0 +1,6 @@
+Run npm run preview to preview your production build locally.
+
+> Using @sveltejs/adapter-static
+Reading `config.kit` inside adapters is deprecated — it should access configuration on the `config` object directly. You may need to update your adapter
+Wrote site to "build"
+✔ done

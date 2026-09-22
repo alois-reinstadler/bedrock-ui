@@ -2,7 +2,7 @@
 
 **Status:** Authoritative sequencing document
 
-**Last updated:** 2026-08-30
+**Last updated:** 2026-09-22 (motion architecture update)
 
 **Companion:** [Bedrock backlog](./backlog.md)
 
@@ -11,6 +11,15 @@
 **Motion verification:** [M1 hardening evidence](./motion-verification.md)
 
 **Motion implementation record:** [Layout animations plan](../superpowers/plans/2026-08-29-layout-animations.md)
+
+## Current motion direction
+
+The [100-component review](motion-architecture-review.md) and [route prototype evaluation](motion-architecture-evaluation.md)
+update the motion direction below: native CSS for ordinary visuals, separate presence/measurement
+helpers, retained local-layout coordination, and dedicated JS/WAAPI route orchestration.
+The audit and representative prototype are verified. Production component migrations, shared policy
+token generation and a production route API remain implementation work; the prototype does not
+advance every component's maturity or replace the existing local engine.
 
 ## Purpose
 
@@ -40,7 +49,7 @@ Every component family has one explicit maturity level.
 | 3     | Hardened Bedrock component   | Documented semantic contract, token integration and required unit, browser, accessibility and visual coverage.  |
 | 4     | Product-level pattern        | A composed workflow or application pattern built from hardened components and validated by a real product need. |
 
-The roughly 55 existing component families do **not** advance as a batch. A family graduates only when a named foundation, milestone deliverable or real product pattern requires it. Graduation must have an owner, a written contract and acceptance evidence. Unused families remain at their current level.
+The 100 component directories covered by the current audit do **not** advance as a batch. A family graduates only when a named foundation, milestone deliverable or real product pattern requires it. Graduation must have an owner, a written contract and acceptance evidence. Unused families remain at their current level.
 
 ## Milestone map
 
@@ -85,7 +94,7 @@ The plans match reality, all known verification failures have an owner or are re
 
 ## M1 — Motion foundation
 
-The custom FLIP engine remains the Bedrock layout primitive. M1 defines and tests its production boundary rather than replacing it.
+The custom FLIP engine remains the current coordinated local-layout primitive. Its M1 contract is retained. The newer component audit recommends removing simple indicators from that engine and treating route coordination as a separate layer; those production migrations are not complete.
 
 ### Contract decisions to settle
 

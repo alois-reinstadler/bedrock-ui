@@ -1,0 +1,65 @@
+{
+	"results": [
+		{ "name": "viewport resize retargets live layers", "pass": true },
+		{ "name": "mobile has no horizontal overflow", "pass": true },
+		{ "name": "mobile text stays unscaled", "pass": true }
+	],
+	"events": [
+		{
+			"event": "resize-retarget",
+			"generation": 2,
+			"id": "a",
+			"revision": 2,
+			"duration": 1600,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 26.9375, "y": 410.21875, "width": 336.125, "height": 487.234375 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 42.9375, "y": 426.21875, "width": 304.125, "height": 217.34375 }
+				},
+				{ "part": "title", "box": { "x": 42.9375, "y": 664.625, "width": 304.125, "height": 65 } }
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 26.9375, "y": 410.21875, "width": 336.125, "height": 487.234375 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 42.9375, "y": 426.21875, "width": 304.125, "height": 217.34375 }
+				},
+				{ "part": "title", "box": { "x": 42.9375, "y": 664.625, "width": 304.125, "height": 65 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 32, "y": 276.1875, "width": 716, "height": 732.890625 },
+					"clips": [
+						[32, 228.1875, 716, 660, 32],
+						[32, 228.1875, 716, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 56, "y": 300.1875, "width": 668, "height": 330 },
+					"clips": [
+						[32, 228.1875, 716, 660, 32],
+						[32, 228.1875, 716, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 56, "y": 662.1875, "width": 668, "height": 41.328125 },
+					"clips": [
+						[32, 228.1875, 716, 660, 32],
+						[32, 228.1875, 716, 660, 0]
+					]
+				}
+			]
+		}
+	]
+}

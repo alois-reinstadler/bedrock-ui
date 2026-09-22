@@ -1,0 +1,44 @@
+{
+	"checks": [
+		{
+			"name": "bounded bitmap generation 0",
+			"pass": true
+		},
+		{
+			"name": "bounded bitmap generation 1",
+			"pass": true
+		},
+		{
+			"name": "bounded bitmap generation 2",
+			"pass": true
+		},
+		{
+			"name": "bounded bitmap generation 3",
+			"pass": true
+		},
+		{
+			"name": "bounded bitmap generation 4",
+			"pass": true
+		},
+		{
+			"name": "app reduction cleans active motion",
+			"pass": true,
+			"before": 3,
+			"layers": 0,
+			"css": "0s"
+		},
+		{
+			"name": "missing WAAPI preserves navigation",
+			"pass": true
+		},
+		{
+			"name": "playback exception cleans ownership",
+			"pass": true
+		},
+		{
+			"name": "unsupported mask has safe fallback",
+			"pass": true
+		}
+	],
+	"timing_note": "Application preference assertions run after Svelte flush (30ms); an immediate same-task CSS read preceded the DOM attribute update."
+}

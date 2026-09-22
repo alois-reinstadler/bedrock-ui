@@ -1,11 +1,21 @@
-# Bedrock and Astra Motion
+# Bedrock motion: CSS, coordination, and Astra integration
+
+Start with the [component audit and recommended motion policy](motion-architecture-review.md) and
+[route prototype evaluation](motion-architecture-evaluation.md). Native CSS is the default for ordinary
+visuals; Bits UI presence or a small measurement helper does not imply an engine dependency. Keep
+dedicated JS for coordinated local layout and shared-element routes. The route prototype uses JS
+sessions and part-specific WAAPI playback, independently of ordinary components.
+
+The audit and prototype are complete; production component migrations, unified token generation
+and any local-layout backend replacement remain proposed work. The API descriptions below document
+the existing integration, not the recommended default for every new animation.
 
 The `/docs/motion` guide documents the public integration, and `/motion` provides
 interactive comparisons. Bedrock keeps Astra behind explicit local entry points.
 The comparison uses the real packed Astra package from
 `vendor/astra-motion-0.0.1.tgz`. It does not alias sibling repository source.
 Ordinary Bedrock primitives remain unchanged. Import these wrappers only where
-animation is wanted:
+their explicit Astra binding behavior is needed; ordinary CSS needs no wrapper:
 
 ```svelte
 <script lang="ts">
@@ -63,7 +73,7 @@ For native markup, import `createMotion` directly from `astra-motion/css` and sp
 separate CSS import to exclude Motion modules from its browser graph; the comparison
 page intentionally imports both backends.
 
-CSS supports finite scalar opacity, pixel x/y/width/height/borderRadius, scale,
+Astra's CSS binding backend supports finite scalar opacity, pixel x/y/width/height/borderRadius, scale,
 rotation, static variants and hover/tap/focus targets. It rejects spring/inertia,
 drag, projection, MotionValues, keyframe arrays, dynamic variants, repeats,
 transitionEnd, stagger and per-frame callbacks. A native intro snapshots its
@@ -100,8 +110,10 @@ reference was regenerated against the new Svelte types.
 Astra's optional Kit peer is currently `^2.70.3`, so pnpm reports a peer warning
 in this Kit 3 app (other existing packages also report Kit peer warnings). The CSS
 and state/layout entries do not import Kit. This integration qualifies those paths;
-it does not claim Kit 3 support for `astra-motion/routes`. Keep route transitions
-on the app's current mechanism until the route entry is separately qualified.
+it does not claim Kit 3 support for `astra-motion/routes`. The [route evaluation](motion-architecture-evaluation.md) instead recommends a dedicated JS
+coordinator with WAAPI playback. Astra's route wrapper uses browser View Transitions and does not
+provide the required interrupted image/surface/title continuity; peer compatibility alone would not
+resolve that architectural mismatch. The prototype is not yet a production Bedrock route API.
 
 Fresh checkouts install with `pnpm install --frozen-lockfile`;
 `--frozen-lockfile` prevents dependency-resolution changes. Run

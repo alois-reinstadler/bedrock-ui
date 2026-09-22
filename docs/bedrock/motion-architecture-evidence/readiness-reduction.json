@@ -1,0 +1,129 @@
+{
+	"results": [
+		{
+			"name": "delayed data retains interactive source",
+			"pass": true
+		},
+		{
+			"name": "media readiness retains overlay",
+			"pass": true
+		},
+		{
+			"name": "delayed ready cleanup",
+			"pass": true
+		},
+		{
+			"name": "readiness wait bounded",
+			"pass": true,
+			"detail": {
+				"elapsed": 1202.9000000953674
+			}
+		},
+		{
+			"name": "reduced at start no layers",
+			"pass": true
+		},
+		{
+			"name": "reduced during playback settles",
+			"pass": true
+		}
+	],
+	"events": [
+		{
+			"event": "capture",
+			"generation": 1,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 1,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 1,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 2,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 2,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 2,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 3,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 3,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 3,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 4,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 4,
+			"id": "a",
+			"duration": 360,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 4,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 5,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 5,
+			"id": "a",
+			"duration": 1600,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "manual-reduction",
+			"generation": 5,
+			"layers": 0
+		}
+	],
+	"url": "/demo/motion-route-prototype/detail/a"
+}

@@ -15,6 +15,12 @@ pnpm dev
 
 ## Motion
 
+Native CSS transitions and animations are the default for ordinary component visuals.
+Measurement and exit retention do not by themselves require an animation engine.
+See the [100-component motion audit and recommended policy](docs/bedrock/motion-architecture-review.md)
+and [evaluated JS/WAAPI route prototype](docs/bedrock/motion-architecture-evaluation.md).
+The audit and prototype are implemented; production component migrations remain proposals.
+
 Astra Motion is installed from the checked-in `vendor/astra-motion-0.0.1.tgz` archive. No sibling checkout is needed to install or build Bedrock.
 
 - `#lib/bedrock/motion/index.js`: existing native Bedrock APIs, with millisecond durations.

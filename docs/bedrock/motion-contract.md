@@ -4,6 +4,18 @@
 > **Scope:** public behavior expected before any hardened Bedrock component depends on motion  
 > **Implementation record:** [`2026-08-29-layout-animations.md`](../superpowers/plans/2026-08-29-layout-animations.md)
 
+## Status after the 2026-09-22 architecture review
+
+This document specifies the **existing local motion API**, including its compatibility guarantees.
+For new component work, follow the [component audit and recommended policy](motion-architecture-review.md):
+CSS visuals first, independent lifecycle/measurement helpers, coordinated JS only where needed.
+The primitive table below describes available capabilities, not a requirement to use `layout()` for
+single measured indicators or the custom presence helpers for every disclosure.
+
+The local shared-ID exclusion of navigation remains accurate. Route continuity has a separate
+[evaluated JS/WAAPI prototype](motion-architecture-evaluation.md); it does not extend this group's
+480ms snapshot contract. Component migrations and unified CSS/JS policy generation are not shipped.
+
 ## Purpose
 
 Bedrock motion explains a state change without changing its semantics. It is progressive

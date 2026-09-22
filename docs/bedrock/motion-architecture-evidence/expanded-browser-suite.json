@@ -1,0 +1,2074 @@
+{
+	"passed": 43,
+	"checks": [
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "three independent nested layers", "pass": true },
+		{ "name": "two ancestor clips per layer", "pass": true },
+		{ "name": "natural text has no transform", "pass": true },
+		{ "name": "image intrinsic ratio preserved", "pass": true },
+		{
+			"name": "interrupted position continuity",
+			"pass": true,
+			"detail": {
+				"error": 0,
+				"proxy": [
+					{
+						"part": "surface",
+						"box": {
+							"x": 126.25,
+							"y": 251.796875,
+							"width": 749.75,
+							"height": 600.515625,
+							"top": 251.796875,
+							"right": 876,
+							"bottom": 852.3125,
+							"left": 126.25
+						}
+					},
+					{
+						"part": "image",
+						"box": {
+							"x": 146.25,
+							"y": 271.796875,
+							"width": 709.75,
+							"height": 295,
+							"top": 271.796875,
+							"right": 856,
+							"bottom": 566.796875,
+							"left": 146.25
+						}
+					},
+					{
+						"part": "title",
+						"box": {
+							"x": 146.25,
+							"y": 590.796875,
+							"width": 648.25,
+							"height": 78.53125,
+							"top": 590.796875,
+							"right": 794.5,
+							"bottom": 669.328125,
+							"left": 146.25
+						}
+					}
+				]
+			}
+		},
+		{
+			"name": "nonzero velocity retained",
+			"pass": true,
+			"detail": [
+				{
+					"part": "surface",
+					"tracks": [
+						{
+							"name": "clip0",
+							"position": [118.25, 243.296875, 1036, 570, 30],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0.00375]
+						},
+						{
+							"name": "clip1",
+							"position": [118.25, 243.296875, 1021, 570, 0],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0]
+						},
+						{
+							"name": "box",
+							"position": [126.25, 251.796875, 749.75, 600.515625],
+							"velocity": [-0.00796875, -0.036767578125, 0.50859375, 0.409189453125]
+						},
+						{ "name": "radius", "position": [22], "velocity": [0] }
+					]
+				},
+				{
+					"part": "image",
+					"tracks": [
+						{
+							"name": "clip0",
+							"position": [118.25, 243.296875, 1036, 570, 30],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0.00375]
+						},
+						{
+							"name": "clip1",
+							"position": [118.25, 243.296875, 1021, 570, 0],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0]
+						},
+						{
+							"name": "box",
+							"position": [146.25, 271.796875, 709.75, 295],
+							"velocity": [-0.00046875, -0.029267578125, 0.49359375, 0.065625]
+						},
+						{ "name": "radius", "position": [16], "velocity": [0] },
+						{
+							"name": "bitmap:http://127.0.0.1:4095/templates/video-library/paper-suns.jpg",
+							"position": [-3.921875, -38.015625, 717.609375, 403.65625],
+							"velocity": [
+								0.007368164062500054, -0.0713056640625, 0.47885742187499986, 0.26935546875
+							]
+						}
+					]
+				},
+				{
+					"part": "title",
+					"tracks": [
+						{
+							"name": "clip0",
+							"position": [118.25, 243.296875, 1036, 570, 30],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0.00375]
+						},
+						{
+							"name": "clip1",
+							"position": [118.25, 243.296875, 1021, 570, 0],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0]
+						},
+						{
+							"name": "box",
+							"position": [146.25, 590.796875, 648.25, 78.53125],
+							"velocity": [-0.00046875, 0.051357421875, 0.37828125, 0.0912158203125]
+						},
+						{ "name": "radius", "position": [0], "velocity": [0] }
+					]
+				}
+			]
+		},
+		{
+			"name": "history document and nested scroll restored",
+			"pass": true,
+			"detail": {
+				"saved": { "nested": 95, "document": 100 },
+				"actual": { "document": 100, "nested": 95 }
+			}
+		},
+		{ "name": "rapid back/forward reuses bounded layers", "pass": true },
+		{ "name": "scroll retargets without settling", "pass": true },
+		{ "name": "late content remeasured", "pass": true },
+		{ "name": "new typography bounded and unscaled", "pass": true },
+		{ "name": "modal occupies browser top layer", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "decoded art-directed image handoff", "pass": true },
+		{ "name": "both bitmap aspect ratios preserved", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "source stays interactive while data loads", "pass": true },
+		{ "name": "latest navigation wins", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "no hidden matched parts", "pass": true },
+		{ "name": "ten round trips leave zero proxy nodes", "pass": true }
+	],
+	"events": [
+		{ "event": "capture", "generation": 1, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 1,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 1, "layers": 0 },
+		{ "event": "capture", "generation": 2, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 2,
+			"id": "a",
+			"revision": 1,
+			"duration": 1600,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 271.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 287.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 563.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 271.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 287.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 563.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{
+			"event": "interrupt",
+			"generation": 2,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 126.25, "y": 251.796875, "width": 749.75, "height": 600.515625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.25, "y": 271.796875, "width": 709.75, "height": 295 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.25, "y": 590.796875, "width": 648.25, "height": 78.53125 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 126.25, "y": 251.796875, "width": 749.75, "height": 600.515625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.25, "y": 271.796875, "width": 709.75, "height": 295 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.25, "y": 590.796875, "width": 648.25, "height": 78.53125 }
+				}
+			],
+			"momentum": [
+				{
+					"part": "surface",
+					"tracks": [
+						{
+							"name": "clip0",
+							"position": [118.25, 243.296875, 1036, 570, 30],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0.00375]
+						},
+						{
+							"name": "clip1",
+							"position": [118.25, 243.296875, 1021, 570, 0],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0]
+						},
+						{
+							"name": "box",
+							"position": [126.25, 251.796875, 749.75, 600.515625],
+							"velocity": [-0.00796875, -0.036767578125, 0.50859375, 0.409189453125]
+						},
+						{ "name": "radius", "position": [22], "velocity": [0] }
+					]
+				},
+				{
+					"part": "image",
+					"tracks": [
+						{
+							"name": "clip0",
+							"position": [118.25, 243.296875, 1036, 570, 30],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0.00375]
+						},
+						{
+							"name": "clip1",
+							"position": [118.25, 243.296875, 1021, 570, 0],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0]
+						},
+						{
+							"name": "box",
+							"position": [146.25, 271.796875, 709.75, 295],
+							"velocity": [-0.00046875, -0.029267578125, 0.49359375, 0.065625]
+						},
+						{ "name": "radius", "position": [16], "velocity": [0] },
+						{
+							"name": "bitmap:http://127.0.0.1:4095/templates/video-library/paper-suns.jpg",
+							"position": [-3.921875, -38.015625, 717.609375, 403.65625],
+							"velocity": [
+								0.007368164062500054, -0.0713056640625, 0.47885742187499986, 0.26935546875
+							]
+						}
+					]
+				},
+				{
+					"part": "title",
+					"tracks": [
+						{
+							"name": "clip0",
+							"position": [118.25, 243.296875, 1036, 570, 30],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0.00375]
+						},
+						{
+							"name": "clip1",
+							"position": [118.25, 243.296875, 1021, 570, 0],
+							"velocity": [0.00703125, -0.110830078125, 0, 0.16875, 0]
+						},
+						{
+							"name": "box",
+							"position": [146.25, 590.796875, 648.25, 78.53125],
+							"velocity": [-0.00046875, 0.051357421875, 0.37828125, 0.0912158203125]
+						},
+						{ "name": "radius", "position": [0], "velocity": [0] }
+					]
+				}
+			]
+		},
+		{ "event": "capture", "generation": 3, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 3,
+			"id": "a",
+			"revision": 1,
+			"duration": 1600,
+			"scrollY": 100,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 126.25, "y": 251.796875, "width": 749.75, "height": 600.515625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.25, "y": 271.796875, "width": 709.75, "height": 295 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.25, "y": 590.796875, "width": 648.25, "height": 78.53125 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 126.25, "y": 251.796875, "width": 749.75, "height": 600.515625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.25, "y": 271.796875, "width": 709.75, "height": 295 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.25, "y": 590.796875, "width": 648.25, "height": 78.53125 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 271.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 302.40625, 1036, 480, 28],
+						[114.5, 302.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 287.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 302.40625, 1036, 480, 28],
+						[114.5, 302.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 563.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 302.40625, 1036, 480, 28],
+						[114.5, 302.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{
+			"event": "interrupt",
+			"generation": 3,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 125.59375, "y": 248.78125, "width": 791.390625, "height": 634.015625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.203125, "y": 269.390625, "width": 750.15625, "height": 300.359375 }
+				},
+				{ "part": "title", "box": { "x": 146.203125, "y": 595, "width": 679.21875, "height": 86 } }
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 125.59375, "y": 248.78125, "width": 791.390625, "height": 634.015625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.203125, "y": 269.390625, "width": 750.15625, "height": 300.359375 }
+				},
+				{ "part": "title", "box": { "x": 146.203125, "y": 595, "width": 679.21875, "height": 86 } }
+			],
+			"momentum": [
+				{
+					"part": "surface",
+					"tracks": [
+						{
+							"name": "clip0",
+							"position": [
+								118.82631976715545, 234.2126346702121, 1036, 583.8316744117309, 30.307370542482914
+							],
+							"velocity": [
+								0.004529498428344718, -0.07139621897678373, 0, 0.1087079622802734,
+								0.0024157324951171867
+							]
+						},
+						{
+							"name": "clip1",
+							"position": [118.82631976715545, 234.2126346702121, 1021, 583.8316744117309, 0],
+							"velocity": [0.004529498428344718, -0.07139621897678373, 0, 0.1087079622802734, 0]
+						},
+						{
+							"name": "box",
+							"position": [125.59375, 248.78125, 791.390625, 634.015625],
+							"velocity": [
+								-0.005133431552124019, -0.023685502198219296, 0.32763371965026833,
+								0.2635979356195448
+							]
+						},
+						{ "name": "radius", "position": [22], "velocity": [0] }
+					]
+				},
+				{
+					"part": "image",
+					"tracks": [
+						{
+							"name": "clip0",
+							"position": [
+								118.82631976715545, 234.2126346702121, 1036, 583.8316744117309, 30.307370542482914
+							],
+							"velocity": [
+								0.004529498428344718, -0.07139621897678373, 0, 0.1087079622802734,
+								0.0024157324951171867
+							]
+						},
+						{
+							"name": "clip1",
+							"position": [118.82631976715545, 234.2126346702121, 1021, 583.8316744117309, 0],
+							"velocity": [0.004529498428344718, -0.07139621897678373, 0, 0.1087079622802734, 0]
+						},
+						{
+							"name": "box",
+							"position": [146.203125, 269.390625, 750.15625, 300.359375],
+							"velocity": [
+								-0.0003019665618896461, -0.018854037207984904, 0.31797078966979964,
+								0.042275318664550754
+							]
+						},
+						{ "name": "radius", "position": [16], "velocity": [0] },
+						{
+							"name": "bitmap:http://127.0.0.1:4095/templates/video-library/paper-suns.jpg",
+							"position": [-3.3125, -43.84375, 756.8125, 425.703125],
+							"velocity": [
+								0.004744436853135471, -0.04593786872494123, 0.30847847953187274, 0.17351753562583916
+							]
+						}
+					]
+				},
+				{
+					"part": "title",
+					"tracks": [
+						{
+							"name": "clip0",
+							"position": [
+								118.82631976715545, 234.2126346702121, 1036, 583.8316744117309, 30.307370542482914
+							],
+							"velocity": [
+								0.004529498428344718, -0.07139621897678373, 0, 0.1087079622802734,
+								0.0024157324951171867
+							]
+						},
+						{
+							"name": "clip1",
+							"position": [118.82631976715545, 234.2126346702121, 1021, 583.8316744117309, 0],
+							"velocity": [0.004529498428344718, -0.07139621897678373, 0, 0.1087079622802734, 0]
+						},
+						{
+							"name": "box",
+							"position": [146.203125, 595, 679.21875, 86],
+							"velocity": [
+								-0.0003019665618896461, 0.03308421143703457, 0.2436870154449462, 0.0587625238685417
+							]
+						},
+						{ "name": "radius", "position": [0], "velocity": [0] }
+					]
+				}
+			]
+		},
+		{ "event": "capture", "generation": 4, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 4,
+			"id": "a",
+			"revision": 1,
+			"duration": 1600,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 125.59375, "y": 248.78125, "width": 791.390625, "height": 634.015625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.203125, "y": 269.390625, "width": 750.15625, "height": 300.359375 }
+				},
+				{ "part": "title", "box": { "x": 146.203125, "y": 595, "width": 679.21875, "height": 86 } }
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 125.59375, "y": 248.78125, "width": 791.390625, "height": 634.015625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.203125, "y": 269.390625, "width": 750.15625, "height": 300.359375 }
+				},
+				{ "part": "title", "box": { "x": 146.203125, "y": 595, "width": 679.21875, "height": 86 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{
+			"event": "scroll-retarget",
+			"generation": 4,
+			"id": "a",
+			"revision": 2,
+			"duration": 1600,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 123.359375, "y": 238.5, "width": 933.59375, "height": 748.421875 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.0625, "y": 261.203125, "width": 888.171875, "height": 318.703125 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.0625, "y": 609.359375, "width": 784.984375, "height": 111.5 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 123.359375, "y": 238.5, "width": 933.59375, "height": 748.421875 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.0625, "y": 261.203125, "width": 888.171875, "height": 318.703125 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.0625, "y": 609.359375, "width": 784.984375, "height": 111.5 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 177.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 201.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 563.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{
+			"event": "resize-retarget",
+			"generation": 4,
+			"id": "a",
+			"revision": 3,
+			"duration": 1600,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 123.046875, "y": 236.21875, "width": 953.46875, "height": 764.40625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.03125, "y": 259.21875, "width": 907.46875, "height": 321.265625 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.03125, "y": 610.53125, "width": 799.765625, "height": 115.0625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 123.046875, "y": 236.21875, "width": 953.46875, "height": 764.40625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.03125, "y": 259.21875, "width": 907.46875, "height": 321.265625 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.03125, "y": 610.53125, "width": 799.765625, "height": 115.0625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 177.1875, "width": 1021, "height": 938.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 321.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 683.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{
+			"event": "resize-retarget",
+			"generation": 4,
+			"id": "a",
+			"revision": 4,
+			"duration": 1600,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 122.78125, "y": 232.78125, "width": 970.15625, "height": 779.65625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.015625, "y": 257.859375, "width": 923.671875, "height": 323.421875 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.015625, "y": 611.8125, "width": 812.1875, "height": 118.046875 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 122.78125, "y": 232.78125, "width": 970.15625, "height": 779.65625 }
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.015625, "y": 257.859375, "width": 923.671875, "height": 323.421875 }
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.015625, "y": 611.8125, "width": 812.1875, "height": 118.046875 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 177.1875, "width": 1021, "height": 964.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 321.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 683.1875, "width": 850, "height": 152.625 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 4, "layers": 0 },
+		{ "event": "capture", "generation": 5, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 5,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 177.1875, "width": 1021, "height": 964.1875 }
+				},
+				{ "part": "image", "box": { "x": 146, "y": 321.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 683.1875, "width": 850, "height": 152.625 } }
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 177.1875, "width": 1021, "height": 964.1875 }
+				},
+				{ "part": "image", "box": { "x": 146, "y": 321.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 683.1875, "width": 850, "height": 152.625 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 5, "layers": 0 },
+		{ "event": "capture", "generation": 6, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 6,
+			"id": "a",
+			"revision": 1,
+			"duration": 1600,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 6, "layers": 0 },
+		{ "event": "capture", "generation": 7, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 7,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 7, "layers": 0 },
+		{ "event": "capture", "generation": 8, "id": "b", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 8,
+			"id": "b",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 641, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 657, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 657, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 641, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 657, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 657, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 755.15625 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 63.59375 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 8, "layers": 0 },
+		{ "event": "capture", "generation": 9, "id": "b", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 9,
+			"id": "b",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 755.15625 }
+				},
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 63.59375 } }
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 755.15625 }
+				},
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 63.59375 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 641, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 657, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 657, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 9, "layers": 0 },
+		{ "event": "capture", "generation": 10, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 10,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 10, "layers": 0 },
+		{ "event": "capture", "generation": 11, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 11,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 11, "layers": 0 },
+		{ "event": "capture", "generation": 12, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 12,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 12, "layers": 0 },
+		{ "event": "capture", "generation": 13, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 13,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 13, "layers": 0 },
+		{ "event": "capture", "generation": 14, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 14,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 14, "layers": 0 },
+		{ "event": "capture", "generation": 15, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 15,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 15, "layers": 0 },
+		{ "event": "capture", "generation": 16, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 16,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 16, "layers": 0 },
+		{ "event": "capture", "generation": 17, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 17,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 17, "layers": 0 },
+		{ "event": "capture", "generation": 18, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 18,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 18, "layers": 0 },
+		{ "event": "capture", "generation": 19, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 19,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 19, "layers": 0 },
+		{ "event": "capture", "generation": 20, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 20,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 20, "layers": 0 },
+		{ "event": "capture", "generation": 21, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 21,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 21, "layers": 0 },
+		{ "event": "capture", "generation": 22, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 22,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 22, "layers": 0 },
+		{ "event": "capture", "generation": 23, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 23,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 23, "layers": 0 },
+		{ "event": "capture", "generation": 24, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 24,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 24, "layers": 0 },
+		{ "event": "capture", "generation": 25, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 25,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 25, "layers": 0 },
+		{ "event": "capture", "generation": 26, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 26,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 26, "layers": 0 },
+		{ "event": "capture", "generation": 27, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 27,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"after": [
+				{ "part": "surface", "box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 } },
+				{ "part": "image", "box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 } },
+				{ "part": "title", "box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 } }
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 },
+					"clips": [
+						[114.5, 402.40625, 1036, 480, 28],
+						[114.5, 402.40625, 1021, 480, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 27, "layers": 0 },
+		{ "event": "capture", "generation": 28, "id": "a", "layers": 3 },
+		{
+			"event": "play",
+			"generation": 28,
+			"id": "a",
+			"revision": 1,
+			"duration": 360,
+			"scrollY": 0,
+			"before": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": { "x": 130.5, "y": 466.40625, "width": 478.5, "height": 382.28125 }
+				},
+				{ "part": "image", "box": { "x": 146.5, "y": 482.40625, "width": 446.5, "height": 260 } },
+				{
+					"part": "title",
+					"box": { "x": 146.5, "y": 758.40625, "width": 446.5, "height": 29.890625 }
+				}
+			],
+			"targets": [
+				{
+					"part": "surface",
+					"box": { "x": 122, "y": 232.1875, "width": 1021, "height": 818.75 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "image",
+					"box": { "x": 146, "y": 256.1875, "width": 973, "height": 330 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				},
+				{
+					"part": "title",
+					"box": { "x": 146, "y": 618.1875, "width": 850, "height": 127.1875 },
+					"clips": [
+						[122, 184.1875, 1036, 660, 32],
+						[122, 184.1875, 1021, 660, 0]
+					]
+				}
+			]
+		},
+		{ "event": "complete", "generation": 28, "layers": 0 }
+	]
+}

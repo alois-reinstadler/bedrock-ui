@@ -2,7 +2,7 @@
 
 **Status:** Prioritized companion to the [Bedrock roadmap](./roadmap.md)
 
-**Last updated:** 2026-08-30
+**Last updated:** 2026-09-22 (motion architecture update)
 
 ## How to use this backlog
 
@@ -14,6 +14,16 @@ Checkboxes indicate repository state, not intent:
 - `[x]` completed and verified
 
 Do not mark an item complete without recording the relevant check, test, browser or accessibility evidence.
+
+## Motion architecture follow-up — 2026-09-22
+
+- [x] Audit all 100 component directories by visual, lifecycle/measurement and coordination responsibility: [review and policy](motion-architecture-review.md).
+- [x] Evaluate a separate JS/WAAPI list/detail/back prototype, including interruption, nested clipping/scroll, media readiness and reduced motion: [evidence](motion-architecture-evaluation.md).
+- [ ] Generate CSS and JS policy from one semantic source; migrate component timing, easing, movement and reduction together.
+- [ ] Replace single-indicator FLIP usage with CSS interpolation and small measurement helpers.
+- [ ] Migrate presence and intrinsic-size helpers per the audit, preserving reversal and surrounding-layout behavior.
+- [ ] Promote the evaluated route participant/session contract into a production API with supported-browser qualification.
+- [ ] Evaluate any local-layout backend replacement independently; preserve existing coordinated packing/shared-layout behavior meanwhile.
 
 ## M0 — Documentation and stabilization
 
@@ -254,8 +264,11 @@ For each candidate:
       until then.
 - [ ] Track the bits-ui Slider thumb-labeling gap upstream; retain the narrow
       Slider allowlist rather than forking the frozen primitive.
-- [ ] Build the Thumbnail→Lightbox shared-element flight with a View Transitions
-      bridge; do not stretch an app-level `LayoutGroup` across the boundary.
+- [ ] Build the Thumbnail→Lightbox shared-element flight using the JS-coordinated,
+      part-specific approach from the [motion review](motion-architecture-review.md).
+      The older View Transitions bridge choice is superseded; do not stretch an
+      app-level `LayoutGroup` across the boundary. The route prototype does not
+      itself implement the production Lightbox flight.
 
 ## Explicitly deferred
 
@@ -287,10 +300,11 @@ Do not build this family speculatively. When triggered, begin with the consumer'
 
 Use this table for backlog changes that alter scope or ordering.
 
-| Date       | Change                                                     | Reason                                                                                                                                 | Effect on milestones                                                              |
-| ---------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| 2026-08-30 | Created the layered backlog.                               | Preserve and harden motion before expanding Bedrock.                                                                                   | Establishes M0–M5 order and explicit later/conditional work.                      |
-| 2026-08-30 | Added on-demand component graduation.                      | Catalogue size is not a reason to rewrite unused families.                                                                             | Families enter milestones only through a named dependency or consumer.            |
-| 2026-08-30 | Deferred locale breadth but fixed the string architecture. | Avoid API churn without making translation coverage an early blocker.                                                                  | English catalogue is foundational; `de-AT` is a later pack.                       |
-| 2026-08-30 | Deferred AI/chat until demanded.                           | No current consumer establishes the right streaming contract.                                                                          | AI/chat has no milestone allocation until its trigger is met.                     |
-| 2026-09-04 | Approved the expansion close-out decisions.                | English is canonical; frozen/upstream a11y gaps stay narrowly allowlisted; cross-boundary shared-element motion uses View Transitions. | Completes the expansion project and records three follow-ups without local forks. |
+| Date       | Change                                                                         | Reason                                                                                                                                 | Effect on milestones                                                                         |
+| ---------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 2026-08-30 | Created the layered backlog.                                                   | Preserve and harden motion before expanding Bedrock.                                                                                   | Establishes M0–M5 order and explicit later/conditional work.                                 |
+| 2026-08-30 | Added on-demand component graduation.                                          | Catalogue size is not a reason to rewrite unused families.                                                                             | Families enter milestones only through a named dependency or consumer.                       |
+| 2026-08-30 | Deferred locale breadth but fixed the string architecture.                     | Avoid API churn without making translation coverage an early blocker.                                                                  | English catalogue is foundational; `de-AT` is a later pack.                                  |
+| 2026-08-30 | Deferred AI/chat until demanded.                                               | No current consumer establishes the right streaming contract.                                                                          | AI/chat has no milestone allocation until its trigger is met.                                |
+| 2026-09-04 | Approved the expansion close-out decisions.                                    | English is canonical; frozen/upstream a11y gaps stay narrowly allowlisted; cross-boundary shared-element motion uses View Transitions. | Completes the expansion project and records three follow-ups without local forks.            |
+| 2026-09-22 | Recorded CSS-first component review and evaluated JS/WAAPI route architecture. | Lifecycle JS is separate from engine need; complex shared routes require controlled rendering and interruption.                        | Supersedes the 2026-09-04 View Transitions motion choice; production migrations remain open. |

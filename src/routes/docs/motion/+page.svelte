@@ -43,15 +43,42 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 	<title>Motion — Bedrock</title>
 	<meta
 		name="description"
-		content="Use Astra Motion through Bedrock's explicit CSS and engine APIs, with accessible defaults and compatible legacy transitions."
+		content="Native CSS for ordinary visuals, independent lifecycle helpers, and dedicated JS for coordinated layout and shared routes."
 	/>
 </svelte:head>
 
 <article class="mx-auto max-w-4xl px-4 py-10 md:px-8">
 	<DocsPageHeader
 		title="Motion"
-		description="Use motion to explain a state change. Bedrock keeps its native transitions stable and exposes Astra through explicit imports for CSS animation, physics, and layout."
+		description="Use native CSS for ordinary visual changes. Keep lifecycle and measurement separate, and use dedicated JavaScript for coordinated layout and shared route motion."
 	/>
+	<section class="mt-10" aria-labelledby="architecture-heading">
+		<h2 id="architecture-heading" class="text-2xl font-medium tracking-tight">
+			Choose by responsibility
+		</h2>
+		<p class="mt-3 text-muted-foreground">
+			Use CSS transitions, animations, and Bits UI or shadcn-svelte state patterns wherever they
+			deliver the required behavior. Plain CSS and tw-animate are both valid. Measuring a target or
+			retaining an exiting element does not by itself justify an animation engine.
+		</p>
+		<p class="mt-3 text-muted-foreground">
+			Keep coordinated JavaScript for shared layout, gestures, and shared-element routes. The
+			evaluated route prototype uses separate surface, image, and title layers with WAAPI playback,
+			current-state retargeting, and reduced-motion cleanup. Ordinary components remain independent
+			of it.
+		</p>
+		<p class="mt-3 text-muted-foreground">
+			The 100-component audit and representative prototype are complete. Production component
+			migrations, unified policy tokens, and a production route API remain proposed work. Repository
+			references: docs/bedrock/motion-architecture-review.md and
+			docs/bedrock/motion-architecture-evaluation.md.
+		</p>
+		<div class="mt-5">
+			<Button href="/demo/motion-route-prototype/list" variant="outline"
+				>Open the route continuity prototype</Button
+			>
+		</div>
+	</section>
 	<section class="mt-10" aria-labelledby="choose-heading">
 		<h2 id="choose-heading" class="text-2xl font-medium tracking-tight">Choose an entry point</h2>
 		<p class="mt-3 mb-5 text-muted-foreground">
@@ -72,7 +99,7 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 	</section>
 	<section class="mt-12" aria-labelledby="example-heading">
 		<h2 id="example-heading" class="text-2xl font-medium tracking-tight">
-			An accessible disclosure
+			Optional Astra disclosure binding
 		</h2>
 		<p class="mt-3 mb-5 text-muted-foreground">
 			CssButton preserves native button activation and disabled behavior. CssPanel owns its native
@@ -117,10 +144,10 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 				motion systems to the same transform.
 			</li>
 			<li>
-				<strong class="text-foreground">CSS has a finite contract.</strong> Use scalar opacity, pixel
-				position and size, scale, rotation, static variants, and hover, tap, or focus targets. Springs,
-				drag, MotionValues, projection, keyframe arrays, repeats, and per-frame callbacks require the
-				engine.
+				<strong class="text-foreground">Astra CSS bindings have a finite contract.</strong> Use scalar
+				opacity, pixel position and size, scale, rotation, static variants, and hover, tap, or focus targets.
+				Springs, drag, MotionValues, projection, keyframe arrays, repeats, and per-frame callbacks require
+				the engine when using this binding API; native CSS itself supports keyframes and repeats.
 			</li>
 			<li>
 				<strong class="text-foreground">Transitions have lifecycle rules.</strong> A CSS intro snapshots
@@ -128,9 +155,10 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 				an intro or retained exit.
 			</li>
 			<li>
-				<strong class="text-foreground">Routes are a separate boundary.</strong> This application uses
-				SvelteKit 3. Astra's optional route adapter declares a Kit 2 peer and is not qualified here. Keep
-				the site's current navigation behavior.
+				<strong class="text-foreground">Routes are a separate boundary.</strong> The separate prototype
+				evaluates JS orchestration and browser playback on SvelteKit 3. Astra's optional route adapter
+				declares a Kit 2 peer and relies on browser View Transitions; it does not supply the required
+				complex route continuity. The prototype is not yet a production route API.
 			</li>
 		</ul>
 	</section>

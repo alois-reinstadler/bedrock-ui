@@ -1,0 +1,237 @@
+{
+	"results": [
+		{
+			"name": "rapid back-forward latest route",
+			"pass": true
+		},
+		{
+			"name": "bounded title copies",
+			"pass": true,
+			"detail": 2
+		},
+		{
+			"name": "rapid interruption continuity",
+			"pass": true
+		},
+		{
+			"name": "superseded delayed A does not replace B",
+			"pass": true
+		},
+		{
+			"name": "latest route visible and cleaned",
+			"pass": true
+		}
+	],
+	"events": [
+		{
+			"event": "capture",
+			"generation": 1,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 1,
+			"id": "a",
+			"duration": 1600,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "interrupt",
+			"generation": 1,
+			"before": [
+				{
+					"part": "surface",
+					"box": {
+						"x": 114.5,
+						"y": 399.0625,
+						"width": 508.890625,
+						"height": 387.90625
+					}
+				},
+				{
+					"part": "image",
+					"box": {
+						"x": 130.59375,
+						"y": 415.171875,
+						"width": 476.671875,
+						"height": 260.890625
+					}
+				},
+				{
+					"part": "title",
+					"box": {
+						"x": 130.59375,
+						"y": 692.28125,
+						"width": 474.890625,
+						"height": 31.140625
+					}
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": {
+						"x": 114.5,
+						"y": 399.0625,
+						"width": 508.890625,
+						"height": 387.90625
+					}
+				},
+				{
+					"part": "image",
+					"box": {
+						"x": 130.59375,
+						"y": 415.171875,
+						"width": 476.671875,
+						"height": 260.890625
+					}
+				},
+				{
+					"part": "title",
+					"box": {
+						"x": 130.59375,
+						"y": 692.28125,
+						"width": 474.890625,
+						"height": 31.140625
+					}
+				}
+			]
+		},
+		{
+			"event": "capture",
+			"generation": 2,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 2,
+			"id": "a",
+			"duration": 1600,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "interrupt",
+			"generation": 2,
+			"before": [
+				{
+					"part": "surface",
+					"box": {
+						"x": 114.5,
+						"y": 399.09375,
+						"width": 508.796875,
+						"height": 387.828125
+					}
+				},
+				{
+					"part": "image",
+					"box": {
+						"x": 130.578125,
+						"y": 415.203125,
+						"width": 476.578125,
+						"height": 260.875
+					}
+				},
+				{
+					"part": "title",
+					"box": {
+						"x": 130.578125,
+						"y": 692.296875,
+						"width": 474.8125,
+						"height": 31.109375
+					}
+				}
+			],
+			"after": [
+				{
+					"part": "surface",
+					"box": {
+						"x": 114.5,
+						"y": 399.09375,
+						"width": 508.796875,
+						"height": 387.828125
+					}
+				},
+				{
+					"part": "image",
+					"box": {
+						"x": 130.578125,
+						"y": 415.203125,
+						"width": 476.578125,
+						"height": 260.875
+					}
+				},
+				{
+					"part": "title",
+					"box": {
+						"x": 130.578125,
+						"y": 692.296875,
+						"width": 474.8125,
+						"height": 31.109375
+					}
+				}
+			]
+		},
+		{
+			"event": "capture",
+			"generation": 3,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 3,
+			"id": "a",
+			"duration": 1600,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 3,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 4,
+			"id": "a",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 4,
+			"id": "a",
+			"duration": 1600,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "complete",
+			"generation": 4,
+			"layers": 0
+		},
+		{
+			"event": "capture",
+			"generation": 5,
+			"id": "b",
+			"layers": 3
+		},
+		{
+			"event": "play",
+			"generation": 5,
+			"id": "b",
+			"duration": 1600,
+			"scrollY": 0,
+			"layers": 3
+		},
+		{
+			"event": "manual-reduction",
+			"generation": 5,
+			"layers": 0
+		}
+	],
+	"url": "/demo/motion-route-prototype/detail/b"
+}

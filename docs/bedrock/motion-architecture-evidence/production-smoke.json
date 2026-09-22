@@ -1,0 +1,5 @@
+{
+	"url": "/demo/motion-route-prototype/detail/a",
+	"events": "{\"event\":\"capture\",\"generation\":1,\"id\":\"a\",\"layers\":3}\n{\"event\":\"play\",\"generation\":1,\"id\":\"a\",\"duration\":360,\"scrollY\":0,\"layers\":3}\n{\"event\":\"complete\",\"generation\":1,\"layers\":0}",
+	"clean": true
+}

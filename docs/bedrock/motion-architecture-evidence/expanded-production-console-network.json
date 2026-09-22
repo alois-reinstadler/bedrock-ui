@@ -1,0 +1,18 @@
+[
+	{
+		"content": [
+			{
+				"type": "text",
+				"text": "Emulating viewport: {\"deviceScaleFactor\":1,\"isMobile\":false,\"hasTouch\":false,\"isLandscape\":false,\"width\":1280,\"height\":1000}\n## Console messages\n<no console messages found>"
+			}
+		]
+	},
+	{
+		"content": [
+			{
+				"type": "text",
+				"text": "Emulating viewport: {\"deviceScaleFactor\":1,\"isMobile\":false,\"hasTouch\":false,\"isLandscape\":false,\"width\":1280,\"height\":1000}\n## Network requests\nShowing 1-33 of 33 (Page 1 of 1).\nreqid=2289 GET http://127.0.0.1:4095/demo/motion-route-prototype/detail/a [200]\nreqid=2329 GET http://127.0.0.1:4095/templates/video-library/paper-suns.jpg [200]\nreqid=2334 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2335 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2336 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2337 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2338 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2339 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2340 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2341 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2342 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2343 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2344 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2345 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2346 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2347 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2348 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2349 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2350 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2351 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2352 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2353 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2354 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2355 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2356 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2357 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2358 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]\nreqid=2359 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg?motion=repeat-0 [200]\nreqid=2360 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg?motion=repeat-1 [200]\nreqid=2361 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg?motion=repeat-2 [200]\nreqid=2362 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg?motion=repeat-3 [200]\nreqid=2363 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg?motion=repeat-4 [200]\nreqid=2364 GET http://127.0.0.1:4095/templates/video-library/signal-above.jpg [200]"
+			}
+		]
+	}
+]
