@@ -1,154 +1,155 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('Social Network template', () => {
-	test('publishes a note and supports feed reactions and threads', async ({ page }) => {
-		const pageErrors: string[] = [];
-		page.on('pageerror', (error) => pageErrors.push(error.message));
+const base = '/templates/social-network';
 
-		await page.goto('/templates/social-network');
-		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your corner of the internet');
-
-		const composer = page.getByPlaceholder('Share something worth keeping…');
-		await composer.fill('A calmer interface leaves room for better decisions.');
-		await page.getByRole('button', { name: /Publish/ }).click();
-		await expect(
-			page.getByText('A calmer interface leaves room for better decisions.')
-		).toBeVisible();
-
-		const post = page.locator('[data-post-id="garden-signals"]');
-		const appreciate = post.getByRole('button', { name: /appreciations/ });
-		await appreciate.click();
-		await expect(appreciate).toHaveAttribute('aria-pressed', 'true');
-
-		const replies = post.getByRole('button', { name: /replies/ });
-		await replies.click();
-		await expect(post.getByText('The social layer is the real infrastructure.')).toBeVisible();
-		expect(pageErrors).toEqual([]);
-	});
-
-	test('adapts its primary controls to a mobile viewport', async ({ page }) => {
-		await page.setViewportSize({ width: 390, height: 844 });
-		await page.goto('/templates/social-network');
-
-		const mobileNav = page.getByRole('navigation', { name: 'Mobile navigation' });
-		await expect(mobileNav).toBeVisible();
-		await mobileNav.getByRole('button', { name: 'Updates' }).click();
-		await expect(page.getByRole('heading', { name: 'Notifications' })).toBeVisible();
-		await expect(page.getByText('2 updates waiting for you')).toBeVisible();
-	});
-});
-
-test('searches, saves, replies, opens profiles, and marks notifications read', async ({ page }) => {
-	await page.goto('/templates/social-network');
-	const search = page.getByRole('textbox', { name: 'Search people and notes' });
-	await search.fill('not-a-real-note');
-	await expect(page.getByRole('status').filter({ hasText: 'No notes here yet' })).toBeVisible();
-	await search.fill('shade');
-	await expect(page.locator('[data-post-id]')).toHaveCount(1);
-	await search.clear();
-	const post = page.locator('[data-post-id="garden-signals"]');
-	await post.getByRole('button', { name: 'Save note', exact: true }).click();
-	await post.getByRole('button', { name: /replies/ }).click();
-	await post
-		.getByRole('textbox', { name: 'Reply to Sora Bell' })
-		.fill('Rest belongs in every neighborhood.');
-	await post.getByRole('button', { name: 'Send reply' }).click();
-	await expect(post.getByText('Rest belongs in every neighborhood.')).toBeVisible();
-	await post.getByRole('button', { name: "Open Sora Bell's profile" }).click();
-	await expect(page.getByRole('dialog').getByRole('heading', { name: 'Sora Bell' })).toBeVisible();
-	await page.keyboard.press('Escape');
-	await page.getByRole('button', { name: 'Open notifications', exact: true }).click();
+test('opens on the feed, publishes, likes, reposts, quotes and bookmarks', async ({ page }) => {
+	const errors: string[] = [];
+	page.on('pageerror', (error) => errors.push(error.message));
+	await page.goto(base);
+	await expect(page.getByRole('region', { name: 'Template preview controls' })).toHaveAttribute(
+		'data-ready',
+		'true'
+	);
+	await expect(page.getByRole('heading', { name: 'Home', exact: true })).toBeVisible();
+	await expect(page.getByText('Find your people', { exact: true })).toHaveCount(0);
 	await page
-		.getByRole('dialog')
-		.getByRole('button', { name: /Eli Moreno/ })
-		.click();
-	await expect(page.getByText('1 update waiting for you')).toBeVisible();
-});
-
-test('retains drafts, publishes described media, and supports reversible moderation', async ({
-	page
-}) => {
-	await page.goto('/templates/social-network');
-	const draft = page.getByRole('textbox', { name: 'Write a new note' });
-	await draft.fill('A garden gives a neighborhood room to pause.');
-	await page.reload();
-	await expect(draft).toHaveValue('A garden gives a neighborhood room to pause.');
-	await page.getByRole('button', { name: 'Attach sample field map' }).click();
-	await page
-		.getByRole('textbox', { name: 'Image description' })
-		.fill('Three shaded gathering places connected by garden paths');
-	await page.getByRole('button', { name: 'Publish', exact: true }).click();
-	const post = page.locator('[data-post-id]').first();
-	await expect(
-		post.getByRole('img', { name: 'Three shaded gathering places connected by garden paths' })
-	).toBeVisible();
-	await post.getByRole('button', { name: 'Save note', exact: true }).click();
+		.getByRole('textbox', { name: 'Write a post', exact: true })
+		.fill('A little more room for real conversation.');
+	await page.getByRole('button', { name: 'Post', exact: true }).click();
+	await expect(page.locator('[data-post-id]').first()).toContainText(
+		'A little more room for real conversation.'
+	);
+	const post = page.locator('[data-post-id="long-way-home"]');
+	await post.getByRole('button', { name: "Like Leo Martin's post" }).click();
+	await expect(post.getByRole('button', { name: "Like Leo Martin's post" })).toHaveAttribute(
+		'aria-pressed',
+		'true'
+	);
+	await post.getByRole('button', { name: "Repost Leo Martin's post" }).click();
+	await expect(post.getByText('You reposted')).toBeVisible();
+	await post.getByRole('button', { name: 'Bookmark post', exact: true }).click();
+	await post.getByRole('button', { name: "Quote Leo Martin's post" }).click();
+	await post.getByRole('textbox', { name: 'Write a quote' }).fill('Worth taking the scenic route.');
+	await post.getByRole('button', { name: 'Post', exact: true }).click();
+	await expect(page.locator('[data-post-id]').first()).toContainText(
+		'Worth taking the scenic route.'
+	);
 	await page
 		.getByRole('navigation', { name: 'Social primary navigation', exact: true })
-		.getByRole('button', { name: 'Saved', exact: true })
+		.getByRole('link', { name: 'Bookmarks' })
 		.click();
-	await expect(page).toHaveURL(/view=Saved/);
-	await expect(page.getByText('A garden gives a neighborhood room to pause.')).toBeVisible();
-	await page
-		.locator('[data-post-id]')
-		.first()
-		.getByRole('button', { name: 'Hide note by Mina Okafor' })
-		.click();
-	await expect(page.getByText('A garden gives a neighborhood room to pause.')).toHaveCount(0);
-	await page.getByRole('button', { name: 'Undo hide' }).click();
-	await expect(page.getByText('A garden gives a neighborhood room to pause.')).toBeVisible();
-});
-
-test('links profiles and threads, edits own profile, and filters notifications', async ({
-	page
-}) => {
-	await page.goto('/templates/social-network?view=Profile');
-	await page.getByRole('button', { name: 'Edit profile', exact: true }).click();
-	await page.getByRole('textbox', { name: 'Display name' }).fill('Mina Fieldwork');
-	await page.getByRole('textbox', { name: 'About you' }).fill('Making more room for useful ideas.');
-	await page.getByRole('button', { name: 'Save profile' }).click();
+	await expect(page).toHaveURL(`${base}/bookmarks`);
+	await expect(page.locator('[data-post-id="long-way-home"]')).toBeVisible();
 	await expect(
 		page
-			.getByRole('region', { name: 'Your profile' })
-			.getByRole('heading', { name: 'Mina Fieldwork' })
-	).toBeVisible();
-	await page.goto('/templates/social-network?thread=garden-signals');
-	await expect(page.getByRole('textbox', { name: 'Reply to Sora Bell' })).toBeVisible();
-	await page.reload();
-	await expect(page.getByRole('textbox', { name: 'Reply to Sora Bell' })).toBeVisible();
-	await page
-		.locator('[data-post-id="garden-signals"]')
-		.getByRole('button', { name: "Open Sora Bell's profile" })
-		.click();
-	await expect(page).toHaveURL(/profile=sora/);
-	await page.reload();
-	await expect(page.getByRole('dialog').getByRole('heading', { name: 'Sora Bell' })).toBeVisible();
-	await page.keyboard.press('Escape');
-	await page.getByRole('button', { name: 'Open notifications', exact: true }).click();
-	await page.getByRole('button', { name: 'Unread only' }).click();
-	await page.getByRole('button', { name: 'Mark all read' }).click();
-	await expect(page.getByText('0 updates waiting for you')).toBeVisible();
+			.locator('[data-post-id="long-way-home"]')
+			.getByRole('button', { name: "Like Leo Martin's post" })
+	).toHaveAttribute('aria-pressed', 'true');
+	expect(errors).toEqual([]);
 });
 
-test('mobile discovery and browser history work with reduced motion', async ({ page }) => {
-	await page.setViewportSize({ width: 390, height: 844 });
-	await page.emulateMedia({ reducedMotion: 'reduce', colorScheme: 'dark' });
-	await page.goto('/templates/social-network');
-	const navigation = page.getByRole('navigation', { name: 'Mobile navigation', exact: true });
-	await navigation.getByRole('button', { name: 'Discover', exact: true }).click();
-	await expect(
-		page.getByRole('heading', { name: 'Small circles. Wider perspectives.' })
-	).toBeVisible();
+test('thread and profile routes survive refresh; replies and account dropdown work', async ({
+	page
+}) => {
+	await page.goto(`${base}/post/long-way-home`);
+	await expect(page.getByRole('heading', { name: 'Post', exact: true })).toBeVisible();
+	await page.reload();
+	await page.getByRole('textbox', { name: 'Write a reply' }).fill('Taking the long way tomorrow.');
+	await page.getByRole('button', { name: 'Reply', exact: true }).click();
+	await expect(page.getByText('Taking the long way tomorrow.')).toBeVisible();
 	await page
-		.getByRole('region', { name: 'Explore circles' })
-		.getByRole('button', { name: 'Follow', exact: true })
-		.first()
+		.locator('[data-post-id="long-way-home"]')
+		.getByRole('link', { name: 'Leo Martin profile' })
 		.click();
-	await navigation.getByRole('button', { name: 'Profile', exact: true }).click();
-	await expect(page.getByRole('region', { name: 'Your profile' })).toBeVisible();
-	await page.goBack();
-	await expect(page).toHaveURL(/view=Discover/);
-	expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
-		true
+	await expect(page).toHaveURL(`${base}/profile/leo`);
+	await page.reload();
+	await expect(
+		page.getByRole('region', { name: 'Profile' }).getByRole('heading', { name: 'Leo Martin' })
+	).toBeVisible();
+	await page.getByRole('button', { name: 'Open account menu' }).click();
+	await page.getByRole('menuitem', { name: 'View your profile' }).click();
+	await expect(page).toHaveURL(`${base}/profile/mina`);
+	await page.getByRole('button', { name: 'Edit profile' }).click();
+	await page.getByRole('textbox', { name: 'Display name' }).fill('Mina Studio');
+	await page.getByRole('button', { name: 'Save profile' }).click();
+	await expect(
+		page.getByRole('region', { name: 'Profile' }).getByRole('heading', { name: 'Mina Studio' })
+	).toBeVisible();
+});
+
+test('search uses a query, notifications use a route, and note feedback works', async ({
+	page
+}) => {
+	await page.goto(`${base}/explore`);
+	await page.getByRole('textbox', { name: 'Search posts and people' }).fill('photography');
+	await page.getByRole('button', { name: 'Search', exact: true }).click();
+	await expect(page).toHaveURL(/\/explore\?q=photography$/);
+	await expect(page.locator('[data-post-id]')).toHaveCount(2);
+	const note = page.locator('[data-post-id="city-after-dark"]');
+	await note.getByRole('button', { name: 'Helpful?', exact: true }).click();
+	await expect(note.getByRole('button', { name: 'Thanks for your feedback' })).toHaveAttribute(
+		'aria-pressed',
+		'true'
 	);
+	await page
+		.getByRole('navigation', { name: 'Social primary navigation', exact: true })
+		.getByRole('link', { name: 'Notifications' })
+		.click();
+	await expect(page).toHaveURL(`${base}/notifications`);
+	await page.getByRole('button', { name: 'Unread', exact: true }).click();
+	await page.getByRole('button', { name: 'Mark all read' }).click();
+	await expect(page.getByText('No unread notifications.')).toBeVisible();
+});
+
+test('mobile controls have padding, no horizontal overflow, and working route history', async ({
+	page
+}) => {
+	await page.setViewportSize({ width: 390, height: 844 });
+	await page.emulateMedia({ reducedMotion: 'reduce' });
+	await page.goto(base);
+	await expect(page.getByRole('navigation', { name: 'Mobile navigation' })).toBeVisible();
+	const composer = page.getByRole('textbox', { name: 'Write a post', exact: true });
+	expect(
+		await composer.evaluate((element) => parseFloat(getComputedStyle(element).paddingLeft))
+	).toBeGreaterThanOrEqual(8);
+	await composer.fill('A draft stays with the app.');
+	const navigation = page.getByRole('navigation', { name: 'Mobile navigation' });
+	await navigation.getByRole('link', { name: 'Explore' }).click();
+	await expect(page).toHaveURL(`${base}/explore`);
+	expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+	await navigation.getByRole('link', { name: 'Profile' }).click();
+	await expect(page).toHaveURL(`${base}/profile/mina`);
+	await page.goBack();
+	await expect(page).toHaveURL(`${base}/explore`);
+	await navigation.getByRole('link', { name: 'Home' }).click();
+	await expect(composer).toHaveValue('A draft stays with the app.');
+});
+
+test('follow chips stay inside their rows and downloaded media loads', async ({ page }) => {
+	await page.setViewportSize({ width: 1280, height: 900 });
+	await page.goto(base);
+	const discovery = page.getByRole('complementary', { name: 'Discover people and topics' });
+	await discovery.getByRole('button', { name: 'Follow Nora Chen', exact: true }).click();
+	await expect(discovery.getByRole('button', { name: 'Unfollow Nora Chen' })).toHaveText(
+		'Following'
+	);
+	const contained = await discovery.locator('.follow-row').evaluateAll((rows) =>
+		rows.every((row) => {
+			const outer = row.getBoundingClientRect();
+			const button = row.querySelector('button')!.getBoundingClientRect();
+			return button.right <= outer.right + 1 && button.left >= outer.left;
+		})
+	);
+	expect(contained).toBe(true);
+	await expect(page.locator('[data-post-id="long-way-home"] img.post-media')).toBeVisible();
+	expect(
+		await page
+			.locator('[data-post-id="long-way-home"] img.post-media')
+			.evaluate((image) => (image as HTMLImageElement).naturalWidth)
+	).toBeGreaterThan(500);
+	const video = page.locator('video').first();
+	await video.scrollIntoViewIfNeeded();
+	await expect
+		.poll(() => video.evaluate((element) => (element as HTMLVideoElement).readyState))
+		.toBeGreaterThan(0);
 });

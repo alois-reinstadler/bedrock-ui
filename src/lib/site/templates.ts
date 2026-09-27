@@ -15,9 +15,9 @@ export const templates: TemplateDoc[] = [
 		slug: 'music-player',
 		title: 'Music Player',
 		description:
-			'Play nine original songs, build your library, and shape the queue with a responsive full player.',
+			'Browse real music by genre, explore albums, and keep listening as you move through your library.',
 		layouts: ['Mobile', 'Tablet', 'Desktop'],
-		components: ['Avatar', 'Badge', 'Button', 'Icon', 'Icon Button', 'Input', 'Scroll Area'],
+		components: ['Button', 'Input'],
 		blocks: [],
 		thumbnail: '/templates/music-player.png'
 	},
@@ -25,21 +25,9 @@ export const templates: TemplateDoc[] = [
 		slug: 'video-library',
 		title: 'Video Library',
 		description:
-			'Watch original short films, explore genres, and pick up where you left off with saved playback.',
+			'Discover open films, explore title pages, and watch in a dedicated player with saved progress.',
 		layouts: ['Mobile', 'Tablet', 'Desktop'],
-		components: [
-			'Avatar',
-			'Badge',
-			'Button',
-			'Dialog',
-			'Heading',
-			'Icon',
-			'Icon Button',
-			'Input',
-			'Scroll Area',
-			'Text',
-			'Video Player'
-		],
+		components: ['Video Player'],
 		blocks: [],
 		thumbnail: '/templates/video-library.png'
 	},
@@ -47,26 +35,22 @@ export const templates: TemplateDoc[] = [
 		slug: 'email-client',
 		title: 'Email Client',
 		description:
-			'Mail, Calendar, and Tasks in one workspace, with inline composition and message follow-ups.',
+			'A unified mail workspace with conversations, calendar, tasks, and follow-ups in one familiar shell.',
 		layouts: ['Mobile', 'Tablet', 'Desktop'],
 		components: [
 			'Avatar',
 			'Badge',
 			'Button',
 			'Checkbox',
-			'Calendar',
 			'Date Input',
 			'Dialog',
 			'Dropdown Menu',
 			'Icon',
 			'Icon Button',
 			'Input',
-			'Input Group',
 			'Label',
-			'Progress',
 			'Scroll Area',
 			'Separator',
-			'Sheet',
 			'Textarea'
 		],
 		blocks: [],
@@ -76,20 +60,9 @@ export const templates: TemplateDoc[] = [
 		slug: 'social-network',
 		title: 'Social Network',
 		description:
-			'Share described media, explore circles, edit profiles, and keep up with conversations and updates.',
+			'A live-feeling timeline with photos, video, replies, reposts, quotes, and community context.',
 		layouts: ['Mobile', 'Tablet', 'Desktop'],
-		components: [
-			'Avatar',
-			'Badge',
-			'Button',
-			'Card',
-			'Icon Button',
-			'Input',
-			'Scroll Area',
-			'Separator',
-			'Sheet',
-			'Textarea'
-		],
+		components: ['Button', 'Dropdown Menu', 'Input', 'Textarea'],
 		blocks: [],
 		thumbnail: '/templates/social-network.png'
 	}

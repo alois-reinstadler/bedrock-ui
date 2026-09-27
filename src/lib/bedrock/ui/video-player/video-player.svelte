@@ -4,6 +4,7 @@
 		pause: 'Pause',
 		replay: 'Replay',
 		mute: 'Mute',
+		volume: 'Volume',
 		unmute: 'Unmute',
 		scrubber: 'Seek',
 		timeOf: (current: string, duration: string) => `${current} of ${duration}`,
@@ -36,7 +37,8 @@
 </script>
 
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, onMount, untrack } from 'svelte';
+	import { clampVolume, gainToVolume, volumeToGain } from '#lib/bedrock/media/volume.js';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import { IconButton } from '#lib/bedrock/ui/icon-button';
 	import { Spinner } from '#lib/bedrock/ui/spinner';
@@ -96,6 +98,8 @@
 
 	let video = $state<HTMLVideoElement | null>(null);
 	let playing = $state(false);
+	let volume = $state(1);
+	let lastAudibleVolume = 1;
 	let ended = $state(false);
 	let currentTime = $state(0);
 	let duration = $state(0);
@@ -144,11 +148,31 @@
 		media.currentTime = clampTime(seconds, duration);
 	}
 
+	function syncVolume() {
+		if (!video) return;
+		volume = gainToVolume(video.volume);
+		if (volume > 0) lastAudibleVolume = volume;
+	}
+
+	function setVolume(level: number) {
+		if (!video) return;
+		volume = clampVolume(level);
+		video.volume = volumeToGain(volume);
+		if (volume > 0) {
+			lastAudibleVolume = volume;
+			muted = false;
+		}
+	}
+
+	function toggleMute() {
+		if (muted || volume === 0) {
+			if (volume === 0) setVolume(lastAudibleVolume);
+			muted = false;
+		} else muted = true;
+	}
+
 	function adjustVolume(delta: number) {
-		const media = video;
-		if (!media) return;
-		media.volume = Math.min(1, Math.max(0, media.volume + delta));
-		if (media.volume > 0 && media.muted) media.muted = false;
+		setVolume((muted ? 0 : volume) + delta);
 	}
 
 	function cycleRate() {
@@ -167,6 +191,13 @@
 		announce(
 			captionsTrack === null ? labels.captionsOff : labels.captionsOn(captions[captionsTrack].label)
 		);
+	}
+
+	function setRoot(element: HTMLDivElement) {
+		ref = element;
+		return () => {
+			if (ref === element) ref = null;
+		};
 	}
 
 	function toggleFullscreen() {
@@ -228,7 +259,7 @@
 				adjustVolume(-0.05);
 				return handled();
 			case 'm':
-				muted = !muted;
+				toggleMute();
 				return handled();
 			case 'f':
 				toggleFullscreen();
@@ -292,24 +323,27 @@
 	}
 
 	function setVideo(element: HTMLVideoElement) {
-		video = element;
-		// Metadata can load before hydration attaches the listeners.
-		duration = Number.isFinite(element.duration) ? element.duration : 0;
-		currentTime = element.currentTime;
-		rate = element.playbackRate;
-		playing = !element.paused && !element.ended;
-		// Svelte's element typings don't know the PiP events yet.
-		const onEnterPip = () => (inPip = true);
-		const onLeavePip = () => (inPip = false);
-		element.addEventListener('enterpictureinpicture', onEnterPip);
-		element.addEventListener('leavepictureinpicture', onLeavePip);
-		const cleanupSetup = mediaSetup?.(element);
-		return () => {
-			element.removeEventListener('enterpictureinpicture', onEnterPip);
-			element.removeEventListener('leavepictureinpicture', onLeavePip);
-			cleanupSetup?.();
-			if (video === element) video = null;
-		};
+		return untrack(() => {
+			video = element;
+			syncVolume();
+			// Metadata can load before hydration attaches the listeners.
+			duration = Number.isFinite(element.duration) ? element.duration : 0;
+			currentTime = element.currentTime;
+			rate = element.playbackRate;
+			playing = !element.paused && !element.ended;
+			// Svelte's element typings don't know the PiP events yet.
+			const onEnterPip = () => (inPip = true);
+			const onLeavePip = () => (inPip = false);
+			element.addEventListener('enterpictureinpicture', onEnterPip);
+			element.addEventListener('leavepictureinpicture', onLeavePip);
+			const cleanupSetup = mediaSetup?.(element);
+			return () => {
+				element.removeEventListener('enterpictureinpicture', onEnterPip);
+				element.removeEventListener('leavepictureinpicture', onLeavePip);
+				cleanupSetup?.();
+				if (video === element) video = null;
+			};
+		});
 	}
 
 	// Applies the controlled captions selection to the native tracks.
@@ -322,7 +356,7 @@
 		}
 	});
 
-	$effect(() => {
+	onMount(() => {
 		const onFullscreenChange = () => {
 			fullscreen = document.fullscreenElement === ref;
 			wake();
@@ -341,12 +375,12 @@
 </script>
 
 <div
-	bind:this={ref}
+	{@attach setRoot}
 	data-slot="video-player"
 	role="group"
 	aria-label={label}
 	class={cn(
-		'group/video relative overflow-hidden rounded-xl border bg-black text-white',
+		'group/video @container relative overflow-hidden rounded-xl border bg-black text-white',
 		className
 	)}
 	onkeydown={onKeydown}
@@ -363,6 +397,7 @@
 		{playsinline}
 		{preload}
 		bind:muted
+		onvolumechange={syncVolume}
 		controls={nativeControls}
 		onclick={() => {
 			if (!nativeControls) togglePlay();
@@ -458,7 +493,7 @@
 		<div
 			data-slot="video-player-controls"
 			class={cn(
-				'absolute inset-x-0 bottom-0 flex items-center gap-1 bg-gradient-to-t from-black/80 to-transparent px-2 pt-8 pb-1.5 transition-opacity duration-[var(--motion-state)]',
+				'media-controls absolute inset-x-0 bottom-0 flex flex-wrap items-center gap-1 bg-gradient-to-t from-black/80 to-transparent px-2 pt-8 pb-1.5 transition-opacity duration-[var(--motion-state)]',
 				controlsIdle && 'pointer-events-none opacity-0'
 			)}
 		>
@@ -481,7 +516,7 @@
 				aria-valuetext={labels.timeOf(formatTime(currentTime), formatTime(duration))}
 				aria-orientation="horizontal"
 				data-slot="video-player-scrubber"
-				class="tap-target relative mx-1 h-1.5 min-w-0 flex-1 cursor-pointer rounded-full bg-white/25 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+				class="media-seek tap-target relative mx-1 h-1.5 min-w-0 flex-1 cursor-pointer rounded-full bg-white/25 focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
 				onkeydown={onScrubberKeydown}
 			>
 				<span
@@ -490,17 +525,32 @@
 					aria-hidden="true"
 				></span>
 			</div>
-			<span class="px-1 font-code text-[11px] whitespace-nowrap text-white/90 tabular-nums">
+			<span
+				class="media-time px-1 font-code text-[11px] whitespace-nowrap text-white/90 tabular-nums"
+			>
 				{labels.timeOf(formatTime(currentTime), formatTime(duration))}
 			</span>
-			<IconButton
-				icon={muted ? 'volumeMuted' : 'volume'}
-				label={muted ? labels.unmute : labels.mute}
-				variant="ghost"
-				size="sm"
-				class="text-white hover:bg-white/15 hover:text-white"
-				onclick={() => (muted = !muted)}
-			/>
+			<div class="volume-control">
+				<IconButton
+					icon={muted || volume === 0 ? 'volumeMuted' : 'volume'}
+					label={muted || volume === 0 ? labels.unmute : labels.mute}
+					variant="ghost"
+					size="sm"
+					class="text-white hover:bg-white/15 hover:text-white"
+					onclick={toggleMute}
+				/>
+				<input
+					type="range"
+					min="0"
+					max="100"
+					step="1"
+					value={muted ? 0 : Math.round(volume * 100)}
+					aria-label={labels.volume}
+					aria-valuetext={muted ? 'Muted' : `${Math.round(volume * 100)}%`}
+					data-slot="video-player-volume"
+					oninput={(event) => setVolume(Number(event.currentTarget.value) / 100)}
+				/>
+			</div>
 			{#if playbackRates.length > 1}
 				<button
 					type="button"
@@ -547,3 +597,39 @@
 
 	<span class="sr-only" role="status" data-slot="video-player-status">{announcement}</span>
 </div>
+
+<style>
+	.volume-control {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		flex-shrink: 0;
+	}
+	.volume-control input {
+		width: 76px;
+		height: 28px;
+		accent-color: white;
+		cursor: pointer;
+	}
+	.volume-control input:focus-visible {
+		outline: 2px solid white;
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
+	@container (max-width: 540px) {
+		.media-seek {
+			order: -2;
+			flex: 1 0 calc(100% - 130px);
+		}
+		.media-time {
+			order: -1;
+			font-size: 10px;
+		}
+		.volume-control {
+			margin-right: auto;
+		}
+		.volume-control input {
+			width: 52px;
+		}
+	}
+</style>

@@ -47,7 +47,11 @@
 	</p>
 	<div class="mt-6 grid gap-8 xl:grid-cols-2">
 		{#each visible as template (template.slug)}
-			<article class="overflow-hidden rounded-2xl border bg-card">
+			<article
+				id={template.slug}
+				tabindex="-1"
+				class="template-card scroll-mt-20 overflow-hidden rounded-2xl border bg-card outline-none target:ring-2 target:ring-ring target:ring-offset-4 target:ring-offset-background"
+			>
 				<a
 					href={`/templates/${template.slug}`}
 					class="group block rounded-t-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"

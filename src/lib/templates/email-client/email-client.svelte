@@ -7,14 +7,13 @@
 	import CalendarIcon from '@lucide/svelte/icons/calendar-days';
 	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
 	import FileIcon from '@lucide/svelte/icons/file';
-	import InboxIcon from '@lucide/svelte/icons/inbox';
 	import MailIcon from '@lucide/svelte/icons/mail';
 	import MailOpenIcon from '@lucide/svelte/icons/mail-open';
-	import MenuIcon from '@lucide/svelte/icons/menu';
 	import PaperclipIcon from '@lucide/svelte/icons/paperclip';
-	import PencilIcon from '@lucide/svelte/icons/pencil';
+	import ReplyAllIcon from '@lucide/svelte/icons/reply-all';
+	import ForwardIcon from '@lucide/svelte/icons/forward';
+	import ListFilterIcon from '@lucide/svelte/icons/list-filter';
 	import ReplyIcon from '@lucide/svelte/icons/reply';
-	import SearchIcon from '@lucide/svelte/icons/search';
 	import SendIcon from '@lucide/svelte/icons/send';
 	import StarIcon from '@lucide/svelte/icons/star';
 	import TrashIcon from '@lucide/svelte/icons/trash-2';
@@ -27,71 +26,70 @@
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import { IconButton } from '#lib/bedrock/ui/icon-button';
 	import { Input } from '#lib/bedrock/ui/input';
-	import * as InputGroup from '#lib/bedrock/ui/input-group';
 	import { Label } from '#lib/bedrock/ui/label';
 	import { ScrollArea } from '#lib/bedrock/ui/scroll-area';
-	import { Separator } from '#lib/bedrock/ui/separator';
-	import * as Sheet from '#lib/bedrock/ui/sheet';
 	import { Textarea } from '#lib/bedrock/ui/textarea';
-	import { mailboxes, messages as initialMessages, type MailboxId } from './data.js';
+	import { type MailboxId } from './data.js';
 
-	let {
-		active = true,
-		onNavigateCalendar = () => {},
-		onCreateTask = () => {},
-		onCreateEvent = () => {}
-	}: {
-		active?: boolean;
-		onNavigateCalendar?: () => void;
-		onCreateTask?: (subject: string, context: string) => void;
-		onCreateEvent?: (subject: string, context: string) => void;
-	} = $props();
-	let undoArchive = $state<Array<{ id: string; mailbox: MailboxId }>>([]);
-	let draftId = $state<string | null>(null);
-	let composeReplyId = $state<string | null>(null);
+	import { page } from '$app/state';
+	import { browser } from '$app/env';
+	import { goto } from '$app/navigation';
+	import { useWorkspace, mailBase, messageHref } from './workspace.svelte.js';
+	import { demoToday } from './productivity-data.js';
+	const workspace = useWorkspace();
+	const active = true;
 	let ready = $state(false);
+	const mailParams = $derived(page.params as { folder?: string; message?: string });
+	const selectedMailbox = $derived((mailParams.folder ?? 'inbox') as MailboxId);
+	const selectedLabel = $derived(browser && ready ? page.url.searchParams.get('label') : null);
+	const selectedMessageId = $derived(mailParams.message ?? workspace.localMessageId);
+	const onNavigateCalendar = () => goto(`${mailBase}/calendar`);
+	async function onCreateTask(subject: string, context: string) {
+		workspace.tasks.push({
+			id: `mail-task-${Date.now()}`,
+			title: subject,
+			note: context,
+			project: 'Mail follow-up',
+			due: demoToday,
+			completed: false
+		});
+		workspace.taskFilter = 'Today';
+		workspace.selectedProject = 'All projects';
+		workspace.query = '';
+		await goto(`${mailBase}/tasks`);
+	}
+	async function onCreateEvent(subject: string, context: string) {
+		workspace.eventDraft = { subject, note: context };
+		workspace.query = '';
+		await goto(`${mailBase}/calendar`);
+	}
+
 	onMount(() => {
 		ready = true;
 	});
 
 	type MessageFilter = 'all' | 'unread' | 'starred';
 
-	const mailboxIcons = {
-		inbox: InboxIcon,
-		starred: StarIcon,
-		drafts: FileIcon,
-		sent: SendIcon,
-		archive: ArchiveIcon
-	};
-
-	let messages = $state(initialMessages.map((message) => ({ ...message })));
-	let selectedMailbox = $state<MailboxId>('inbox');
-	let selectedMessageId = $state(initialMessages[0].id);
 	let messageFilter = $state<MessageFilter>('all');
-	let query = $state('');
 	let selectedIds = $state<string[]>([]);
 	let mobilePane = $state<'list' | 'reader'>('list');
-	let foldersOpen = $state(false);
-	let composeOpen = $state(false);
-	let composeTo = $state('');
-	let composeSubject = $state('');
-	let composeBody = $state('');
 	let announcement = $state('');
 	let attachmentOpen = $state(false);
 	afterNavigate(() => {
-		if (!active) {
-			foldersOpen = false;
-			attachmentOpen = false;
-		}
+		mobilePane = mailParams.message || workspace.compose.open ? 'reader' : 'list';
+		if (workspace.compose.open) document.getElementById('compose-to')?.focus();
 	});
 
 	const mailboxMessages = $derived.by(() => {
-		if (selectedMailbox === 'starred') return messages.filter((message) => message.starred);
-		return messages.filter((message) => message.mailbox === selectedMailbox);
+		if (selectedLabel)
+			return workspace.messages.filter((message) => message.label === selectedLabel);
+		if (selectedMailbox === 'starred')
+			return workspace.messages.filter((message) => message.starred);
+		return workspace.messages.filter((message) => message.mailbox === selectedMailbox);
 	});
 
 	const filteredMessages = $derived.by(() => {
-		const normalizedQuery = query.trim().toLocaleLowerCase('en-US');
+		const normalizedQuery = workspace.query.trim().toLocaleLowerCase('en-US');
 		return mailboxMessages.filter((message) => {
 			const matchesFilter =
 				messageFilter === 'all' ||
@@ -107,38 +105,23 @@
 	});
 
 	const currentMessage = $derived(
-		filteredMessages.find((message) => message.id === selectedMessageId) ?? filteredMessages[0]
-	);
-	const unreadCount = $derived(
-		messages.filter((message) => message.mailbox === 'inbox' && message.unread).length
+		workspace.messages.find((message) => message.id === selectedMessageId) ?? filteredMessages[0]
 	);
 	const allVisibleSelected = $derived(
 		filteredMessages.length > 0 &&
 			filteredMessages.every((message) => selectedIds.includes(message.id))
 	);
 
-	function chooseMailbox(mailbox: MailboxId) {
-		selectedMailbox = mailbox;
-		messageFilter = 'all';
-		query = '';
-		selectedIds = [];
-		const first =
-			mailbox === 'starred'
-				? messages.find((message) => message.starred)
-				: messages.find((message) => message.mailbox === mailbox);
-		if (first) selectedMessageId = first.id;
-		mobilePane = 'list';
-		foldersOpen = false;
-	}
-
 	async function chooseMessage(id: string) {
-		if (composeOpen) {
+		if (workspace.compose.open) {
 			persistDraft();
-			composeOpen = false;
+			workspace.compose.open = false;
 		}
-		selectedMessageId = id;
+		workspace.localMessageId = id;
+		const target = workspace.messages.find((item) => item.id === id);
+		if (target) await goto(messageHref(target, selectedMailbox), { reset: false });
 		mobilePane = 'reader';
-		const message = messages.find((item) => item.id === id);
+		const message = workspace.messages.find((item) => item.id === id);
 		if (message?.unread) {
 			message.unread = false;
 			announcement = `${message.subject} marked as read`;
@@ -152,6 +135,8 @@
 
 	async function backToMessages() {
 		mobilePane = 'list';
+		workspace.localMessageId = null;
+		await goto(`${mailBase}/mail/${selectedMailbox}`, { reset: false });
 		await tick();
 		await new Promise<void>((resolve) =>
 			requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
@@ -167,7 +152,7 @@
 	}
 
 	function toggleStar(id: string) {
-		const message = messages.find((item) => item.id === id);
+		const message = workspace.messages.find((item) => item.id === id);
 		if (!message) return;
 		message.starred = !message.starred;
 		announcement = `${message.subject} ${message.starred ? 'starred' : 'unstarred'}`;
@@ -186,44 +171,86 @@
 
 	function updateSelected(action: 'read' | 'archive' | 'delete') {
 		if (action === 'delete') {
-			messages = messages.filter((message) => !selectedIds.includes(message.id));
+			workspace.messages = workspace.messages.filter(
+				(message) => !selectedIds.includes(message.id)
+			);
 			announcement = `${selectedIds.length} messages deleted locally`;
 		} else if (action === 'archive') {
-			undoArchive = messages
+			workspace.undoArchive = workspace.messages
 				.filter((message) => selectedIds.includes(message.id))
 				.map((message) => ({ id: message.id, mailbox: message.mailbox }));
-			for (const message of messages) {
+			for (const message of workspace.messages) {
 				if (selectedIds.includes(message.id)) message.mailbox = 'archive';
 			}
 			announcement = `${selectedIds.length} messages archived`;
 		} else {
-			for (const message of messages) {
+			for (const message of workspace.messages) {
 				if (selectedIds.includes(message.id)) message.unread = false;
 			}
 			announcement = `${selectedIds.length} messages marked as read`;
 		}
 		selectedIds = [];
+		workspace.localMessageId = null;
 	}
 
 	async function openCompose(to = '', subject = '', body = '', replyId: string | null = null) {
-		if (composeOpen) {
+		if (workspace.compose.open) {
 			persistDraft();
-			composeOpen = false;
+			workspace.compose.open = false;
 		}
-		draftId = null;
-		composeReplyId = replyId;
-		foldersOpen = false;
-		composeTo = to;
-		composeSubject = subject;
-		composeBody = body;
-		composeOpen = true;
+		workspace.compose.mode = 'new';
+		workspace.compose.draftId = null;
+		workspace.compose.replyId = replyId;
+		workspace.compose.to = to;
+		workspace.compose.subject = subject;
+		workspace.compose.body = body;
+		workspace.compose.open = true;
 		mobilePane = 'reader';
 		await tick();
 		document.getElementById(replyId ? 'compose-body' : 'compose-to')?.focus();
 	}
 
+	function setDensity(value: string) {
+		if (value !== 'comfortable' && value !== 'compact') return;
+		workspace.mailDensity = value;
+		try {
+			localStorage.setItem('lumen-mail-density', value);
+		} catch {
+			/* Session preference still works. */
+		}
+	}
+	async function startResponse(mode: 'reply' | 'reply-all' | 'forward') {
+		if (!currentMessage) return;
+		const message = currentMessage;
+		const previousBody =
+			workspace.compose.open && workspace.compose.mode !== 'new' ? workspace.compose.body : '';
+		if (workspace.compose.open && workspace.compose.mode === 'new') persistDraft();
+		const others = message.to.flatMap((recipient) =>
+			recipient === 'Product team'
+				? ['product@northstar.example']
+				: recipient.includes('@') && recipient !== 'alex@lumenmail.example'
+					? [recipient]
+					: []
+		);
+		workspace.compose = {
+			open: true,
+			mode,
+			draftId: null,
+			replyId: mode === 'forward' ? null : message.id,
+			to:
+				mode === 'forward'
+					? ''
+					: [...new Set([message.from.email, ...(mode === 'reply-all' ? others : [])])].join(', '),
+			subject: `${mode === 'forward' ? 'Fwd' : 'Re'}: ${message.subject.replace(/^(Re|Fwd):\s*/i, '')}`,
+			body: previousBody
+		};
+		mobilePane = 'reader';
+		await tick();
+		document.getElementById(mode === 'forward' ? 'compose-to' : 'compose-body')?.focus();
+	}
+
 	async function closeCompose() {
-		composeOpen = false;
+		workspace.compose.open = false;
 		await tick();
 		if (currentMessage) document.getElementById('mail-reader-heading')?.focus();
 		else await backToMessages();
@@ -233,9 +260,14 @@
 		persistDraft();
 		void closeCompose();
 	}
+	function composedBody() {
+		return workspace.compose.mode === 'forward' && currentMessage
+			? `${workspace.compose.body}\n\nForwarded message from ${currentMessage.from.name} <${currentMessage.from.email}>:\n${currentMessage.body.join('\n')}`
+			: workspace.compose.body;
+	}
 	function persistDraft() {
 		const draft = {
-			id: draftId ?? `draft-${Date.now()}`,
+			id: workspace.compose.draftId ?? `draft-${Date.now()}`,
 			mailbox: 'drafts' as const,
 			from: {
 				name: 'You',
@@ -243,45 +275,55 @@
 				initials: 'AL',
 				tone: 'bg-primary text-primary-foreground'
 			},
-			to: [composeTo],
-			subject: composeSubject || '(No subject)',
-			preview: composeBody,
-			body: composeBody.split('\n'),
+			to: workspace.compose.to
+				.split(',')
+				.map((recipient) => recipient.trim())
+				.filter(Boolean),
+			subject: workspace.compose.subject || '(No subject)',
+			preview: workspace.compose.body,
+			body: composedBody().split('\n'),
 			time: 'Draft',
 			dateTime: new Date().toISOString(),
 			unread: false,
 			starred: false
 		};
-		messages = draftId
-			? messages.map((message) => (message.id === draftId ? draft : message))
-			: [draft, ...messages];
+		workspace.messages = workspace.compose.draftId
+			? workspace.messages.map((message) =>
+					message.id === workspace.compose.draftId ? draft : message
+				)
+			: [draft, ...workspace.messages];
 		announcement = 'Draft saved locally. Find it in Drafts.';
 	}
 	function restoreArchive() {
-		for (const item of undoArchive) {
-			const message = messages.find((message) => message.id === item.id);
+		for (const item of workspace.undoArchive) {
+			const message = workspace.messages.find((message) => message.id === item.id);
 			if (message) message.mailbox = item.mailbox;
 		}
-		announcement = `Restored ${undoArchive.length} messages.`;
-		undoArchive = [];
+		announcement = `Restored ${workspace.undoArchive.length} messages.`;
+		workspace.undoArchive = [];
 	}
 	function editDraft() {
 		if (!currentMessage) return;
 		openCompose(currentMessage.to[0] ?? '', currentMessage.subject, currentMessage.body.join('\n'));
-		draftId = currentMessage.id;
+		workspace.compose.draftId = currentMessage.id;
 	}
 	function sendMessage(event: SubmitEvent) {
 		event.preventDefault();
-		if (draftId) messages = messages.filter((message) => message.id !== draftId);
-		if (composeReplyId) {
-			const original = messages.find((message) => message.id === composeReplyId);
+		if (workspace.compose.draftId)
+			workspace.messages = workspace.messages.filter(
+				(message) => message.id !== workspace.compose.draftId
+			);
+		if (workspace.compose.replyId) {
+			const original = workspace.messages.find(
+				(message) => message.id === workspace.compose.replyId
+			);
 			if (original)
 				original.thread = [
 					...(original.thread ?? []),
-					{ author: 'You', time: 'Just now', body: composeBody }
+					{ author: 'You', time: 'Just now', body: workspace.compose.body }
 				];
 		}
-		messages.unshift({
+		workspace.messages.unshift({
 			id: `local-${Date.now()}`,
 			mailbox: 'sent',
 			from: {
@@ -290,16 +332,19 @@
 				initials: 'AL',
 				tone: 'bg-primary text-primary-foreground'
 			},
-			to: [composeTo],
-			subject: composeSubject,
-			preview: composeBody,
-			body: composeBody.split('\n').filter(Boolean),
+			to: workspace.compose.to
+				.split(',')
+				.map((recipient) => recipient.trim())
+				.filter(Boolean),
+			subject: workspace.compose.subject,
+			preview: workspace.compose.body,
+			body: composedBody().split('\n').filter(Boolean),
 			time: 'Now',
 			dateTime: new Date().toISOString(),
 			unread: false,
 			starred: false
 		});
-		announcement = `Demo message to ${composeTo} saved in Sent. No email was sent.`;
+		announcement = `Demo message to ${workspace.compose.to} saved in Sent. No email was sent.`;
 		void closeCompose();
 	}
 
@@ -318,8 +363,7 @@
 			event.ctrlKey ||
 			event.metaKey ||
 			event.altKey ||
-			composeOpen ||
-			foldersOpen ||
+			workspace.compose.open ||
 			attachmentOpen
 		)
 			return;
@@ -354,155 +398,33 @@
 <div
 	class="mail-app"
 	data-ready={ready}
-	data-mobile-pane={mobilePane}
-	class:has-undo={undoArchive.length > 0}
+	data-density={workspace.mailDensity}
+	data-mobile-pane={workspace.compose.open || mailParams.message ? 'reader' : mobilePane}
+	class:has-undo={workspace.undoArchive.length > 0}
 >
 	<p class="sr-only" aria-live="polite">{announcement}</p>
 
-	<header class="app-header">
-		<div class="brand-lockup">
-			<div class="brand-mark" aria-hidden="true"><Icon icon={MailIcon} class="size-4" /></div>
-			<span>Lumen</span>
-			<Badge variant="secondary" class="hidden sm:inline-flex">Mail</Badge>
-		</div>
-
-		<div class="header-search">
-			<InputGroup.Root>
-				<InputGroup.Addon><Icon icon={SearchIcon} /></InputGroup.Addon>
-				<InputGroup.Input
-					id="mail-search"
-					value={query}
-					oninput={(event) => (query = event.currentTarget.value)}
-					name="mail-search"
-					aria-label="Search mail"
-					placeholder="Search mail"
-				/>
-				<InputGroup.Addon align="inline-end">
-					<kbd class="hidden rounded border bg-muted px-1.5 font-mono text-[10px] sm:inline">/</kbd>
-				</InputGroup.Addon>
-			</InputGroup.Root>
-		</div>
-
-		<div class="header-actions">
-			<IconButton
-				class="md:hidden"
-				icon={PencilIcon}
-				label="Compose"
-				onclick={() => openCompose()}
-			/>
-			<IconButton icon={CalendarIcon} label="Open calendar" onclick={onNavigateCalendar} />
-			<Avatar class="size-8">
-				<AvatarFallback class="bg-primary text-xs text-primary-foreground">AL</AvatarFallback>
-			</Avatar>
-		</div>
-	</header>
-
-	{#if undoArchive.length}<div
+	{#if workspace.undoArchive.length}<div
 			class="archive-notice flex items-center justify-between gap-3 border-b bg-muted px-4 py-2 text-sm"
 		>
-			<span>{undoArchive.length} messages archived</span><Button
+			<span>{workspace.undoArchive.length} messages archived</span><Button
 				size="sm"
 				variant="outline"
 				onclick={restoreArchive}>Undo archive</Button
 			>
 		</div>{/if}
 	<div class="mail-layout">
-		<aside class="folder-pane" aria-label="Mail folders">
-			<div class="folder-pane-inner">
-				<Button class="w-full justify-start gap-2" onclick={() => openCompose()}>
-					<Icon icon={PencilIcon} />
-					Compose
-					<kbd class="ml-auto rounded bg-primary-foreground/12 px-1.5 font-mono text-[10px]">C</kbd>
-				</Button>
-
-				<nav class="folder-nav" aria-label="Mailbox">
-					<p class="eyebrow">Mailboxes</p>
-					{#each mailboxes as mailbox (mailbox.id)}
-						<Button
-							variant="ghost"
-							class={`folder-button${selectedMailbox === mailbox.id ? ' folder-active' : ''}`}
-							aria-current={selectedMailbox === mailbox.id ? 'page' : undefined}
-							onclick={() => chooseMailbox(mailbox.id)}
-						>
-							<Icon icon={mailboxIcons[mailbox.id]} />
-							<span>{mailbox.label}</span>
-							{#if mailbox.id === 'inbox' && unreadCount > 0}
-								<Badge class="ml-auto min-w-5 justify-center px-1.5">{unreadCount}</Badge>
-							{:else if messages.filter((message) => message.mailbox === mailbox.id).length}
-								<span class="ml-auto text-xs text-muted-foreground"
-									>{messages.filter((message) => message.mailbox === mailbox.id).length}</span
-								>
-							{/if}
-						</Button>
-					{/each}
-				</nav>
-
-				<div class="folder-labels">
-					<p class="eyebrow">Labels</p>
-					<div class="space-y-1">
-						<div class="label-row">
-							<span class="size-2 rounded-full bg-violet-500"></span>Launch
-						</div>
-						<div class="label-row">
-							<span class="size-2 rounded-full bg-sky-500"></span>Research
-						</div>
-						<div class="label-row">
-							<span class="size-2 rounded-full bg-rose-500"></span>Reading
-						</div>
-					</div>
-				</div>
-
-				<div class="storage-card">
-					<div class="flex items-center justify-between text-xs">
-						<span class="font-medium">Storage</span><span class="text-muted-foreground"
-							>4.2 of 15 GB</span
-						>
-					</div>
-					<div class="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
-						<div class="h-full w-[28%] rounded-full bg-primary"></div>
-					</div>
-				</div>
-			</div>
-		</aside>
-
 		<section class="message-pane" aria-label="Message list">
 			<div class="message-toolbar">
 				<div class="flex min-w-0 items-center gap-2">
-					<Sheet.Root open={active && foldersOpen} onOpenChange={(open) => (foldersOpen = open)}>
-						<Sheet.Trigger>
-							{#snippet child({ props })}
-								<IconButton {...props} class="lg:hidden" icon={MenuIcon} label="Open folders" />
-							{/snippet}
-						</Sheet.Trigger>
-						<Sheet.Content side="left" class="w-72 p-0">
-							<Sheet.Header class="border-b px-5 py-4 text-left">
-								<Sheet.Title>Mailboxes</Sheet.Title>
-								<Sheet.Description>Move between folders and labels.</Sheet.Description>
-							</Sheet.Header>
-							<div class="p-4">
-								<Button class="mb-4 w-full justify-start gap-2" onclick={() => openCompose()}>
-									<Icon icon={PencilIcon} />Compose
-								</Button>
-								{#each mailboxes as mailbox (mailbox.id)}
-									<Button
-										variant="ghost"
-										class={`folder-button${selectedMailbox === mailbox.id ? ' folder-active' : ''}`}
-										onclick={() => chooseMailbox(mailbox.id)}
-									>
-										<Icon icon={mailboxIcons[mailbox.id]} />{mailbox.label}
-									</Button>
-								{/each}
-							</div>
-						</Sheet.Content>
-					</Sheet.Root>
 					<div>
-						<p class="eyebrow">{selectedMailbox}</p>
+						<p class="eyebrow">{selectedLabel ? 'Label' : 'Mailbox'}</p>
 						<h1
 							id="mail-list-heading"
 							tabindex="-1"
 							class="truncate text-lg font-semibold capitalize"
 						>
-							{selectedMailbox}
+							{selectedLabel ?? selectedMailbox}
 						</h1>
 					</div>
 				</div>
@@ -560,6 +482,28 @@
 							onclick={() => updateSelected('delete')}
 						/>
 					</div>
+				{:else}
+					<DropdownMenu.Root
+						><DropdownMenu.Trigger
+							>{#snippet child({ props })}<Button
+									{...props}
+									variant="ghost"
+									size="sm"
+									aria-label="Mail list density"
+									><ListFilterIcon class="size-4" />{workspace.mailDensity === 'compact'
+										? 'Compact'
+										: 'View'}</Button
+								>{/snippet}</DropdownMenu.Trigger
+						><DropdownMenu.Content align="end" class="w-44"
+							><DropdownMenu.Label>List density</DropdownMenu.Label><DropdownMenu.RadioGroup
+								value={workspace.mailDensity}
+								onValueChange={setDensity}
+								><DropdownMenu.RadioItem value="comfortable">Comfortable</DropdownMenu.RadioItem
+								><DropdownMenu.RadioItem value="compact">Compact</DropdownMenu.RadioItem
+								></DropdownMenu.RadioGroup
+							></DropdownMenu.Content
+						></DropdownMenu.Root
+					>
 				{/if}
 			</div>
 
@@ -575,7 +519,15 @@
 										aria-label={`Select message from ${message.from.name}`}
 									/>
 								</div>
-								<button class="message-summary" onclick={() => chooseMessage(message.id)}>
+								<a
+									class="message-summary"
+									href={messageHref(message, selectedMailbox)}
+									onclick={(event) => {
+										if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+										event.preventDefault();
+										void chooseMessage(message.id);
+									}}
+								>
 									<div class="message-title-line">
 										<span class:font-semibold={message.unread}>{message.from.name}</span>
 										<time datetime={message.dateTime}>{message.time}</time>
@@ -589,7 +541,7 @@
 										{#if message.label}<Badge variant="secondary">{message.label}</Badge>{/if}
 										{#if message.hasAttachment}<Icon icon={PaperclipIcon} class="size-3.5" />{/if}
 									</div>
-								</button>
+								</a>
 								<div class="message-star">
 									<IconButton
 										icon={StarIcon}
@@ -609,8 +561,10 @@
 						<div class="empty-icon"><Icon icon={MailIcon} class="size-5" /></div>
 						<h2 class="font-semibold">No messages here</h2>
 						<p>Try another filter or clear your search.</p>
-						{#if query}<Button variant="outline" size="sm" onclick={() => (query = '')}
-								>Clear search</Button
+						{#if workspace.query}<Button
+								variant="outline"
+								size="sm"
+								onclick={() => (workspace.query = '')}>Clear search</Button
 							>{/if}
 					</div>
 				{/if}
@@ -618,7 +572,7 @@
 		</section>
 
 		<section class="reader-pane" aria-label="Reading pane">
-			{#if composeOpen}
+			{#if workspace.compose.open && workspace.compose.mode === 'new'}
 				<form class="compose-pane" aria-labelledby="compose-heading" onsubmit={sendMessage}>
 					<header class="border-b px-5 py-4">
 						<div class="mb-2 flex items-center gap-3">
@@ -626,7 +580,7 @@
 								><ArrowLeftIcon class="size-4" />Back</Button
 							>
 							<h2 id="compose-heading" class="text-lg font-semibold">
-								{composeReplyId ? 'Reply' : 'New message'}
+								{workspace.compose.replyId ? 'Reply' : 'New message'}
 							</h2>
 						</div>
 						<p class="text-xs text-muted-foreground">
@@ -638,8 +592,8 @@
 							<Label for="compose-to">To</Label>
 							<Input
 								id="compose-to"
-								value={composeTo}
-								oninput={(event) => (composeTo = event.currentTarget.value)}
+								value={workspace.compose.to}
+								oninput={(event) => (workspace.compose.to = event.currentTarget.value)}
 								name="to"
 								type="email"
 								placeholder="name@example.com"
@@ -650,8 +604,8 @@
 							<Label for="compose-subject">Subject</Label>
 							<Input
 								id="compose-subject"
-								value={composeSubject}
-								oninput={(event) => (composeSubject = event.currentTarget.value)}
+								value={workspace.compose.subject}
+								oninput={(event) => (workspace.compose.subject = event.currentTarget.value)}
 								name="subject"
 								placeholder="What is this about?"
 								required
@@ -661,8 +615,8 @@
 							<Label for="compose-body">Message</Label>
 							<Textarea
 								id="compose-body"
-								value={composeBody}
-								oninput={(event) => (composeBody = event.currentTarget.value)}
+								value={workspace.compose.body}
+								oninput={(event) => (workspace.compose.body = event.currentTarget.value)}
 								name="body"
 								class="min-h-52 resize-none"
 								placeholder="Write your message…"
@@ -796,35 +750,85 @@
 										<p class="mt-2 text-sm leading-relaxed">{reply.body}</p>
 									</div>{/each}
 							</section>{/if}
-						<div class="flex flex-wrap gap-2">
-							{#if currentMessage.mailbox === 'drafts'}<Button variant="outline" onclick={editDraft}
-									>Edit draft</Button
-								>{/if}<Button
-								variant="outline"
-								size="sm"
-								onclick={() =>
-									openCompose(
-										'',
-										`Fwd: ${currentMessage.subject}`,
-										`\n\nForwarded message from ${currentMessage.from.name}:\n${currentMessage.body.join('\n')}`
-									)}>Forward message</Button
+						<div class="message-actions" aria-label="Message actions">
+							{#if currentMessage.mailbox === 'drafts'}<Button
+									variant="outline"
+									size="sm"
+									onclick={editDraft}>Edit draft</Button
+								>{/if}
+							<Button variant="outline" size="sm" onclick={() => startResponse('reply')}
+								><ReplyIcon class="size-4" />Reply</Button
+							>
+							<Button variant="outline" size="sm" onclick={() => startResponse('reply-all')}
+								><ReplyAllIcon class="size-4" />Reply all</Button
+							>
+							<Button variant="outline" size="sm" onclick={() => startResponse('forward')}
+								><ForwardIcon class="size-4" />Forward message</Button
 							>
 						</div>
-						<Separator />
-
-						<button
-							class="reply-prompt"
-							onclick={() =>
-								openCompose(
-									currentMessage.from.email,
-									`Re: ${currentMessage.subject}`,
-									'',
-									currentMessage.id
-								)}
-						>
-							<Icon icon={ReplyIcon} />
-							<span>Reply to {currentMessage.from.name}…</span>
-						</button>
+						{#if workspace.compose.open && workspace.compose.mode !== 'new'}
+							<form class="inline-reply" aria-label="Message reply editor" onsubmit={sendMessage}>
+								<header class="reply-heading">
+									<ReplyIcon class="size-4" />
+									<h3>
+										{workspace.compose.mode === 'forward'
+											? 'Forward'
+											: workspace.compose.mode === 'reply-all'
+												? 'Reply all'
+												: 'Reply'}
+									</h3>
+									<span>From Alex Lane</span>
+								</header>
+								<div class="reply-recipient">
+									<Label for="compose-to">To</Label><Input
+										id="compose-to"
+										type="email"
+										multiple
+										required
+										value={workspace.compose.to}
+										oninput={(event) => (workspace.compose.to = event.currentTarget.value)}
+										placeholder="Add recipients"
+									/>
+								</div>
+								{#if workspace.compose.mode === 'forward'}<div class="reply-recipient">
+										<Label for="compose-subject">Subject</Label><Input
+											id="compose-subject"
+											required
+											value={workspace.compose.subject}
+											oninput={(event) => (workspace.compose.subject = event.currentTarget.value)}
+										/>
+									</div>{/if}
+								<div class="reply-writing">
+									<Label for="compose-body" class="sr-only">Message</Label><Textarea
+										id="compose-body"
+										value={workspace.compose.body}
+										oninput={(event) => (workspace.compose.body = event.currentTarget.value)}
+										class="reply-textarea min-h-40 resize-y border-0 bg-transparent shadow-none focus-visible:ring-0"
+										placeholder="Write your message…"
+										required={workspace.compose.mode !== 'forward'}
+									/>
+									<p class="reply-signature">Alex Lane</p>
+								</div>
+								{#if workspace.compose.mode === 'forward'}<blockquote class="forwarded-message">
+										<strong>Forwarded message</strong>
+										<p>From: {currentMessage.from.name} &lt;{currentMessage.from.email}&gt;</p>
+										<p>Subject: {currentMessage.subject}</p>
+										{#each currentMessage.body as paragraph, index (index)}<p>{paragraph}</p>{/each}
+									</blockquote>{/if}
+								<footer class="reply-footer">
+									<Button type="submit" size="sm"><SendIcon class="size-4" />Send message</Button
+									><Button type="button" size="sm" variant="ghost" onclick={saveDraft}
+										>Save draft</Button
+									><Button
+										type="button"
+										size="sm"
+										variant="ghost"
+										class="ml-auto"
+										onclick={closeCompose}><TrashIcon class="size-4" />Discard</Button
+									>
+								</footer>
+							</form>
+						{/if}
 					</article>
 				</ScrollArea>
 			{:else}
@@ -863,11 +867,11 @@
 
 	.mail-app {
 		--mail-sidebar: 15rem;
-		--mail-list: 23rem;
+		--mail-list: clamp(19rem, 28vw, 25rem);
 		display: grid;
-		grid-template-rows: 3.5rem minmax(0, 1fr);
-		height: calc(100svh - 10.5rem);
-		min-height: 36rem;
+		grid-template-rows: minmax(0, 1fr);
+		height: 100%;
+		min-height: 0;
 		background:
 			radial-gradient(
 				circle at 72% 0%,
@@ -880,75 +884,13 @@
 	}
 
 	.mail-app.has-undo {
-		grid-template-rows: 3.5rem auto minmax(0, 1fr);
-	}
-	.app-header {
-		display: grid;
-		grid-template-columns: var(--mail-sidebar) minmax(16rem, 38rem) auto;
-		align-items: center;
-		gap: 1rem;
-		border-bottom: 1px solid var(--border);
-		padding: 0 1rem;
-		background: color-mix(in oklab, var(--background) 94%, transparent);
-		backdrop-filter: blur(1rem);
-		z-index: 20;
-	}
-
-	.brand-lockup,
-	.header-actions {
-		display: flex;
-		align-items: center;
-		gap: 0.625rem;
-	}
-
-	.brand-lockup {
-		font-weight: 700;
-		letter-spacing: -0.025em;
-	}
-
-	.brand-mark {
-		display: grid;
-		place-items: center;
-		width: 1.9rem;
-		height: 1.9rem;
-		border-radius: 0.65rem;
-		background: var(--primary);
-		color: var(--primary-foreground);
-		box-shadow: 0 0.35rem 1rem color-mix(in oklab, var(--foreground) 12%, transparent);
-	}
-
-	.header-search {
-		width: min(100%, 38rem);
-	}
-
-	.header-actions {
-		justify-content: flex-end;
+		grid-template-rows: auto minmax(0, 1fr);
 	}
 
 	.mail-layout {
 		display: grid;
-		grid-template-columns: var(--mail-sidebar) var(--mail-list) minmax(0, 1fr);
+		grid-template-columns: var(--mail-list) minmax(0, 1fr);
 		min-height: 0;
-	}
-
-	.folder-pane,
-	.message-pane {
-		border-right: 1px solid var(--border);
-	}
-
-	.folder-pane {
-		background: color-mix(in oklab, var(--muted) 45%, var(--background));
-	}
-
-	.folder-pane-inner {
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		padding: 1rem;
-	}
-
-	.folder-nav {
-		margin-top: 1.5rem;
 	}
 
 	.eyebrow {
@@ -960,42 +902,6 @@
 		color: var(--muted-foreground);
 	}
 
-	:global(.folder-button) {
-		width: 100%;
-		justify-content: flex-start;
-		gap: 0.625rem;
-		padding-inline: 0.65rem;
-		font-weight: 450;
-	}
-
-	:global(.folder-button.folder-active) {
-		background: var(--accent);
-		color: var(--accent-foreground);
-		font-weight: 600;
-	}
-
-	.folder-labels {
-		margin-top: 1.5rem;
-	}
-
-	.label-row {
-		display: flex;
-		align-items: center;
-		gap: 0.65rem;
-		border-radius: var(--radius-md);
-		padding: 0.45rem 0.65rem;
-		font-size: 0.8125rem;
-		color: var(--muted-foreground);
-	}
-
-	.storage-card {
-		margin-top: auto;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
-		padding: 0.75rem;
-		background: color-mix(in oklab, var(--card) 82%, transparent);
-	}
-
 	.message-pane,
 	.reader-pane {
 		display: grid;
@@ -1005,6 +911,7 @@
 	}
 
 	.message-pane {
+		border-right: 1px solid var(--border);
 		grid-template-rows: auto auto minmax(0, 1fr);
 	}
 
@@ -1019,7 +926,7 @@
 	}
 
 	.message-toolbar {
-		min-height: 4.65rem;
+		min-height: 86px;
 		padding: 0.75rem 1rem;
 	}
 
@@ -1058,7 +965,7 @@
 
 	.message-row.message-current {
 		background: var(--accent);
-		box-shadow: inset 3px 0 0 var(--foreground);
+		box-shadow: inset 3px 0 0 #5967c7;
 	}
 
 	.message-select,
@@ -1136,12 +1043,18 @@
 		color: var(--muted-foreground);
 	}
 
+	.compose-pane {
+		grid-row: 1 / -1;
+		min-height: 0;
+		overflow-y: auto;
+		padding-bottom: 60px;
+	}
 	.reader-pane {
 		grid-template-rows: auto minmax(0, 1fr);
 	}
 
 	.reader-toolbar {
-		min-height: 4.65rem;
+		min-height: 86px;
 		padding: 0.75rem 1.25rem;
 	}
 
@@ -1153,7 +1066,7 @@
 
 	.reader-subject {
 		max-width: 28ch;
-		font-size: clamp(1.55rem, 3vw, 2.25rem);
+		font-size: clamp(1.35rem, 2vw, 1.75rem);
 		font-weight: 650;
 		line-height: 1.12;
 		letter-spacing: -0.035em;
@@ -1202,32 +1115,84 @@
 		height: 2.4rem;
 	}
 
-	.reply-prompt {
+	.message-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 1.75rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--border);
+	}
+	.inline-reply {
+		margin-top: 1rem;
+		border: 1px solid var(--border);
+		border-top: 2px solid #5967c7;
+		border-radius: 4px;
+		background: var(--background);
+		box-shadow: 0 2px 8px #00000006;
+	}
+	.reply-heading {
 		display: flex;
 		align-items: center;
-		gap: 0.65rem;
-		width: 100%;
-		margin-top: 1.5rem;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
-		padding: 0.85rem 1rem;
+		gap: 0.5rem;
+		padding: 0.75rem 1rem;
+		font-size: 0.8125rem;
+		border-bottom: 1px solid var(--border);
+	}
+	.reply-heading h3 {
+		font-weight: 600;
+	}
+	.reply-heading span {
+		margin-left: auto;
+		font-size: 0.6875rem;
 		color: var(--muted-foreground);
-		text-align: left;
-		transition:
-			background-color var(--motion-state) var(--motion-ease-enter),
-			color var(--motion-state) var(--motion-ease-enter),
-			border-color var(--motion-state) var(--motion-ease-enter);
 	}
-
-	.reply-prompt:hover {
-		border-color: color-mix(in oklab, var(--foreground) 30%, var(--border));
-		background: var(--accent);
-		color: var(--foreground);
+	.reply-recipient {
+		display: grid;
+		grid-template-columns: 3.25rem minmax(0, 1fr);
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.5rem 1rem;
+		border-bottom: 1px solid var(--border);
 	}
-
-	.reply-prompt:focus-visible {
-		outline: 3px solid color-mix(in oklab, var(--ring) 50%, transparent);
-		outline-offset: 2px;
+	.reply-writing {
+		padding: 0.5rem;
+	}
+	.reply-signature {
+		margin: 0.25rem 0.5rem 1rem;
+		font-size: 0.8125rem;
+		color: var(--muted-foreground);
+	}
+	.reply-footer {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.75rem;
+		border-top: 1px solid var(--border);
+		background: color-mix(in oklab, var(--muted) 25%, transparent);
+	}
+	.forwarded-message {
+		margin: 0 1rem 1rem;
+		padding: 1rem;
+		border-left: 2px solid var(--border);
+		font-size: 0.75rem;
+		line-height: 1.7;
+		color: var(--muted-foreground);
+	}
+	.forwarded-message p {
+		margin-top: 0.5rem;
+	}
+	.mail-app[data-density='compact'] .message-summary {
+		padding-block: 0.55rem;
+	}
+	.mail-app[data-density='compact'] .message-select,
+	.mail-app[data-density='compact'] .message-star {
+		padding-top: 0.45rem;
+	}
+	.mail-app[data-density='compact'] .message-preview,
+	.mail-app[data-density='compact'] .message-meta {
+		display: none;
 	}
 
 	.empty-mailbox,
@@ -1253,34 +1218,16 @@
 			--mail-list: min(23rem, 42vw);
 		}
 
-		.app-header {
-			grid-template-columns: auto minmax(12rem, 32rem) auto;
-		}
-
 		.mail-layout {
 			grid-template-columns: var(--mail-list) minmax(0, 1fr);
-		}
-
-		.folder-pane {
-			display: none;
 		}
 	}
 
 	@media (max-width: 767px) {
 		.mail-app {
-			height: calc(100svh - 14rem);
-			min-height: 30rem;
-			grid-template-rows: 3.5rem minmax(0, 1fr);
-		}
-
-		.app-header {
-			grid-template-columns: auto minmax(0, 1fr) auto;
-			gap: 0.5rem;
-			padding-inline: 0.75rem;
-		}
-
-		.brand-lockup > span:not(.sr-only) {
-			display: none;
+			height: 100%;
+			min-height: 0;
+			grid-template-rows: minmax(0, 1fr);
 		}
 
 		.mail-layout {
@@ -1329,8 +1276,7 @@
 	@media (prefers-reduced-motion: reduce) {
 		.message-pane,
 		.reader-pane,
-		.message-row,
-		.reply-prompt {
+		.message-row {
 			transition-duration: 0.01ms;
 		}
 	}

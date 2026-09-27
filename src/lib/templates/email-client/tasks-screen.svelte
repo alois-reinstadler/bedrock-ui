@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { afterNavigate } from '$app/navigation';
-	let {
-		active = true,
-		tasks = $bindable<WorkspaceTask[]>([])
-	}: { active?: boolean; tasks?: WorkspaceTask[] } = $props();
+	import { useWorkspace } from './workspace.svelte.js';
+	const workspace = useWorkspace();
+	const active = true;
+
 	import { tick } from 'svelte';
 	import { parseDate, type CalendarDate } from '@internationalized/date';
 	import Star from '@lucide/svelte/icons/star';
 	import Plus from '@lucide/svelte/icons/plus';
 	import CheckCheck from '@lucide/svelte/icons/check-check';
 	import { Button } from '#lib/bedrock/ui/button';
-	import { Progress } from '#lib/bedrock/ui/progress';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Checkbox } from '#lib/bedrock/ui/checkbox';
 	import { Input } from '#lib/bedrock/ui/input';
@@ -19,12 +17,9 @@
 	import { DateInput } from '#lib/bedrock/ui/date-input';
 	import * as Dialog from '#lib/bedrock/ui/dialog';
 	import { demoToday, type WorkspaceTask } from './productivity-data.js';
-	let filter = $state<'Today' | 'Upcoming' | 'Important' | 'Completed'>('Today');
-	let query = $state('');
+	let quickTitle = $state('');
+	const projects = $derived([...new Set(workspace.tasks.map((task) => task.project))].sort());
 	let open = $state(false);
-	afterNavigate(() => {
-		if (!active) open = false;
-	});
 	let editing = $state<string | null>(null);
 	let title = $state('');
 	let due = $state<CalendarDate | undefined>(parseDate(demoToday));
@@ -33,25 +28,32 @@
 	let error = $state('');
 	let announcement = $state('');
 	const visible = $derived(
-		tasks
+		workspace.tasks
 			.filter(
 				(task) =>
-					(filter === 'Completed'
+					(workspace.taskFilter === 'Completed'
 						? task.completed
 						: !task.completed &&
-							(filter === 'Important'
-								? task.important
-								: filter === 'Today'
-									? task.due <= demoToday
-									: task.due > demoToday)) &&
-					`${task.title} ${task.project}`.toLowerCase().includes(query.toLowerCase())
+							(workspace.taskFilter === 'All'
+								? true
+								: workspace.taskFilter === 'Important'
+									? task.important
+									: workspace.taskFilter === 'Today'
+										? task.due <= demoToday
+										: task.due > demoToday)) &&
+					(workspace.selectedProject === 'All projects' ||
+						task.project === workspace.selectedProject) &&
+					`${task.title} ${task.project} ${task.note}`
+						.toLowerCase()
+						.includes(workspace.query.toLowerCase())
 			)
 			.sort((a, b) => a.due.localeCompare(b.due))
 	);
-	const completed = $derived(tasks.filter((task) => task.completed).length);
+	const completed = $derived(workspace.tasks.filter((task) => task.completed).length);
 	export async function revealTask(id: string) {
-		filter = 'Today';
-		query = '';
+		workspace.taskFilter = 'Today';
+		workspace.selectedProject = 'All projects';
+		workspace.query = '';
 		await tick();
 		document.getElementById(`task-${id}`)?.focus();
 	}
@@ -59,7 +61,9 @@
 		editing = task?.id ?? null;
 		title = task?.title ?? '';
 		due = parseDate(task?.due ?? demoToday);
-		project = task?.project ?? 'Launch';
+		project =
+			task?.project ??
+			(workspace.selectedProject === 'All projects' ? 'Launch' : workspace.selectedProject);
 		note = task?.note ?? '';
 		error = '';
 		open = true;
@@ -76,17 +80,47 @@
 			due: due.toString(),
 			project: project.trim() || 'Personal',
 			note: note.trim(),
-			important: tasks.find((task) => task.id === editing)?.important ?? false,
-			completed: tasks.find((task) => task.id === editing)?.completed ?? false
+			important: workspace.tasks.find((task) => task.id === editing)?.important ?? false,
+			completed: workspace.tasks.find((task) => task.id === editing)?.completed ?? false
 		};
-		tasks = editing ? tasks.map((item) => (item.id === editing ? task : item)) : [...tasks, task];
-		filter = task.completed ? 'Completed' : task.due > demoToday ? 'Upcoming' : 'Today';
-		query = '';
+		workspace.tasks = editing
+			? workspace.tasks.map((item) => (item.id === editing ? task : item))
+			: [...workspace.tasks, task];
+		workspace.taskFilter = task.completed
+			? 'Completed'
+			: task.due > demoToday
+				? 'Upcoming'
+				: 'Today';
+		workspace.query = '';
+		workspace.selectedProject = 'All projects';
 		announcement = `${task.title} ${editing ? 'updated' : 'added'}.`;
 		open = false;
 	}
+	function quickAdd(event: SubmitEvent) {
+		event.preventDefault();
+		if (!quickTitle.trim()) return;
+		const task: WorkspaceTask = {
+			id: `task-${Date.now()}`,
+			title: quickTitle.trim(),
+			due: demoToday,
+			project:
+				workspace.selectedProject === 'All projects' ? 'Personal' : workspace.selectedProject,
+			note: '',
+			completed: false
+		};
+		workspace.tasks = [...workspace.tasks, task];
+		workspace.taskFilter = 'Today';
+		workspace.query = '';
+		quickTitle = '';
+		announcement = `${task.title} added for today.`;
+	}
+	function dueLabel(value: string) {
+		if (value === demoToday) return 'Due today';
+		return `Due ${new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short' }).format(parseDate(value).toDate('UTC'))}`;
+	}
+
 	async function toggle(id: string) {
-		const task = tasks.find((task) => task.id === id);
+		const task = workspace.tasks.find((task) => task.id === id);
 		if (task) {
 			task.completed = !task.completed;
 			announcement = `${task.title} marked ${task.completed ? 'complete' : 'incomplete'}.`;
@@ -95,95 +129,83 @@
 		}
 	}
 	function remove() {
-		const task = tasks.find((task) => task.id === editing);
-		tasks = tasks.filter((task) => task.id !== editing);
+		const task = workspace.tasks.find((task) => task.id === editing);
+		workspace.tasks = workspace.tasks.filter((task) => task.id !== editing);
 		announcement = `${task?.title ?? 'Task'} deleted.`;
 		open = false;
 	}
 </script>
 
-<section class="mx-auto min-h-[calc(100svh-11rem)] max-w-6xl p-4 sm:p-6 lg:p-8">
-	<header class="mb-7 flex flex-wrap items-end justify-between gap-4">
+<section class="tasks-screen">
+	<header class="workspace-page-heading">
 		<div>
-			<p class="text-xs font-medium tracking-widest text-muted-foreground uppercase">
-				One thing at a time
-			</p>
-			<h1
-				id="tasks-screen-heading"
-				tabindex="-1"
-				class="mt-1 text-3xl font-semibold tracking-tight"
-			>
-				Tasks
-			</h1>
-			<p class="mt-2 text-sm text-muted-foreground">
-				Turn the conversation into a clear next step.
+			<h1 id="tasks-screen-heading" tabindex="-1">Tasks</h1>
+			<p>
+				{workspace.tasks.filter((task) => !task.completed).length} open tasks · Monday, September 14
 			</p>
 		</div>
-		<Button onclick={() => edit()}><Plus class="size-4" />New task</Button>
+		<Button size="sm" onclick={() => edit()}><Plus class="size-4" />New task</Button>
 	</header>
-	<div class="grid gap-6 lg:grid-cols-[15rem_minmax(0,1fr)]">
-		<aside class="order-2 space-y-5 lg:order-1">
-			<div class="rounded-2xl border bg-card p-5">
-				<div class="mb-3 flex items-center gap-2 text-sm font-semibold">
-					<CheckCheck class="size-4" />Your progress
-				</div>
-				<p class="text-3xl font-semibold tabular-nums">
-					{completed}<span class="text-base font-normal text-muted-foreground">
-						/ {tasks.length} complete</span
-					>
-				</p>
-				<Progress
-					class="mt-4 h-2 [&_[data-slot=progress-indicator]]:transition-none"
-					value={completed}
-					max={tasks.length || 1}
-					aria-label="Task completion"
-				/>
-				<p class="mt-3 text-xs text-muted-foreground">
-					Small steps move the whole project forward.
-				</p>
+	<div class="tasks-body">
+		<div class="tasks-filterbar">
+			<div role="group" aria-label="Task filters">
+				{#each ['All', 'Today', 'Upcoming', 'Important', 'Completed'] as item (item)}<button
+						class:active={workspace.taskFilter === item}
+						aria-pressed={workspace.taskFilter === item}
+						onclick={() => (workspace.taskFilter = item as typeof workspace.taskFilter)}
+						>{item}</button
+					>{/each}
 			</div>
-			<div class="rounded-2xl bg-muted/40 p-5">
-				<p class="text-sm font-medium">Monday, 14 September</p>
-				<p class="mt-2 text-sm text-muted-foreground">
-					A little space between tasks makes room for better work.
-				</p>
-				<p class="mt-3 text-xs text-muted-foreground">Demo date · Local changes reset on reload.</p>
-			</div>
-		</aside>
-		<div class="order-1 min-w-0 overflow-hidden rounded-2xl border bg-card shadow-sm lg:order-2">
-			<div class="flex flex-wrap items-center justify-between gap-3 border-b p-4">
-				<div class="flex flex-wrap gap-1" role="group" aria-label="Task filters">
-					{#each ['Today', 'Upcoming', 'Important', 'Completed'] as item (item)}<Button
-							size="sm"
-							variant={filter === item ? 'secondary' : 'ghost'}
-							aria-pressed={filter === item}
-							onclick={() => (filter = item as typeof filter)}>{item}</Button
-						>{/each}
-				</div>
+			<span>{completed}/{workspace.tasks.length} completed</span>
+		</div>
+		<nav class="project-filter" aria-label="Task projects">
+			{#each ['All projects', ...projects] as item (item)}<button
+					class:active={workspace.selectedProject === item}
+					aria-pressed={workspace.selectedProject === item}
+					onclick={() => {
+						workspace.selectedProject = item;
+						workspace.taskFilter = 'All';
+						workspace.query = '';
+					}}>{item}</button
+				>{/each}
+		</nav>
+		<div class="task-list">
+			<form class="flex items-center gap-2 border-b px-4 py-3" onsubmit={quickAdd}>
+				<Plus class="size-4 shrink-0 text-muted-foreground" />
 				<Input
-					class="max-w-52"
-					id="tasks-search"
-					name="tasks-search"
-					aria-label="Search tasks"
-					placeholder="Find a task…"
-					value={query}
-					oninput={(event) => (query = event.currentTarget.value)}
+					aria-label="Quick task name"
+					name="quick-task"
+					placeholder={workspace.selectedProject === 'All projects'
+						? 'Add a task for today…'
+						: `Add a task to ${workspace.selectedProject}…`}
+					value={quickTitle}
+					oninput={(event) => (quickTitle = event.currentTarget.value)}
+					maxlength={120}
+					class="border-0 bg-transparent shadow-none"
+					required
 				/>
-			</div>
-			<div class="flex items-center justify-between border-b bg-muted/20 px-5 py-3">
+				<Button type="submit" variant="outline" size="sm" disabled={!quickTitle.trim()}
+					>Add task</Button
+				>
+			</form>
+			<div class="flex items-center justify-between gap-3 border-b bg-muted/20 px-5 py-3">
 				<h2 id="tasks-list-heading" tabindex="-1" class="text-sm font-medium">
-					{filter === 'Today'
-						? 'Your priorities'
-						: filter === 'Upcoming'
-							? 'On the horizon'
-							: filter === 'Important'
-								? 'Keep in sight'
-								: 'A job well done'}
+					{workspace.selectedProject !== 'All projects'
+						? workspace.selectedProject
+						: workspace.taskFilter === 'All'
+							? 'All tasks'
+							: workspace.taskFilter === 'Today'
+								? 'Today'
+								: workspace.taskFilter === 'Upcoming'
+									? 'Upcoming'
+									: workspace.taskFilter === 'Important'
+										? 'Important'
+										: 'Completed'}
 				</h2>
 				<Badge variant="outline">{visible.length} {visible.length === 1 ? 'task' : 'tasks'}</Badge>
 			</div>
 			<ul class="divide-y">
-				{#each visible as task (task.id)}<li class="flex items-start gap-3 p-5">
+				{#each visible as task (task.id)}<li class="task-row flex items-start gap-3">
 						<Checkbox
 							class="mt-1"
 							checked={task.completed}
@@ -199,11 +221,10 @@
 								class:line-through={task.completed}
 								class:text-muted-foreground={task.completed}>{task.title}</span
 							><span class="mt-1 block text-sm text-muted-foreground">{task.note}</span><span
-								class="mt-3 flex flex-wrap items-center gap-2 text-xs"
+								class="mt-2 flex flex-wrap items-center gap-2 text-xs"
 								><Badge variant="secondary">{task.project}</Badge><span
 									class="text-muted-foreground"
-									>{task.due === demoToday ? 'Due today' : `Due ${task.due}`}{!task.completed &&
-									task.due < demoToday
+									>{dueLabel(task.due)}{!task.completed && task.due < demoToday
 										? ' · Overdue'
 										: ''}</span
 								></span
@@ -222,19 +243,23 @@
 					</li>{:else}<li class="px-6 py-16 text-center">
 						<CheckCheck class="mx-auto mb-3 size-8 text-muted-foreground" />
 						<h3 class="font-medium">
-							{query
+							{workspace.query
 								? 'No matching tasks'
-								: filter === 'Completed'
+								: workspace.taskFilter === 'Completed'
 									? 'Your completed tasks will appear here'
-									: filter === 'Today'
+									: workspace.taskFilter === 'Today'
 										? 'You are clear for today'
-										: 'Nothing on the horizon'}
+										: 'No tasks to show'}
 						</h3>
 						<p class="mt-2 text-sm text-muted-foreground">
-							{query ? 'Try another title or project name.' : 'Add a next step when you are ready.'}
+							{workspace.query
+								? 'Try another title or project name.'
+								: 'Add a next step when you are ready.'}
 						</p>
-						{#if query}<Button class="mt-4" variant="outline" onclick={() => (query = '')}
-								>Clear task search</Button
+						{#if workspace.query}<Button
+								class="mt-4"
+								variant="outline"
+								onclick={() => (workspace.query = '')}>Clear task search</Button
 							>{:else}<Button class="mt-4" variant="outline" onclick={() => edit()}
 								>Add a task</Button
 							>{/if}
@@ -242,7 +267,7 @@
 			</ul>
 		</div>
 	</div>
-	<p role="status" class="mt-4 min-h-5 text-sm text-muted-foreground">{announcement}</p>
+	<p role="status" class="sr-only">{announcement}</p>
 </section>
 <Dialog.Root open={active && open} onOpenChange={(value) => (open = value)}
 	><Dialog.Content
@@ -294,3 +319,87 @@
 		</form></Dialog.Content
 	></Dialog.Root
 >
+
+<style>
+	.tasks-body {
+		padding: 0 28px 100px;
+		max-width: 1120px;
+		margin: auto;
+	}
+	.tasks-filterbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 1px solid var(--border);
+		gap: 12px;
+	}
+	.tasks-filterbar > div {
+		display: flex;
+		gap: 22px;
+		overflow: auto;
+	}
+	.tasks-filterbar button {
+		padding: 20px 0 15px;
+		font-size: 12px;
+		color: var(--muted-foreground);
+		border-bottom: 2px solid transparent;
+		white-space: nowrap;
+	}
+	.tasks-filterbar button.active {
+		border-color: #5967c7;
+		color: var(--foreground);
+		font-weight: 600;
+	}
+	.tasks-filterbar > span {
+		font-size: 11px;
+		color: var(--muted-foreground);
+		white-space: nowrap;
+	}
+	.project-filter {
+		display: flex;
+		gap: 8px;
+		flex-wrap: wrap;
+		padding: 20px 0;
+	}
+	.project-filter button {
+		font-size: 11px;
+		padding: 5px 10px;
+		border-radius: 5px;
+		color: var(--muted-foreground);
+		border: 1px solid transparent;
+	}
+	.project-filter button.active {
+		background: var(--muted);
+		border-color: var(--border);
+		color: var(--foreground);
+	}
+	.task-list {
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		overflow: hidden;
+	}
+	.task-row {
+		padding: 18px 20px;
+		font-size: 13px;
+	}
+	.task-row:hover {
+		background: color-mix(in oklab, var(--muted) 35%, transparent);
+	}
+	@media (max-width: 767px) {
+		.tasks-body {
+			padding: 0 16px 100px;
+		}
+		.tasks-filterbar > div {
+			gap: 15px;
+		}
+		.tasks-filterbar > span {
+			display: none;
+		}
+		.task-row {
+			padding: 16px;
+		}
+		.project-filter {
+			gap: 3px;
+		}
+	}
+</style>

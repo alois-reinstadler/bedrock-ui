@@ -1,27 +1,24 @@
 <script lang="ts">
-	import { afterNavigate } from '$app/navigation';
-	let {
-		active = true,
-		events = $bindable<CalendarEvent[]>([])
-	}: { active?: boolean; events?: CalendarEvent[] } = $props();
+	import { useWorkspace } from './workspace.svelte.js';
+	const workspace = useWorkspace();
+	const active = true;
+
 	import { CalendarDate, parseDate, type DateValue } from '@internationalized/date';
 	import Plus from '@lucide/svelte/icons/plus';
 	import MapPin from '@lucide/svelte/icons/map-pin';
-	import { Calendar, Day } from '#lib/bedrock/ui/calendar';
+	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
+	import ChevronRight from '@lucide/svelte/icons/chevron-right';
+	import { onMount } from 'svelte';
 	import { DateInput } from '#lib/bedrock/ui/date-input';
 	import { Button } from '#lib/bedrock/ui/button';
-	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Input } from '#lib/bedrock/ui/input';
 	import { Label } from '#lib/bedrock/ui/label';
 	import { Textarea } from '#lib/bedrock/ui/textarea';
 	import * as Dialog from '#lib/bedrock/ui/dialog';
 	import { demoToday, type CalendarEvent } from './productivity-data.js';
-	let selected = $state<DateValue>(parseDate(demoToday));
+	let selected = $state<DateValue>(parseDate(workspace.selectedDate));
 	let month = $state<DateValue>(parseDate(demoToday));
 	let open = $state(false);
-	afterNavigate(() => {
-		if (!active) open = false;
-	});
 	let editing = $state<string | null>(null);
 	let title = $state('');
 	let date = $state<CalendarDate | undefined>(parseDate(demoToday));
@@ -32,13 +29,44 @@
 	let category = $state<CalendarEvent['category']>('Team');
 	let error = $state('');
 	let announcement = $state('');
+	const categories = ['Team', 'Focus', 'Personal'] as const;
+
+	const visibleEvents = $derived(
+		workspace.events.filter(
+			(event) =>
+				workspace.calendarCategories.includes(event.category) &&
+				`${event.title} ${event.note}`.toLowerCase().includes(workspace.query.toLowerCase())
+		)
+	);
+	function minutes(time: string) {
+		const [hours, mins] = time.split(':').map(Number);
+		return hours * 60 + mins;
+	}
+	function duration(value: number) {
+		return value >= 60
+			? `${Math.floor(value / 60)}h${value % 60 ? ` ${value % 60}m` : ''}`
+			: `${value}m`;
+	}
+	function toggleCategory(kind: CalendarEvent['category']) {
+		workspace.calendarCategories = workspace.calendarCategories.includes(kind)
+			? workspace.calendarCategories.filter((item) => item !== kind)
+			: [...workspace.calendarCategories, kind];
+	}
 	const dayEvents = $derived(
-		events
+		visibleEvents
 			.filter((event) => event.date === selected.toString())
 			.sort((a, b) => a.start.localeCompare(b.start))
 	);
+	const scheduledMinutes = $derived(
+		dayEvents.reduce((total, event) => total + minutes(event.end) - minutes(event.start), 0)
+	);
+	const focusMinutes = $derived(
+		dayEvents
+			.filter((event) => event.category === 'Focus')
+			.reduce((total, event) => total + minutes(event.end) - minutes(event.start), 0)
+	);
 	const upcoming = $derived(
-		events
+		visibleEvents
 			.filter((event) => event.date > selected.toString())
 			.sort((a, b) => (a.date + a.start).localeCompare(b.date + b.start))
 			.slice(0, 3)
@@ -51,6 +79,33 @@
 	const monthLabel = $derived(
 		new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric' }).format(month.toDate('UTC'))
 	);
+	const monthDays = $derived.by(() => {
+		const first = new CalendarDate(month.year, month.month, 1);
+		const offset = (first.toDate('UTC').getUTCDay() + 6) % 7;
+		return Array.from(
+			{ length: 35 + (offset + first.calendar.getDaysInMonth(first) > 35 ? 7 : 0) },
+			(_, i) => first.add({ days: i - offset })
+		);
+	});
+	function dayLabel(day: DateValue) {
+		return new Intl.DateTimeFormat('en-GB', {
+			weekday: 'long',
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric'
+		}).format(day.toDate('UTC'));
+	}
+	function selectDay(day: DateValue) {
+		selected = day;
+		workspace.selectedDate = day.toString();
+	}
+	onMount(() => {
+		if (workspace.eventDraft) {
+			composeEvent(workspace.eventDraft.subject, workspace.eventDraft.note);
+			workspace.eventDraft = null;
+		}
+	});
+
 	export function composeEvent(subject: string, context: string) {
 		edit();
 		title = subject;
@@ -78,7 +133,7 @@
 			error = 'End time must be later than start time.';
 			return;
 		}
-		const conflict = events.find(
+		const conflict = workspace.events.find(
 			(item) =>
 				item.id !== editing &&
 				item.date === date!.toString() &&
@@ -99,17 +154,19 @@
 			note: note.trim(),
 			category
 		};
-		events = editing
-			? events.map((existing) => (existing.id === editing ? item : existing))
-			: [...events, item];
+		workspace.events = editing
+			? workspace.events.map((existing) => (existing.id === editing ? item : existing))
+			: [...workspace.events, item];
+		if (!workspace.calendarCategories.includes(category))
+			workspace.calendarCategories = [...workspace.calendarCategories, category];
 		selected = date;
 		month = date;
 		announcement = `${item.title} ${editing ? 'updated' : 'added'} on ${item.date}.`;
 		open = false;
 	}
 	function remove() {
-		const item = events.find((event) => event.id === editing);
-		events = events.filter((event) => event.id !== editing);
+		const item = workspace.events.find((event) => event.id === editing);
+		workspace.events = workspace.events.filter((event) => event.id !== editing);
 		announcement = `${item?.title ?? 'Event'} deleted.`;
 		open = false;
 	}
@@ -120,115 +177,114 @@
 	}
 </script>
 
-<section class="calendar-screen mx-auto max-w-[100rem] p-4 sm:p-6 lg:p-8">
-	<header class="mb-6 flex flex-wrap items-end justify-between gap-4">
+<section class="calendar-screen">
+	<header class="workspace-page-heading">
 		<div>
-			<p class="text-xs font-medium tracking-widest text-muted-foreground uppercase">
-				Make time for what matters
-			</p>
-			<h1
-				id="calendar-screen-heading"
-				tabindex="-1"
-				class="mt-1 text-3xl font-semibold tracking-tight"
-			>
-				Calendar
-			</h1>
-			<p class="mt-2 text-sm text-muted-foreground">A little structure. A little breathing room.</p>
+			<h1 id="calendar-screen-heading" tabindex="-1">Calendar</h1>
+			<p>{monthLabel} · Europe/Vienna</p>
 		</div>
-		<Button onclick={() => edit()}><Plus class="size-4" />New event</Button>
+		<Button size="sm" onclick={() => edit()}><Plus class="size-4" />New event</Button>
 	</header>
-	<div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
-		<div class="min-w-0 rounded-2xl border bg-card p-3 shadow-sm sm:p-5">
-			<div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+	<div class="calendar-layout">
+		<div class="month-pane">
+			<div class="month-toolbar">
+				<h2 data-calendar-month>{monthLabel}</h2>
 				<div>
-					<h2 class="text-lg font-semibold" data-calendar-month>{monthLabel}</h2>
-					<p class="text-xs text-muted-foreground">All times shown in Europe/Vienna</p>
+					<Button size="sm" variant="outline" onclick={today}>Today</Button><Button
+						size="icon"
+						variant="ghost"
+						aria-label="Previous month"
+						onclick={() => (month = month.subtract({ months: 1 }))}
+						><ChevronLeft size={16} /></Button
+					><Button
+						size="icon"
+						variant="ghost"
+						aria-label="Next month"
+						data-calendar-next-button
+						onclick={() => (month = month.add({ months: 1 }))}><ChevronRight size={16} /></Button
+					>
 				</div>
-				<Button variant="outline" size="sm" onclick={today}>Today</Button>
 			</div>
-			<Calendar
-				type="single"
-				value={selected}
-				onValueChange={(value) => {
-					if (value) selected = value;
-				}}
-				placeholder={month}
-				onPlaceholderChange={(value) => (month = value)}
-				locale="en-GB"
-				weekStartsOn={1}
-				class="workspace-calendar w-full bg-transparent [--cell-size:clamp(2.25rem,5vw,4.5rem)]"
-			>
-				{#snippet day({ day, outsideMonth })}<Day
-						><div
-							class="flex h-full flex-col items-center justify-center gap-1"
-							class:opacity-40={outsideMonth}
-						>
-							<span>{day.day}</span><span class="flex h-1.5 gap-0.5" aria-hidden="true"
-								>{#each events
-									.filter((event) => event.date === day.toString())
-									.slice(0, 3) as event (event.id)}<span class="size-1 rounded-full bg-current"
-									></span>{/each}</span
-							>
-						</div></Day
-					>{/snippet}
-			</Calendar>
-			<div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 border-t pt-4 text-xs text-muted-foreground">
-				<span>● Team</span><span>● Focus time</span><span>● Personal</span><span class="sm:ml-auto"
-					>Dots indicate scheduled events</span
-				>
+			<div class="month-grid">
+				<div class="weekdays">
+					{#each ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as day (day)}<span>{day}</span
+						>{/each}
+				</div>
+				<div class="month-days">
+					{#each monthDays as day (day.toString())}{@const dayItems = visibleEvents.filter(
+							(event) => event.date === day.toString()
+						)}<button
+							class="month-day"
+							class:outside={day.month !== month.month}
+							class:selected={day.toString() === selected.toString()}
+							class:today={day.toString() === demoToday}
+							aria-label={dayLabel(day)}
+							aria-pressed={day.toString() === selected.toString()}
+							onclick={() => selectDay(day)}
+							><span class="day-number">{day.day}</span
+							>{#each dayItems.slice(0, 2) as event (event.id)}<span
+									class="calendar-entry"
+									class:focus-event={event.category === 'Focus'}
+									class:personal-event={event.category === 'Personal'}
+									><span>{event.start}</span>{event.title}</span
+								>{/each}{#if dayItems.length > 2}<span class="more-events"
+									>+{dayItems.length - 2} more</span
+								>{/if}</button
+						>{/each}
+				</div>
+			</div>
+			<div class="calendar-filters">
+				{#each categories as kind (kind)}<button
+						aria-label={`Show ${kind} calendar`}
+						aria-pressed={workspace.calendarCategories.includes(kind)}
+						class:inactive={!workspace.calendarCategories.includes(kind)}
+						onclick={() => toggleCategory(kind)}
+						><i class:focus-dot={kind === 'Focus'} class:personal-dot={kind === 'Personal'}
+						></i>{kind}</button
+					>{/each}
 			</div>
 		</div>
-		<aside class="min-w-0 space-y-5" aria-label="Day agenda">
-			<div class="rounded-2xl border bg-card p-5">
-				<div class="mb-5 flex items-center justify-between gap-3">
-					<h2 class="font-semibold">{selectedLabel}</h2>
-					<Badge variant="secondary">{dayEvents.length} events</Badge>
-				</div>
-				<div class="space-y-3">
-					{#each dayEvents as event (event.id)}<button
-							class="event-card w-full rounded-xl border-l-4 bg-muted/35 p-4 text-left transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-							class:border-l-violet-500={event.category === 'Team'}
-							class:border-l-sky-500={event.category === 'Focus'}
-							class:border-l-amber-500={event.category === 'Personal'}
-							onclick={() => edit(event)}
-							aria-label={`Edit ${event.title}`}
-							><span class="text-xs font-medium text-muted-foreground"
-								>{event.start}–{event.end} · {event.category}</span
-							><span class="mt-1 block font-medium">{event.title}</span><span
-								class="mt-2 flex items-center gap-1 text-xs text-muted-foreground"
-								><MapPin class="size-3" />{event.location || 'Location to be confirmed'}</span
-							></button
-						>{:else}<div class="rounded-xl border border-dashed px-4 py-8 text-center">
-							<p class="font-medium">A clear day</p>
-							<p class="mt-1 text-sm text-muted-foreground">
-								Protect some focus time or add a plan.
-							</p>
-							<Button variant="outline" size="sm" class="mt-4" onclick={() => edit()}
-								>Add an event</Button
-							>
-						</div>{/each}
-				</div>
+		<aside class="agenda-pane" aria-label="Day agenda">
+			<header>
+				<span class="agenda-label">Your schedule</span>
+				<h2>{selectedLabel}</h2>
+				<p aria-label="Day summary">
+					{dayEvents.length} events · {duration(scheduledMinutes)} scheduled · {duration(
+						focusMinutes
+					)} focus
+				</p>
+			</header>
+			<div class="agenda-list">
+				{#each dayEvents as event (event.id)}<button
+						class="agenda-event"
+						onclick={() => edit(event)}
+						aria-label={`Edit ${event.title}`}
+						><span class="event-time">{event.start}<small>{event.end}</small></span><span
+							class="event-details"
+							class:focus-event={event.category === 'Focus'}
+							class:personal-event={event.category === 'Personal'}
+							><strong>{event.title}</strong><span
+								><MapPin size={12} />{event.location || 'No location'}</span
+							><small>{event.note}</small></span
+						></button
+					>{:else}<p class="empty-day">No events scheduled for this day.</p>
+					<Button size="sm" variant="outline" onclick={() => edit()}>Add an event</Button>{/each}
 			</div>
-			<div class="rounded-2xl border bg-muted/25 p-5">
-				<h2 class="mb-4 text-sm font-semibold">Coming up</h2>
+			<div class="upcoming">
+				<h3>Coming up</h3>
 				{#each upcoming as event (event.id)}<button
-						class="block w-full border-t py-3 text-left first:border-0 hover:text-primary focus-visible:outline-2 focus-visible:outline-ring"
 						onclick={() => {
-							selected = parseDate(event.date);
+							selectDay(parseDate(event.date));
 							month = selected;
 						}}
-						><span class="text-xs text-muted-foreground">{event.date} · {event.start}</span><span
-							class="block text-sm font-medium">{event.title}</span
-						></button
-					>{:else}<p class="text-sm text-muted-foreground">No later events scheduled.</p>{/each}
+						><small>{event.date.slice(5)} · {event.start}</small><span>{event.title}</span></button
+					>{/each}
 			</div>
 		</aside>
 	</div>
-	<p role="status" class="mt-4 min-h-5 text-sm text-muted-foreground">{announcement}</p>
-	<p class="mt-3 text-xs text-muted-foreground">
-		Demo date: 14 September 2026. Changes stay on this page and reset on reload.
-	</p>
+	<p class="sr-only" role="status">{announcement}</p>
 </section>
+
 <Dialog.Root open={active && open} onOpenChange={(value) => (open = value)}
 	><Dialog.Content
 		onCloseAutoFocus={(event) => {
@@ -315,40 +371,329 @@
 
 <style>
 	.calendar-screen {
-		min-height: calc(100svh - 11rem);
+		height: 100%;
+		min-height: 0;
+		display: grid;
+		grid-template-rows: 86px minmax(0, 1fr);
 	}
-	:global(.workspace-calendar [data-slot='calendar-months']) {
-		width: 100%;
+	.calendar-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 290px;
+		min-height: 0;
+		overflow: auto;
 	}
-	:global(.workspace-calendar [data-slot='calendar-month']) {
-		width: 100%;
+	.month-pane {
+		padding: 22px 26px 24px;
+		min-width: 0;
 	}
-	:global(.workspace-calendar table) {
-		width: 100%;
+	.month-toolbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 20px;
+		gap: 8px;
 	}
-	@media (prefers-reduced-motion: reduce) {
-		.event-card {
-			transition: none;
-		}
+	.month-toolbar h2 {
+		font-size: 16px;
+		font-weight: 600;
+		letter-spacing: -0.3px;
 	}
-
-	:global(.workspace-calendar tr) {
+	.month-toolbar > div {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+	}
+	.month-grid {
+		border: 1px solid var(--border);
+		border-radius: 8px;
+		overflow: hidden;
+	}
+	.weekdays,
+	.month-days {
 		display: grid;
 		grid-template-columns: repeat(7, minmax(0, 1fr));
 	}
-	:global(.workspace-calendar td),
-	:global(.workspace-calendar th) {
+	.weekdays {
+		border-bottom: 1px solid var(--border);
+		background: color-mix(in oklab, var(--muted) 40%, transparent);
+	}
+	.weekdays span {
+		padding: 12px 8px;
+		font-size: 10px;
+		text-align: center;
+		color: var(--muted-foreground);
+	}
+	.month-day {
+		min-width: 0;
+		min-height: 105px;
+		text-align: left;
+		border-right: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
+		padding: 8px 5px;
+		display: flex;
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 5px;
+	}
+	.month-day:nth-child(7n) {
+		border-right: 0;
+	}
+	.month-day:hover,
+	.month-day.selected {
+		background: color-mix(in oklab, #5967c7 6%, var(--background));
+	}
+	.month-day.selected {
+		box-shadow: inset 0 0 0 1px #5967c7;
+	}
+	.day-number {
+		display: grid;
+		place-items: center;
+		width: 23px;
+		height: 23px;
+		font-size: 11px;
+		border-radius: 50%;
+	}
+	.today .day-number {
+		background: #5967c7;
+		color: white;
+	}
+	.outside .day-number {
+		color: var(--muted-foreground);
+		opacity: 0.45;
+	}
+	.calendar-entry {
+		display: block;
+		width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		padding: 4px;
+		border-radius: 3px;
+		background: color-mix(in oklab, #9586c8 15%, var(--background));
+		color: var(--foreground);
+		font-size: 9px;
+		border-left: 2px solid #9586c8;
+	}
+	.calendar-entry > span {
+		margin-right: 4px;
+		opacity: 0.65;
+	}
+	.focus-event {
+		border-color: #76a3c2;
+		background: color-mix(in oklab, #76a3c2 12%, var(--background));
+	}
+	.personal-event {
+		border-color: #c7a57c;
+		background: color-mix(in oklab, #c7a57c 12%, var(--background));
+	}
+	.more-events {
+		font-size: 9px;
+		color: var(--muted-foreground);
+		padding-left: 4px;
+	}
+	.calendar-filters {
+		display: flex;
+		gap: 20px;
+		padding: 18px 2px;
+	}
+	.calendar-filters button {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 11px;
+	}
+	.calendar-filters i {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: #9586c8;
+	}
+	.calendar-filters .focus-dot {
+		background: #76a3c2;
+	}
+	.calendar-filters .personal-dot {
+		background: #c7a57c;
+	}
+	.calendar-filters .inactive {
+		opacity: 0.4;
+		text-decoration: line-through;
+	}
+	.agenda-pane {
+		border-left: 1px solid var(--border);
+		padding: 26px 20px 30px;
+	}
+	.agenda-label {
+		font-size: 10px;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		color: var(--muted-foreground);
+	}
+	.agenda-pane h2 {
+		font-weight: 600;
+		font-size: 14px;
+		margin-top: 8px;
+	}
+	.agenda-pane header p {
+		font-size: 10px;
+		color: var(--muted-foreground);
+		margin-top: 7px;
+	}
+	.agenda-list {
+		margin-top: 27px;
+	}
+	.agenda-event {
+		display: flex;
+		gap: 12px;
+		align-items: flex-start;
+		width: 100%;
+		text-align: left;
+		margin-bottom: 24px;
+	}
+	.event-time {
+		font-size: 11px;
+		font-weight: 500;
+		width: 33px;
+		flex-shrink: 0;
+		padding-top: 2px;
+	}
+	.event-time small {
+		display: block;
+		font-size: 10px;
+		font-weight: 400;
+		color: var(--muted-foreground);
+		margin-top: 5px;
+	}
+	.event-details {
+		border-left: 2px solid #9586c8;
+		padding: 2px 0 3px 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		background: none;
+		min-width: 0;
+	}
+	.event-details.focus-event {
+		border-color: #76a3c2;
+	}
+	.event-details.personal-event {
+		border-color: #c7a57c;
+	}
+	.event-details strong {
+		font-size: 12px;
+		font-weight: 550;
+	}
+	.event-details > span {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		font-size: 10px;
+		color: var(--muted-foreground);
+	}
+	.event-details > small {
+		font-size: 10px;
+		color: var(--muted-foreground);
+		line-height: 1.6;
+	}
+	.upcoming {
+		border-top: 1px solid var(--border);
+		padding-top: 22px;
+		margin-top: 34px;
+	}
+	.upcoming h3 {
+		font-size: 11px;
+		font-weight: 600;
+	}
+	.upcoming button {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		text-align: left;
+		padding: 15px 0;
+		border-bottom: 1px solid var(--border);
 		width: 100%;
 	}
-	:global(.workspace-calendar [data-calendar-day]) {
-		width: 100%;
+	.upcoming small {
+		font-size: 10px;
+		color: var(--muted-foreground);
 	}
-	:global(.workspace-calendar [data-calendar-header]) {
-		height: 2.5rem;
+	.upcoming span {
+		font-size: 11px;
 	}
-	:global(.workspace-calendar [data-calendar-prev-button]),
-	:global(.workspace-calendar [data-calendar-next-button]) {
-		height: 2.5rem;
-		width: 2.5rem;
+	.empty-day {
+		font-size: 12px;
+		color: var(--muted-foreground);
+		margin-bottom: 15px;
+	}
+	@media (max-width: 1200px) {
+		.calendar-layout {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.agenda-pane {
+			border-left: 0;
+			border-top: 1px solid var(--border);
+			padding: 22px 26px 100px;
+		}
+		.agenda-list {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 20px;
+		}
+		.month-pane {
+			padding-bottom: 5px;
+		}
+		.upcoming {
+			display: none;
+		}
+		.month-day {
+			min-height: 90px;
+		}
+	}
+	@media (max-width: 767px) {
+		.calendar-screen {
+			grid-template-rows: 78px minmax(0, 1fr);
+		}
+		.month-pane {
+			padding: 18px 14px 0;
+		}
+		.month-toolbar h2 {
+			font-size: 14px;
+		}
+		.month-day {
+			min-height: 68px;
+			padding: 5px 2px;
+		}
+		.calendar-entry {
+			font-size: 0;
+			width: 6px;
+			height: 6px;
+			padding: 0;
+			border: 0;
+			border-radius: 50%;
+			background: #9586c8;
+		}
+		.calendar-entry > span {
+			display: none;
+		}
+		.calendar-entry.focus-event {
+			background: #76a3c2;
+		}
+		.calendar-entry.personal-event {
+			background: #c7a57c;
+		}
+		.more-events {
+			font-size: 8px;
+		}
+		.agenda-pane {
+			padding: 22px 18px 100px;
+		}
+		.agenda-list {
+			display: block;
+		}
+		.agenda-event {
+			margin-bottom: 22px;
+		}
+		.weekdays span {
+			padding-inline: 2px;
+		}
 	}
 </style>
