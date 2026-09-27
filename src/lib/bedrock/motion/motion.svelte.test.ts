@@ -515,11 +515,16 @@ describe('Bedrock motion browser contract', () => {
 		await nextFrame(3);
 		const root = view.container.querySelector<HTMLElement>('[data-testid="layout-root"]')!;
 		const node = view.container.querySelector<HTMLElement>('[data-testid="moving-node"]')!;
+		// Keep the guard's sampling interval deterministic under CPU contention.
+		// Rendering, mutation delivery and WAAPI still run on real browser frames.
+		let sampleTime = performance.now();
+		const clock = vi.spyOn(performance, 'now').mockImplementation(() => sampleTime);
 		let lastTarget = 'Ende';
 		for (let index = 0; index < 10; index += 1) {
+			sampleTime += 20;
 			lastTarget = index % 2 === 0 ? 'Ende' : 'Start';
 			clickButton(view.container, lastTarget);
-			await new Promise((resolve) => setTimeout(resolve, 20));
+			await nextFrame(2);
 			if (warn.mock.calls.some(([message]) => String(message).includes('animation-work guard'))) {
 				break;
 			}
@@ -535,6 +540,7 @@ describe('Bedrock motion browser contract', () => {
 		if (lastTarget === 'Ende') expect(Math.abs(nodeBox.right - rootBox.right)).toBeLessThan(2);
 		else expect(Math.abs(nodeBox.left - rootBox.left)).toBeLessThan(2);
 
+		clock.mockRestore();
 		await new Promise((resolve) => setTimeout(resolve, 150));
 		clickButton(view.container, lastTarget === 'Ende' ? 'Start' : 'Ende');
 		await waitForAnimation(node);
