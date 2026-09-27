@@ -6416,7 +6416,7 @@
 				{
 					"name": "labels",
 					"kind": "prop",
-					"type": "Partial<{ copy: string; copied: string; language: (lang: string) => string; }> | undefined",
+					"type": "Partial<{ copy: string; copied: string; copyFailed: string; language: (lang: string) => string; }> | undefined",
 					"default": "{}",
 					"required": false,
 					"description": "Accepted by Root; constrained by the source TypeScript contract.",
@@ -31073,7 +31073,7 @@
 				{
 					"name": "tooltipContentProps",
 					"kind": "snippet",
-					"type": "Omit<Omit<Omit<Omit<import(\"bits-ui/dist/bits/utilities/floating-layer/types\").FloatingLayerContentProps, \"preventScroll\" | \"content\"> & Omit<import(\"bits-ui/dist/bits/utilities/dismissible-layer/types\").DismissibleLayerProps, \"onInteractOutsideStart\"> & import(\"bits-ui/dist/bits/utilities/escape-layer/types\").EscapeLayerProps & { forceMount?: boolean; }, \"child\" | \"children\"> & { child?: import(\"svelte\").Snippet<[import(\"bits-ui\").FloatingContentSnippetProps & { props: Record<string, unknown>; }]> | undefined; children?: import(\"svelte\").Snippet; style?: import(\"bits-ui\").StyleProperties | string | null | undefined; ref?: HTMLElement | null | undefined; } & import(\"bits-ui\").Without<import(\"bits-ui\").BitsPrimitiveDivAttributes, import(\"bits-ui\").TooltipContentPropsWithoutHTML> & { arrowClasses?: string; portalProps?: import(\"../../utils\").WithoutChildrenOrChild<ComponentProps<typeof import(\"../../../shadcn/ui/tooltip\").Portal>>; }, \"child\">, \"children\"> | undefined",
+					"type": "Omit<Omit<Omit<Omit<import(\"bits-ui/dist/bits/utilities/floating-layer/types\").FloatingLayerContentProps, \"preventScroll\" | \"content\"> & Omit<import(\"bits-ui/dist/bits/utilities/dismissible-layer/types\").DismissibleLayerProps, \"onInteractOutsideStart\"> & import(\"bits-ui/dist/bits/utilities/escape-layer/types\").EscapeLayerProps & { forceMount?: boolean; }, \"child\" | \"children\"> & { child?: import(\"svelte\").Snippet<[import(\"bits-ui\").FloatingContentSnippetProps & { props: Record<string, unknown>; }]> | undefined; children?: import(\"svelte\").Snippet; style?: import(\"bits-ui\").StyleProperties | string | null | undefined; ref?: HTMLElement | null | undefined; } & import(\"bits-ui\").Without<import(\"bits-ui\").BitsPrimitiveDivAttributes, import(\"bits-ui\").TooltipContentPropsWithoutHTML> & { arrowClasses?: string; portalProps?: import(\"#lib/utils.js\").WithoutChildrenOrChild<ComponentProps<typeof import(\"../../../shadcn/ui/tooltip\").Portal>>; }, \"child\">, \"children\"> | undefined",
 					"required": false,
 					"description": "Accepted by MenuButton; constrained by the source TypeScript contract.",
 					"source": "src/lib/shadcn/ui/sidebar/sidebar-menu-button.svelte"
@@ -35773,7 +35773,7 @@
 				{
 					"name": "labels",
 					"kind": "prop",
-					"type": "Partial<{ play: string; pause: string; replay: string; mute: string; unmute: string; scrubber: string; timeOf: (current: string, duration: string) => string; captionsOn: (track: string) => string; captionsOff: string; playbackRate: (rate: number) => string; fullscreen: string; exitFullscreen: string; pip: string; pipPlaceholder: string; pipReturn: string; buffering: string; error: string; retry: string; playing: string; paused: string; seekedTo: (time: string) => string; }> | undefined",
+					"type": "Partial<{ play: string; pause: string; replay: string; mute: string; volume: string; unmute: string; scrubber: string; timeOf: (current: string, duration: string) => string; captionsOn: (track: string) => string; captionsOff: string; playbackRate: (rate: number) => string; fullscreen: string; exitFullscreen: string; pip: string; pipPlaceholder: string; pipReturn: string; buffering: string; error: string; retry: string; playing: string; paused: string; seekedTo: (time: string) => string; }> | undefined",
 					"default": "{}",
 					"required": false,
 					"description": "Accepted by Root; constrained by the source TypeScript contract.",

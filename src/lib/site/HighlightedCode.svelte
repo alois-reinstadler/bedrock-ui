@@ -8,11 +8,15 @@
 		maxHeight
 	}: { code: string; html: string; label?: string; maxHeight?: string } = $props();
 	let copied = $state(false);
+	let disposed = false;
 	let failed = $state(false);
 	let timer: ReturnType<typeof setTimeout> | undefined;
 	async function copy() {
+		copied = false;
+		clearTimeout(timer);
 		try {
 			await navigator.clipboard.writeText(code);
+			if (disposed) return;
 			copied = true;
 			failed = false;
 			clearTimeout(timer);
@@ -20,10 +24,13 @@
 				copied = false;
 			}, 1400);
 		} catch {
-			failed = true;
+			if (!disposed) failed = true;
 		}
 	}
-	onDestroy(() => clearTimeout(timer));
+	onDestroy(() => {
+		disposed = true;
+		clearTimeout(timer);
+	});
 </script>
 
 <div data-slot="highlighted-code" class="overflow-hidden rounded-xl border bg-muted/30">

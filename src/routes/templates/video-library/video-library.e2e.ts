@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { filmSources } from '../../../lib/templates/media.js';
 const base = '/templates/video-library';
 
 test('browse, film details and playback are separate real routes', async ({ page }) => {
@@ -83,7 +84,7 @@ test('genre routes, real search filters, account menu and mobile sizing', async 
 	await expect(page.getByRole('link', { name: 'Play film', exact: true })).toBeVisible();
 });
 
-test('every title loads its own local film and measured runtime', async ({ page }) => {
+test('every title loads its own remote film and measured runtime', async ({ page }) => {
 	const sources = new Set<string>();
 	for (const [slug, minimum, maximum] of [
 		['tears-of-steel', 730, 740],
@@ -103,7 +104,7 @@ test('every title loads its own local film and measured runtime', async ({ page 
 		expect(duration).toBeGreaterThanOrEqual(minimum);
 		expect(duration).toBeLessThanOrEqual(maximum);
 		const source = await video.evaluate((element: HTMLVideoElement) => element.currentSrc);
-		expect(source).toContain(`${base}/${slug}.mp4`);
+		expect(source).toBe(filmSources[slug]);
 		sources.add(source);
 	}
 	expect(sources.size).toBe(4);

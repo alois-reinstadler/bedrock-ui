@@ -29,7 +29,8 @@ export const tracks: Track[] = [
 		collection: 'the-lounge',
 		artwork: '/templates/music-player/on-and-on.jpg',
 		duration: 208.013061,
-		audio: '/templates/music-player/on-and-on.mp3',
+		audio:
+			'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/152/1654766391_N6n9kRBaAr_Cartoon---On--On-feat.-Daniel-Levi-_NCS-Release_.mp3',
 		source: 'https://ncs.io/onandon',
 		youtube: 'https://youtu.be/K4DyBUG242c',
 		download: 'https://ncs.io/track/download/442dfd89-c291-41b4-b93a-18c0ff73c1dc'
@@ -42,7 +43,8 @@ export const tracks: Track[] = [
 		collection: 'sunday-drive',
 		artwork: '/templates/music-player/heroes-tonight.jpg',
 		duration: 208.091429,
-		audio: '/templates/music-player/heroes-tonight.mp3',
+		audio:
+			'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/143/heroes-tonight-feat-johnning-1586946924-fcppiBJp7z.mp3',
 		source: 'https://ncs.io/ht',
 		youtube: 'https://youtu.be/3nQNiWdeH2Q',
 		download: 'https://ncs.io/track/download/2ede9de2-8386-4210-b2a0-b36d731c8a4e'
@@ -55,7 +57,8 @@ export const tracks: Track[] = [
 		collection: 'after-hours',
 		artwork: '/templates/music-player/mortals.jpg',
 		duration: 228.388571,
-		audio: '/templates/music-player/mortals.mp3',
+		audio:
+			'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/287/mortals-feat-laura-brehm-1586948736-3e1Snmxk7T.mp3',
 		source: 'https://ncs.io/mortals',
 		youtube: 'https://youtu.be/yJg-Y5byMMw',
 		download: 'https://ncs.io/track/download/784a2ccc-5ace-48d1-8af1-9da55c383960'
@@ -68,7 +71,8 @@ export const tracks: Track[] = [
 		collection: 'slow-mornings',
 		artwork: '/templates/music-player/my-heart.jpg',
 		duration: 267.102041,
-		audio: '/templates/music-player/my-heart.mp3',
+		audio:
+			'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/007/my-heart-1586945702-4NfTD6qN1D.mp3',
 		source: 'https://ncs.io/myheart',
 		youtube: 'https://youtu.be/jK2aIUmmdP4',
 		download: 'https://ncs.io/track/download/db1bcfe4-1999-4b5e-879c-2d21b3456285'
@@ -81,7 +85,8 @@ export const tracks: Track[] = [
 		collection: 'after-hours',
 		artwork: '/templates/music-player/invincible.jpg',
 		duration: 273.084082,
-		audio: '/templates/music-player/invincible.mp3',
+		audio:
+			'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/137/invincible-1586946876-v3qvV3TEKb.mp3',
 		source: 'https://ncs.io/invincible',
 		youtube: 'https://youtu.be/J2X5mJ3HDYE',
 		download: 'https://ncs.io/track/download/817ec1ef-bac0-4c8a-9671-857fdd13cfa9'
@@ -94,7 +99,8 @@ export const tracks: Track[] = [
 		collection: 'sunday-drive',
 		artwork: '/templates/music-player/sky-high.jpg',
 		duration: 236.303675,
-		audio: '/templates/music-player/sky-high.mp3',
+		audio:
+			'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/290/sky-high-1586948785-jGkCsW2xA9.mp3',
 		source: 'https://ncs.io/skyhigh',
 		youtube: 'https://youtu.be/TW9d8vYrVFQ',
 		download: 'https://ncs.io/track/download/6d744632-0472-463c-8a13-da071971fbdf'
@@ -107,7 +113,8 @@ export const tracks: Track[] = [
 		collection: 'slow-mornings',
 		artwork: '/templates/music-player/blank.jpg',
 		duration: 209.057959,
-		audio: '/templates/music-player/blank.mp3',
+		audio:
+			'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/003/blank-1586945660-LPD2Fw7OZ0.mp3',
 		source: 'https://ncs.io/blank',
 		youtube: 'https://youtu.be/p7ZsBPK656s',
 		download: 'https://ncs.io/track/download/0d434c0f-8059-42af-bae6-61b7aa0e294b'
@@ -120,7 +127,8 @@ export const tracks: Track[] = [
 		collection: 'the-lounge',
 		artwork: '/templates/music-player/why-we-lose.jpg',
 		duration: 213.054694,
-		audio: '/templates/music-player/why-we-lose.mp3',
+		audio:
+			'https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/144/why-we-lose-feat-coleman-trapp-1586946940-Bpv8ccBznf.mp3',
 		source: 'https://ncs.io/whywelose',
 		youtube: 'https://youtu.be/zyXmsVwZqX4',
 		download: 'https://ncs.io/track/download/84a06f66-d649-4224-b3a3-d35857fcf752'

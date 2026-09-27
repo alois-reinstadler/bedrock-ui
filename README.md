@@ -34,6 +34,7 @@ The normal component imports remain stable. Read the [motion integration contrac
 
 ```sh
 pnpm motion:verify
+pnpm assets:verify
 pnpm check
 pnpm lint
 pnpm test:unit --run
@@ -41,3 +42,14 @@ pnpm build
 ```
 
 `--run` makes Vitest finish after one pass. Browser checks require the shared Chrome and a managed local preview; see [agent instructions](AGENTS.md). Package maintenance instructions and motion-specific verification are in the [motion guide](docs/bedrock/motion.md).
+
+## Template media
+
+Music and film templates stream from remote URLs and require an internet connection.
+Artwork, subtitles and attribution remain in the repository. Audio/video downloads
+are ignored; `pnpm assets:verify` also rejects staged template media and static
+files over 2 MiB. The existing `static/demo/clip.mp4` is the small fixture used by
+the VideoPlayer documentation. Playback E2E tests require access to the remote hosts.
+
+Animated icons are deferred on the local `parked/animated-icons` branch. The main
+site uses static icons.

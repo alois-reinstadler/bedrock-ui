@@ -1,6 +1,7 @@
+import { filmSources } from '../media.js';
 export const base = '/templates/video-library';
 export type Film = {
-	slug: string;
+	slug: keyof typeof filmSources;
 	title: string;
 	year: number;
 	duration: number;
@@ -83,7 +84,7 @@ export const films: Film[] = [
 export const genres = ['Science fiction', 'Animation', 'Comedy', 'Fantasy'];
 export const genreSlug = (genre: string) => genre.toLowerCase().replaceAll(' ', '-');
 export const poster = (film: Film) => `${base}/${film.slug}.jpg`;
-export const source = (film: Film) => `${base}/${film.slug}.mp4`;
+export const source = (film: Film) => filmSources[film.slug];
 export const runtime = (film: Film) =>
 	`${Math.floor(film.duration / 60)}:${String(Math.round(film.duration % 60)).padStart(2, '0')}`;
 export const findFilm = (slug: string) => films.find((film) => film.slug === slug);

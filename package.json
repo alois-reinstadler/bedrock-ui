@@ -17,7 +17,8 @@
 		"test": "pnpm run test:unit -- --run && pnpm run test:e2e",
 		"test:e2e": "playwright install chromium && playwright test",
 		"reference:generate": "node scripts/extract-component-reference.mjs",
-		"motion:verify": "node scripts/verify-motion-package.mjs"
+		"motion:verify": "node scripts/verify-motion-package.mjs",
+		"assets:verify": "node scripts/verify-template-media.mjs"
 	},
 	"devDependencies": {
 		"@axe-core/playwright": "^4.13.0",

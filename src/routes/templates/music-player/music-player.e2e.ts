@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 
+import { tracks } from '../../../lib/templates/music-player/data.js';
+
 const base = '/templates/music-player';
 async function ready(page: import('@playwright/test').Page) {
 	await expect(page.locator('[data-music-shell]')).toHaveAttribute('data-ready', 'true');
@@ -38,7 +40,7 @@ test('music uses real routes while preserving shell, album frame, and playing au
 	expect(await audioElement?.evaluate((node) => node === document.querySelector('audio'))).toBe(
 		true
 	);
-	await expect(audio).toHaveAttribute('src', '/templates/music-player/mortals.mp3');
+	await expect(audio).toHaveAttribute('src', tracks.find((track) => track.id === 'mortals')!.audio);
 	await expect
 		.poll(() => audio.evaluate((node: HTMLAudioElement) => node.currentTime))
 		.toBeGreaterThan(time);
@@ -46,7 +48,10 @@ test('music uses real routes while preserving shell, album frame, and playing au
 	await page.goBack();
 	await expect(page.getByRole('heading', { name: 'Bass Anthems', exact: true })).toBeVisible();
 	await page.getByRole('button', { name: 'Next track', exact: true }).click();
-	await expect(audio).toHaveAttribute('src', '/templates/music-player/invincible.mp3');
+	await expect(audio).toHaveAttribute(
+		'src',
+		tracks.find((track) => track.id === 'invincible')!.audio
+	);
 	await page.getByRole('button', { name: 'Pause playback', exact: true }).click();
 	await expect.poll(() => audio.evaluate((node: HTMLAudioElement) => node.paused)).toBe(true);
 });
@@ -73,9 +78,8 @@ test('music search and genre filters are query parameters and likes persist', as
 	await expect(page.locator('[data-track-list]')).toContainText('On & On');
 });
 
-test('local music recordings expose correct duration, attribution, and seek controls', async ({
-	page,
-	request
+test('remote music recordings expose correct duration, attribution, and seek controls', async ({
+	page
 }) => {
 	await page.goto(`${base}/album/sunday-drive`);
 	await ready(page);
@@ -93,10 +97,11 @@ test('local music recordings expose correct duration, attribution, and seek cont
 	await expect
 		.poll(() => audio.evaluate((node: HTMLAudioElement) => node.currentTime))
 		.toBeGreaterThanOrEqual(42);
-	const media = await request.get('/templates/music-player/heroes-tonight.mp3');
-	expect(media.ok()).toBe(true);
-	expect(media.headers()['content-type']).toContain('audio');
-	expect((await media.body()).byteLength).toBeGreaterThan(1000000);
+	await expect(audio).toHaveAttribute(
+		'src',
+		tracks.find((track) => track.id === 'heroes-tonight')!.audio
+	);
+	expect(await audio.evaluate((node: HTMLAudioElement) => node.error)).toBeNull();
 	await page.getByRole('link', { name: 'Track credits', exact: true }).click();
 	await expect(page.getByRole('heading', { name: 'Music & credits', exact: true })).toBeVisible();
 	await expect(
@@ -137,7 +142,7 @@ test('compact player exposes queue and volume without overflow and honors reduce
 	expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-test('all eight NCS downloads decode, play and expose their full measured duration', async ({
+test('all eight remote NCS recordings decode, play and expose their full measured duration', async ({
 	page
 }) => {
 	await page.goto(`${base}/discover`);
@@ -154,7 +159,7 @@ test('all eight NCS downloads decode, play and expose their full measured durati
 		['why-we-lose', 'Why We Lose', 213.055]
 	] as const) {
 		await page.getByRole('button', { name: `Play ${title}`, exact: true }).click();
-		await expect(audio).toHaveAttribute('src', `${base}/${id}.mp3`);
+		await expect(audio).toHaveAttribute('src', tracks.find((track) => track.id === id)!.audio);
 		await expect
 			.poll(() => audio.evaluate((node: HTMLAudioElement) => node.duration))
 			.toBeCloseTo(duration, 1);

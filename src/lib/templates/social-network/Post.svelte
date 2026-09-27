@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { socialFilmSource } from '../media.js';
 	import Heart from '@lucide/svelte/icons/heart';
 	import Repeat from '@lucide/svelte/icons/repeat-2';
 	import Message from '@lucide/svelte/icons/message-circle';
@@ -54,7 +55,7 @@
 					preload="metadata"
 					poster="/templates/social-network/bunny-social.jpg"
 					aria-label="Open film excerpt"
-					><source src="/templates/social-network/bunny-social.mp4" type="video/mp4" /><track
+					><source src={socialFilmSource} type="video/webm" /><track
 						kind="captions"
 						src="/templates/social-network/film.vtt"
 						srclang="en"

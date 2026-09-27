@@ -4,6 +4,7 @@
 	const defaultLabels = {
 		copy: 'Copy code',
 		copied: 'Copied',
+		copyFailed: 'Copy failed. Select the code to copy it manually.',
 		language: (lang: string) => lang
 	};
 
@@ -108,13 +109,22 @@
 	);
 	const highlightedPromise = $derived(highlightCode(code, language));
 	let copied = $state(false);
+	let copyFailed = $state(false);
+	let disposed = false;
 	let copyTimer: ReturnType<typeof setTimeout> | undefined;
 
 	async function copyCode() {
-		await navigator.clipboard.writeText(code);
-		copied = true;
+		copied = false;
+		copyFailed = false;
 		clearTimeout(copyTimer);
-		copyTimer = setTimeout(() => (copied = false), 1400);
+		try {
+			await navigator.clipboard.writeText(code);
+			if (disposed) return;
+			copied = true;
+			copyTimer = setTimeout(() => (copied = false), 1400);
+		} catch {
+			if (!disposed) copyFailed = true;
+		}
 	}
 
 	function attachRef(node: HTMLDivElement) {
@@ -124,7 +134,10 @@
 		};
 	}
 
-	onDestroy(() => clearTimeout(copyTimer));
+	onDestroy(() => {
+		disposed = true;
+		clearTimeout(copyTimer);
+	});
 </script>
 
 {#snippet PlainCode()}
@@ -164,6 +177,7 @@
 		</div>
 	{/if}
 
+	{#if copyFailed}<p role="status" class="px-3 py-2 text-xs">{labels.copyFailed}</p>{/if}
 	<div
 		data-slot="code-block-content"
 		class={cn(
