@@ -7435,6 +7435,12 @@
 					"kind": "data-attribute",
 					"type": "voiceState",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-expanded",
+					"kind": "data-attribute",
+					"type": "expanded || undefined",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
 			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."

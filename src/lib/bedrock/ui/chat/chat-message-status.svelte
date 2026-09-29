@@ -18,7 +18,7 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
 	import { Button } from '#lib/bedrock/ui/button';
-	import { Icon } from '#lib/bedrock/ui/icon';
+	import Feedback from './chat-feedback.svelte';
 	import { cn } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 	let {
@@ -64,16 +64,20 @@
 	data-status={status}
 	class={cn('flex flex-wrap items-center gap-2 text-xs text-muted-foreground', className)}
 >
-	<span role="status" class="inline-flex items-center gap-1.5">
-		{#if pending || ['sending', 'waiting', 'streaming'].includes(status)}<Icon
-				icon="loading"
-				class="size-3 animate-spin motion-reduce:animate-none"
-			/>{:else if recoverable}<Icon icon="error" class="size-3" />{:else}<Icon
-				icon="check"
-				class="size-3"
-			/>{/if}
-		{pending ? labels.retrying : (detail ?? labels[status])}
-	</span>
+	<Feedback
+		role="status"
+		tone={pending
+			? 'info'
+			: status === 'failed'
+				? 'error'
+				: status === 'interrupted'
+					? 'warning'
+					: status === 'sent'
+						? 'success'
+						: 'info'}
+		busy={pending || ['sending', 'waiting', 'streaming'].includes(status)}
+		message={pending ? labels.retrying : (detail ?? labels[status])}
+	/>
 	{#if recoverable && onRetry}<Button
 			type="button"
 			size="sm"
@@ -81,7 +85,5 @@
 			disabled={disabled || pending}
 			onclick={retry}>{labels.retry}</Button
 		>{/if}
-	{#if retryError && recoverable}<span role="alert" class="text-destructive"
-			>{labels.retryFailed}</span
-		>{/if}
+	{#if retryError && recoverable}<Feedback tone="error" message={labels.retryFailed} />{/if}
 </div>

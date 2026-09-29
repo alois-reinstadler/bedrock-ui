@@ -148,7 +148,11 @@
 	});
 	const locked = $derived(disabled || submitting);
 	const toolbar = $derived(
-		attachments || models.length > 0 || reasoningOptions.length > 0 || serviceTiers.length > 0
+		!!voice ||
+			attachments ||
+			models.length > 0 ||
+			reasoningOptions.length > 0 ||
+			serviceTiers.length > 0
 	);
 	const promptText = $derived({
 		sources: 'Mention sources',
@@ -505,7 +509,10 @@
 	{#if toolbar}
 		<div
 			data-slot="chat-composer-toolbar"
-			class="flex flex-wrap items-center justify-between gap-1"
+			class={cn(
+				'items-center gap-1',
+				voice ? 'grid grid-cols-[minmax(0,1fr)_auto_auto]' : 'flex flex-wrap justify-between'
+			)}
 		>
 			<div class="flex min-w-0 flex-wrap items-center gap-1">
 				{#if attachments}<Button
@@ -534,9 +541,15 @@
 						{onServiceTierChange}
 					/>{/if}
 			</div>
-			<div class="ml-auto flex items-center gap-1">{@render sendControls()}</div>
+			{#if voice}<Voice
+					{...voice}
+					disabled={disabled || submitting || busy || voice.disabled}
+					class="col-start-2 row-start-1 justify-self-end data-[expanded=true]:col-span-3 data-[expanded=true]:col-start-1 data-[expanded=true]:row-start-2 data-[expanded=true]:mt-1 data-[expanded=true]:w-full"
+				/>{/if}
+			<div class={cn('ml-auto flex items-center gap-1', voice && 'col-start-3 row-start-1')}>
+				{@render sendControls()}
+			</div>
 		</div>
 	{/if}
-	{#if voice}<Voice {...voice} disabled={disabled || submitting || busy || voice.disabled} />{/if}
 	{#if error}<p id="{uid}-error" role="alert" class="px-2 text-sm text-destructive">{error}</p>{/if}
 </form>

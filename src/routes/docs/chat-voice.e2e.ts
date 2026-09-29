@@ -8,6 +8,7 @@ test('voice capture states preserve drafts, gate send, and insert a reviewable t
 	page.on('pageerror', (error) => errors.push(error.message));
 	await page.goto('/docs/components/chat');
 	const demo = page.locator('[data-demo="chat-voice"]');
+	await demo.getByRole('button', { name: 'Demo controls', exact: true }).click();
 	const draft = demo.getByRole('textbox');
 	const send = demo.getByRole('button', { name: 'Send', exact: true });
 	await draft.fill('Keep my draft.');
@@ -36,6 +37,7 @@ test('voice can cancel, recover from rejected start, retry denied access, and sh
 }) => {
 	await page.goto('/docs/components/chat');
 	const demo = page.locator('[data-demo="chat-voice"]');
+	await demo.getByRole('button', { name: 'Demo controls', exact: true }).click();
 	await demo.getByRole('textbox').fill('Unchanged');
 	await demo.getByRole('button', { name: 'Fail next start', exact: true }).click();
 	await demo.getByRole('button', { name: 'Start voice input', exact: true }).click();
@@ -63,6 +65,7 @@ test('voice example has source, accessible recording controls, and fits mobile t
 	await card.getByRole('tab', { name: 'Code', exact: true }).click();
 	await expect(card.locator('pre')).toContainText('Chat.Composer');
 	await card.getByRole('tab', { name: 'Preview', exact: true }).click();
+	await card.getByRole('button', { name: 'Demo controls', exact: true }).click();
 	await card.getByRole('button', { name: 'Start voice input', exact: true }).click();
 	await card.getByRole('button', { name: 'Allow microphone (demo)', exact: true }).click();
 	for (const dark of [false, true]) {

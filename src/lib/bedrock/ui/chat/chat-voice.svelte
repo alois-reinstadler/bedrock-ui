@@ -36,7 +36,11 @@
 	import Square from '@lucide/svelte/icons/square';
 	import X from '@lucide/svelte/icons/x';
 	import { onDestroy } from 'svelte';
-	import { Button } from '#lib/bedrock/ui/button';
+	import { IconButton } from '#lib/bedrock/ui/icon-button';
+	import { Icon } from '#lib/bedrock/ui/icon';
+	import { StatusDot } from '#lib/bedrock/ui/status-dot';
+	import MicOff from '@lucide/svelte/icons/mic-off';
+	import Feedback from './chat-feedback.svelte';
 	import { cn } from '#lib/utils.js';
 	let {
 		state: voiceState = 'idle',
@@ -71,6 +75,11 @@
 		duration: 'Recording duration',
 		...labels
 	});
+	const expanded = $derived(voiceState !== 'idle' || !!failure);
+	const bars = [
+		0.2, 0.35, 0.6, 0.45, 0.8, 0.55, 0.95, 0.7, 0.4, 0.65, 1, 0.75, 0.5, 0.85, 0.6, 0.35, 0.7, 0.95,
+		0.55, 0.8, 0.45, 0.65, 0.3, 0.2
+	];
 	const active = $derived(['requesting', 'recording', 'processing'].includes(voiceState));
 	const seconds = $derived(Number.isFinite(elapsed) ? Math.max(0, Math.floor(elapsed)) : 0);
 	const duration = $derived(`${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`);
@@ -93,54 +102,110 @@
 <div
 	data-slot="chat-voice"
 	data-state={voiceState}
-	class={cn('flex min-w-0 flex-wrap items-center gap-2', className)}
+	data-expanded={expanded || undefined}
+	class={cn(
+		'min-w-0',
+		expanded ? 'space-y-3 rounded-xl bg-muted/50 p-3' : 'inline-flex items-center',
+		className
+	)}
 >
-	{#if voiceState === 'idle' || voiceState === 'error'}
-		<Button
-			type="button"
-			variant="ghost"
-			size="icon-sm"
-			aria-label={voiceState === 'error' ? text.retry : text.start}
+	{#if !expanded}
+		<IconButton
+			icon={Mic}
+			label={text.start}
+			tooltip={text.start}
+			size="sm"
+			class="rounded-full text-muted-foreground hover:text-foreground"
 			disabled={disabled || pending || !onStart}
-			onclick={() => invoke(onStart)}><Mic class="size-4" /></Button
-		>
-	{/if}
-	{#if active || voiceState === 'unsupported'}
-		<span role="status" class="text-sm text-muted-foreground">{text[voiceState]}</span>
-	{/if}
-	{#if voiceState === 'recording'}
-		<span role="timer" aria-label={text.duration} class="font-mono text-sm tabular-nums"
-			>{duration}</span
-		>
-		{#if level !== undefined}
-			<meter
-				min="0"
-				max="1"
-				value={volume}
-				aria-label={text.level}
-				class="h-2 w-16 overflow-hidden rounded-full [&::-webkit-meter-bar]:border-0 [&::-webkit-meter-bar]:bg-muted [&::-webkit-meter-optimum-value]:bg-primary"
-			></meter>
+			onclick={() => invoke(onStart)}
+		/>
+	{:else if active}
+		<div class="flex items-center justify-between gap-3">
+			<div class="flex min-w-0 items-center gap-2">
+				{#if voiceState === 'recording'}<StatusDot
+						status="destructive"
+						size="sm"
+						pulse
+					/>{:else}<Icon
+						icon="loading"
+						class="size-3.5 animate-spin text-muted-foreground motion-reduce:animate-none"
+					/>{/if}
+				<span role="status" class="text-xs leading-relaxed font-medium">{text[voiceState]}</span>
+			</div>
+			{#if voiceState === 'recording'}<span
+					role="timer"
+					aria-label={text.duration}
+					class="shrink-0 rounded-md bg-background px-2 py-1 font-mono text-[11px] text-muted-foreground tabular-nums"
+					>{duration}</span
+				>
+			{:else if onCancel}<IconButton
+					icon={X}
+					label={text.cancel}
+					tooltip={text.cancel}
+					size="sm"
+					class="shrink-0 rounded-full"
+					{disabled}
+					onclick={() => invoke(onCancel, true)}
+				/>{/if}
+		</div>
+		{#if voiceState === 'recording'}
+			<div class="flex items-center gap-3">
+				<div
+					class="flex h-10 min-w-0 flex-1 items-center justify-center gap-1 overflow-hidden"
+					aria-hidden="true"
+				>
+					{#each bars as height, i (i)}<span
+							class="w-1 min-w-0 rounded-full bg-foreground/60 transition-[height] duration-100 motion-reduce:transition-none"
+							style:height={`${level === undefined ? 4 : 4 + height * volume * 30}px`}
+						></span>{/each}
+				</div>
+				{#if level !== undefined}<meter
+						min="0"
+						max="1"
+						value={volume}
+						aria-label={text.level}
+						class="sr-only"
+					></meter>{/if}
+				<div class="flex shrink-0 items-center gap-1">
+					{#if onCancel}<IconButton
+							icon={X}
+							label={text.cancel}
+							tooltip={text.cancel}
+							size="sm"
+							class="rounded-full text-muted-foreground"
+							{disabled}
+							onclick={() => invoke(onCancel, true)}
+						/>{/if}
+					<IconButton
+						icon={Square}
+						label={text.stop}
+						tooltip={text.stop}
+						size="sm"
+						variant="default"
+						class="rounded-full [&_svg]:size-3 [&_svg]:fill-current"
+						disabled={disabled || pending || !onStop}
+						onclick={() => invoke(onStop)}
+					/>
+				</div>
+			</div>
 		{/if}
-		<Button
-			type="button"
-			variant="outline"
-			size="icon-sm"
-			aria-label={text.stop}
-			disabled={disabled || pending || !onStop}
-			onclick={() => invoke(onStop)}><Square class="size-3 fill-current" /></Button
-		>
-	{/if}
-	{#if active && onCancel}
-		<Button
-			type="button"
-			variant="ghost"
-			size="icon-sm"
-			aria-label={text.cancel}
-			{disabled}
-			onclick={() => invoke(onCancel, true)}><X class="size-4" /></Button
-		>
+	{:else if voiceState === 'unsupported'}
+		<div role="status" class="flex items-center gap-2 text-xs text-muted-foreground">
+			<Icon icon={MicOff} class="size-4" />{text.unsupported}
+		</div>
 	{/if}
 	{#if voiceState === 'error' || failure}
-		<p role="alert" class="basis-full text-sm text-destructive">{failure || error || text.error}</p>
+		<div class="flex items-start gap-2">
+			<Feedback tone="error" message={failure || error || text.error} class="min-w-0 flex-1" />
+			{#if !active}<IconButton
+					icon={Mic}
+					label={voiceState === 'error' ? text.retry : text.start}
+					tooltip={text.retry}
+					size="sm"
+					class="shrink-0 rounded-full"
+					disabled={disabled || pending || !onStart}
+					onclick={() => invoke(onStart)}
+				/>{/if}
+		</div>
 	{/if}
 </div>
