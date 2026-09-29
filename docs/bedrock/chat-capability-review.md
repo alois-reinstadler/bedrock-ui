@@ -36,3 +36,5 @@ The initial feature pass underused Bedrock primitives and treated most interacti
 | Change review               | Card, Collapsible, Checkbox, CodeBlock, Button, Icon |
 
 Use quiet inset surfaces for activity, one outer card for decisions, and shared footer spacing for actions. Keep source disclosures compact until expanded. The primary preview demonstrates these parts together in a delivery conversation. Model, reasoning, uploads, and voice remain optional; existing callback and recovery contracts are unchanged.
+
+Decision feedback shares Bedrock FieldStatus: approval, accepted recommendations, submitted answers, and applied changes use green success text with an icon. Saving uses blue information styling, rejected approval uses amber warning styling, callback failures use destructive error styling, and dismissal stays neutral. Text and icons carry the meaning alongside color; successful action feedback is a polite live region and failures are alerts.

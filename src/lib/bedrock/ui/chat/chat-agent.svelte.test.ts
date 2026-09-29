@@ -27,10 +27,10 @@ it('locks approval immediately against duplicate clicks and retains pending stat
 	await expect
 		.poll(() => view.container.querySelector('[role="alert"]')?.textContent)
 		.toContain('Could not save');
-	expect(view.container.querySelector('[role="status"]')?.textContent).toBe('');
+	expect(view.container.querySelector('[role="status"]')?.textContent?.trim()).toBe('');
 	button.click();
 	await expect
-		.poll(() => view.container.querySelector('[role="status"]')?.textContent)
+		.poll(() => view.container.querySelector('[role="status"]')?.textContent?.trim())
 		.toBe('Approved');
 	expect(calls).toBe(2);
 });
@@ -59,7 +59,7 @@ it('sends the selected recommendation only once while acceptance is pending', as
 	expect(calls).toBe(1);
 	resolve();
 	await expect
-		.poll(() => view.container.querySelector('[role="status"]')?.textContent)
+		.poll(() => view.container.querySelector('[role="status"]')?.textContent?.trim())
 		.toBe('Recommendation accepted');
 });
 
@@ -78,6 +78,6 @@ it('filters stale review selections and never applies unselected changes', async
 	view.container.querySelector<HTMLButtonElement>('[data-slot="chat-change-apply"]')!.click();
 	await expect.poll(() => applied).toEqual(['one']);
 	await expect
-		.poll(() => view.container.querySelector('[role="status"]')?.textContent)
+		.poll(() => view.container.querySelector('[role="status"]')?.textContent?.trim())
 		.toBe('Changes applied');
 });

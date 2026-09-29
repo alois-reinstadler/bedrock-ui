@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Feedback from './chat-feedback.svelte';
 	import * as Card from '#lib/bedrock/ui/card';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import * as Collapsible from '#lib/bedrock/ui/collapsible';
@@ -124,8 +125,6 @@
 			disabled={disabled || action.pending || !picked.length}
 			onclick={apply}>{text.apply} ({picked.length})</Button
 		>{/if}
-	<p role="status" class="text-xs text-muted-foreground empty:hidden">
-		{applied ? text.applied : ''}
-	</p>
-	{#if action.failed}<p role="alert" class="text-sm text-destructive">{text.error}</p>{/if}
+	<Feedback tone="success" message={applied ? text.applied : ''} />
+	{#if action.failed}<Feedback tone="error" message={text.error} />{/if}
 </Card.Root>

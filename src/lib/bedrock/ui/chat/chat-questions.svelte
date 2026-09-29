@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Feedback from './chat-feedback.svelte';
 	import * as Card from '#lib/bedrock/ui/card';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import * as RadioGroup from '#lib/bedrock/ui/radio-group';
@@ -82,7 +83,7 @@
 	aria-busy={action.pending}
 	class={cn('min-w-0 gap-0 bg-background py-0 shadow-sm', className)}
 >
-	{#if complete}<p role="status" class="p-4 text-sm">{text.done}</p>
+	{#if complete}<Feedback tone="success" message={text.done} class="p-4" />
 	{:else if current}
 		{#key current.id}
 			<Card.Header class="flex items-start gap-3 p-4 pb-2">
@@ -167,7 +168,5 @@
 			</div>
 		</Card.Footer>
 	{:else}<p class="p-4 text-sm text-muted-foreground">{text.empty}</p>{/if}
-	{#if action.failed}<p role="alert" class="px-4 pb-3 text-xs text-destructive">
-			{text.error}
-		</p>{/if}
+	{#if action.failed}<Feedback tone="error" message={text.error} class="px-4 pb-3" />{/if}
 </Card.Root>

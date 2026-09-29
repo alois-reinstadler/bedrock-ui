@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Feedback from './chat-feedback.svelte';
 	import * as Card from '#lib/bedrock/ui/card';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import * as RadioGroup from '#lib/bedrock/ui/radio-group';
@@ -119,11 +120,10 @@
 					disabled={disabled || action.pending}
 					onclick={dismiss}>{text.dismiss}</Button
 				>{/if}{/if}
-		<p role="status" class="text-xs text-muted-foreground empty:hidden">
-			{outcome ? text[outcome] : ''}
-		</p>
+		<Feedback
+			tone={outcome === 'accepted' ? 'success' : 'neutral'}
+			message={outcome ? text[outcome] : ''}
+		/>
 	</Card.Footer>
-	{#if action.failed}<p role="alert" class="px-4 pb-3 text-xs text-destructive">
-			{text.error}
-		</p>{/if}
+	{#if action.failed}<Feedback tone="error" message={text.error} class="px-4 pb-3" />{/if}
 </Card.Root>

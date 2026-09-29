@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Feedback from './chat-feedback.svelte';
 	import * as Card from '#lib/bedrock/ui/card';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import ShieldCheckIcon from '@lucide/svelte/icons/shield-check';
@@ -84,11 +85,10 @@
 				onclick={() => decide('rejected')}>{text.reject}</Button
 			>
 		{/if}
-		<p role="status" class="text-xs text-muted-foreground empty:hidden">
-			{action.pending ? text.working : decision === 'pending' ? '' : text[decision]}
-		</p>
+		<Feedback
+			tone={action.pending ? 'info' : decision === 'approved' ? 'success' : 'warning'}
+			message={action.pending ? text.working : decision === 'pending' ? '' : text[decision]}
+		/>
 	</Card.Footer>
-	{#if action.failed}<p role="alert" class="px-4 pb-3 text-xs text-destructive">
-			{text.error}
-		</p>{/if}
+	{#if action.failed}<Feedback tone="error" message={text.error} class="px-4 pb-3" />{/if}
 </Card.Root>
