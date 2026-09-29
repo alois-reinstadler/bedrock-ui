@@ -97,3 +97,23 @@ export {
 	type ChatVoiceOptions,
 	type ChatVoiceLabels
 } from './chat-voice.svelte';
+
+export { default as Citation } from './chat-citation.svelte';
+export { default as SourceCard } from './chat-source-card.svelte';
+export { default as Sources } from './chat-sources.svelte';
+export { default as Approval } from './chat-approval.svelte';
+export { default as Questions } from './chat-questions.svelte';
+export { default as Activity } from './chat-activity.svelte';
+export { default as Recommendation } from './chat-recommendation.svelte';
+export { default as ChangeReview } from './chat-change-review.svelte';
+export { default as SelectionActions } from './chat-selection-actions.svelte';
+export type {
+	ChatContext,
+	ChatCommand,
+	ChatSource,
+	ChatQuestion,
+	ChatActivityStep,
+	ChatRecommendationOption,
+	ChatChange,
+	ChatSelectionAction
+} from './agent-types';

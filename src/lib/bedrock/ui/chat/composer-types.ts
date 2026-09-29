@@ -1,3 +1,4 @@
+import type { ChatContext, ChatCommand } from './agent-types';
 import type { IconType } from '#lib/bedrock/ui/icon';
 
 export type ChatModelOption = {
@@ -20,6 +21,8 @@ export type ChatReasoningOption = {
 export type ChatServiceTierOption = ChatReasoningOption;
 export type ChatComposerSubmission = {
 	files: File[];
+	context?: ChatContext[];
+	command?: ChatCommand;
 	model?: string;
 	reasoning?: string;
 	serviceTier?: string;

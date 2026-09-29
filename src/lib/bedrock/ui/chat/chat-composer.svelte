@@ -12,6 +12,7 @@
 	import ReasoningPicker from './chat-reasoning-picker.svelte';
 	import ComposerFile from './chat-composer-file.svelte';
 	import Voice, { type ChatVoiceOptions } from './chat-voice.svelte';
+	import { chatPromptToken, type ChatContext, type ChatCommand } from './agent-types';
 	import { selectComposerFiles } from './composer-files';
 	import type {
 		ChatComposerSubmission,
@@ -39,6 +40,11 @@
 		serviceTiers = [],
 		serviceTier = $bindable(''),
 		voice,
+		contexts = [],
+		commands = [],
+		context = $bindable<ChatContext[]>([]),
+		command = $bindable<ChatCommand | null>(null),
+		promptLabels = {},
 		attachments = false,
 		files = $bindable<File[]>([]),
 		uploads = [],
@@ -91,6 +97,13 @@
 		attachments?: boolean;
 		/** Optional voice controls. The app owns audio capture and updates the draft or files. */
 		voice?: ChatVoiceOptions;
+		/** Optional @ source choices and / commands. Selection is returned in onSend. */
+		contexts?: ChatContext[];
+		commands?: ChatCommand[];
+		/** Selected source chips, independent of message text. */
+		context?: ChatContext[];
+		command?: ChatCommand | null;
+		promptLabels?: Partial<{ sources: string; commands: string; empty: string; remove: string }>;
 		files?: File[];
 		/** Optional app-owned upload progress, matched by File identity. Incomplete uploads prevent sending. */
 		uploads?: ChatUpload[];
@@ -136,6 +149,60 @@
 	const toolbar = $derived(
 		attachments || models.length > 0 || reasoningOptions.length > 0 || serviceTiers.length > 0
 	);
+	const promptText = $derived({
+		sources: 'Mention sources',
+		commands: 'Commands',
+		empty: 'No matches.',
+		remove: 'Remove',
+		...promptLabels
+	});
+	let caret = $state(0);
+	let selectionEnd = $state(0);
+	let focused = $state(false);
+	let dismissed = $state(false);
+	let activeOption = $state(0);
+	const token = $derived(chatPromptToken(value, caret, selectionEnd));
+	const promptOpen = $derived(
+		focused &&
+			!dismissed &&
+			!locked &&
+			!!token &&
+			(token.trigger === '@' ? contexts.length > 0 : commands.length > 0)
+	);
+	const promptOptions = $derived(
+		token
+			? (token.trigger === '@' ? contexts : commands).filter(
+					(item) =>
+						!item.disabled &&
+						(token.trigger !== '@' || !context.some((selected) => selected.id === item.id)) &&
+						`${item.label} ${item.description ?? ''}`
+							.toLowerCase()
+							.includes(token.query.toLowerCase())
+				)
+			: []
+	);
+	const activeIndex = $derived(Math.min(activeOption, Math.max(0, promptOptions.length - 1)));
+	function updateCaret() {
+		if (!textarea) return;
+		caret = textarea.selectionStart;
+		selectionEnd = textarea.selectionEnd;
+		dismissed = false;
+		activeOption = 0;
+	}
+	async function choosePrompt(item: ChatContext | ChatCommand) {
+		if (!token || locked) return;
+		const start = token.start;
+		if (token.trigger === '@') context = [...context, item];
+		else command = item;
+		value = value.slice(0, start) + value.slice(token.end);
+		dismissed = true;
+		await tick();
+		if (destroyed) return;
+		textarea?.focus();
+		textarea?.setSelectionRange(start, start);
+		caret = start;
+		selectionEnd = start;
+	}
 	const maxHeight = $derived(`${maxRows * 1.25 + 0.75}rem`);
 	const blockedUploads = $derived(
 		attachments &&
@@ -149,24 +216,30 @@
 	const canSend = $derived(
 		!voiceActive &&
 			!blockedUploads &&
-			(value.trim().length > 0 || (attachments && files.length > 0))
+			(value.trim().length > 0 || !!command || (attachments && files.length > 0))
 	);
 
 	async function submit() {
 		if (!canSend || locked || busy) return;
 		const draft = value;
 		const sentFiles = attachments ? [...files] : [];
+		const sentContext = [...context];
+		const sentCommand = command;
 		submitting = true;
 		error = '';
 		try {
 			await onSend?.(draft.trim(), {
 				files: sentFiles,
+				...(contexts.length || sentContext.length ? { context: sentContext } : {}),
+				...(sentCommand ? { command: sentCommand } : {}),
 				model: models.length ? model || undefined : undefined,
 				reasoning: reasoningOptions.length ? reasoning || undefined : undefined,
 				serviceTier: serviceTiers.length ? serviceTier || undefined : undefined
 			});
 			if (destroyed) return;
 			if (value === draft) value = '';
+			context = context.filter((item) => !sentContext.includes(item));
+			if (command === sentCommand) command = null;
 			if (sentFiles.length) {
 				files = files.filter((file) => !sentFiles.includes(file));
 				onFilesChange?.(files);
@@ -206,6 +279,27 @@
 		onFilesChange?.(files);
 	}
 	function onkeydown(event: KeyboardEvent) {
+		if (event.isComposing) return;
+		if (promptOpen) {
+			if (event.key === 'Escape') {
+				event.preventDefault();
+				dismissed = true;
+				return;
+			}
+			if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+				event.preventDefault();
+				activeOption = promptOptions.length
+					? (activeIndex + (event.key === 'ArrowDown' ? 1 : -1) + promptOptions.length) %
+						promptOptions.length
+					: 0;
+				return;
+			}
+			if (event.key === 'Enter' && !event.shiftKey) {
+				event.preventDefault();
+				if (promptOptions[activeIndex]) void choosePrompt(promptOptions[activeIndex]);
+				return;
+			}
+		}
 		if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
 			event.preventDefault();
 			void submit();
@@ -321,6 +415,64 @@
 		>
 			{@render headerActions()}
 		</div>{/if}
+	{#if context.length || command}
+		<div data-slot="chat-prompt-context" class="flex flex-wrap gap-2 px-2">
+			{#each context as item (item.id)}<Button
+					type="button"
+					variant="secondary"
+					size="sm"
+					disabled={locked}
+					aria-label={`${promptText.remove}: ${item.label}`}
+					onclick={() => {
+						context = context.filter((selected) => selected.id !== item.id);
+					}}>{item.label} ×</Button
+				>{/each}
+			{#if command}<Button
+					type="button"
+					variant="secondary"
+					size="sm"
+					disabled={locked}
+					aria-label={`${promptText.remove}: ${command.label}`}
+					onclick={() => {
+						command = null;
+					}}>/{command.label} ×</Button
+				>{/if}
+		</div>
+	{/if}
+	{#if promptOpen}
+		<div
+			id={`${uid}-prompt-options`}
+			role="listbox"
+			aria-label={token?.trigger === '@' ? promptText.sources : promptText.commands}
+			class="max-h-48 overflow-auto rounded-lg border bg-background p-1"
+		>
+			{#each promptOptions as item, index (item.id)}
+				<button
+					type="button"
+					role="option"
+					aria-selected={index === activeIndex}
+					id={`${uid}-prompt-${index}`}
+					tabindex="-1"
+					onpointerdown={(event) => event.preventDefault()}
+					onclick={() => choosePrompt(item)}
+					class={cn(
+						'block w-full rounded-md px-3 py-2 text-left text-sm',
+						index === activeIndex && 'bg-accent text-accent-foreground'
+					)}
+					><span class="block font-medium">{item.label}</span>{#if item.description}<span
+							class="block text-xs text-muted-foreground">{item.description}</span
+						>{/if}</button
+				>
+			{:else}<div
+					role="option"
+					aria-selected="false"
+					aria-disabled="true"
+					class="p-3 text-sm text-muted-foreground"
+				>
+					{promptText.empty}
+				</div>{/each}
+		</div>
+	{/if}
 	<div class="flex items-end gap-2">
 		<TextareaPrimitive
 			bind:ref={textarea}
@@ -330,6 +482,21 @@
 			{placeholder}
 			disabled={locked}
 			{onkeydown}
+			oninput={updateCaret}
+			onclick={updateCaret}
+			onselect={updateCaret}
+			onfocus={() => {
+				focused = true;
+				updateCaret();
+			}}
+			onblur={() => {
+				focused = false;
+			}}
+			aria-autocomplete={contexts.length || commands.length ? 'list' : undefined}
+			aria-controls={promptOpen ? `${uid}-prompt-options` : undefined}
+			aria-activedescendant={promptOpen && promptOptions.length
+				? `${uid}-prompt-${activeIndex}`
+				: undefined}
 			rows={1}
 			aria-label={placeholder}
 			aria-describedby={error ? `${uid}-error` : undefined}

@@ -6381,6 +6381,51 @@
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
+					"name": "contexts",
+					"kind": "prop",
+					"type": "ChatContext[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Optional @ source choices and / commands. Selection is returned in onSend.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "commands",
+					"kind": "prop",
+					"type": "ChatCommand[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "context",
+					"kind": "prop",
+					"type": "ChatContext[] | undefined",
+					"default": "$bindable<ChatContext[]>([])",
+					"required": false,
+					"description": "Selected source chips, independent of message text.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "command",
+					"kind": "prop",
+					"type": "ChatCommand | null | undefined",
+					"default": "$bindable<ChatCommand | null>(null)",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "promptLabels",
+					"kind": "prop",
+					"type": "Partial<{ sources: string; commands: string; empty: string; remove: string; }> | undefined",
+					"default": "{}",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
 					"name": "files",
 					"kind": "prop",
 					"type": "File[] | undefined",
@@ -7389,6 +7434,609 @@
 					"name": "data-state",
 					"kind": "data-attribute",
 					"type": "voiceState",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Citation",
+			"aliases": [],
+			"source": "src/lib/bedrock/ui/chat/chat-citation.svelte",
+			"entries": [
+				{
+					"name": "source",
+					"kind": "prop",
+					"type": "ChatSource",
+					"required": true,
+					"description": "Accepted by Citation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-citation.svelte"
+				},
+				{
+					"name": "label",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Source'",
+					"required": false,
+					"description": "Accepted by Citation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-citation.svelte"
+				},
+				{
+					"name": "open",
+					"kind": "bindable",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by Citation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-citation.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-citation\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "SourceCard",
+			"aliases": [],
+			"source": "src/lib/bedrock/ui/chat/chat-source-card.svelte",
+			"entries": [
+				{
+					"name": "source",
+					"kind": "prop",
+					"type": "ChatSource",
+					"required": true,
+					"description": "Accepted by SourceCard; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-source-card.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by SourceCard; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-source-card.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-source-card\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Sources",
+			"aliases": [],
+			"source": "src/lib/bedrock/ui/chat/chat-sources.svelte",
+			"entries": [
+				{
+					"name": "sources",
+					"kind": "prop",
+					"type": "ChatSource[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Accepted by Sources; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-sources.svelte"
+				},
+				{
+					"name": "open",
+					"kind": "bindable",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by Sources; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-sources.svelte"
+				},
+				{
+					"name": "label",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Sources'",
+					"required": false,
+					"description": "Accepted by Sources; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-sources.svelte"
+				},
+				{
+					"name": "emptyLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'No sources available.'",
+					"required": false,
+					"description": "Accepted by Sources; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-sources.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Sources; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-sources.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-sources\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Approval",
+			"aliases": [],
+			"source": "src/lib/bedrock/ui/chat/chat-approval.svelte",
+			"entries": [
+				{
+					"name": "title",
+					"kind": "prop",
+					"type": "string",
+					"required": true,
+					"description": "Accepted by Approval; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-approval.svelte"
+				},
+				{
+					"name": "description",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Approval; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-approval.svelte"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Approval; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-approval.svelte"
+				},
+				{
+					"name": "decision",
+					"kind": "prop",
+					"type": "\"pending\" | \"approved\" | \"rejected\" | undefined",
+					"default": "$bindable<'pending' | 'approved' | 'rejected'>('pending')",
+					"required": false,
+					"description": "Accepted by Approval; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-approval.svelte"
+				},
+				{
+					"name": "onDecide",
+					"kind": "event",
+					"type": "(decision: \"approved\" | \"rejected\") => void | Promise<void>",
+					"required": true,
+					"description": "Accepted by Approval; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-approval.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by Approval; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-approval.svelte"
+				},
+				{
+					"name": "labels",
+					"kind": "prop",
+					"type": "Partial<{ approve: string; reject: string; approved: string; rejected: string; working: string; error: string; }> | undefined",
+					"default": "{}",
+					"required": false,
+					"description": "Accepted by Approval; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-approval.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Approval; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-approval.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-approval\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Questions",
+			"aliases": [],
+			"source": "src/lib/bedrock/ui/chat/chat-questions.svelte",
+			"entries": [
+				{
+					"name": "questions",
+					"kind": "prop",
+					"type": "ChatQuestion[]",
+					"required": true,
+					"description": "Accepted by Questions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-questions.svelte"
+				},
+				{
+					"name": "answers",
+					"kind": "prop",
+					"type": "Record<string, string> | undefined",
+					"default": "$bindable<Record<string, string>>({})",
+					"required": false,
+					"description": "Accepted by Questions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-questions.svelte"
+				},
+				{
+					"name": "onSubmit",
+					"kind": "event",
+					"type": "(answers: Record<string, string>) => void | Promise<void>",
+					"required": true,
+					"description": "Accepted by Questions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-questions.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by Questions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-questions.svelte"
+				},
+				{
+					"name": "labels",
+					"kind": "prop",
+					"type": "Partial<{ title: string; back: string; next: string; skip: string; submit: string; custom: string; done: string; empty: string; error: string; }> | undefined",
+					"default": "{}",
+					"required": false,
+					"description": "Accepted by Questions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-questions.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Questions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-questions.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-questions\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Activity",
+			"aliases": [],
+			"source": "src/lib/bedrock/ui/chat/chat-activity.svelte",
+			"entries": [
+				{
+					"name": "steps",
+					"kind": "prop",
+					"type": "ChatActivityStep[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Accepted by Activity; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-activity.svelte"
+				},
+				{
+					"name": "layout",
+					"kind": "prop",
+					"type": "\"list\" | \"chips\" | undefined",
+					"default": "'list'",
+					"required": false,
+					"description": "Accepted by Activity; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-activity.svelte"
+				},
+				{
+					"name": "label",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Activity'",
+					"required": false,
+					"description": "Accepted by Activity; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-activity.svelte"
+				},
+				{
+					"name": "emptyLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'No activity yet.'",
+					"required": false,
+					"description": "Accepted by Activity; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-activity.svelte"
+				},
+				{
+					"name": "statusLabels",
+					"kind": "prop",
+					"type": "Partial<Record<\"error\" | \"pending\" | \"running\" | \"complete\", string>> | undefined",
+					"default": "{}",
+					"required": false,
+					"description": "Accepted by Activity; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-activity.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Activity; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-activity.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-activity\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-status",
+					"kind": "data-attribute",
+					"type": "step.status",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Recommendation",
+			"aliases": [],
+			"source": "src/lib/bedrock/ui/chat/chat-recommendation.svelte",
+			"entries": [
+				{
+					"name": "title",
+					"kind": "prop",
+					"type": "string",
+					"required": true,
+					"description": "Accepted by Recommendation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-recommendation.svelte"
+				},
+				{
+					"name": "options",
+					"kind": "prop",
+					"type": "ChatRecommendationOption[]",
+					"required": true,
+					"description": "Accepted by Recommendation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-recommendation.svelte"
+				},
+				{
+					"name": "value",
+					"kind": "bindable",
+					"type": "string | undefined",
+					"default": "''",
+					"required": false,
+					"description": "Accepted by Recommendation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-recommendation.svelte"
+				},
+				{
+					"name": "onAccept",
+					"kind": "event",
+					"type": "(option: ChatRecommendationOption) => void | Promise<void>",
+					"required": true,
+					"description": "Accepted by Recommendation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-recommendation.svelte"
+				},
+				{
+					"name": "onDismiss",
+					"kind": "event",
+					"type": "(() => void | Promise<void>) | undefined",
+					"required": false,
+					"description": "Accepted by Recommendation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-recommendation.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by Recommendation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-recommendation.svelte"
+				},
+				{
+					"name": "labels",
+					"kind": "prop",
+					"type": "Partial<{ accept: string; dismiss: string; accepted: string; dismissed: string; empty: string; error: string; }> | undefined",
+					"default": "{}",
+					"required": false,
+					"description": "Accepted by Recommendation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-recommendation.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Recommendation; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-recommendation.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-recommendation\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "ChangeReview",
+			"aliases": [],
+			"source": "src/lib/bedrock/ui/chat/chat-change-review.svelte",
+			"entries": [
+				{
+					"name": "changes",
+					"kind": "prop",
+					"type": "ChatChange[]",
+					"required": true,
+					"description": "Accepted by ChangeReview; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-change-review.svelte"
+				},
+				{
+					"name": "view",
+					"kind": "prop",
+					"type": "\"diff\" | \"before-after\" | undefined",
+					"default": "'diff'",
+					"required": false,
+					"description": "Accepted by ChangeReview; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-change-review.svelte"
+				},
+				{
+					"name": "selected",
+					"kind": "prop",
+					"type": "string[] | undefined",
+					"default": "$bindable<string[]>([])",
+					"required": false,
+					"description": "Accepted by ChangeReview; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-change-review.svelte"
+				},
+				{
+					"name": "onApply",
+					"kind": "event",
+					"type": "(changes: ChatChange[]) => void | Promise<void>",
+					"required": true,
+					"description": "Accepted by ChangeReview; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-change-review.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by ChangeReview; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-change-review.svelte"
+				},
+				{
+					"name": "labels",
+					"kind": "prop",
+					"type": "Partial<{ title: string; before: string; after: string; apply: string; applied: string; empty: string; error: string; }> | undefined",
+					"default": "{}",
+					"required": false,
+					"description": "Accepted by ChangeReview; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-change-review.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by ChangeReview; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-change-review.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-change-review\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "SelectionActions",
+			"aliases": [],
+			"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte",
+			"entries": [
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet<[]>",
+					"required": true,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "actions",
+					"kind": "prop",
+					"type": "ChatSelectionAction[] | undefined",
+					"default": "[\n\t\t\t{ id: 'quote', label: 'Quote' },\n\t\t\t{ id: 'explain', label: 'Explain' },\n\t\t\t{ id: 'rewrite', label: 'Rewrite' }\n\t\t]",
+					"required": false,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "onAction",
+					"kind": "event",
+					"type": "(action: string, text: string) => void | Promise<void>",
+					"required": true,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "label",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Response text'",
+					"required": false,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "hint",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Select text to use an action.'",
+					"required": false,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "selectLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Select response text'",
+					"required": false,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "selectedLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Selected text'",
+					"required": false,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "errorLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Could not complete this action. Try again.'",
+					"required": false,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by SelectionActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-selection-actions.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-selection-actions\"",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
