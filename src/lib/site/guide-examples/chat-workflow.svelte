@@ -49,46 +49,12 @@
 	];
 </script>
 
-<section data-demo="chat-workflow" class="w-full max-w-xl space-y-4">
+<section data-demo="chat-workflow" class="mx-auto w-full max-w-xl space-y-4">
 	<p class="text-sm text-muted-foreground">
 		Tool calls, tasks, and public progress summaries share one activity surface. Expand a row for
 		details.
 	</p>
-	<div class="flex flex-wrap gap-2">
-		<Button
-			size="sm"
-			variant="outline"
-			onclick={() => {
-				layout = layout === 'list' ? 'chips' : 'list';
-			}}>Toggle activity layout</Button
-		>
-		<Button
-			size="sm"
-			variant="outline"
-			onclick={() => {
-				steps = steps.map((step) =>
-					step.id === 'review'
-						? { ...step, status: 'error', detail: 'A check failed. Review the output.' }
-						: step
-				);
-			}}>Fail review task</Button
-		>
-		<Button
-			size="sm"
-			variant="outline"
-			onclick={() => {
-				steps = steps.map((step) => ({ ...step, status: 'complete', progress: 100 }));
-			}}>Complete tasks</Button
-		>
-	</div>
 	<Chat.Activity {steps} {layout} />
-	<Button
-		size="sm"
-		variant="outline"
-		onclick={() => {
-			fail = true;
-		}}>Fail next change apply</Button
-	>
 	<Chat.ChangeReview
 		{changes}
 		bind:selected
@@ -101,6 +67,40 @@
 			applied = `Applied: ${picked.map((change) => change.id).join(', ')}`;
 		}}
 	/>
+	<div class="flex flex-wrap gap-2">
+		<Button
+			size="sm"
+			variant="ghost"
+			onclick={() => {
+				layout = layout === 'list' ? 'chips' : 'list';
+			}}>Toggle activity layout</Button
+		>
+		<Button
+			size="sm"
+			variant="ghost"
+			onclick={() => {
+				steps = steps.map((step) =>
+					step.id === 'review'
+						? { ...step, status: 'error', detail: 'A check failed. Review the output.' }
+						: step
+				);
+			}}>Fail review task</Button
+		>
+		<Button
+			size="sm"
+			variant="ghost"
+			onclick={() => {
+				steps = steps.map((step) => ({ ...step, status: 'complete', progress: 100 }));
+			}}>Complete tasks</Button
+		>
+	</div>
+	<Button
+		size="sm"
+		variant="ghost"
+		onclick={() => {
+			fail = true;
+		}}>Fail next change apply</Button
+	>
 	<output class="block text-sm">{applied}</output>
 	<Chat.SelectionActions
 		onAction={(action, text) => {

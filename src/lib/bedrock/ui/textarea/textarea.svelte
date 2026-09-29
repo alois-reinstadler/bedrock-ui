@@ -6,7 +6,11 @@
 	import Textarea from '#lib/shadcn/ui/textarea/textarea.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Textarea> = $props();
+	let {
+		ref = $bindable(null),
+		value = $bindable(),
+		...props
+	}: ComponentProps<typeof Textarea> = $props();
 </script>
 
-<Textarea {...props} />
+<Textarea bind:ref bind:value {...props} />

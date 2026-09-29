@@ -45,19 +45,37 @@
 
 <section class="w-full max-w-2xl space-y-4">
 	<header class="space-y-1">
-		<h3 class="text-lg font-semibold">Chat with optional composer controls</h3>
+		<h3 class="text-lg font-semibold">Release workspace</h3>
 		<p class="text-sm text-muted-foreground">
 			Choose a model and reasoning level, then attach or drop up to four images, PDFs, or text files
 			(5 MB each). Messages and files stay in this local demo.
 		</p>
 	</header>
-	<Chat.Root class="h-96 min-w-0 rounded-lg border">
+	<Chat.Root class="h-[30rem] min-w-0 overflow-hidden rounded-2xl border bg-background shadow-sm">
 		<Chat.MessageList>
-			<Chat.Message role="assistant"
-				><Chat.MessageBubble
-					>What would you like to work on? You can also send files without a message.</Chat.MessageBubble
+			<Chat.Message role="user"
+				><Chat.MessageBubble class="bg-muted text-foreground"
+					>Help me prepare our next release.</Chat.MessageBubble
 				></Chat.Message
 			>
+			<Chat.Message role="assistant" class="gap-4 py-2">
+				<p class="text-sm leading-relaxed">
+					Let’s turn your release notes into a clear launch plan. Share a draft or attach your
+					project files to get started.
+				</p>
+				<Chat.Activity
+					class="w-full"
+					steps={[
+						{
+							id: 'workspace',
+							title: 'Release workspace ready',
+							kind: 'task',
+							status: 'complete',
+							detail: 'Attach a brief, choose a model, and send your first message.'
+						}
+					]}
+				/>
+			</Chat.Message>
 			{#each messages as message (message.id)}
 				<Chat.Message role="user">
 					{#if message.text}<Chat.MessageBubble>{message.text}</Chat.MessageBubble>{/if}

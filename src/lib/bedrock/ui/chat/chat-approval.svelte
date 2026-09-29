@@ -1,4 +1,7 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
+	import { Icon } from '#lib/bedrock/ui/icon';
+	import ShieldCheckIcon from '@lucide/svelte/icons/shield-check';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { createChatAction } from './agent-action.svelte';
 	import type { Snippet } from 'svelte';
@@ -45,28 +48,47 @@
 	}
 </script>
 
-<section
+<Card.Root
 	data-slot="chat-approval"
+	role="region"
 	aria-label={title}
 	aria-busy={action.pending}
-	class={cn('space-y-3 rounded-xl border bg-background p-4', className)}
+	class={cn('min-w-0 gap-0 bg-background py-0 shadow-sm', className)}
 >
-	<p class="font-medium">{title}</p>
-	{#if description}<p class="text-sm text-muted-foreground">{description}</p>{/if}
-	{@render children?.()}
-	{#if decision === 'pending'}<div class="flex flex-wrap gap-2">
-			<Button size="sm" disabled={disabled || action.pending} onclick={() => decide('approved')}
-				>{text.approve}</Button
+	<Card.Header class="flex items-start gap-3 p-4">
+		<span
+			class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-muted-foreground"
+			><Icon icon={ShieldCheckIcon} /></span
+		>
+		<div class="min-w-0 space-y-1">
+			<Card.Title class="text-sm leading-6">{title}</Card.Title>
+			{#if description}<Card.Description class="text-xs leading-relaxed"
+					>{description}</Card.Description
+				>{/if}
+		</div>
+	</Card.Header>
+	{#if children}<Card.Content class="px-4 pb-4">{@render children()}</Card.Content>{/if}
+	<Card.Footer class="flex-wrap gap-2 px-4 py-3">
+		{#if decision === 'pending'}
+			<Button
+				size="sm"
+				class="rounded-full"
+				disabled={disabled || action.pending}
+				onclick={() => decide('approved')}>{text.approve}</Button
 			>
 			<Button
 				size="sm"
-				variant="outline"
+				variant="ghost"
+				class="rounded-full"
 				disabled={disabled || action.pending}
 				onclick={() => decide('rejected')}>{text.reject}</Button
 			>
-		</div>{/if}
-	<p role="status" class="text-sm text-muted-foreground">
-		{action.pending ? text.working : decision === 'pending' ? '' : text[decision]}
-	</p>
-	{#if action.failed}<p role="alert" class="text-sm text-destructive">{text.error}</p>{/if}
-</section>
+		{/if}
+		<p role="status" class="text-xs text-muted-foreground empty:hidden">
+			{action.pending ? text.working : decision === 'pending' ? '' : text[decision]}
+		</p>
+	</Card.Footer>
+	{#if action.failed}<p role="alert" class="px-4 pb-3 text-xs text-destructive">
+			{text.error}
+		</p>{/if}
+</Card.Root>

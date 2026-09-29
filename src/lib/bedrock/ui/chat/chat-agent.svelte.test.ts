@@ -50,7 +50,9 @@ it('sends the selected recommendation only once while acceptance is pending', as
 			});
 		}
 	});
-	const button = view.container.querySelector('button')!;
+	const button = view.container.querySelector<HTMLButtonElement>(
+		'[data-slot="chat-recommendation-accept"]'
+	)!;
 	button.click();
 	button.click();
 	await expect.poll(() => button.disabled).toBe(true);
@@ -73,7 +75,7 @@ it('filters stale review selections and never applies unselected changes', async
 			applied = changes.map((change) => change.id);
 		}
 	});
-	view.container.querySelector<HTMLButtonElement>('section > button')!.click();
+	view.container.querySelector<HTMLButtonElement>('[data-slot="chat-change-apply"]')!.click();
 	await expect.poll(() => applied).toEqual(['one']);
 	await expect
 		.poll(() => view.container.querySelector('[role="status"]')?.textContent)

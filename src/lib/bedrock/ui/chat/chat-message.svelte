@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts">
+	import { Root as Message } from '#lib/bedrock/ui/message';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -17,29 +18,30 @@
 	} = $props();
 </script>
 
-<div
-	bind:this={ref}
+<Message
+	bind:ref
+	align={role === 'user' ? 'end' : 'start'}
 	data-slot="chat-message"
 	data-role={role}
 	class={cn(
-		'bedrock-chat-message group/chat-message flex w-full flex-col gap-1',
+		'bedrock-chat-message group/chat-message flex w-full flex-col gap-1 data-[align=end]:flex-col',
 		role === 'user' ? 'items-end' : 'items-start',
 		className
 	)}
 	{...restProps}
 >
 	{@render children?.()}
-</div>
+</Message>
 
 <style>
-	.bedrock-chat-message {
+	:global(.bedrock-chat-message) {
 		transition:
 			translate var(--motion-enter) var(--motion-ease-enter),
 			opacity var(--motion-enter) var(--motion-ease-enter);
 	}
 
 	@starting-style {
-		.bedrock-chat-message {
+		:global(.bedrock-chat-message) {
 			translate: 0 0.4rem;
 			opacity: 0;
 		}

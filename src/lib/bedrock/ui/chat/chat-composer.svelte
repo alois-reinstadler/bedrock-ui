@@ -5,8 +5,9 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 	import { Swap } from '#lib/bedrock/motion/index.js';
 	import { Button } from '#lib/bedrock/ui/button';
+	import { Token } from '#lib/bedrock/ui/token';
 	import { Icon } from '#lib/bedrock/ui/icon';
-	import TextareaPrimitive from '#lib/shadcn/ui/textarea/textarea.svelte';
+	import { Textarea } from '#lib/bedrock/ui/textarea';
 	import { cn } from '#lib/utils.js';
 	import ModelPicker from './chat-model-picker.svelte';
 	import ReasoningPicker from './chat-reasoning-picker.svelte';
@@ -417,26 +418,22 @@
 		</div>{/if}
 	{#if context.length || command}
 		<div data-slot="chat-prompt-context" class="flex flex-wrap gap-2 px-2">
-			{#each context as item (item.id)}<Button
-					type="button"
-					variant="secondary"
-					size="sm"
+			{#each context as item (item.id)}<Token
+					label={item.label}
 					disabled={locked}
-					aria-label={`${promptText.remove}: ${item.label}`}
-					onclick={() => {
+					labels={{ remove: (label) => `${promptText.remove}: ${label}` }}
+					onRemove={() => {
 						context = context.filter((selected) => selected.id !== item.id);
-					}}>{item.label} ×</Button
-				>{/each}
-			{#if command}<Button
-					type="button"
-					variant="secondary"
-					size="sm"
+					}}
+				/>{/each}
+			{#if command}<Token
+					label={`/${command.label}`}
 					disabled={locked}
-					aria-label={`${promptText.remove}: ${command.label}`}
-					onclick={() => {
+					labels={{ remove: () => `${promptText.remove}: ${command?.label}` }}
+					onRemove={() => {
 						command = null;
-					}}>/{command.label} ×</Button
-				>{/if}
+					}}
+				/>{/if}
 		</div>
 	{/if}
 	{#if promptOpen}
@@ -474,7 +471,7 @@
 		</div>
 	{/if}
 	<div class="flex items-end gap-2">
-		<TextareaPrimitive
+		<Textarea
 			bind:ref={textarea}
 			bind:value
 			id="{uid}-message"

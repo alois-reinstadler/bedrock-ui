@@ -19,3 +19,20 @@ Bedrock already provides draft recovery, multi-file intake and upload states, me
 All are opt-in. Capture, transport, retrieval, authorization, execution, and persistence remain application-owned. Use stable item IDs. Key decision/review components by request ID to reset completed state for new requests. Callback rejection retains input; successful decisions stop duplicate submission. Do not replace a live request with a different request under the same identity.
 
 Each workflow has a Preview/Code example with copy feedback. Existing Tabs and Sidebar can compose conversation navigation; application-specific tables, charts, inspectors, and remote screen viewers remain separate primitives.
+
+## Composition and presentation
+
+The initial feature pass underused Bedrock primitives and treated most interactions as large bordered forms. The visual reference is stronger in density, hierarchy, and integration into the conversation. Chat now builds on the shared components:
+
+| Chat part                   | Bedrock components                                   |
+| --------------------------- | ---------------------------------------------------- |
+| Message                     | Message                                              |
+| Composer and message editor | Textarea; Token for removable context and commands   |
+| Approval                    | Card, Button, Icon                                   |
+| Questions                   | Card, RadioGroup, Label, Input, Button, Icon         |
+| Recommendation              | Card, RadioGroup, Label, Button, Icon                |
+| Activity                    | Collapsible, Progress, StatusDot, Icon               |
+| Sources and source cards    | Collapsible, Card, Icon                              |
+| Change review               | Card, Collapsible, Checkbox, CodeBlock, Button, Icon |
+
+Use quiet inset surfaces for activity, one outer card for decisions, and shared footer spacing for actions. Keep source disclosures compact until expanded. The primary preview demonstrates these parts together in a delivery conversation. Model, reasoning, uploads, and voice remain optional; existing callback and recovery contracts are unchanged.

@@ -15,33 +15,15 @@
 	}
 </script>
 
-<section data-demo="chat-decisions" class="w-full max-w-xl space-y-4">
+<section data-demo="chat-decisions" class="mx-auto w-full max-w-md space-y-5">
 	<p class="text-sm text-muted-foreground">
 		Ask a question or request a decision within a conversation. No external actions run in this
 		demo.
 	</p>
-	<div class="flex flex-wrap gap-2">
-		<Button
-			size="sm"
-			variant="outline"
-			onclick={() => {
-				fail = true;
-			}}>Fail next decision</Button
-		><Button
-			size="sm"
-			variant="outline"
-			onclick={() => {
-				revision++;
-				result = '';
-				fail = false;
-				recommendation = 'small';
-			}}>Reset decisions</Button
-		>
-	</div>
 	{#key revision}
 		<Chat.Approval
 			title="Publish the release notes?"
-			description="The app should validate permission and publish only after an explicit approval."
+			description="The draft is ready. Publish it to your team’s release feed?"
 			onDecide={(decision) => save(`Decision: ${decision}`)}
 		/>
 		<Chat.Questions
@@ -88,6 +70,24 @@
 			onDismiss={() => save('Recommendation dismissed')}
 		/>
 	{/key}
+	<div class="flex flex-wrap gap-2">
+		<Button
+			size="sm"
+			variant="ghost"
+			onclick={() => {
+				fail = true;
+			}}>Fail next decision</Button
+		><Button
+			size="sm"
+			variant="ghost"
+			onclick={() => {
+				revision++;
+				result = '';
+				fail = false;
+				recommendation = 'small';
+			}}>Reset decisions</Button
+		>
+	</div>
 	<output class="block text-sm break-words">{result}</output>
 	<p class="text-sm text-muted-foreground">
 		Callbacks may be async. Rejections retain choices for retry; successful decisions lock against

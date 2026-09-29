@@ -1,4 +1,12 @@
 <script lang="ts">
+	import * as Collapsible from '#lib/bedrock/ui/collapsible';
+	import { Progress } from '#lib/bedrock/ui/progress';
+	import { StatusDot } from '#lib/bedrock/ui/status-dot';
+	import { Icon } from '#lib/bedrock/ui/icon';
+	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
+	import TerminalIcon from '@lucide/svelte/icons/terminal';
+	import ListChecksIcon from '@lucide/svelte/icons/list-checks';
+	import SparklesIcon from '@lucide/svelte/icons/sparkles';
 	import type { ChatActivityStep } from './agent-types';
 	import { cn } from '#lib/utils.js';
 	let {
@@ -28,48 +36,70 @@
 	}
 </script>
 
-<section data-slot="chat-activity" aria-label={label} class={cn('min-w-0 space-y-2', className)}>
-	<div class={cn('flex gap-2', layout === 'chips' ? 'flex-wrap items-start' : 'flex-col')}>
+<div role="group" data-slot="chat-activity" aria-label={label} class={cn('min-w-0', className)}>
+	<div class={cn('flex gap-1.5', layout === 'chips' ? 'flex-wrap items-start' : 'flex-col')}>
 		{#each steps as step (step.id)}
-			<details
+			<Collapsible.Root
 				data-slot="chat-activity-step"
 				data-status={step.status}
-				class="max-w-full min-w-0 rounded-lg border bg-background text-sm"
+				class={cn(
+					'group/activity max-w-full min-w-0 rounded-xl text-sm',
+					layout === 'chips' ? 'border bg-muted/30' : 'bg-muted/30'
+				)}
 			>
-				<summary
-					class="cursor-pointer rounded-lg p-3 break-words focus-visible:outline-2 focus-visible:outline-ring"
+				<Collapsible.Trigger
+					class="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left outline-none hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-ring"
 				>
-					<span class="font-medium">{step.title}</span>
-					<span
-						class={cn(
-							'ml-2 text-xs text-muted-foreground',
-							step.status === 'error' && 'text-destructive'
-						)}>{statuses[step.status]}</span
-					>
-					{#if step.duration}<span class="ml-2 text-xs text-muted-foreground">{step.duration}</span
+					<Icon
+						icon={step.kind === 'tool'
+							? TerminalIcon
+							: step.kind === 'reasoning'
+								? SparklesIcon
+								: ListChecksIcon}
+						class="size-3.5 text-muted-foreground"
+					/>
+					<span class="min-w-0 flex-1 text-xs font-medium break-words">{step.title}</span>
+					{#if step.duration}<span class="shrink-0 text-[11px] text-muted-foreground tabular-nums"
+							>{step.duration}</span
 						>{/if}
-				</summary>
-				<div class="space-y-2 px-3 pb-3">
-					{#if step.kind}<p class="text-xs text-muted-foreground">{step.kind}</p>{/if}
-					{#if step.progress !== undefined}<progress
-							max="100"
+					<span
+						class="flex shrink-0 items-center gap-1.5 rounded-full bg-background px-2 py-1 text-[10px] text-muted-foreground"
+					>
+						<StatusDot
+							size="sm"
+							status={step.status === 'error'
+								? 'destructive'
+								: step.status === 'complete'
+									? 'success'
+									: step.status === 'running'
+										? 'info'
+										: 'neutral'}
+							pulse={step.status === 'running'}
+						/>{statuses[step.status]}
+					</span>
+					<Icon
+						icon={ChevronDownIcon}
+						class="size-3 text-muted-foreground transition-transform group-data-[state=open]/activity:rotate-180"
+					/>
+				</Collapsible.Trigger>
+				<Collapsible.Content class="space-y-3 px-3 pt-1 pb-3">
+					{#if step.progress !== undefined}<Progress
 							value={progress(step.progress)}
 							aria-label={step.title}
-							class="h-2 w-full accent-primary"
-						></progress>{/if}
+						/>{/if}
 					{#if step.detail}<pre
-							class="max-h-64 overflow-auto text-xs break-words whitespace-pre-wrap">{step.detail}</pre>{/if}
-					{#if step.children?.length}<ul class="space-y-1">
+							class="max-h-64 overflow-auto rounded-lg bg-background/70 p-3 font-mono text-[11px] leading-relaxed break-words whitespace-pre-wrap text-muted-foreground">{step.detail}</pre>{/if}
+					{#if step.children?.length}<ul class="space-y-2 border-l border-border pl-3">
 							{#each step.children as child (child.id)}<li
-									class="flex flex-wrap justify-between gap-2"
+									class="flex flex-wrap justify-between gap-2 text-xs"
 								>
 									<span>{child.label}</span><span class="text-muted-foreground"
 										>{child.detail ?? ''}</span
 									>
 								</li>{/each}
 						</ul>{/if}
-				</div>
-			</details>
+				</Collapsible.Content>
+			</Collapsible.Root>
 		{:else}<p class="text-sm text-muted-foreground">{emptyLabel}</p>{/each}
 	</div>
-</section>
+</div>

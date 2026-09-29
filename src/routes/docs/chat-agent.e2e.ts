@@ -70,7 +70,10 @@ test('citations preview context and restore focus; source lists expand', async (
 	).toHaveAttribute('href', '/docs/components/chat');
 	await page.keyboard.press('Escape');
 	await expect(citation).toBeFocused();
-	await demo.locator('summary').click();
+	await demo
+		.locator('[data-slot="chat-sources"]')
+		.getByRole('button', { name: /Sources/ })
+		.click();
 	await expect(
 		demo.locator('[data-slot="chat-sources"] [data-slot="chat-source-card"]')
 	).toHaveCount(2);
@@ -147,15 +150,15 @@ test('activity details update, and change review applies only selected units aft
 	await page.goto('/docs/components/chat');
 	const demo = page.locator('[data-demo="chat-workflow"]');
 	const activity = demo.locator('[data-slot="chat-activity"]');
-	await activity.locator('summary').nth(1).click();
-	await expect(activity.getByRole('progressbar')).toHaveAttribute('value', '60');
+	await activity.locator('[data-slot="collapsible-trigger"]').nth(1).click();
+	await expect(activity.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '60');
 	await demo.getByRole('button', { name: 'Fail review task' }).click();
 	await expect(activity.locator('[data-status="error"]')).toContainText('A check failed');
 	await demo.getByRole('button', { name: 'Toggle activity layout' }).click();
 	await demo.getByRole('button', { name: 'Complete tasks' }).click();
 	await expect(activity.locator('[data-status="complete"]')).toHaveCount(3);
 	const review = demo.locator('[data-slot="chat-change-review"]');
-	await review.locator('summary').nth(1).click();
+	await review.locator('[data-slot="collapsible-trigger"]').nth(1).click();
 	await expect(review.locator('pre').last()).toContainText('+Review transcripts');
 	await review.getByRole('checkbox', { name: 'Clarify description', exact: true }).uncheck();
 	await demo.getByRole('button', { name: 'Fail next change apply' }).click();
@@ -223,4 +226,22 @@ test('new workflow cards have code, fit mobile themes, and expose accessible con
 	}
 	await page.locator('#chat-context').screenshot({ path: '/tmp/chat-context-mobile.png' });
 	await page.locator('#chat-decisions').screenshot({ path: '/tmp/chat-decisions-mobile.png' });
+});
+
+test('question options support radio-group keyboard navigation and custom answers clear the selection', async ({
+	page
+}) => {
+	await page.goto('/docs/components/chat');
+	const questions = page.locator('[data-demo="chat-decisions"] [data-slot="chat-questions"]');
+	const team = questions.getByRole('radio', { name: 'Our team', exact: true });
+	await team.focus();
+	await page.keyboard.press('Space');
+	await expect(team).toBeChecked();
+	await page.keyboard.press('ArrowDown');
+	await expect(questions.getByRole('radio', { name: 'Customers', exact: true })).toBeChecked();
+	await questions.getByRole('textbox', { name: 'Custom answer', exact: true }).fill('Partners');
+	await expect(questions.getByRole('radio', { name: 'Customers', exact: true })).not.toBeChecked();
+	await questions.getByRole('button', { name: 'Continue', exact: true }).click();
+	await questions.getByRole('button', { name: 'Back', exact: true }).click();
+	await expect(questions.getByRole('textbox')).toHaveValue('Partners');
 });

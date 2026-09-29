@@ -1,4 +1,10 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
+	import { Icon } from '#lib/bedrock/ui/icon';
+	import * as RadioGroup from '#lib/bedrock/ui/radio-group';
+	import { Input } from '#lib/bedrock/ui/input';
+	import { Label } from '#lib/bedrock/ui/label';
+	import MessageCircleIcon from '@lucide/svelte/icons/message-circle';
 	import { Button } from '#lib/bedrock/ui/button';
 	import type { ChatQuestion } from './agent-types';
 	import { createChatAction } from './agent-action.svelte';
@@ -69,66 +75,99 @@
 	}
 </script>
 
-<section
+<Card.Root
 	data-slot="chat-questions"
+	role="region"
 	aria-label={text.title}
 	aria-busy={action.pending}
-	class={cn('space-y-3 rounded-xl border bg-background p-4', className)}
+	class={cn('min-w-0 gap-0 bg-background py-0 shadow-sm', className)}
 >
-	{#if complete}<p role="status">{text.done}</p>
+	{#if complete}<p role="status" class="p-4 text-sm">{text.done}</p>
 	{:else if current}
 		{#key current.id}
-			<fieldset disabled={disabled || action.pending} class="space-y-3">
-				<legend class="font-medium">{current.label}</legend>
-				{#if current.description}<p class="text-sm text-muted-foreground">
-						{current.description}
-					</p>{/if}
-				{#each current.options as option (option.value)}
-					<label class="flex cursor-pointer items-center gap-2 rounded-lg border p-2 text-sm"
-						><input
-							type="radio"
-							name={`${uid}-${current.id}`}
-							value={option.value}
-							checked={answers[current.id] === option.value}
-							onchange={() => answer(option.value)}
-						/>{option.label}</label
-					>
-				{/each}
-				{#if current.allowCustom}<label class="grid gap-1 text-sm"
-						>{text.custom}<input
-							class="rounded-md border bg-background px-3 py-2"
+			<Card.Header class="flex items-start gap-3 p-4 pb-2">
+				<Icon icon={MessageCircleIcon} class="mt-0.5 text-muted-foreground" />
+				<div class="min-w-0 space-y-1">
+					<Card.Title id={`${uid}-question`} class="text-sm leading-5">{current.label}</Card.Title>
+					{#if current.description}<Card.Description class="text-xs leading-relaxed"
+							>{current.description}</Card.Description
+						>{/if}
+				</div>
+			</Card.Header>
+			<Card.Content class="space-y-3 px-4 pb-4">
+				<RadioGroup.Root
+					value={current.options.some((o) => o.value === answers[current.id])
+						? answers[current.id]
+						: ''}
+					onValueChange={answer}
+					disabled={disabled || action.pending}
+					aria-labelledby={`${uid}-question`}
+					class="gap-1"
+				>
+					{#each current.options as option, i (option.value)}
+						<Label
+							for={`${uid}-${current.id}-${i}`}
+							class={cn(
+								'flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-normal transition-colors hover:bg-muted/60 has-focus-visible:ring-2 has-focus-visible:ring-ring',
+								answers[current.id] === option.value && 'bg-muted'
+							)}
+						>
+							<RadioGroup.Item
+								id={`${uid}-${current.id}-${i}`}
+								value={option.value}
+							/>{option.label}
+						</Label>
+					{/each}
+				</RadioGroup.Root>
+				{#if current.allowCustom}<div class="space-y-1.5">
+						<Label for={`${uid}-custom`} class="text-xs text-muted-foreground">{text.custom}</Label>
+						<Input
+							id={`${uid}-custom`}
+							disabled={disabled || action.pending}
+							class="h-9 bg-muted/30 text-sm shadow-none"
 							value={current.options.some((o) => o.value === answers[current.id])
 								? ''
 								: (answers[current.id] ?? '')}
 							oninput={(e) => answer(e.currentTarget.value)}
-						/></label
-					>{/if}
-			</fieldset>
+						/>
+					</div>{/if}
+			</Card.Content>
 		{/key}
-		<p role="status" class="text-xs text-muted-foreground">{step + 1} / {questions.length}</p>
-		<div class="flex flex-wrap gap-2">
-			<Button
-				size="sm"
-				variant="outline"
-				disabled={disabled || action.pending || step === 0}
-				onclick={() => {
-					index = step - 1;
-				}}>{text.back}</Button
-			>
-			{#if current.required === false}<Button
+		<Card.Footer class="flex-wrap justify-between gap-2 px-4 py-3">
+			<div class="flex items-center gap-2">
+				<Button
 					size="sm"
 					variant="ghost"
-					disabled={disabled || action.pending}
-					onclick={() => next(true)}>{text.skip}</Button
-				>{/if}
-			<Button
-				size="sm"
-				disabled={disabled ||
-					action.pending ||
-					(current.required !== false && !answers[current.id]?.trim())}
-				onclick={() => next()}>{step === questions.length - 1 ? text.submit : text.next}</Button
-			>
-		</div>
-	{:else}<p class="text-sm text-muted-foreground">{text.empty}</p>{/if}
-	{#if action.failed}<p role="alert" class="text-sm text-destructive">{text.error}</p>{/if}
-</section>
+					class="rounded-full"
+					disabled={disabled || action.pending || step === 0}
+					onclick={() => {
+						index = step - 1;
+					}}>{text.back}</Button
+				>
+				<p role="status" class="text-xs text-muted-foreground tabular-nums">
+					{step + 1} / {questions.length}
+				</p>
+			</div>
+			<div class="flex gap-1">
+				{#if current.required === false}<Button
+						size="sm"
+						variant="ghost"
+						class="rounded-full"
+						disabled={disabled || action.pending}
+						onclick={() => next(true)}>{text.skip}</Button
+					>{/if}
+				<Button
+					size="sm"
+					class="rounded-full"
+					disabled={disabled ||
+						action.pending ||
+						(current.required !== false && !answers[current.id]?.trim())}
+					onclick={() => next()}>{step === questions.length - 1 ? text.submit : text.next}</Button
+				>
+			</div>
+		</Card.Footer>
+	{:else}<p class="p-4 text-sm text-muted-foreground">{text.empty}</p>{/if}
+	{#if action.failed}<p role="alert" class="px-4 pb-3 text-xs text-destructive">
+			{text.error}
+		</p>{/if}
+</Card.Root>

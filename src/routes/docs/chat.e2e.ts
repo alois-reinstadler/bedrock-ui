@@ -52,7 +52,9 @@ test('multiple attachments validate, remove, survive code tabs, and send without
 	await expect(example.getByRole('alert')).toContainText('Some files could not be added');
 	await example.getByRole('button', { name: 'Remove file: notes.txt', exact: true }).click();
 	await example.getByRole('tab', { name: 'Code', exact: true }).click();
-	await expect(example.locator('pre')).toContainText('Chat.Composer');
+	await expect(
+		example.getByRole('tabpanel', { name: 'Code', exact: true }).locator('pre')
+	).toContainText('Chat.Composer');
 	await example.getByRole('tab', { name: 'Preview', exact: true }).click();
 	await expect(example.locator('[data-slot="chat-composer-file"]')).toHaveCount(1);
 	await example.getByRole('button', { name: 'Send', exact: true }).click();

@@ -1,4 +1,10 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
+	import { Icon } from '#lib/bedrock/ui/icon';
+	import * as Collapsible from '#lib/bedrock/ui/collapsible';
+	import { Checkbox } from '#lib/bedrock/ui/checkbox';
+	import FileDiffIcon from '@lucide/svelte/icons/file-diff';
+	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { CodeBlock } from '#lib/bedrock/ui/code-block';
 	import { createChatAction } from './agent-action.svelte';
@@ -49,24 +55,36 @@
 	}
 </script>
 
-<section
+<Card.Root
+	role="region"
 	data-slot="chat-change-review"
 	aria-label={text.title}
 	aria-busy={action.pending}
-	class={cn('min-w-0 space-y-3 rounded-xl border bg-background p-4', className)}
+	class={cn('min-w-0 gap-3 bg-background p-4 shadow-sm', className)}
 >
-	<p class="font-medium">{text.title}</p>
-	{#each changes as change (change.id)}<details class="min-w-0 rounded-lg border">
-			<summary
-				class="cursor-pointer p-3 text-sm font-medium break-words focus-visible:outline-2 focus-visible:outline-ring"
-				>{change.title}</summary
+	<Card.Title class="flex items-center gap-2 text-sm"
+		><Icon icon={FileDiffIcon} class="text-muted-foreground" />{text.title}</Card.Title
+	>
+	{#each changes as change (change.id)}<Collapsible.Root
+			class="group/change min-w-0 overflow-hidden rounded-lg border"
+		>
+			<Collapsible.Trigger
+				class="flex w-full items-center justify-between gap-2 bg-muted/30 p-3 text-left text-xs font-medium break-words outline-none focus-visible:ring-2 focus-visible:ring-ring"
+				>{change.title}<Icon
+					icon={ChevronDownIcon}
+					class="size-3 text-muted-foreground transition-transform group-data-[state=open]/change:rotate-180"
+				/></Collapsible.Trigger
 			>
-			<div class="space-y-3 px-3 pb-3">
+			<Collapsible.Content class="space-y-3 p-3">
 				<label class="flex items-center gap-2 text-sm"
-					><input
-						type="checkbox"
-						value={change.id}
-						bind:group={selected}
+					><Checkbox
+						aria-label={change.title}
+						checked={selected.includes(change.id)}
+						onCheckedChange={(checked) => {
+							selected = checked
+								? [...selected.filter((id) => id !== change.id), change.id]
+								: selected.filter((id) => id !== change.id);
+						}}
 						disabled={disabled || action.pending || applied}
 					/>{change.title}</label
 				>
@@ -97,13 +115,17 @@
 						/>
 					</div>
 				{/if}
-			</div>
-		</details>{:else}<p class="text-sm text-muted-foreground">{text.empty}</p>{/each}
+			</Collapsible.Content>
+		</Collapsible.Root>{:else}<p class="text-sm text-muted-foreground">{text.empty}</p>{/each}
 	{#if !applied}<Button
+			data-slot="chat-change-apply"
+			class="self-start rounded-full"
 			size="sm"
 			disabled={disabled || action.pending || !picked.length}
 			onclick={apply}>{text.apply} ({picked.length})</Button
 		>{/if}
-	<p role="status" class="text-sm text-muted-foreground">{applied ? text.applied : ''}</p>
+	<p role="status" class="text-xs text-muted-foreground empty:hidden">
+		{applied ? text.applied : ''}
+	</p>
 	{#if action.failed}<p role="alert" class="text-sm text-destructive">{text.error}</p>{/if}
-</section>
+</Card.Root>

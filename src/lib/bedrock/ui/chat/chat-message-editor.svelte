@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy, tick } from 'svelte';
 	import { Button } from '#lib/bedrock/ui/button';
-	import Textarea from '#lib/shadcn/ui/textarea/textarea.svelte';
+	import { Textarea } from '#lib/bedrock/ui/textarea';
 	import { cn } from '#lib/utils.js';
 	let {
 		value = $bindable(''),

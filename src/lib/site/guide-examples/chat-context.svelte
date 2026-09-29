@@ -40,7 +40,7 @@
 	/>
 	<Button
 		size="sm"
-		variant="outline"
+		variant="ghost"
 		onclick={() => {
 			fail = true;
 		}}>Fail next context send</Button

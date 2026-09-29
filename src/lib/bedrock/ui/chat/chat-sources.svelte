@@ -1,4 +1,8 @@
 <script lang="ts">
+	import * as Collapsible from '#lib/bedrock/ui/collapsible';
+	import { Icon } from '#lib/bedrock/ui/icon';
+	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
+	import FilesIcon from '@lucide/svelte/icons/files';
 	import SourceCard from './chat-source-card.svelte';
 	import type { ChatSource } from './agent-types';
 	import { cn } from '#lib/utils.js';
@@ -17,20 +21,28 @@
 	} = $props();
 </script>
 
-<details
+<Collapsible.Root
 	data-slot="chat-sources"
-	bind:open
-	class={cn('min-w-0 rounded-lg border bg-background text-sm', className)}
+	{open}
+	onOpenChange={(next) => {
+		open = next;
+	}}
+	class={cn('group/sources min-w-0 text-sm', className)}
 >
-	<summary
-		class="cursor-pointer rounded-lg p-3 font-medium focus-visible:outline-2 focus-visible:outline-ring"
-		>{label} ({sources.length})</summary
+	<Collapsible.Trigger
+		class="inline-flex items-center gap-2 rounded-full border bg-background px-3 py-1.5 text-xs text-muted-foreground outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
 	>
-	<div class="grid gap-2 px-3 pb-3">
+		<Icon icon={FilesIcon} class="size-3.5" />{label}
+		<span class="tabular-nums">({sources.length})</span><Icon
+			icon={ChevronDownIcon}
+			class="size-3 transition-transform group-data-[state=open]/sources:rotate-180"
+		/>
+	</Collapsible.Trigger>
+	<Collapsible.Content class="grid gap-2 pt-3 sm:grid-cols-2">
 		{#each sources as source (source.id)}<SourceCard {source} />{:else}<p
-				class="text-muted-foreground"
+				class="text-xs text-muted-foreground"
 			>
 				{emptyLabel}
 			</p>{/each}
-	</div>
-</details>
+	</Collapsible.Content>
+</Collapsible.Root>

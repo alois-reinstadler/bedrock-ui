@@ -1,4 +1,9 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
+	import { Icon } from '#lib/bedrock/ui/icon';
+	import * as RadioGroup from '#lib/bedrock/ui/radio-group';
+	import { Label } from '#lib/bedrock/ui/label';
+	import SparklesIcon from '@lucide/svelte/icons/sparkles';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { createChatAction } from './agent-action.svelte';
 	import type { ChatRecommendationOption } from './agent-types';
@@ -53,37 +58,72 @@
 	}
 </script>
 
-<section
+<Card.Root
 	data-slot="chat-recommendation"
+	role="region"
 	aria-label={title}
 	aria-busy={action.pending}
-	class={cn('space-y-3 rounded-xl border bg-background p-4', className)}
+	class={cn('min-w-0 gap-0 bg-background py-0 shadow-sm', className)}
 >
-	<fieldset disabled={disabled || action.pending || !!outcome} class="space-y-2">
-		<legend class="mb-2 font-medium">{title}</legend>
-		{#each options as option (option.id)}<label
-				class="flex cursor-pointer items-start gap-2 rounded-lg border p-3"
-			>
-				<input type="radio" name={uid} value={option.id} bind:group={value} class="mt-1" />
-				<span class="min-w-0 space-y-1 text-sm break-words"
-					><span class="block font-medium">{option.title}</span>{#if option.description}<span
-							class="block text-muted-foreground">{option.description}</span
-						>{/if}{#if option.confidence}<span class="block text-xs text-muted-foreground"
-							>{option.confidence}</span
-						>{/if}</span
+	<Card.Header class="flex items-center gap-2 p-4"
+		><Icon icon={SparklesIcon} class="text-muted-foreground" /><Card.Title
+			id={`${uid}-title`}
+			class="text-sm">{title}</Card.Title
+		></Card.Header
+	>
+	<Card.Content class="px-3 pb-3">
+		<RadioGroup.Root
+			{value}
+			onValueChange={(next) => {
+				value = next;
+			}}
+			disabled={disabled || action.pending || !!outcome}
+			aria-labelledby={`${uid}-title`}
+			class="gap-2"
+		>
+			{#each options as option, i (option.id)}
+				<Label
+					for={`${uid}-${i}`}
+					class={cn(
+						'flex cursor-pointer items-start gap-3 rounded-lg border border-transparent p-3 font-normal transition-colors hover:bg-muted/50 has-focus-visible:ring-2 has-focus-visible:ring-ring',
+						value === option.id && 'border-border bg-muted/50'
+					)}
 				>
-			</label>{:else}<p class="text-sm text-muted-foreground">{text.empty}</p>{/each}
-	</fieldset>
-	{#if !outcome}<div class="flex flex-wrap gap-2">
-			<Button size="sm" disabled={disabled || action.pending || !selected} onclick={accept}
-				>{text.accept}</Button
-			>{#if onDismiss}<Button
+					<RadioGroup.Item id={`${uid}-${i}`} value={option.id} class="mt-0.5" />
+					<span class="min-w-0 space-y-1 text-sm break-words"
+						><span class="block font-medium">{option.title}</span>
+						{#if option.description}<span
+								class="block text-xs leading-relaxed text-muted-foreground"
+								>{option.description}</span
+							>{/if}
+						{#if option.confidence}<span class="mt-2 block text-[11px] text-muted-foreground"
+								>{option.confidence}</span
+							>{/if}
+					</span>
+				</Label>
+			{:else}<p class="p-1 text-sm text-muted-foreground">{text.empty}</p>{/each}
+		</RadioGroup.Root>
+	</Card.Content>
+	<Card.Footer class="flex-wrap gap-2 px-4 py-3">
+		{#if !outcome}<Button
+				data-slot="chat-recommendation-accept"
+				size="sm"
+				class="rounded-full"
+				disabled={disabled || action.pending || !selected}
+				onclick={accept}>{text.accept}</Button
+			>
+			{#if onDismiss}<Button
 					size="sm"
-					variant="outline"
+					variant="ghost"
+					class="rounded-full"
 					disabled={disabled || action.pending}
 					onclick={dismiss}>{text.dismiss}</Button
-				>{/if}
-		</div>{/if}
-	<p role="status" class="text-sm text-muted-foreground">{outcome ? text[outcome] : ''}</p>
-	{#if action.failed}<p role="alert" class="text-sm text-destructive">{text.error}</p>{/if}
-</section>
+				>{/if}{/if}
+		<p role="status" class="text-xs text-muted-foreground empty:hidden">
+			{outcome ? text[outcome] : ''}
+		</p>
+	</Card.Footer>
+	{#if action.failed}<p role="alert" class="px-4 pb-3 text-xs text-destructive">
+			{text.error}
+		</p>{/if}
+</Card.Root>

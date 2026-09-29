@@ -79,7 +79,7 @@
 	>
 		{@render children()}
 	</div>
-	<div class="space-y-2 rounded-lg border bg-background p-3">
+	<div class="space-y-2 rounded-xl bg-muted/30 p-3">
 		{#if selected}<blockquote
 				aria-label={selectedLabel}
 				class="max-h-24 overflow-auto border-l-2 pl-2 text-sm break-words whitespace-pre-wrap"
@@ -89,13 +89,15 @@
 		<div class="flex flex-wrap gap-2">
 			<Button
 				size="sm"
+				class="rounded-full"
 				variant="ghost"
 				disabled={disabled || action.pending}
 				onclick={selectResponse}>{selectLabel}</Button
 			>
 			{#each actions as item (item.id)}<Button
 					size="sm"
-					variant="outline"
+					class="rounded-full"
+					variant="ghost"
 					disabled={disabled || action.pending || !selected}
 					onclick={() => run(item.id)}>{item.label}</Button
 				>{/each}
