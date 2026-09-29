@@ -287,7 +287,7 @@
 						</section>
 
 						{#if slug === 'chat'}
-							{#each [{ slug: 'chat-recovery', title: 'Message recovery and feedback', load: () => import('#lib/site/guide-examples/chat-recovery.svelte') }, { slug: 'chat-uploads', title: 'Upload progress and recovery', load: () => import('#lib/site/guide-examples/chat-uploads.svelte') }, { slug: 'chat-history', title: 'Empty states and conversation history', load: () => import('#lib/site/guide-examples/chat-history.svelte') }] as demo (demo.slug)}
+							{#each [{ slug: 'chat-recovery', title: 'Message recovery and feedback', load: () => import('#lib/site/guide-examples/chat-recovery.svelte') }, { slug: 'chat-uploads', title: 'Upload progress and recovery', load: () => import('#lib/site/guide-examples/chat-uploads.svelte') }, { slug: 'chat-voice', title: 'Voice input', load: () => import('#lib/site/guide-examples/chat-voice.svelte') }, { slug: 'chat-history', title: 'Empty states and conversation history', load: () => import('#lib/site/guide-examples/chat-history.svelte') }] as demo (demo.slug)}
 								<section id={demo.slug} class="space-y-4" aria-label={demo.title}>
 									<Heading level={3} visual={4}>{demo.title}</Heading>
 									<ExampleCard

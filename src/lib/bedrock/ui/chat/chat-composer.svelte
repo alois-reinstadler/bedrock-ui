@@ -11,6 +11,7 @@
 	import ModelPicker from './chat-model-picker.svelte';
 	import ReasoningPicker from './chat-reasoning-picker.svelte';
 	import ComposerFile from './chat-composer-file.svelte';
+	import Voice, { type ChatVoiceOptions } from './chat-voice.svelte';
 	import { selectComposerFiles } from './composer-files';
 	import type {
 		ChatComposerSubmission,
@@ -37,6 +38,7 @@
 		reasoning = $bindable(''),
 		serviceTiers = [],
 		serviceTier = $bindable(''),
+		voice,
 		attachments = false,
 		files = $bindable<File[]>([]),
 		uploads = [],
@@ -87,6 +89,8 @@
 		serviceTier?: string;
 		/** Enable the native file picker and a removable attachment queue. */
 		attachments?: boolean;
+		/** Optional voice controls. The app owns audio capture and updates the draft or files. */
+		voice?: ChatVoiceOptions;
 		files?: File[];
 		/** Optional app-owned upload progress, matched by File identity. Incomplete uploads prevent sending. */
 		uploads?: ChatUpload[];
@@ -139,8 +143,13 @@
 				(upload) => files.includes(upload.file) && !['queued', 'complete'].includes(upload.status)
 			)
 	);
+	const voiceActive = $derived(
+		voice && ['requesting', 'recording', 'processing'].includes(voice.state ?? 'idle')
+	);
 	const canSend = $derived(
-		!blockedUploads && (value.trim().length > 0 || (attachments && files.length > 0))
+		!voiceActive &&
+			!blockedUploads &&
+			(value.trim().length > 0 || (attachments && files.length > 0))
 	);
 
 	async function submit() {
@@ -364,5 +373,6 @@
 			<div class="ml-auto flex items-center gap-1">{@render sendControls()}</div>
 		</div>
 	{/if}
+	{#if voice}<Voice {...voice} disabled={disabled || submitting || busy || voice.disabled} />{/if}
 	{#if error}<p id="{uid}-error" role="alert" class="px-2 text-sm text-destructive">{error}</p>{/if}
 </form>

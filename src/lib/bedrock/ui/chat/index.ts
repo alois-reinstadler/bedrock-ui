@@ -89,3 +89,11 @@ export {
 	default as ChatMessageEditor
 } from './chat-message-editor.svelte';
 export type { ChatUpload } from './composer-types';
+
+export {
+	default as Voice,
+	default as ChatVoice,
+	type ChatVoiceState,
+	type ChatVoiceOptions,
+	type ChatVoiceLabels
+} from './chat-voice.svelte';

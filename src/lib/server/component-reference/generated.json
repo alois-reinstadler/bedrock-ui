@@ -6373,6 +6373,14 @@
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
+					"name": "voice",
+					"kind": "prop",
+					"type": "ChatVoiceOptions | undefined",
+					"required": false,
+					"description": "Optional voice controls. The app owns audio capture and updates the draft or files.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
 					"name": "files",
 					"kind": "prop",
 					"type": "File[] | undefined",
@@ -7276,6 +7284,111 @@
 					"name": "data-slot",
 					"kind": "data-attribute",
 					"type": "\"chat-message-editor\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Voice",
+			"aliases": ["ChatVoice"],
+			"source": "src/lib/bedrock/ui/chat/chat-voice.svelte",
+			"entries": [
+				{
+					"name": "state",
+					"kind": "prop",
+					"type": "ChatVoiceState | undefined",
+					"default": "'idle'",
+					"required": false,
+					"description": "App-owned state. The app owns microphone permissions, capture, transcription, and cleanup.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "elapsed",
+					"kind": "prop",
+					"type": "number | undefined",
+					"default": "0",
+					"required": false,
+					"description": "Recording duration in seconds.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "level",
+					"kind": "prop",
+					"type": "number | undefined",
+					"required": false,
+					"description": "Live microphone level between 0 and 1; omitted levels render no meter.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "error",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "''",
+					"required": false,
+					"description": "Accepted by Voice; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by Voice; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "labels",
+					"kind": "prop",
+					"type": "Partial<ChatVoiceLabels> | undefined",
+					"default": "{}",
+					"required": false,
+					"description": "Accepted by Voice; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "onStart",
+					"kind": "event",
+					"type": "(() => void | Promise<void>) | undefined",
+					"required": false,
+					"description": "Accepted by Voice; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "onStop",
+					"kind": "event",
+					"type": "(() => void | Promise<void>) | undefined",
+					"required": false,
+					"description": "Accepted by Voice; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "onCancel",
+					"kind": "event",
+					"type": "(() => void | Promise<void>) | undefined",
+					"required": false,
+					"description": "Accepted by Voice; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Voice; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-voice.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-voice\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-state",
+					"kind": "data-attribute",
+					"type": "voiceState",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
