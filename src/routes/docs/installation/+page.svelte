@@ -1,5 +1,6 @@
 <script lang="ts">
-	import CodeBlock from '#lib/site/CodeBlock.svelte';
+	import ExampleCard from '#lib/site/ExampleCard.svelte';
+	import { Button } from '#lib/bedrock/ui/button';
 
 	const buttonExample = [
 		'<script lang="ts">',
@@ -29,7 +30,9 @@
 			<p class="mt-1 mb-3 text-sm text-muted-foreground">
 				Point at the Bedrock entry, not the generated shadcn folder.
 			</p>
-			<CodeBlock label="Svelte" language="svelte" code={buttonExample} />
+			<ExampleCard label="Button import example" code={buttonExample}
+				><Button>Save</Button></ExampleCard
+			>
 		</li>
 		<li>
 			<p class="text-sm font-medium">2. Tokens are already loaded</p>

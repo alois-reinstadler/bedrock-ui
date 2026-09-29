@@ -1,27 +1,12 @@
 <script lang="ts">
+	import ExampleCard from '#lib/site/ExampleCard.svelte';
+	import MotionExample from '#lib/site/guide-examples/motion-disclosure.svelte';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { CodeBlock } from '#lib/bedrock/ui/code-block';
 	import DocsPageHeader from '#lib/site/DocsPageHeader.svelte';
 
 	const install = 'pnpm install --frozen-lockfile\npnpm motion:verify\npnpm check\npnpm build';
-	const example = `<script lang="ts">
-  import { CssButton, CssPanel } from '#lib/bedrock/motion/css.js';
-  import { MotionConfig } from '#lib/bedrock/motion/config.js';
-  let open = $state(false);
-<${'/'}script>
 
-<MotionConfig reducedMotion="user">
-  <CssButton aria-expanded={open} aria-controls="motion-details"
-    onclick={() => (open = !open)}>Toggle details</CssButton>
-  {#if open}
-    <CssPanel id="motion-details" motion={{
-      initial: { opacity: 0, y: 8 },
-      animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -8 },
-      transition: { duration: 0.2 }
-    }}>Your details remain mounted until the exit finishes.</CssPanel>
-  {/if}
-</MotionConfig>`;
 	const imports = `// Existing Bedrock transitions and layout: milliseconds
 import { appear, reveal, LayoutGroup, Swap } from '#lib/bedrock/motion/index.js';
 
@@ -106,7 +91,11 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 			element and retains it through an ancestor conditional's exit transition. Keep interactive
 			content out of a departing panel, or move focus back to the trigger before closing it.
 		</p>
-		<CodeBlock class="bg-background" title="Disclosure.svelte" language="svelte" code={example} />
+		<ExampleCard
+			label="Motion disclosure example"
+			sourceUrl="/docs/examples/guide-examples/motion-disclosure/source.json"
+			><MotionExample /></ExampleCard
+		>
 		<div class="mt-5">
 			<Button href="/motion" variant="outline">Open the motion comparison</Button>
 		</div>

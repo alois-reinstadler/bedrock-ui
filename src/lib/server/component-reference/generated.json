@@ -1611,6 +1611,449 @@
 			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
 		}
 	],
+	"attachment": [
+		{
+			"name": "Root",
+			"aliases": ["Attachment"],
+			"source": "src/lib/bedrock/ui/attachment/attachment.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "state",
+					"kind": "prop",
+					"type": "import(\"#lib/shadcn/ui/attachment/attachment.svelte\").AttachmentState | undefined",
+					"default": "'done'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/attachment/attachment.svelte"
+				},
+				{
+					"name": "size",
+					"kind": "prop",
+					"type": "\"default\" | \"xs\" | \"sm\" | undefined",
+					"default": "'default'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/attachment/attachment.svelte"
+				},
+				{
+					"name": "orientation",
+					"kind": "prop",
+					"type": "\"horizontal\" | \"vertical\" | undefined",
+					"default": "'horizontal'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/attachment/attachment.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"attachment\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-state",
+					"kind": "data-attribute",
+					"type": "state",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-size",
+					"kind": "data-attribute",
+					"type": "size",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-orientation",
+					"kind": "data-attribute",
+					"type": "orientation",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Group",
+			"aliases": ["AttachmentGroup"],
+			"source": "src/lib/bedrock/ui/attachment/attachment-group.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Group; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Group; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Group; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"attachment-group\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Media",
+			"aliases": ["AttachmentMedia"],
+			"source": "src/lib/bedrock/ui/attachment/attachment-media.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Media; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Media; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Media; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "variant",
+					"kind": "prop",
+					"type": "\"icon\" | \"image\" | undefined",
+					"default": "'icon'",
+					"required": false,
+					"description": "Accepted by Media; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/attachment/attachment-media.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"attachment-media\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-variant",
+					"kind": "data-attribute",
+					"type": "variant",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Content",
+			"aliases": ["AttachmentContent"],
+			"source": "src/lib/bedrock/ui/attachment/attachment-content.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"attachment-content\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Title",
+			"aliases": ["AttachmentTitle"],
+			"source": "src/lib/bedrock/ui/attachment/attachment-title.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Title; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Title; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Title; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"attachment-title\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Description",
+			"aliases": ["AttachmentDescription"],
+			"source": "src/lib/bedrock/ui/attachment/attachment-description.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Description; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Description; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Description; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"attachment-description\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Actions",
+			"aliases": ["AttachmentActions"],
+			"source": "src/lib/bedrock/ui/attachment/attachment-actions.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Actions; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Actions; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Actions; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"attachment-actions\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Action",
+			"aliases": ["AttachmentAction"],
+			"source": "src/lib/bedrock/ui/attachment/attachment-action.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Action; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Action; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "variant",
+					"kind": "prop",
+					"type": "\"link\" | \"default\" | \"destructive\" | \"outline\" | \"secondary\" | \"ghost\" | undefined",
+					"default": "'ghost'",
+					"required": false,
+					"description": "Accepted by Action; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/button/button.svelte"
+				},
+				{
+					"name": "size",
+					"kind": "prop",
+					"type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | undefined",
+					"default": "'icon-xs'",
+					"required": false,
+					"description": "Accepted by Action; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/button/button.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"attachment-action\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Trigger",
+			"aliases": ["AttachmentTrigger"],
+			"source": "src/lib/bedrock/ui/attachment/attachment-trigger.svelte",
+			"entries": [
+				{
+					"name": "type",
+					"kind": "prop",
+					"type": "\"button\" | \"submit\" | \"reset\" | null | undefined",
+					"default": "'button'",
+					"required": false,
+					"description": "Accepted by Trigger; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Trigger; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Trigger; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "child",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[{ props: Record<string, unknown>; }]> | undefined",
+					"required": false,
+					"description": "Accepted by Trigger; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/attachment/attachment-trigger.svelte"
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		}
+	],
 	"avatar": [
 		{
 			"name": "Root",
@@ -2590,6 +3033,225 @@
 					"name": "data-slot",
 					"kind": "data-attribute",
 					"type": "\"breadcrumb-page\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		}
+	],
+	"bubble": [
+		{
+			"name": "Root",
+			"aliases": ["Bubble"],
+			"source": "src/lib/bedrock/ui/bubble/bubble.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "variant",
+					"kind": "prop",
+					"type": "\"default\" | \"destructive\" | \"outline\" | \"secondary\" | \"ghost\" | \"muted\" | \"tinted\" | undefined",
+					"default": "'default'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/bubble/bubble.svelte"
+				},
+				{
+					"name": "align",
+					"kind": "prop",
+					"type": "\"start\" | \"end\" | undefined",
+					"default": "'start'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/bubble/bubble.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"bubble\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-variant",
+					"kind": "data-attribute",
+					"type": "variant",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-align",
+					"kind": "data-attribute",
+					"type": "align",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Group",
+			"aliases": ["BubbleGroup"],
+			"source": "src/lib/bedrock/ui/bubble/bubble-group.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Group; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Group; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Group; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"bubble-group\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Content",
+			"aliases": ["BubbleContent"],
+			"source": "src/lib/bedrock/ui/bubble/bubble-content.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "child",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[{ props: Record<string, unknown>; }]> | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/bubble/bubble-content.svelte"
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Reactions",
+			"aliases": ["BubbleReactions"],
+			"source": "src/lib/bedrock/ui/bubble/bubble-reactions.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Reactions; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Reactions; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Reactions; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "side",
+					"kind": "prop",
+					"type": "\"top\" | \"bottom\" | undefined",
+					"default": "'bottom'",
+					"required": false,
+					"description": "Accepted by Reactions; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/bubble/bubble-reactions.svelte"
+				},
+				{
+					"name": "align",
+					"kind": "prop",
+					"type": "\"start\" | \"end\" | undefined",
+					"default": "'end'",
+					"required": false,
+					"description": "Accepted by Reactions; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/bubble/bubble-reactions.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"bubble-reactions\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-align",
+					"kind": "data-attribute",
+					"type": "align",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-side",
+					"kind": "data-attribute",
+					"type": "side",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
@@ -5041,6 +5703,75 @@
 					"source": "src/lib/bedrock/ui/chat/chat.svelte"
 				},
 				{
+					"name": "state",
+					"kind": "prop",
+					"type": "\"error\" | \"loading\" | \"ready\" | undefined",
+					"default": "'ready'",
+					"required": false,
+					"description": "Initial history state. Loading/error take precedence over the empty state. Children remain mounted.",
+					"source": "src/lib/bedrock/ui/chat/chat.svelte"
+				},
+				{
+					"name": "loading",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat.svelte"
+				},
+				{
+					"name": "error",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat.svelte"
+				},
+				{
+					"name": "loadingLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Loading conversation…'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat.svelte"
+				},
+				{
+					"name": "errorLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Could not load this conversation.'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat.svelte"
+				},
+				{
+					"name": "emptyLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Start a conversation'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat.svelte"
+				},
+				{
+					"name": "retryLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Retry loading conversation'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat.svelte"
+				},
+				{
+					"name": "onRetry",
+					"kind": "event",
+					"type": "(() => void | Promise<void>) | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat.svelte"
+				},
+				{
 					"name": "empty",
 					"kind": "snippet",
 					"type": "Snippet<[]> | undefined",
@@ -5113,6 +5844,59 @@
 					"default": "false",
 					"required": false,
 					"description": "While true the log is marked `aria-busy` so screen readers announce completed messages once.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-list.svelte"
+				},
+				{
+					"name": "hasMore",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by MessageList; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-list.svelte"
+				},
+				{
+					"name": "onLoadMore",
+					"kind": "event",
+					"type": "(() => void | Promise<void>) | undefined",
+					"required": false,
+					"description": "Prepend keyed messages before resolving. Rejection keeps the existing history and enables retry.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-list.svelte"
+				},
+				{
+					"name": "loadMoreLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Load older messages'",
+					"required": false,
+					"description": "Accepted by MessageList; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-list.svelte"
+				},
+				{
+					"name": "loadingMoreLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Loading older messages…'",
+					"required": false,
+					"description": "Accepted by MessageList; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-list.svelte"
+				},
+				{
+					"name": "loadErrorLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Could not load older messages. Try again.'",
+					"required": false,
+					"description": "Accepted by MessageList; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-list.svelte"
+				},
+				{
+					"name": "historyStartLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Beginning of conversation'",
+					"required": false,
+					"description": "Accepted by MessageList; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/chat/chat-message-list.svelte"
 				},
 				{
@@ -5346,9 +6130,43 @@
 					"source": "src/lib/bedrock/ui/chat/chat-message-actions.svelte"
 				},
 				{
+					"name": "feedback",
+					"kind": "prop",
+					"type": "\"up\" | \"down\" | null | undefined",
+					"default": "$bindable<'up' | 'down' | null>(null)",
+					"required": false,
+					"description": "Bind the selection to persist it. Clicking the selected thumb clears it.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-actions.svelte"
+				},
+				{
+					"name": "onFeedbackChange",
+					"kind": "event",
+					"type": "((kind: \"up\" | \"down\" | null) => void) | undefined",
+					"required": false,
+					"description": "Includes null when feedback is cleared; legacy onFeedback fires only for selections.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-actions.svelte"
+				},
+				{
+					"name": "onEdit",
+					"kind": "event",
+					"type": "(() => void) | undefined",
+					"required": false,
+					"description": "Accepted by MessageActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-actions.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by MessageActions; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-actions.svelte"
+				},
+				{
 					"name": "labels",
 					"kind": "prop",
-					"type": "Partial<{ copy: string; copied: string; retry: string; goodResponse: string; badResponse: string; }> | undefined",
+					"type": "Partial<{ copy: string; copied: string; retry: string; goodResponse: string; badResponse: string; edit: string; copyFailed: string; }> | undefined",
 					"default": "{}",
 					"required": false,
 					"description": "Accepted by MessageActions; constrained by the source TypeScript contract.",
@@ -5452,7 +6270,7 @@
 					"type": "boolean | undefined",
 					"default": "false",
 					"required": false,
-					"description": "While true the send button swaps to a stop button; typing stays enabled.",
+					"description": "Generation state: show Stop while allowing the next draft to be typed.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
@@ -5461,7 +6279,7 @@
 					"type": "string | undefined",
 					"default": "'Send'",
 					"required": false,
-					"description": "Accessible label for the send button.",
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
@@ -5470,7 +6288,7 @@
 					"type": "string | undefined",
 					"default": "'Stop'",
 					"required": false,
-					"description": "Accessible label for the stop button shown while `busy`.",
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
@@ -5479,15 +6297,208 @@
 					"type": "number | undefined",
 					"default": "8",
 					"required": false,
-					"description": "Caps how tall the textarea grows before it scrolls.",
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "models",
+					"kind": "prop",
+					"type": "ChatModelOption[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Optional model choices. Omit to hide the picker.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "model",
+					"kind": "bindable",
+					"type": "string | undefined",
+					"default": "''",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "favoriteModels",
+					"kind": "prop",
+					"type": "string[] | undefined",
+					"default": "$bindable<string[]>([])",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "reasoningOptions",
+					"kind": "prop",
+					"type": "ChatReasoningOption[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Pass supported reasoning levels to show the reasoning picker.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "reasoning",
+					"kind": "bindable",
+					"type": "string | undefined",
+					"default": "''",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "serviceTiers",
+					"kind": "prop",
+					"type": "ChatReasoningOption[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "serviceTier",
+					"kind": "bindable",
+					"type": "string | undefined",
+					"default": "''",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "attachments",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Enable the native file picker and a removable attachment queue.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "files",
+					"kind": "prop",
+					"type": "File[] | undefined",
+					"default": "$bindable<File[]>([])",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "uploads",
+					"kind": "prop",
+					"type": "ChatUpload[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Optional app-owned upload progress, matched by File identity. Incomplete uploads prevent sending.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "onCancelUpload",
+					"kind": "event",
+					"type": "((file: File) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "onRetryUpload",
+					"kind": "event",
+					"type": "((file: File) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "cancelUploadLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Cancel upload'",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "retryUploadLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Retry upload'",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "multiple",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "true",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "accept",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "maxFiles",
+					"kind": "prop",
+					"type": "number | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "maxFileSize",
+					"kind": "prop",
+					"type": "number | undefined",
+					"required": false,
+					"description": "Maximum bytes per file.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "attachLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Attach files'",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "removeFileLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Remove file'",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "sendErrorLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Message could not be sent. Your draft is saved. Try again.'",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "rejectedFilesLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Some files could not be added. Check the allowed file types, size, and count.'",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
 					"name": "onSend",
 					"kind": "event",
-					"type": "((message: string) => void) | undefined",
+					"type": "((message: string, submission: ChatComposerSubmission) => void | Promise<void>) | undefined",
 					"required": false,
-					"description": "Called with the trimmed message; the composer clears afterwards.",
+					"description": "Receives the draft and files/settings. Clears only when this callback succeeds. The app owns upload transport.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
@@ -5495,7 +6506,7 @@
 					"kind": "event",
 					"type": "(() => void) | undefined",
 					"required": false,
-					"description": "Called when the stop button is pressed while `busy`.",
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
@@ -5503,7 +6514,63 @@
 					"kind": "event",
 					"type": "((files: File[]) => void) | undefined",
 					"required": false,
-					"description": "Called with files pasted into or dropped onto the composer.",
+					"description": "Newly accepted files from picker, paste, or drop. Also works without the built-in attachment queue.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "onFilesChange",
+					"kind": "event",
+					"type": "((files: File[]) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "onFilesRejected",
+					"kind": "event",
+					"type": "((rejections: ChatFileRejection[]) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "onSendError",
+					"kind": "event",
+					"type": "((error: unknown) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "onModelChange",
+					"kind": "event",
+					"type": "((model: string) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "onReasoningChange",
+					"kind": "event",
+					"type": "((reasoning: string) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "onServiceTierChange",
+					"kind": "event",
+					"type": "((tier: string) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
+				},
+				{
+					"name": "onFavoriteModelsChange",
+					"kind": "event",
+					"type": "((favorites: string[]) => void) | undefined",
+					"required": false,
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
@@ -5511,7 +6578,7 @@
 					"kind": "snippet",
 					"type": "Snippet<[]> | undefined",
 					"required": false,
-					"description": "Extra controls rendered left of the send button (attachments etc.).",
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
@@ -5519,7 +6586,7 @@
 					"kind": "snippet",
 					"type": "Snippet<[]> | undefined",
 					"required": false,
-					"description": "Row rendered above the textarea, aligned left (model picker etc.).",
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
@@ -5527,13 +6594,13 @@
 					"kind": "snippet",
 					"type": "Snippet<[]> | undefined",
 					"required": false,
-					"description": "Full-width row above everything inside the form — attachment chips etc.",
+					"description": "Accepted by Composer; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/chat/chat-composer.svelte"
 				},
 				{
 					"name": "data-slot",
 					"kind": "data-attribute",
-					"type": "\"chat-composer\"",
+					"type": "\"chat-stop-button\"",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
@@ -5842,6 +6909,373 @@
 					"name": "data-slot",
 					"kind": "data-attribute",
 					"type": "\"chat-suggestions\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "ModelPicker",
+			"aliases": ["ChatModelPicker"],
+			"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte",
+			"entries": [
+				{
+					"name": "models",
+					"kind": "prop",
+					"type": "ChatModelOption[]",
+					"required": true,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "value",
+					"kind": "bindable",
+					"type": "string | undefined",
+					"default": "''",
+					"required": false,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "favorites",
+					"kind": "bindable",
+					"type": "string[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "open",
+					"kind": "bindable",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "showFavorites",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "true",
+					"required": false,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "onValueChange",
+					"kind": "event",
+					"type": "((value: string) => void) | undefined",
+					"required": false,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "onFavoritesChange",
+					"kind": "event",
+					"type": "((values: string[]) => void) | undefined",
+					"required": false,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "labels",
+					"kind": "prop",
+					"type": "Partial<{ model: string; placeholder: string; search: string; empty: string; all: string; favorites: string; other: string; filters: string; addFavorite: (label: string) => string; removeFavorite: (label: string) => string; }> | undefined",
+					"required": false,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by ModelPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-model-picker.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-model-picker\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-model-option",
+					"kind": "data-attribute",
+					"type": "entry.value",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "ReasoningPicker",
+			"aliases": ["ChatReasoningPicker"],
+			"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte",
+			"entries": [
+				{
+					"name": "value",
+					"kind": "bindable",
+					"type": "string | undefined",
+					"default": "''",
+					"required": false,
+					"description": "Accepted by ReasoningPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte"
+				},
+				{
+					"name": "options",
+					"kind": "prop",
+					"type": "ChatReasoningOption[] | undefined",
+					"default": "defaultReasoningOptions",
+					"required": false,
+					"description": "Accepted by ReasoningPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte"
+				},
+				{
+					"name": "serviceTier",
+					"kind": "bindable",
+					"type": "string | undefined",
+					"default": "''",
+					"required": false,
+					"description": "Accepted by ReasoningPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte"
+				},
+				{
+					"name": "serviceTiers",
+					"kind": "prop",
+					"type": "ChatReasoningOption[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Accepted by ReasoningPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by ReasoningPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte"
+				},
+				{
+					"name": "onValueChange",
+					"kind": "event",
+					"type": "((value: string) => void) | undefined",
+					"required": false,
+					"description": "Accepted by ReasoningPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte"
+				},
+				{
+					"name": "onServiceTierChange",
+					"kind": "event",
+					"type": "((value: string) => void) | undefined",
+					"required": false,
+					"description": "Accepted by ReasoningPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte"
+				},
+				{
+					"name": "labels",
+					"kind": "prop",
+					"type": "Partial<{ reasoning: string; serviceTier: string; default: string; }> | undefined",
+					"required": false,
+					"description": "Accepted by ReasoningPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by ReasoningPicker; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-reasoning-picker.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-reasoning-picker\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "MessageStatus",
+			"aliases": ["ChatMessageStatusIndicator"],
+			"source": "src/lib/bedrock/ui/chat/chat-message-status.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by MessageStatus; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "status",
+					"kind": "prop",
+					"type": "ChatMessageStatus",
+					"required": true,
+					"description": "Accepted by MessageStatus; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-status.svelte"
+				},
+				{
+					"name": "detail",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by MessageStatus; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-status.svelte"
+				},
+				{
+					"name": "onRetry",
+					"kind": "event",
+					"type": "(() => void | Promise<void>) | undefined",
+					"required": false,
+					"description": "Accepted by MessageStatus; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-status.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by MessageStatus; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-status.svelte"
+				},
+				{
+					"name": "labels",
+					"kind": "prop",
+					"type": "Partial<{ sending: string; waiting: string; streaming: string; sent: string; failed: string; interrupted: string; retry: string; retrying: string; retryFailed: string; }> | undefined",
+					"required": false,
+					"description": "Accepted by MessageStatus; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-status.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-message-status\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-status",
+					"kind": "data-attribute",
+					"type": "status",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "MessageEditor",
+			"aliases": ["ChatMessageEditor"],
+			"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte",
+			"entries": [
+				{
+					"name": "value",
+					"kind": "bindable",
+					"type": "string | undefined",
+					"default": "''",
+					"required": false,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "onSave",
+					"kind": "event",
+					"type": "(text: string) => void | Promise<void>",
+					"required": true,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "onCancel",
+					"kind": "event",
+					"type": "() => void",
+					"required": true,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "disabled",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"default": "false",
+					"required": false,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "label",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Edit message'",
+					"required": false,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "saveLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Save and resend'",
+					"required": false,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "cancelLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Cancel editing'",
+					"required": false,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "savingLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Saving…'",
+					"required": false,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "errorLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Could not resend. Your edits are saved here. Try again.'",
+					"required": false,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Accepted by MessageEditor; constrained by the source TypeScript contract.",
+					"source": "src/lib/bedrock/ui/chat/chat-message-editor.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"chat-message-editor\"",
 					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
@@ -8664,20 +10098,20 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -8729,7 +10163,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
@@ -9195,20 +10629,20 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/text-selection-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -9260,7 +10694,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
@@ -11196,7 +12630,7 @@
 				{
 					"name": "direction",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
 					"description": "Direction of the drawer. Can be `top` or `bottom`, `left`, `right`.",
 					"source": "node_modules/vaul-svelte/dist/components/drawer/types.d.ts",
@@ -11476,7 +12910,7 @@
 				{
 					"name": "direction",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
 					"description": "Direction of the drawer. Can be `top` or `bottom`, `left`, `right`.",
 					"source": "node_modules/vaul-svelte/dist/components/drawer/types.d.ts",
@@ -12556,21 +13990,21 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
-					"default": "'start'",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
+					"default": "'start'",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -12623,7 +14057,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
@@ -13536,20 +14970,20 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/text-selection-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -13601,7 +15035,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
@@ -15662,21 +17096,21 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/escape-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
-					"default": "'center'",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
+					"default": "'center'",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -15729,7 +17163,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
@@ -15955,7 +17389,7 @@
 				{
 					"name": "align",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
 					"default": "'center'",
 					"required": false,
 					"description": "Accepted by Preview; constrained by the source TypeScript contract.",
@@ -16341,7 +17775,7 @@
 				{
 					"name": "type",
 					"kind": "prop",
-					"type": "\"file\" | (\"number\" | \"hidden\" | \"color\" | \"search\" | \"button\" | \"checkbox\" | \"radio\" | (string & {}) | \"text\" | \"tel\" | \"url\" | \"email\" | \"submit\" | \"reset\" | \"date\" | \"month\" | \"time\" | \"image\" | \"datetime-local\" | \"password\" | \"range\" | \"week\") | undefined",
+					"type": "\"file\" | (\"number\" | \"hidden\" | \"color\" | \"search\" | \"button\" | \"checkbox\" | \"radio\" | (string & {}) | \"text\" | \"tel\" | \"url\" | \"email\" | \"submit\" | \"reset\" | \"image\" | \"date\" | \"month\" | \"time\" | \"datetime-local\" | \"password\" | \"range\" | \"week\") | undefined",
 					"required": false,
 					"description": "Accepted by Root; constrained by the source TypeScript contract.",
 					"source": "src/lib/shadcn/ui/input/input.svelte"
@@ -16558,7 +17992,7 @@
 				{
 					"name": "type",
 					"kind": "prop",
-					"type": "\"file\" | (\"number\" | \"hidden\" | \"color\" | \"search\" | \"button\" | \"checkbox\" | \"radio\" | (string & {}) | \"text\" | \"tel\" | \"url\" | \"email\" | \"submit\" | \"reset\" | \"date\" | \"month\" | \"time\" | \"image\" | \"datetime-local\" | \"password\" | \"range\" | \"week\") | undefined",
+					"type": "\"file\" | (\"number\" | \"hidden\" | \"color\" | \"search\" | \"button\" | \"checkbox\" | \"radio\" | (string & {}) | \"text\" | \"tel\" | \"url\" | \"email\" | \"submit\" | \"reset\" | \"image\" | \"date\" | \"month\" | \"time\" | \"datetime-local\" | \"password\" | \"range\" | \"week\") | undefined",
 					"required": false,
 					"description": "Accepted by Input; constrained by the source TypeScript contract.",
 					"source": "src/lib/shadcn/ui/input/input.svelte"
@@ -16741,7 +18175,7 @@
 				{
 					"name": "textalign",
 					"kind": "prop",
-					"type": "\"center\" | \"right\" | \"left\" | undefined",
+					"type": "\"right\" | \"left\" | \"center\" | undefined",
 					"required": false,
 					"description": "Customize the alignment of the text within in the input.",
 					"source": "node_modules/bits-ui/dist/bits/pin-input/types.d.ts",
@@ -18010,6 +19444,133 @@
 			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
 		}
 	],
+	"marker": [
+		{
+			"name": "Root",
+			"aliases": ["Marker"],
+			"source": "src/lib/bedrock/ui/marker/marker.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "variant",
+					"kind": "prop",
+					"type": "\"separator\" | \"default\" | \"border\" | undefined",
+					"default": "'default'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/marker/marker.svelte"
+				},
+				{
+					"name": "child",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[{ props: Record<string, unknown>; }]> | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/marker/marker.svelte"
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Icon",
+			"aliases": ["MarkerIcon"],
+			"source": "src/lib/bedrock/ui/marker/marker-icon.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Icon; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Icon; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Icon; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"marker-icon\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Content",
+			"aliases": ["MarkerContent"],
+			"source": "src/lib/bedrock/ui/marker/marker-content.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"marker-content\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		}
+	],
 	"menubar": [
 		{
 			"name": "Root",
@@ -18395,22 +19956,22 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
-					"default": "'start'",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
+					"default": "'bottom'",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
-					"default": "'bottom'",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
+					"default": "'start'",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -18464,7 +20025,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
@@ -19065,20 +20626,20 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/text-selection-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -19130,7 +20691,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
@@ -19831,6 +21392,269 @@
 					"description": "The children content to render within the portal.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/portal/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/portal/types.d.ts"
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		}
+	],
+	"message": [
+		{
+			"name": "Root",
+			"aliases": ["Message"],
+			"source": "src/lib/bedrock/ui/message/message.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "align",
+					"kind": "prop",
+					"type": "\"start\" | \"end\" | undefined",
+					"default": "'start'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/ui/message/message.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"message\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-align",
+					"kind": "data-attribute",
+					"type": "align",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Group",
+			"aliases": ["MessageGroup"],
+			"source": "src/lib/bedrock/ui/message/message-group.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Group; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Group; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Group; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"message-group\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Avatar",
+			"aliases": ["MessageAvatar"],
+			"source": "src/lib/bedrock/ui/message/message-avatar.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Avatar; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Avatar; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Avatar; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"message-avatar\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Content",
+			"aliases": ["MessageContent"],
+			"source": "src/lib/bedrock/ui/message/message-content.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Content; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"message-content\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Header",
+			"aliases": ["MessageHeader"],
+			"source": "src/lib/bedrock/ui/message/message-header.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Header; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Header; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Header; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"message-header\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		},
+		{
+			"name": "Footer",
+			"aliases": ["MessageFooter"],
+			"source": "src/lib/bedrock/ui/message/message-footer.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Footer; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[]> | undefined",
+					"required": false,
+					"description": "Accepted by Footer; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Footer; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"message-footer\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
 			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
@@ -22229,21 +24053,21 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
-					"default": "'center'",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
+					"default": "'center'",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -22296,7 +24120,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
@@ -28733,20 +30557,20 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -28799,7 +30623,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
@@ -30787,7 +32611,7 @@
 				{
 					"name": "type",
 					"kind": "prop",
-					"type": "\"file\" | (\"number\" | \"hidden\" | \"color\" | \"search\" | \"button\" | \"checkbox\" | \"radio\" | (string & {}) | \"text\" | \"tel\" | \"url\" | \"email\" | \"submit\" | \"reset\" | \"date\" | \"month\" | \"time\" | \"image\" | \"datetime-local\" | \"password\" | \"range\" | \"week\") | undefined",
+					"type": "\"file\" | (\"number\" | \"hidden\" | \"color\" | \"search\" | \"button\" | \"checkbox\" | \"radio\" | (string & {}) | \"text\" | \"tel\" | \"url\" | \"email\" | \"submit\" | \"reset\" | \"image\" | \"date\" | \"month\" | \"time\" | \"datetime-local\" | \"password\" | \"range\" | \"week\") | undefined",
 					"required": false,
 					"description": "Accepted by Input; constrained by the source TypeScript contract.",
 					"source": "src/lib/shadcn/ui/input/input.svelte"
@@ -35319,21 +37143,21 @@
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/escape-layer/types.d.ts"
 				},
 				{
-					"name": "align",
+					"name": "side",
 					"kind": "prop",
-					"type": "\"start\" | \"center\" | \"end\" | undefined",
+					"type": "\"top\" | \"bottom\" | \"right\" | \"left\" | undefined",
+					"default": "'top'",
 					"required": false,
-					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
+					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
 				{
-					"name": "side",
+					"name": "align",
 					"kind": "prop",
-					"type": "\"top\" | \"right\" | \"bottom\" | \"left\" | undefined",
-					"default": "'top'",
+					"type": "\"start\" | \"end\" | \"center\" | undefined",
 					"required": false,
-					"description": "The preferred side of the anchor to render against when open.\nWill be reversed when collisions occur.",
+					"description": "The preferred alignment of the anchor to render against when open.\nThis may change when collisions occur.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/floating-layer/types.d.ts"
 				},
@@ -35386,7 +37210,7 @@
 				{
 					"name": "collisionPadding",
 					"kind": "prop",
-					"type": "number | Partial<Record<\"top\" | \"right\" | \"bottom\" | \"left\", number>> | undefined",
+					"type": "number | Partial<Record<\"top\" | \"bottom\" | \"right\" | \"left\", number>> | undefined",
 					"required": false,
 					"description": "The amount in pixels of virtual padding around the viewport edges to check\nfor overflow which will cause a collision.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/floating-layer/types.d.ts",

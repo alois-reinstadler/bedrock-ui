@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { copyText } from './copy-text';
 	import { IconButton } from '#lib/bedrock/ui/icon-button';
 	import { onDestroy } from 'svelte';
 	let {
@@ -15,7 +16,7 @@
 		copied = false;
 		clearTimeout(timer);
 		try {
-			await navigator.clipboard.writeText(code);
+			await copyText(code);
 			if (disposed) return;
 			copied = true;
 			failed = false;
@@ -51,9 +52,13 @@
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html html}
 	</div>
-	{#if failed}<p role="status" class="px-4 pb-3 text-sm">
-			Copy failed. Select the code to copy it manually.
-		</p>{/if}
+	<p role="status" aria-live="polite" class={failed ? 'px-4 pb-3 text-sm' : 'sr-only'}>
+		{failed
+			? 'Copy failed. Select the code to copy it manually.'
+			: copied
+				? 'Code copied to clipboard.'
+				: ''}
+	</p>
 </div>
 
 <style>

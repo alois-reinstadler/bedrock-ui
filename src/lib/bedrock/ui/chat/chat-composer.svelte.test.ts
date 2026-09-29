@@ -44,3 +44,74 @@ describe('ChatComposer additions', () => {
 		await expect.poll(() => view.container.querySelector('#pasted')?.textContent).toBe('notes.txt');
 	});
 });
+
+import Composer from './chat-composer.svelte';
+
+it('retains text and files after a rejected send, prevents duplicate sends, and clears on retry', async () => {
+	let rejectSend: (reason: unknown) => void = () => {};
+	let calls = 0;
+	const attached = new File(['hello'], 'notes.txt', { type: 'text/plain' });
+	const view = await render(Composer, {
+		value: '  Saved draft  ',
+		attachments: true,
+		files: [attached],
+		onSend: (message, submission) => {
+			calls++;
+			expect(message).toBe('Saved draft');
+			expect(submission.files).toEqual([attached]);
+			if (calls === 1)
+				return new Promise<void>((_resolve, reject) => {
+					rejectSend = reject;
+				});
+		}
+	});
+	const button = view.container.querySelector<HTMLButtonElement>('[data-slot="chat-send-button"]')!;
+	const textarea = view.container.querySelector('textarea')!;
+	button.click();
+	await expect.poll(() => button.disabled).toBe(true);
+	expect(textarea.disabled).toBe(true);
+	button.click();
+	expect(calls).toBe(1);
+	rejectSend(new Error('Upload failed'));
+	await expect
+		.poll(() => view.container.querySelector('[role="alert"]')?.textContent)
+		.toContain('Your draft is saved');
+	expect(textarea.value).toBe('  Saved draft  ');
+	expect(view.container.querySelectorAll('[data-slot="chat-composer-file"]')).toHaveLength(1);
+	button.click();
+	await expect.poll(() => textarea.value).toBe('');
+	expect(view.container.querySelectorAll('[data-slot="chat-composer-file"]')).toHaveLength(0);
+	expect(calls).toBe(2);
+	await expect.poll(() => document.activeElement).toBe(textarea);
+});
+
+it('ignores pasted files while disabled and single-file mode replaces the queue', async () => {
+	const paste = (form: HTMLFormElement, names: string[]) => {
+		const data = new DataTransfer();
+		names.forEach((name) => data.items.add(new File(['data'], name, { type: 'text/plain' })));
+		form.dispatchEvent(
+			new ClipboardEvent('paste', { clipboardData: data, bubbles: true, cancelable: true })
+		);
+	};
+	let calls = 0;
+	const disabled = await render(Composer, {
+		disabled: true,
+		attachments: true,
+		onFiles: () => {
+			calls++;
+		}
+	});
+	paste(disabled.container.querySelector('form')!, ['ignored.txt']);
+	await expect
+		.poll(() => disabled.container.querySelectorAll('[data-slot="chat-composer-file"]').length)
+		.toBe(0);
+	expect(calls).toBe(0);
+	const single = await render(Composer, { attachments: true, multiple: false });
+	const form = single.container.querySelector('form')!;
+	paste(form, ['first.txt']);
+	await expect.poll(() => form.textContent).toContain('first.txt');
+	paste(form, ['next.txt', 'extra.txt']);
+	await expect.poll(() => form.textContent).toContain('next.txt');
+	expect(form.textContent).not.toContain('first.txt');
+	expect(form.querySelectorAll('[data-slot="chat-composer-file"]')).toHaveLength(1);
+});

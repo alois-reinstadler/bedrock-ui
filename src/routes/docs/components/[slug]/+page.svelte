@@ -7,29 +7,26 @@
 	import { page } from '$app/state';
 	import BoxIcon from '@lucide/svelte/icons/box';
 	import { Badge } from '#lib/bedrock/ui/badge';
-	import { Button } from '#lib/bedrock/ui/button';
 	import * as Card from '#lib/bedrock/ui/card';
 	import * as Empty from '#lib/bedrock/ui/empty';
 	import { Heading } from '#lib/bedrock/ui/heading';
-	import { Icon } from '#lib/bedrock/ui/icon';
 	import { Outline, type OutlineItem } from '#lib/bedrock/ui/outline';
 	import { Text } from '#lib/bedrock/ui/text';
+	import ExampleCard from '#lib/site/ExampleCard.svelte';
 	import HighlightedCode from '#lib/site/HighlightedCode.svelte';
 	import AccessibilityTab from '#lib/site/component-docs/AccessibilityTab.svelte';
 	import ComponentTabs from '#lib/site/component-docs/ComponentTabs.svelte';
 	import PropertiesTab from '#lib/site/component-docs/PropertiesTab.svelte';
 	import type { ComponentDocTab } from '#lib/site/component-guides/index.js';
-	import { getExample, getPreview, getExampleSource } from '#lib/site/examples';
+	import { getExample, getPreview } from '#lib/site/examples';
 
 	let { data } = $props();
-	let sourceSlug = $state<string | null>(null);
 
 	// SvelteKit can update leaf props before destroying this component when a
 	// navigation leaves the dynamic route. Keep teardown/HMR from dereferencing
 	// another page's data shape.
 	let component = $derived(data.component as typeof data.component | undefined);
 	let slug = $derived(component?.slug ?? '');
-	let sourceOpen = $derived(sourceSlug === slug);
 	let guide = $derived(component ? data.guide : undefined);
 	let reference = $derived(component ? data.reference : undefined);
 	let requestedTab = $derived(mounted ? page.url.searchParams.get('tab') : null);
@@ -42,9 +39,6 @@
 	let isCompound = $derived((guide?.anatomy.length ?? 0) > 1);
 	let previewPromise = $derived(
 		slug && activeTab === 'overview' ? getPreview(slug) : Promise.resolve(undefined)
-	);
-	let sourcePromise = $derived(
-		sourceOpen && slug ? getExampleSource(slug) : Promise.resolve(undefined)
 	);
 	let bestPractices = $derived([
 		...(guide?.behavior ?? []).slice(0, 3),
@@ -126,7 +120,10 @@
 				{#if activeTab === 'overview'}
 					<section id="preview" aria-labelledby="preview-heading" class="space-y-4">
 						<Heading id="preview-heading" level={2}>Common variants</Heading>
-						<div class="rounded-xl border bg-card p-6 md:p-8">
+						<ExampleCard
+							label={`${component.title} variants`}
+							sourceUrl={`/docs/examples/previews/${slug}/source.json`}
+						>
 							{#await previewPromise}<p
 									role="status"
 									class="min-h-24 text-sm text-muted-foreground"
@@ -137,7 +134,7 @@
 							{:catch}<p role="status">
 									Variants could not load. Reload the page to retry.
 								</p>{/await}
-						</div>
+						</ExampleCard>
 					</section>
 					<section id="installation" aria-labelledby="installation-heading" class="space-y-4">
 						<Heading id="installation-heading" level={2}>Installation</Heading>
@@ -254,75 +251,58 @@
 								</Text>
 							</div>
 
-							<div class="overflow-hidden rounded-xl border bg-card">
-								<div class="border-b bg-muted/40 px-4 py-2">
-									<Text type="supporting" class="font-code tracking-wide uppercase">Preview</Text>
-								</div>
-								<div class="p-6 md:p-8">
-									{#await examplePromise}
-										<div class="h-32 rounded-lg bg-muted" aria-label="Loading example"></div>
-									{:then example}
-										{#if example}
-											{@const Example = example.component}
-											<Example />
-										{:else}
-											<Empty.Root class="border-0 p-2">
-												<Empty.Header>
-													<Empty.Media variant="icon"><BoxIcon /></Empty.Media>
-													<Empty.Title>Example in review</Empty.Title>
-													<Empty.Description>
-														The API is available; its primary example is still being reviewed.
-													</Empty.Description>
-												</Empty.Header>
-											</Empty.Root>
-										{/if}
-									{:catch}
+							<ExampleCard
+								label={`${component.title} example`}
+								sourceUrl={`/docs/examples/examples/${slug}/source.json`}
+							>
+								{#await examplePromise}
+									<div class="h-32 rounded-lg bg-muted" aria-label="Loading example"></div>
+								{:then example}
+									{#if example}
+										{@const Example = example.component}
+										<Example />
+									{:else}
 										<Empty.Root class="border-0 p-2">
 											<Empty.Header>
 												<Empty.Media variant="icon"><BoxIcon /></Empty.Media>
-												<Empty.Title>Example failed to load</Empty.Title>
-												<Empty.Description
-													>Reload the page to retry this example chunk.</Empty.Description
-												>
+												<Empty.Title>Example in review</Empty.Title>
+												<Empty.Description>
+													The API is available; its primary example is still being reviewed.
+												</Empty.Description>
 											</Empty.Header>
 										</Empty.Root>
-									{/await}
-								</div>
-							</div>
-
-							<div class="space-y-3">
-								<Button
-									id={`example-source-trigger-${slug}`}
-									disabled={!mounted}
-									variant="outline"
-									size="sm"
-									aria-expanded={sourceOpen}
-									aria-controls={`example-source-content-${slug}`}
-									onclick={() => (sourceSlug = sourceOpen ? null : slug)}
-								>
-									{sourceOpen ? 'Hide code' : 'View code'}
-									<Icon icon={sourceOpen ? 'chevronUp' : 'chevronDown'} />
-								</Button>
-								{#if sourceOpen}
-									<div id={`example-source-content-${slug}`}>
-										{#await sourcePromise}
-											<p role="status" class="p-4 text-sm text-muted-foreground">
-												Loading highlighted source…
-											</p>
-										{:then source}{#if source}<HighlightedCode
-													label={`${component.title} example`}
-													code={source.code}
-													html={source.html}
-													maxHeight="32rem"
-												/>{/if}
-										{:catch}<p role="status">
-												Source could not load. Close and reopen it to retry.
-											</p>
-										{/await}
-									</div>
-								{/if}
-							</div>
+									{/if}
+								{:catch}
+									<Empty.Root class="border-0 p-2">
+										<Empty.Header>
+											<Empty.Media variant="icon"><BoxIcon /></Empty.Media>
+											<Empty.Title>Example failed to load</Empty.Title>
+											<Empty.Description
+												>Reload the page to retry this example chunk.</Empty.Description
+											>
+										</Empty.Header>
+									</Empty.Root>
+								{/await}
+							</ExampleCard>
 						</section>
+
+						{#if slug === 'chat'}
+							{#each [{ slug: 'chat-recovery', title: 'Message recovery and feedback', load: () => import('#lib/site/guide-examples/chat-recovery.svelte') }, { slug: 'chat-uploads', title: 'Upload progress and recovery', load: () => import('#lib/site/guide-examples/chat-uploads.svelte') }, { slug: 'chat-history', title: 'Empty states and conversation history', load: () => import('#lib/site/guide-examples/chat-history.svelte') }] as demo (demo.slug)}
+								<section id={demo.slug} class="space-y-4" aria-label={demo.title}>
+									<Heading level={3} visual={4}>{demo.title}</Heading>
+									<ExampleCard
+										label={demo.title}
+										sourceUrl={`/docs/examples/guide-examples/${demo.slug}/source.json`}
+									>
+										{#await demo.load()}<p role="status">
+												Loading example…
+											</p>{:then module}<module.default />{:catch}<p role="alert">
+												Example could not load. Reload the page to retry.
+											</p>{/await}
+									</ExampleCard>
+								</section>
+							{/each}
+						{/if}
 					</section>
 				{:else if activeTab === 'properties' && guide && reference}
 					<PropertiesTab {component} {guide} {reference} />

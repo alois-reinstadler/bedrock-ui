@@ -1,5 +1,14 @@
 /** Requirements describe the rendered role and the consumer's verification obligation. */
 export const semantics: Record<string, string> = {
+	attachment:
+		'The file container is presentational. Give its stretched Trigger and each Action distinct names, and include progress or errors as text. No upload state is announced automatically.',
+	bubble:
+		'The bubble is presentational; interactive Content must use a native button or link through child. Label emoji reactions and expose toggle state with aria-pressed.',
+	message:
+		'Rows preserve document reading order. Label sender identity, make redundant avatars decorative, and provide a named conversation region at application level.',
+	marker:
+		'Icons are decorative. Use readable Content and explicitly opt into role="status" for dynamic updates; static separators are not live regions.',
+
 	accordion:
 		'Each Trigger is a button with expanded state and a relationship to its Content; Item groups one disclosure.',
 	alert:

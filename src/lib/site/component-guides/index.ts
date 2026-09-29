@@ -1,3 +1,4 @@
+import { conversationGuides } from './conversation';
 import { contentGuides } from './content';
 import { dataGuides } from './data';
 import { displayGuides } from './display';
@@ -20,6 +21,7 @@ export type {
 } from './types';
 
 export const componentGuides: ComponentGuides = {
+	...conversationGuides,
 	...contentGuides,
 	...dataGuides,
 	...displayGuides,

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ExampleCard from '#lib/site/ExampleCard.svelte';
 	import CodeBlock from '#lib/site/CodeBlock.svelte';
 	import SteppedExample from '#lib/site/examples/stepped-form.svelte';
 	let opened = $state<Record<string, boolean>>({});
@@ -213,7 +214,10 @@ export const reviewOnboarding = command(profileSchema, async ({ name }) => {
 	</section>
 	<section class="space-y-4" aria-labelledby="stepped">
 		<h2 id="stepped" class="text-2xl font-semibold">A long mobile form</h2>
-		<SteppedExample />
+		<ExampleCard
+			label="Stepped form example"
+			sourceUrl="/docs/examples/examples/stepped-form/source.json"><SteppedExample /></ExampleCard
+		>
 		<p>
 			Stepped Form validates the current section before advancing and all enabled sections before
 			submission. Inactive panels remain mounted, hidden and inert. Root uses novalidate so the

@@ -378,7 +378,7 @@ export const displayGuides = {
 			{
 				name: 'Chat.Root',
 				description:
-					'Required flex shell and empty-state owner; also exported as Chat. The consumer sets isEmpty and supplies the empty snippet.',
+					'Required flex shell with ready/loading/error history states, retry, and a default or custom empty state. Loading and error take precedence over isEmpty. Children remain mounted so the composer stays available; conditionally render MessageList when history is ready. Also exported as Chat.',
 				required: true
 			},
 			{
@@ -406,7 +406,17 @@ export const displayGuides = {
 			{
 				name: 'Chat.MessageActions',
 				description:
-					'Optional copy, retry, and positive/negative feedback controls; also exported as ChatMessageActions. ChatMessageActionsLabels customizes names.'
+					'Optional copy, retry, edit, and positive/negative feedback controls. Bind feedback to persist selection; clicking the selected thumb clears it. onFeedbackChange includes null for undo; legacy onFeedback fires only for a selected rating. Copy failures show feedback. Also exported as ChatMessageActions.'
+			},
+			{
+				name: 'Chat.MessageStatus',
+				description:
+					'Sending, waiting, streaming, sent, failed, and interrupted status with an optional async retry action. The app updates status after recovery; rejected retries remain recoverable.'
+			},
+			{
+				name: 'Chat.MessageEditor',
+				description:
+					'Optional inline editor with bindable value, async onSave, and onCancel. Ctrl/Cmd+Enter saves and Escape cancels. Failed saves preserve the edited draft; the app controls message replacement, downstream replies, and closing the editor.'
 			},
 			{
 				name: 'Chat.SystemMessage',
@@ -416,7 +426,17 @@ export const displayGuides = {
 			{
 				name: 'Chat.Composer',
 				description:
-					'Message form with bindable value, growing textarea, send/stop state, file intake, and actions, headerActions, and drawer snippets; also exported as ChatComposer.'
+					'Message form with bindable value, optional models/reasoningOptions/serviceTiers, and opt-in attachments with bindable files. Picker, paste, and drop share accept, multiple, maxFiles, and maxFileSize validation. onSend(text, submission) receives files and settings; resolving clears the draft, rejecting retains it with feedback. The app owns network uploads. actions, headerActions, and drawer remain available; also exported as ChatComposer.'
+			},
+			{
+				name: 'Chat.ModelPicker',
+				description:
+					'Standalone searchable model popover with provider filters, groups, favorites, and bindable value. Supply your supported models; also exported as ChatModelPicker.'
+			},
+			{
+				name: 'Chat.ReasoningPicker',
+				description:
+					'Standalone reasoning menu with optional service tiers and bindable value/serviceTier. defaultReasoningOptions is a display-only starting point; filter it to supported levels. Distinct from the response reasoning disclosure.'
 			},
 			{
 				name: 'Chat.Attachments',
@@ -449,9 +469,10 @@ export const displayGuides = {
 			}
 		],
 		behavior: [
-			'MessageList pins growth only within 32px of the bottom; after the reader scrolls up it preserves position and offers a scroll-down/new-messages button.',
-			'Composer submits trimmed text with Enter, inserts a newline with Shift+Enter, ignores composing Enter events, clears after send, and swaps Send for Stop while busy.',
-			'Composer accepts pasted or dropped files only with onFiles; the consumer validates, uploads, and owns attachment state.',
+			'MessageList pins growth only within 32px of the bottom; after the reader scrolls up it preserves position and offers a scroll-down/new-messages button. Set hasMore and onLoadMore to enable history pagination: prepend keyed messages before resolving the callback. The visible message stays anchored and failures leave existing history intact.',
+			'Composer submits trimmed text and selected files with Enter, inserts a newline with Shift+Enter, ignores composing Enter events, clears after a successful send, retains drafts on rejection, and swaps Send for Stop while busy.',
+			'Enable attachments for a file picker and removable queue, with multiple selection by default. Picker, paste, and drop share file type, size, and count limits. Legacy onFiles intake is also supported. The app uploads files through onSend.',
+			'Composer accepts app-owned uploads keyed by File identity, with queued, uploading, processing, complete, error, or cancelled status and optional 0–100 progress. onCancelUpload and onRetryUpload delegate transport control to the app. Uploading, processing, failed, or cancelled queued files prevent sending until completed, retried, or removed. Plain attachments require no upload state.',
 			'Image and PDF attachments with src open Lightbox; ordinary files remain non-interactive, and removal appears only with onRemove.',
 			'MessageActions renders nothing without handlers and gives copy temporary Copied feedback. Tool and reasoning disclosures are keyboard-operable Collapsibles.',
 			'streamText reveals the full target during SSR, reduced motion, or instant mode and reports done after catching a growing target.'

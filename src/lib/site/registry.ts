@@ -36,6 +36,31 @@ export const gettingStarted: DocsNavItem[] = [
 
 export const components: ComponentDoc[] = [
 	{
+		slug: 'attachment',
+		title: 'Attachment',
+		description: 'File previews with upload states and independent actions.',
+		category: 'content'
+	},
+	{
+		slug: 'bubble',
+		title: 'Bubble',
+		description: 'Conversation surfaces with variants and anchored reactions.',
+		category: 'content'
+	},
+	{
+		slug: 'message',
+		title: 'Message',
+		description: 'Conversation rows with avatars, headers, footers, and grouping.',
+		category: 'content'
+	},
+	{
+		slug: 'marker',
+		title: 'Marker',
+		description: 'Inline conversation status, system notes, and labeled separators.',
+		category: 'content'
+	},
+
+	{
 		slug: 'accordion',
 		title: 'Accordion',
 		description: 'A vertically stacked set of collapsible sections.',

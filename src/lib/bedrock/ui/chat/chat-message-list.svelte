@@ -1,6 +1,8 @@
 <script lang="ts">
 	import ArrowDownIcon from '@lucide/svelte/icons/arrow-down';
 	import { cn, type WithElementRef } from '#lib/utils.js';
+	import { onDestroy, tick } from 'svelte';
+	import { Button } from '#lib/bedrock/ui/button';
 	import type { HTMLAttributes } from 'svelte/elements';
 
 	const STICK_THRESHOLD = 32;
@@ -11,6 +13,13 @@
 		scrollDownLabel = 'Scroll to bottom',
 		newMessagesLabel,
 		streaming = false,
+		hasMore = false,
+		onLoadMore,
+		loadMoreLabel = 'Load older messages',
+		loadingMoreLabel = 'Loading older messages…',
+		loadErrorLabel = 'Could not load older messages. Try again.',
+		historyStartLabel = 'Beginning of conversation',
+
 		children,
 		...restProps
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
@@ -19,11 +28,54 @@
 		newMessagesLabel?: string;
 		/** While true the log is marked `aria-busy` so screen readers announce completed messages once. */
 		streaming?: boolean;
+		hasMore?: boolean;
+		/** Prepend keyed messages before resolving. Rejection keeps the existing history and enables retry. */
+		onLoadMore?: () => void | Promise<void>;
+		loadMoreLabel?: string;
+		loadingMoreLabel?: string;
+		loadErrorLabel?: string;
+		historyStartLabel?: string;
 	} = $props();
 
-	let viewport = $state<HTMLDivElement | null>(null);
-	let content = $state<HTMLDivElement | null>(null);
+	let viewport: HTMLDivElement | null = null;
+	let content: HTMLDivElement | null = null;
 	let stuck = $state(true);
+	let loadingMore = $state(false);
+	let loadError = $state(false);
+	let disposed = false;
+	let lastHeight = 0;
+	onDestroy(() => {
+		disposed = true;
+	});
+	async function loadMore() {
+		if (!hasMore || !onLoadMore || loadingMore || !viewport || !content) return;
+		const view = viewport;
+		const anchor = [...content.children].find(
+			(child) => child.getBoundingClientRect().bottom > view.getBoundingClientRect().top
+		);
+		const top = (anchor?.getBoundingClientRect().top ?? 0) - view.getBoundingClientRect().top;
+		const previousHeight = view.scrollHeight;
+		const previousScroll = view.scrollTop;
+		loadingMore = true;
+		loadError = false;
+		try {
+			await onLoadMore();
+		} catch {
+			if (!disposed) loadError = true;
+		} finally {
+			if (!disposed) {
+				await tick();
+				if (!disposed) {
+					view.scrollTop += anchor?.isConnected
+						? anchor.getBoundingClientRect().top - view.getBoundingClientRect().top - top
+						: view.scrollHeight - previousHeight + previousScroll - view.scrollTop;
+					lastHeight = content?.getBoundingClientRect().height ?? 0;
+					loadingMore = false;
+					onscroll();
+				}
+			}
+		}
+	}
 	let hasNewContent = $state(false);
 
 	function distanceFromBottom(element: HTMLDivElement) {
@@ -31,49 +83,82 @@
 	}
 
 	function onscroll() {
-		if (!viewport) return;
+		if (!viewport || loadingMore) return;
 		stuck = distanceFromBottom(viewport) < STICK_THRESHOLD;
 		if (stuck) hasNewContent = false;
 	}
 
 	function scrollToBottom(behavior: ScrollBehavior = 'smooth') {
-		viewport?.scrollTo({ top: viewport.scrollHeight, behavior });
+		viewport?.scrollTo({
+			top: viewport.scrollHeight,
+			behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior
+		});
 	}
 
-	$effect(() => {
-		if (!viewport || !content) return;
-		// While the reader sits at the bottom, growing content (new or
-		// streaming messages) keeps the view pinned there; once they scroll
-		// up, nothing moves under them — the scroll-down button flags the
-		// growth instead.
-		let lastHeight = content.getBoundingClientRect().height;
+	function observeContent(node: HTMLDivElement) {
+		content = node;
+		lastHeight = node.getBoundingClientRect().height;
 		const observer = new ResizeObserver(() => {
-			const height = content ? content.getBoundingClientRect().height : lastHeight;
+			const height = node.getBoundingClientRect().height;
 			const grew = height > lastHeight;
 			lastHeight = height;
+			if (loadingMore) return;
 			if (stuck) scrollToBottom('instant');
 			else if (grew) hasNewContent = true;
 		});
-		observer.observe(content);
-		scrollToBottom('instant');
-		return () => observer.disconnect();
-	});
+		observer.observe(node);
+		void tick().then(() => {
+			if (!disposed) scrollToBottom('instant');
+		});
+		return () => {
+			observer.disconnect();
+			content = null;
+		};
+	}
 
 	const showLabel = $derived(Boolean(newMessagesLabel) && hasNewContent);
 </script>
 
 <div
-	bind:this={ref}
+	{@attach (node) => {
+		ref = node;
+		return () => {
+			if (ref === node) ref = null;
+		};
+	}}
 	data-slot="chat-message-list"
-	class={cn('relative min-h-0 flex-1', className)}
+	class={cn('relative flex min-h-0 flex-1 flex-col', className)}
 	{...restProps}
 >
-	<div bind:this={viewport} {onscroll} class="h-full overflow-y-auto">
+	{#if onLoadMore}
+		<div data-slot="chat-history-controls" class="shrink-0 px-3 pt-2 text-center">
+			{#if hasMore}<Button
+					type="button"
+					variant="ghost"
+					size="sm"
+					disabled={loadingMore}
+					onclick={loadMore}>{loadingMore ? loadingMoreLabel : loadMoreLabel}</Button
+				>
+			{:else}<p class="py-2 text-xs text-muted-foreground">{historyStartLabel}</p>{/if}
+			{#if loadError}<p role="alert" class="text-xs text-destructive">{loadErrorLabel}</p>{/if}
+		</div>
+	{/if}
+	<div
+		{@attach (node) => {
+			viewport = node;
+			return () => {
+				viewport = null;
+			};
+		}}
+		data-slot="chat-message-viewport"
+		{onscroll}
+		class="min-h-0 flex-1 overflow-y-auto [overflow-anchor:none]"
+	>
 		<div
-			bind:this={content}
+			{@attach observeContent}
 			role="log"
 			aria-live="polite"
-			aria-busy={streaming || undefined}
+			aria-busy={streaming || loadingMore || undefined}
 			class="flex flex-col gap-3 p-4"
 		>
 			{@render children?.()}

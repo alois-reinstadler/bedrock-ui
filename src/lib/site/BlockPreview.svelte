@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ExampleCard from './ExampleCard.svelte';
 	import { Button } from '#lib/bedrock/ui/button';
 	let { kind }: { kind: 'authentication-panel' | 'data-toolbar' | 'settings-section' } = $props();
 	const loaders = {
@@ -13,15 +14,20 @@
 	});
 </script>
 
-<div class="space-y-4 rounded-2xl border bg-muted/20 p-4 sm:p-6">
-	{#await example}
-		<p role="status" class="py-8 text-sm text-muted-foreground">Loading interactive example…</p>
-	{:then module}
-		<module.default />
-	{:catch}
-		<p role="alert" class="text-sm">
-			The interactive example could not load. Check your connection and try again.
-		</p>
-		<Button variant="outline" onclick={() => (attempt += 1)}>Retry loading example</Button>
-	{/await}
-</div>
+{#key kind}
+	<ExampleCard
+		label={`${kind} example`}
+		sourceUrl={`/docs/examples/block-examples/${kind}/source.json`}
+	>
+		{#await example}
+			<p role="status" class="py-8 text-sm text-muted-foreground">Loading interactive example…</p>
+		{:then module}
+			<module.default />
+		{:catch}
+			<p role="alert" class="text-sm">
+				The interactive example could not load. Check your connection and try again.
+			</p>
+			<Button variant="outline" onclick={() => (attempt += 1)}>Retry loading example</Button>
+		{/await}
+	</ExampleCard>
+{/key}

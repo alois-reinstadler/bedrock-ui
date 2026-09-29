@@ -60,3 +60,32 @@ export {
 	Reasoning as ChatReasoning,
 	Suggestions as ChatSuggestions
 };
+
+export { default as ModelPicker, default as ChatModelPicker } from './chat-model-picker.svelte';
+export {
+	default as ReasoningPicker,
+	default as ChatReasoningPicker
+} from './chat-reasoning-picker.svelte';
+export type { ChatModelPickerLabels } from './chat-model-picker.svelte';
+export type { ChatReasoningPickerLabels } from './chat-reasoning-picker.svelte';
+export {
+	defaultReasoningOptions,
+	type ChatModelOption,
+	type ChatReasoningOption,
+	type ChatServiceTierOption,
+	type ChatComposerSubmission,
+	type ChatFileRejection,
+	type ChatFileConstraints
+} from './composer-types';
+
+export {
+	default as MessageStatus,
+	default as ChatMessageStatusIndicator,
+	type ChatMessageStatus,
+	type ChatMessageStatusLabels
+} from './chat-message-status.svelte';
+export {
+	default as MessageEditor,
+	default as ChatMessageEditor
+} from './chat-message-editor.svelte';
+export type { ChatUpload } from './composer-types';
