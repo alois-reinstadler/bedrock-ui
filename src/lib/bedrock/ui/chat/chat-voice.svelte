@@ -195,7 +195,7 @@
 		</div>
 	{/if}
 	{#if voiceState === 'error' || failure}
-		<div class="flex items-start gap-2">
+		<div class="flex items-center gap-2">
 			<Feedback tone="error" message={failure || error || text.error} class="min-w-0 flex-1" />
 			{#if !active}<IconButton
 					icon={Mic}
