@@ -6,7 +6,7 @@
 	import ResizableHandle from '#lib/shadcn/ui/resizable/resizable-handle.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ResizableHandle> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ResizableHandle> = $props();
 </script>
 
-<ResizableHandle {...props} />
+<ResizableHandle bind:ref {...props} />

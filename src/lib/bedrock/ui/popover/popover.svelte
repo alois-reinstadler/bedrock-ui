@@ -6,7 +6,7 @@
 	import Popover from '#lib/shadcn/ui/popover/popover.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Popover> = $props();
+	let { open = $bindable(false), ...props }: ComponentProps<typeof Popover> = $props();
 </script>
 
-<Popover {...props} />
+<Popover bind:open {...props} />

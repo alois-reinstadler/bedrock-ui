@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { AsyncButton } from '#lib/bedrock/ui/async-button';
 	import { Checkbox } from '#lib/bedrock/ui/checkbox';
 	let digest = $state(true);
@@ -19,7 +20,7 @@
 			A simulated first failure teaches retry behavior while preserving the selected setting.
 		</p>
 	</header>
-	<div class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-4 p-5">
 		<label class="flex items-center gap-3"
 			><Checkbox bind:checked={digest} />Weekly project digest</label
 		>
@@ -39,5 +40,5 @@
 					: 'Weekly digest disabled in this demo.'
 				: ''}
 		</p>
-	</div>
+	</Card.Root>
 </section>

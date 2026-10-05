@@ -1,0 +1,25 @@
+export const mapExamples = [
+	{ category: 'Map', title: 'Location finder', file: 'LocationsExample' },
+	{ category: 'Map', title: 'Lazy loading', file: 'LazyMapExample' },
+	{ category: 'Map', title: 'Basic map', file: 'BasicMapExample' },
+	{ category: 'Map', title: 'Controlled viewport', file: 'ControlledMapExample' },
+	{ category: 'Map', title: 'Custom styles', file: 'CustomStyleExample' },
+	{ category: 'Map', title: 'Blank map', file: 'BlankMapExample' },
+	{ category: 'Controls', title: 'Map controls', file: 'MapControlsExample' },
+	{ category: 'Markers', title: 'Custom markers', file: 'MarkersExample' },
+	{ category: 'Markers', title: 'Draggable marker', file: 'DraggableMarkerExample' },
+	{ category: 'Markers', title: 'Layer markers', file: 'LayerMarkersExample' },
+	{ category: 'Popups', title: 'Marker popups', file: 'PopupExample' },
+	{ category: 'Popups', title: 'Standalone popup', file: 'StandalonePopupExample' },
+	{ category: 'Routes', title: 'Routes and tooltips', file: 'RouteExample' },
+	{ category: 'Routes', title: 'Route progress', file: 'RouteProgressExample' },
+	{ category: 'Routes', title: 'OSRM routing', file: 'OsrmRouteExample' },
+	{ category: 'Arcs', title: 'Arc connections', file: 'ArcExample' },
+	{ category: 'Arcs', title: 'Interactive arcs', file: 'InteractiveArcExample' },
+	{ category: 'GeoJSON', title: 'Interactive regions', file: 'GeoJSONExample' },
+	{ category: 'Clusters', title: 'Earthquake clusters', file: 'ClusterExample' },
+	{ category: 'Advanced', title: 'Camera controls', file: 'AdvancedUsageExample' },
+	{ category: 'Advanced', title: 'Custom layers', file: 'CustomLayerExample' },
+	{ category: 'Advanced', title: 'Map overlays', file: 'MapOverlayExample' }
+] as const;
+export const mapCategories = [...new Set(mapExamples.map((example) => example.category))];

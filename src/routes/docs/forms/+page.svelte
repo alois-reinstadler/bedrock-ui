@@ -128,7 +128,7 @@ export const reviewOnboarding = command(profileSchema, async ({ name }) => {
 		</p>
 	</header>
 	<details
-		class="rounded-lg border p-4"
+		class="rounded-lg border p-4 corner-theme"
 		ontoggle={(event) => (opened.imports = event.currentTarget.open)}
 	>
 		<summary class="cursor-pointer font-medium">Import conventions</summary>{#if opened.imports}<div
@@ -166,7 +166,7 @@ export const reviewOnboarding = command(profileSchema, async ({ name }) => {
 			server; client checks improve feedback but do not establish trust.
 		</p>
 		<details
-			class="rounded-lg border p-4"
+			class="rounded-lg border p-4 corner-theme"
 			ontoggle={(event) => (opened.schema = event.currentTarget.open)}
 		>
 			<summary class="cursor-pointer font-medium">View shared validation source</summary
@@ -175,7 +175,7 @@ export const reviewOnboarding = command(profileSchema, async ({ name }) => {
 				</div>{/if}
 		</details>
 		<details
-			class="rounded-lg border p-4"
+			class="rounded-lg border p-4 corner-theme"
 			ontoggle={(event) => (opened.remote = event.currentTarget.open)}
 		>
 			<summary class="cursor-pointer font-medium">View remote function source</summary
@@ -184,7 +184,7 @@ export const reviewOnboarding = command(profileSchema, async ({ name }) => {
 				</div>{/if}
 		</details>
 		<details
-			class="rounded-lg border p-4"
+			class="rounded-lg border p-4 corner-theme"
 			ontoggle={(event) => (opened.client = event.currentTarget.open)}
 		>
 			<summary class="cursor-pointer font-medium">View remote form source</summary
@@ -225,7 +225,7 @@ export const reviewOnboarding = command(profileSchema, async ({ name }) => {
 			first. Preserve ordinary control names so FormData includes previous sections.
 		</p>
 		<details
-			class="rounded-lg border p-4"
+			class="rounded-lg border p-4 corner-theme"
 			ontoggle={(event) => (opened.stepped = event.currentTarget.open)}
 		>
 			<summary class="cursor-pointer font-medium">View stepped form source</summary

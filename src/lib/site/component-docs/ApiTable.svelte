@@ -6,7 +6,7 @@
 	let { entries }: { entries: ComponentApiEntry[] } = $props();
 </script>
 
-<div class="overflow-x-auto rounded-xl border bg-card">
+<div class="overflow-x-auto rounded-xl border bg-card corner-theme">
 	<table class="w-full min-w-[46rem] border-collapse text-left text-sm">
 		<thead class="bg-muted/40 text-xs tracking-wide text-muted-foreground uppercase">
 			<tr>

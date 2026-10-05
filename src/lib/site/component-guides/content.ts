@@ -96,6 +96,48 @@ export const contentGuides = {
 			}
 		]
 	},
+	diff: {
+		purpose:
+			'Diff compares two versions of source code or plain text with numbered additions, removals, and unchanged context. It renders on the server and supports unified and aligned side-by-side layouts.',
+		useWhen: [
+			'Reviewing a proposed code or configuration change.',
+			'Comparing revisions of text while preserving whitespace and line numbers.'
+		],
+		avoidWhen: [
+			'Use CodeBlock to display a single version without comparison controls.',
+			'Use an editor or merge tool when users must modify or resolve changes.'
+		],
+		anatomy: [
+			{
+				name: 'Diff.Root',
+				description:
+					'Also exported as Diff. Owns the change summary, view controls, copy action, and scrollable comparison table. DiffLabels and DiffView type its labels and layout.',
+				required: true
+			}
+		],
+		behavior: [
+			'before and after are required complete text strings, not a patch. Comparison is line-based and whitespace-sensitive; CRLF line endings are normalized to LF, and missing final newlines are marked.',
+			'view defaults to unified and is bindable. Split view pairs replacement lines and leaves empty cells for unmatched additions or removals. viewToggle can hide the built-in controls.',
+			'contextLines defaults to 3: distant unchanged lines collapse between Git-style hunk headers and can be expanded with a keyboard-accessible button. Set contextLines to null to show the whole file. Expansion is preserved when switching views and reset when the compared text changes.',
+			'wordHighlight defaults to true and emphasizes changed words within paired replacement lines. It composes CodeBlock.Line highlights with syntax tokens; set it to false for line-only highlighting.',
+			'lineNumbers defaults to true. wrap keeps long lines inside the available width; maxHeight bounds a keyboard-scrollable region. container="section" removes the card treatment.',
+			'copyButton copies the exact after string, including its original line endings. Copy success and failure are announced. labels can translate all built-in text.',
+			'language enables syntax highlighting through CodeBlock.Source and CodeBlock.Line. Each complete version is tokenized independently, preserving multiline syntax in both views. Plaintext, unknown languages, and loading failures retain escaped text. Identical inputs show No changes and retain their context. For more than 1,000 line edits, the bounded diff search falls back to a full replacement; this is not a virtualized large-file viewer.'
+		],
+		examplePlan: [
+			{
+				title: 'Review a source change',
+				demonstrates:
+					'A realistic request handler update with view switching, aligned lines, change counts, and copying the updated source.',
+				priority: 'primary'
+			},
+			{
+				title: 'Text revisions and identical inputs',
+				demonstrates: 'A fixed split comparison and the no-changes state.',
+				priority: 'edge-case'
+			}
+		]
+	},
 	'code-block': {
 		purpose:
 			'CodeBlock presents source code or preformatted text in a readable, copyable region. It progressively adds Shiki syntax highlighting in the browser while retaining a plain, server-renderable fallback.',
@@ -113,16 +155,26 @@ export const contentGuides = {
 			{
 				name: 'CodeBlock.Root',
 				description:
-					'The required component, also exported as CodeBlock. It owns the optional header, copy action, scrollable preformatted content, and plain-to-highlighted rendering; CodeBlockLabels types overrides for the copy, copied, and language labels.',
+					'The ready-made component, also exported as CodeBlock. It owns the optional header, copy action, scrollable preformatted content, and plain-to-highlighted rendering; CodeBlockLabels types overrides for the copy, copied, and language labels.',
 				required: true
+			},
+			{
+				name: 'CodeBlock.Source',
+				description:
+					'Also exported as CodeSource. A renderless source provider taking code, language, and a children(lines) snippet. It supplies plain lines immediately, then whole-document tokens from the shared lazy Shiki highlighter and bounded cache.'
+			},
+			{
+				name: 'CodeBlock.Line',
+				description:
+					'Also exported as CodeLine. Renders a CodeLineData value as escaped token spans with light/dark syntax styles. It adds no card, header, gutters, or copy controls, so it fits custom layouts and Diff cells. Its optional highlights prop takes CodeHighlightRange offsets (UTF-16, exclusive end) to emphasize ranges while preserving token colors; --code-highlight-bg controls the background.'
 			}
 		],
 		behavior: [
 			'code is required. language defaults to plaintext; supported non-plain languages load Shiki lazily, while an unknown language or load failure keeps the escaped plain-text fallback.',
 			'The header appears when there is a title, a copy button, or a non-plaintext language. copyButton defaults to true and writes the complete code string to the Clipboard API.',
 			'After copying, the localized button label and icon report success for about 1.4 seconds before returning to the copy state.',
-			'wrap switches horizontal overflow to wrapped lines, maxHeight bounds the content region, and lineNumbers numbers visual lines. container="section" removes the card border treatment but not the content semantics.',
-			'Shiki output uses paired light and dark themes. Consumer code is escaped by Shiki, and the fallback is rendered as text rather than injected HTML.'
+			'wrap switches horizontal overflow to wrapped lines, maxHeight bounds the content region, and lineNumbers numbers source lines. container="section" removes the card border treatment but not the content semantics.',
+			'Root composes Source and Line internally. Custom viewers can compose those same primitives to own their layout. CodeLineData and CodeToken describe their shared line/token contract; consumer code is always rendered as escaped text, with paired light/dark token styles.'
 		],
 		examplePlan: [
 			{

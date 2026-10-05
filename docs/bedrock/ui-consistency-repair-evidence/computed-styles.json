@@ -1,0 +1,822 @@
+[
+	{
+		"slug": "email-client",
+		"width": 390,
+		"colorScheme": "light",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"navigation": [
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			}
+		],
+		"outsideDate": {
+			"text": "31",
+			"foreground": [115, 115, 115],
+			"background": [255, 255, 255],
+			"opacity": "1",
+			"contrast": 4.741667181590045
+		},
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": []
+	},
+	{
+		"slug": "music-player",
+		"width": 390,
+		"colorScheme": "light",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"navigation": [
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			}
+		],
+		"artworkName": "Open Vocal Classics collection",
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": [
+			{
+				"url": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/152/1654766391_N6n9kRBaAr_Cartoon---On--On-feat.-Daniel-Levi-_NCS-Release_.mp3",
+				"error": "net::ERR_ABORTED"
+			}
+		]
+	},
+	{
+		"slug": "social-network",
+		"width": 390,
+		"colorScheme": "light",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"pills": [
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			}
+		],
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": [
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			}
+		]
+	},
+	{
+		"slug": "video-library",
+		"width": 390,
+		"colorScheme": "light",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"contrast": {
+			"initials": {
+				"text": "JD",
+				"foreground": [255, 255, 255],
+				"background": [166, 95, 76],
+				"opacity": "1",
+				"contrast": 4.813596523008449
+			},
+			"footer": {
+				"text": "Films by Blender Foundation and independent creators.",
+				"foreground": [170, 169, 176],
+				"background": [17, 17, 19],
+				"opacity": "1",
+				"contrast": 8.09338579544756
+			}
+		},
+		"menu": {
+			"radius": "24px",
+			"corner": "superellipse(0)",
+			"bounds": {
+				"x": 126,
+				"y": 62.50821304321289,
+				"width": 230,
+				"height": 179.78124618530273
+			}
+		},
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": []
+	},
+	{
+		"slug": "email-client",
+		"width": 390,
+		"colorScheme": "dark",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"navigation": [
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			}
+		],
+		"outsideDate": {
+			"text": "31",
+			"foreground": [161, 161, 161],
+			"background": [10, 10, 10],
+			"opacity": "1",
+			"contrast": 7.662827876742547
+		},
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": []
+	},
+	{
+		"slug": "music-player",
+		"width": 390,
+		"colorScheme": "dark",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"navigation": [
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			}
+		],
+		"artworkName": "Open Vocal Classics collection",
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": [
+			{
+				"url": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/152/1654766391_N6n9kRBaAr_Cartoon---On--On-feat.-Daniel-Levi-_NCS-Release_.mp3",
+				"error": "net::ERR_ABORTED"
+			}
+		]
+	},
+	{
+		"slug": "social-network",
+		"width": 390,
+		"colorScheme": "dark",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"pills": [
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			}
+		],
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": [
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			}
+		]
+	},
+	{
+		"slug": "video-library",
+		"width": 390,
+		"colorScheme": "dark",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"contrast": {
+			"initials": {
+				"text": "JD",
+				"foreground": [255, 255, 255],
+				"background": [166, 95, 76],
+				"opacity": "1",
+				"contrast": 4.813596523008449
+			},
+			"footer": {
+				"text": "Films by Blender Foundation and independent creators.",
+				"foreground": [170, 169, 176],
+				"background": [17, 17, 19],
+				"opacity": "1",
+				"contrast": 8.09338579544756
+			}
+		},
+		"menu": {
+			"radius": "24px",
+			"corner": "superellipse(0)",
+			"bounds": {
+				"x": 126,
+				"y": 62.507904052734375,
+				"width": 230,
+				"height": 179.78125
+			}
+		},
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": []
+	},
+	{
+		"slug": "email-client",
+		"width": 1440,
+		"colorScheme": "light",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"navigation": [
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			}
+		],
+		"outsideDate": {
+			"text": "31",
+			"foreground": [115, 115, 115],
+			"background": [255, 255, 255],
+			"opacity": "1",
+			"contrast": 4.741667181590045
+		},
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": []
+	},
+	{
+		"slug": "music-player",
+		"width": 1440,
+		"colorScheme": "light",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"navigation": [
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			}
+		],
+		"artworkName": "Open Vocal Classics collection",
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": [
+			{
+				"url": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/152/1654766391_N6n9kRBaAr_Cartoon---On--On-feat.-Daniel-Levi-_NCS-Release_.mp3",
+				"error": "net::ERR_ABORTED"
+			}
+		]
+	},
+	{
+		"slug": "social-network",
+		"width": 1440,
+		"colorScheme": "light",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"pills": [
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			}
+		],
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": [
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			}
+		]
+	},
+	{
+		"slug": "video-library",
+		"width": 1440,
+		"colorScheme": "light",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"contrast": {
+			"initials": {
+				"text": "JD",
+				"foreground": [255, 255, 255],
+				"background": [166, 95, 76],
+				"opacity": "1",
+				"contrast": 4.813596523008449
+			},
+			"footer": {
+				"text": "Films by Blender Foundation and independent creators.",
+				"foreground": [170, 169, 176],
+				"background": [17, 17, 19],
+				"opacity": "1",
+				"contrast": 8.09338579544756
+			}
+		},
+		"menu": {
+			"radius": "24px",
+			"corner": "superellipse(0)",
+			"bounds": {
+				"x": 1131,
+				"y": 76.86426544189453,
+				"width": 230,
+				"height": 179.78124237060547
+			}
+		},
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": []
+	},
+	{
+		"slug": "email-client",
+		"width": 1440,
+		"colorScheme": "dark",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"navigation": [
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			}
+		],
+		"outsideDate": {
+			"text": "31",
+			"foreground": [161, 161, 161],
+			"background": [10, 10, 10],
+			"opacity": "1",
+			"contrast": 7.662827876742547
+		},
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": []
+	},
+	{
+		"slug": "music-player",
+		"width": 1440,
+		"colorScheme": "dark",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"navigation": [
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			},
+			{
+				"radius": "24px",
+				"corner": "superellipse(0)"
+			}
+		],
+		"artworkName": "Open Vocal Classics collection",
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": [
+			{
+				"url": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/152/1654766391_N6n9kRBaAr_Cartoon---On--On-feat.-Daniel-Levi-_NCS-Release_.mp3",
+				"error": "net::ERR_ABORTED"
+			}
+		]
+	},
+	{
+		"slug": "social-network",
+		"width": 1440,
+		"colorScheme": "dark",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"pills": [
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			},
+			{
+				"radius": "9999px",
+				"corner": "superellipse(1)"
+			}
+		],
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": [
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			},
+			{
+				"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+				"error": "net::ERR_ABORTED"
+			}
+		]
+	},
+	{
+		"slug": "video-library",
+		"width": 1440,
+		"colorScheme": "dark",
+		"initialControls": {
+			"radius": "22.4px",
+			"corner": "superellipse(3)"
+		},
+		"overriddenControls": {
+			"radius": "33.6px",
+			"corner": "superellipse(0)"
+		},
+		"contrast": {
+			"initials": {
+				"text": "JD",
+				"foreground": [255, 255, 255],
+				"background": [166, 95, 76],
+				"opacity": "1",
+				"contrast": 4.813596523008449
+			},
+			"footer": {
+				"text": "Films by Blender Foundation and independent creators.",
+				"foreground": [170, 169, 176],
+				"background": [17, 17, 19],
+				"opacity": "1",
+				"contrast": 8.09338579544756
+			}
+		},
+		"menu": {
+			"radius": "24px",
+			"corner": "superellipse(0)",
+			"bounds": {
+				"x": 1131,
+				"y": 76.5070571899414,
+				"width": 230,
+				"height": 179.78124237060547
+			}
+		},
+		"pageErrors": [],
+		"consoleErrors": [],
+		"failedRequests": []
+	}
+]

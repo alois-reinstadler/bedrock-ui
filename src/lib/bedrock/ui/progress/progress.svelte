@@ -6,7 +6,7 @@
 	import Progress from '#lib/shadcn/ui/progress/progress.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Progress> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof Progress> = $props();
 </script>
 
-<Progress {...props} />
+<Progress bind:ref {...props} />

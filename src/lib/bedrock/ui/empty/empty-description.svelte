@@ -6,7 +6,7 @@
 	import EmptyDescription from '#lib/shadcn/ui/empty/empty-description.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof EmptyDescription> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof EmptyDescription> = $props();
 </script>
 
-<EmptyDescription {...props} />
+<EmptyDescription bind:ref {...props} />

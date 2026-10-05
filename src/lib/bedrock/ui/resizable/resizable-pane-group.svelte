@@ -6,7 +6,22 @@
 	import ResizablePaneGroup from '#lib/shadcn/ui/resizable/resizable-pane-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ResizablePaneGroup> = $props();
+	let {
+		ref = $bindable(null),
+		this: paneGroup = $bindable(),
+		...props
+	}: ComponentProps<typeof ResizablePaneGroup> = $props();
 </script>
 
-<ResizablePaneGroup {...props} />
+<ResizablePaneGroup
+	bind:ref
+	{...props}
+	{...{
+		get this() {
+			return paneGroup;
+		},
+		set this(value: ComponentProps<typeof ResizablePaneGroup>['this']) {
+			paneGroup = value;
+		}
+	}}
+/>

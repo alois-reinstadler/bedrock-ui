@@ -6,7 +6,7 @@
 	import CardDescription from '#lib/shadcn/ui/card/card-description.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CardDescription> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CardDescription> = $props();
 </script>
 
-<CardDescription {...props} />
+<CardDescription bind:ref {...props} />

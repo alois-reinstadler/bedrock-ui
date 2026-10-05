@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import { Input } from '#lib/bedrock/ui/input';
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
@@ -34,7 +35,14 @@
 			name="q"
 			value={query}
 			placeholder="Search posts and people"
-		/><button class="small-button" type="submit">Search</button>
+		/><Button
+			variant="ghost"
+			class={[
+				'control-templates-social-network-explore-page h-auto whitespace-normal',
+				'small-button'
+			]}
+			type="submit">Search</Button
+		>
 	</form>
 </div>
 {#if results.length}<section class="people-results" aria-label="People">
@@ -44,13 +52,18 @@
 					><img class="avatar" src={`/templates/social-network/${person.avatar}.jpg`} alt="" /><span
 						><strong>{person.name}</strong><small>@{person.handle} · {person.bio}</small></span
 					></a
-				><button
-					class="follow-button"
-					class:following={social.following.includes(person.handle)}
+				><Button
+					variant="ghost"
+					type="button"
+					class={[
+						'control-templates-social-network-explore-page h-auto whitespace-normal',
+						'follow-button',
+						{ following: social.following.includes(person.handle) }
+					]}
 					aria-label={`${social.following.includes(person.handle) ? 'Unfollow' : 'Follow'} ${person.name}`}
 					aria-pressed={social.following.includes(person.handle)}
 					onclick={() => social.toggle('following', person.handle)}
-					>{social.following.includes(person.handle) ? 'Following' : 'Follow'}</button
+					>{social.following.includes(person.handle) ? 'Following' : 'Follow'}</Button
 				>
 			</div>{/each}
 	</section>{/if}

@@ -6,7 +6,7 @@
 	import HoverCard from '#lib/shadcn/ui/hover-card/hover-card.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof HoverCard> = $props();
+	let { open = $bindable(false), ...props }: ComponentProps<typeof HoverCard> = $props();
 </script>
 
-<HoverCard {...props} />
+<HoverCard bind:open {...props} />

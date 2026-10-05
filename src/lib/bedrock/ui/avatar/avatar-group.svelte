@@ -6,7 +6,7 @@
 	import AvatarGroup from '#lib/shadcn/ui/avatar/avatar-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AvatarGroup> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AvatarGroup> = $props();
 </script>
 
-<AvatarGroup {...props} />
+<AvatarGroup bind:ref {...props} />

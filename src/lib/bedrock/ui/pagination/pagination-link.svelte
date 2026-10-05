@@ -6,7 +6,7 @@
 	import PaginationLink from '#lib/shadcn/ui/pagination/pagination-link.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof PaginationLink> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof PaginationLink> = $props();
 </script>
 
-<PaginationLink {...props} />
+<PaginationLink bind:ref {...props} />

@@ -30,15 +30,15 @@ describe('ChatToolCalls', () => {
 		const trigger = group.querySelector<HTMLButtonElement>('[data-slot="chat-tool-calls-trigger"]');
 		expect(trigger?.textContent).toContain('3 tool calls');
 		expect(trigger?.textContent).toContain('run_check');
-		// bits-ui keeps closed content mounted but hidden.
-		const content = group.querySelector('[data-slot="collapsible-content"]');
-		expect(content?.hasAttribute('hidden')).toBe(true);
+		// Closed disclosures unmount after their retained exit.
+		const content = () => group.querySelector<HTMLElement>('[data-slot="collapsible-content"]');
+		expect(content()).toBeNull();
 
 		trigger?.click();
-		await expect.poll(() => content?.hasAttribute('hidden')).toBe(false);
+		await expect.poll(() => content()?.inert).toBe(false);
 		expect(group.querySelectorAll('[data-slot="chat-tool-call"]')).toHaveLength(3);
-		expect(content?.textContent).toContain('grep');
-		expect(content?.textContent).toContain('read_file');
+		expect(content()?.textContent).toContain('grep');
+		expect(content()?.textContent).toContain('read_file');
 	});
 
 	it('reveals the detail CodeBlock when a row with detail is clicked', async () => {

@@ -1,12 +1,23 @@
 {
 	"name": "astra-motion",
-	"version": "0.0.1",
-	"archive": "astra-motion-0.0.1.tgz",
-	"sha256": "b99f2f8d46b4e6c3c515ad97fa6b9ac730e2e556ce25b5a505b13b800dc14afe",
+	"version": "0.1.0-rc.3",
+	"archive": "astra-motion-0.1.0-rc.3-c7a0c1aac16f.tgz",
+	"sha256": "c7a0c1aac16f170ce7f755de04136a64ba2165825fa2c1dc1cb9aa9b8a7eb780",
 	"upstream": "https://github.com/alois-reinstadler/astra-motion",
-	"baseCommit": "b5dc31e",
-	"sourceState": "Includes completed, uncommitted CSS backend and aftercare changes from the Evaluate CSS Motion Alternatives thread; baseCommit alone does not reproduce this archive.",
-	"threadId": "64e2c9f6-9d06-4f23-ab2a-8885067eb328",
-	"license": "unspecified upstream",
-	"verification": "Archive runtime files match current upstream dist; 29 TypeScript runtime sources independently transpiled to matching output."
+	"baseCommit": "4f609394089684fa287402852f23d04503ff12ac",
+	"sourceState": "Frozen combined RC3 source snapshot: RC2, preserved September 30 runtime/docs refinements, and word-punctuation correction.",
+	"snapshotManifestSha256": "2e3a542c0f3bae49f368accccb0a48e35351680d2092dcdbdf34b7675235a649",
+	"snapshotLocation": "/workspace/releases/astra-motion/0.1.0-rc.3/source-snapshot",
+	"snapshotManifest": "vendor/astra-motion-source-manifest.json",
+	"license": "MIT",
+	"bundledNotices": [
+		"dist/motion/vendor/framer-motion/LICENSE",
+		"dist/motion/vendor/motion-dom/LICENSE",
+		"dist/motion/vendor/motion-utils/LICENSE"
+	],
+	"buildCommand": "pnpm check:package",
+	"nodeVersion": "v24.20.0",
+	"packageManager": "pnpm@11.24.0",
+	"bundledProvenance": "dist/motion/vendor/provenance.json",
+	"qualificationScope": "Chromium source and exact packed consumers; prior RC2 Firefox/WebKit evidence is historical, not a new RC3 pass."
 }

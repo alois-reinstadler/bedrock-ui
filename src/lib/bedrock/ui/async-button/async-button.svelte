@@ -12,7 +12,14 @@
 
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import { Swap, autoSize, motionPresets } from '#lib/bedrock/motion/index.js';
+	import { autoSize } from '#lib/bedrock/motion/auto-size.js';
+	import { motionPresets } from '#lib/bedrock/motion/tokens.js';
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
+	import AstraPolicy from '#lib/bedrock/motion/AstraPolicy.svelte';
+	import { AnimatePresence } from 'astra-motion/presence';
+	import { LazyMotion } from 'astra-motion/lazy';
+	import { domAnimation } from 'astra-motion/features/dom-animation';
+	import Label from './async-button-label.svelte';
 	import { Button, type ButtonProps } from '#lib/bedrock/ui/button';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import { cn } from '#lib/utils.js';
@@ -30,7 +37,7 @@
 		interruptible = false,
 		onError,
 		disabled = false,
-		children,
+		children: content,
 		...restProps
 	}: Omit<ButtonProps, 'onclick' | 'href' | 'type'> & {
 		/** Invoked on click. The button shows `pending` until it settles. */
@@ -72,9 +79,11 @@
 	const locked = $derived(!interruptible && buttonState !== 'idle');
 	const statusMessage = $derived(buttonState === 'idle' ? '' : text[buttonState]);
 	const statusId = $props.id();
+	const policy = useMotionPolicy();
+	// Presence retains the previous record; its label cannot change to the next state.
+	const labelItems = $derived([{ state: buttonState, text: statusMessage }]);
 
-	// Same shell pattern as AvatarStack's hover card: autoSize animates the
-	// label area between intrinsic sizes while Swap crossfades the content.
+	// The shell performs real reflow; Astra owns only label opacity and translation.
 	const shell = autoSize({ duration: motionPresets.swap.duration, axis: 'both' });
 
 	async function invoke() {
@@ -123,6 +132,7 @@
      focusable so keyboard users are never dropped mid-interaction. -->
 <Button
 	{@attach setRef}
+	{@attach policy.attach}
 	data-slot="async-button"
 	data-state={buttonState}
 	{disabled}
@@ -133,22 +143,42 @@
 	onclick={handleClick}
 	{...restProps}
 >
-	<span {@attach shell} class="inline-flex items-center justify-center">
-		<Swap key={buttonState} effect={swapEffect} direction={swapDirection} class="whitespace-nowrap">
-			{#if buttonState === 'idle'}
-				{@render children?.()}
-			{:else if buttonState === 'pending'}
-				<Icon icon="loading" class="animate-spin motion-reduce:animate-none" />
-				{text.pending}
-			{:else if buttonState === 'success'}
-				<Icon icon="success" />
-				{text.success}
-			{:else}
-				<Icon icon="error" />
-				{text.error}
-			{/if}
-		</Swap>
-	</span>
+	<AstraPolicy>
+		<LazyMotion features={domAnimation}>
+			<span
+				{@attach shell}
+				class="relative inline-flex items-center justify-center overflow-hidden"
+				data-direction={swapDirection}
+			>
+				<AnimatePresence
+					items={labelItems}
+					key={(item) => item.state}
+					initial={false}
+					mode="popLayout"
+				>
+					{#snippet children(item)}
+						<Label effect={swapEffect} direction={swapDirection}>
+							{#if item.state === 'idle'}
+								{@render content?.()}
+							{:else if item.state === 'pending'}
+								<Icon
+									icon="loading"
+									class={policy.reduced ? '' : 'animate-spin motion-reduce:animate-none'}
+								/>
+								{item.text}
+							{:else if item.state === 'success'}
+								<Icon icon="success" />
+								{item.text}
+							{:else}
+								<Icon icon="error" />
+								{item.text}
+							{/if}
+						</Label>
+					{/snippet}
+				</AnimatePresence>
+			</span>
+		</LazyMotion>
+	</AstraPolicy>
 </Button>
 <span id={statusId} class="sr-only" role="status" data-slot="async-button-status">
 	{statusMessage}

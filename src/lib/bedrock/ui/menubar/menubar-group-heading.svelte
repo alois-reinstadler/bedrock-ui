@@ -6,7 +6,7 @@
 	import MenubarGroupHeading from '#lib/shadcn/ui/menubar/menubar-group-heading.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof MenubarGroupHeading> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof MenubarGroupHeading> = $props();
 </script>
 
-<MenubarGroupHeading {...props} />
+<MenubarGroupHeading bind:ref {...props} />

@@ -4,8 +4,8 @@
 </script>
 
 <script lang="ts">
-	import { onDestroy } from 'svelte';
-	import { createLayoutGroup, layout } from '#lib/bedrock/motion/index.js';
+	import { onDestroy, untrack } from 'svelte';
+	import { elementPrefersReducedMotion } from '#lib/bedrock/motion/policy.js';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -19,7 +19,7 @@
 	export type OutlineProps = WithElementRef<HTMLAttributes<HTMLElement>> & {
 		items: OutlineItem[];
 		activeId?: string;
-		/** Set false to disable the IntersectionObserver and control `activeId` yourself. */
+		/** Set false to disable scroll tracking and control `activeId` yourself. */
 		scrollSpy?: boolean;
 		/** Fixed-header height in px; shifts the activation line and the scroll landing. */
 		offset?: number;
@@ -55,6 +55,7 @@
 	// --- Navigation settle tracking (non-reactive on purpose) ---
 	let cancelSettle: ((fire: boolean) => void) | null = null;
 	let navigationPending = false;
+	let refreshScrollSpy = () => {};
 
 	function beginSettle(id: string) {
 		// A new start interrupts the previous one; its end fires now (once).
@@ -67,6 +68,7 @@
 			done = true;
 			cancelSettle = null;
 			navigationPending = false;
+			refreshScrollSpy();
 			clearTimeout(fallbackTimer);
 			clearTimeout(attachTimer);
 			scroller.removeEventListener('scrollend', onSettle);
@@ -88,20 +90,30 @@
 		cancelSettle = finish;
 	}
 
-	$effect(() => () => cancelSettle?.(false));
+	onDestroy(() => cancelSettle?.(false));
+
+	function findTarget(id: string): HTMLElement | null {
+		// Async route replacement can retain the previous page with the same IDs.
+		// Prefer headings in this nav's own content branch, even before insertion.
+		for (let scope = ref?.parentElement; scope; scope = scope.parentElement) {
+			const target = scope.querySelector<HTMLElement>(`#${CSS.escape(id)}`);
+			if (target) return target;
+		}
+		return null;
+	}
 
 	function activate(id: string, index: number) {
 		rovingIndex = index;
 		onNavigateStart?.(id);
 		activeId = id;
 		history.replaceState(null, '', `#${id}`);
-		const target = document.getElementById(id);
+		const target = findTarget(id);
 		if (!target) {
 			onNavigateEnd?.(id);
 			return;
 		}
 		target.style.scrollMarginTop = `${offset}px`;
-		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const reducedMotion = elementPrefersReducedMotion(ref);
 		if (reducedMotion) {
 			target.scrollIntoView({ behavior: 'auto', block: 'start' });
 			onNavigateEnd?.(id);
@@ -127,41 +139,75 @@
 		itemRefs[next]?.focus();
 	}
 
-	// Scroll-spy: the observer only triggers re-evaluation; the winner is the
-	// heading nearest the activation line (offset below the scroller top).
-	$effect(() => {
-		if (!scrollSpy) return;
+	// Track section starts on scroll: an intersecting section can cross the
+	// activation line without triggering another IntersectionObserver entry.
+	function observeSections() {
+		if (!scrollSpy || !ref) return;
 		const targets = items
-			.map((item) => document.getElementById(item.id))
+			.map((item) => findTarget(item.id))
 			.filter((element): element is HTMLElement => element !== null);
 		if (targets.length === 0) return;
 		const container = scrollContainer;
+		const activationOffset = offset;
+		const scroller = container ?? document;
+		let frame = 0;
 		const updateActive = () => {
+			frame = 0;
 			if (navigationPending) return;
-			const line = (container ? container.getBoundingClientRect().top : 0) + offset + 1;
+			const scrollElement = container ?? document.documentElement;
+			const viewportTop = container
+				? container.getBoundingClientRect().top + container.clientTop
+				: 0;
+			const viewportHeight = container
+				? container.clientHeight
+				: document.documentElement.clientHeight;
+			const line = viewportTop + activationOffset + 1;
 			let current: HTMLElement | undefined;
 			for (const target of targets) {
 				if (target.getBoundingClientRect().top <= line) current = target;
 				else break;
 			}
+			// Short final sections cannot always reach the activation line.
+			const last = targets[targets.length - 1];
+			if (
+				scrollElement.scrollTop > 0 &&
+				scrollElement.scrollHeight - scrollElement.scrollTop - viewportHeight <= 1 &&
+				last.getBoundingClientRect().top < viewportTop + viewportHeight
+			) {
+				current = last;
+			}
 			activeId = (current ?? targets[0]).id;
 		};
-		const observer = new IntersectionObserver(updateActive, {
+		const scheduleUpdate = () => {
+			if (!frame) frame = requestAnimationFrame(updateActive);
+		};
+		refreshScrollSpy = scheduleUpdate;
+		scroller.addEventListener('scroll', scheduleUpdate, { passive: true });
+		window.addEventListener('resize', scheduleUpdate);
+		const observer = new IntersectionObserver(scheduleUpdate, {
 			root: container,
-			rootMargin: `${-offset}px 0px 0px 0px`
+			rootMargin: `${-activationOffset}px 0px 0px 0px`
 		});
-		for (const target of targets) observer.observe(target);
-		return () => observer.disconnect();
-	});
-
-	// The nav is its own layout group; the indicator is the only registered
-	// node, so discrete top/height updates below become spring projections.
-	const group = createLayoutGroup();
-	const indicatorLayout = layout();
-	onDestroy(() => group.destroy());
+		const sizes = new ResizeObserver(scheduleUpdate);
+		sizes.observe(container ?? document.documentElement);
+		for (const target of targets) {
+			observer.observe(target);
+			sizes.observe(target);
+		}
+		scheduleUpdate();
+		return () => {
+			cancelAnimationFrame(frame);
+			scroller.removeEventListener('scroll', scheduleUpdate);
+			window.removeEventListener('resize', scheduleUpdate);
+			observer.disconnect();
+			sizes.disconnect();
+			refreshScrollSpy = () => {};
+		};
+	}
+	$effect(observeSections);
 
 	// Indicator geometry: the nav is the offsetParent of every item link.
-	$effect(() => {
+	function measureIndicator() {
 		const index = items.findIndex((item) => item.id === activeId);
 		const element = index >= 0 ? itemRefs[index] : null;
 		if (!element) {
@@ -170,19 +216,36 @@
 		}
 		indicatorTop = element.offsetTop;
 		indicatorHeight = element.offsetHeight;
-	});
+	}
+
+	function observeIndicator() {
+		void activeId;
+		void items;
+		const links = itemRefs.slice(0, items.length);
+		const nav = ref;
+		untrack(measureIndicator);
+		const sizes = new ResizeObserver(measureIndicator);
+		if (nav) sizes.observe(nav);
+		// Observe every link: wrapping and async fonts can move later items.
+		for (const link of links) if (link) sizes.observe(link);
+		return () => sizes.disconnect();
+	}
+	$effect(observeIndicator);
 </script>
 
 <nav
-	bind:this={ref}
-	{@attach group.bindRoot}
+	{@attach (node) => {
+		ref = node;
+		return () => {
+			if (ref === node) ref = null;
+		};
+	}}
 	data-slot="outline"
 	aria-label={label}
 	class={cn('relative text-sm', className)}
 	{...restProps}
 >
 	<div
-		{@attach indicatorLayout}
 		data-slot="outline-indicator"
 		aria-hidden="true"
 		class="absolute start-0 w-0.5 rounded-full bg-primary"
@@ -194,7 +257,12 @@
 		{#each items as item, index (`${item.id}-${index}`)}
 			<li>
 				<a
-					bind:this={itemRefs[index]}
+					{@attach (node) => {
+						itemRefs[index] = node;
+						return () => {
+							if (itemRefs[index] === node) itemRefs[index] = null;
+						};
+					}}
 					href={`#${item.id}`}
 					aria-current={activeId === item.id ? 'location' : undefined}
 					tabindex={index === rovingIndex ? 0 : -1}
@@ -213,10 +281,21 @@
 </nav>
 
 <style>
-	/* Movement comes from the shared-layout engine; only visibility fades. */
 	[data-slot='outline-indicator'] {
-		transition-property: opacity;
-		transition-duration: var(--motion-state);
-		transition-timing-function: var(--motion-ease-enter);
+		pointer-events: none;
+		transition:
+			top var(--motion-layout) var(--motion-ease-enter),
+			height var(--motion-layout) var(--motion-ease-enter),
+			opacity var(--motion-state) var(--motion-ease-enter);
+	}
+
+	:global([data-bedrock-motion='reduced']) [data-slot='outline-indicator'] {
+		transition: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		[data-slot='outline-indicator'] {
+			transition: none;
+		}
 	}
 </style>

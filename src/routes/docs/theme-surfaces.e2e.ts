@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
 
 for (const colorScheme of ['light', 'dark'] as const) {
 	test(`sidebar surface, spacing and hover hierarchy: ${colorScheme}`, async ({ page }) => {
@@ -26,11 +26,21 @@ for (const colorScheme of ['light', 'dark'] as const) {
 		const highlight = sidebar.locator('[data-slot="docs-active-highlight"]');
 		const activeColor = await highlight.evaluate((node) => getComputedStyle(node).backgroundColor);
 		await other.hover();
-		const hoverColor = await other.evaluate((node) => getComputedStyle(node).backgroundColor);
-		// The theme uses neutral OKLCH colors: compare actual rendered lightness.
-		const lightness = (value: string) => Number(value.match(/^oklch\(([\d.]+)/)?.[1]);
-		expect(lightness(hoverColor)).toBeGreaterThan(lightness(activeColor));
-		expect(lightness(hoverColor) - lightness(activeColor)).toBeLessThan(0.06);
+		const hoverHighlight = sidebar.locator('[data-slot="docs-hover-highlight"]');
+		await expect(hoverHighlight).toBeVisible();
+		const hoverSurface = hoverHighlight.locator('[data-hover-surface]');
+		const hoverColor = await hoverSurface.evaluate(
+			(node) => getComputedStyle(node).backgroundColor
+		);
+		// Hover is a translucent tint, so the active surface remains visible beneath it.
+		const alpha = Number(hoverColor.match(/\/\s*([\d.]+)\)/)?.[1]);
+		expect(alpha).toBeCloseTo(colorScheme === 'light' ? 0.04 : 0.08);
+		const activeShape = await highlight.evaluate((node) => ({
+			radius: getComputedStyle(node).borderRadius,
+			corner: getComputedStyle(node).getPropertyValue('corner-shape')
+		}));
+		await expect(hoverSurface).toHaveCSS('border-radius', activeShape.radius);
+		await expect(hoverSurface).toHaveCSS('corner-shape', activeShape.corner);
 		await active.hover();
 		await expect(highlight).toHaveCSS('background-color', activeColor);
 		await expect(active).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
@@ -49,8 +59,8 @@ for (const colorScheme of ['light', 'dark'] as const) {
 			.getByRole('navigation', { name: 'Primary' })
 			.getByRole('link', { name: 'Docs', exact: true });
 		await expect(card).toBeVisible();
-		await expect(card).toHaveCSS('corner-shape', /^(squircle|superellipse\(2\))$/);
-		await expect(button).toHaveCSS('corner-shape', /^(squircle|superellipse\(2\))$/);
+		await expect(card).toHaveCSS('corner-shape', 'superellipse(3)');
+		await expect(button).toHaveCSS('corner-shape', 'superellipse(3)');
 		const before = await card.boundingBox();
 		const radius = await card.evaluate((node) => getComputedStyle(node).borderRadius);
 		await page.evaluate(() =>

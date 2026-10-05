@@ -14,7 +14,7 @@
 		</p>
 	</header>
 	<form
-		class="space-y-4 rounded-xl border bg-card p-5"
+		class="space-y-4 rounded-xl border bg-card p-5 corner-theme"
 		onsubmit={(event) => {
 			event.preventDefault();
 			saved = value ? `Review scheduled for ${value.toString()}.` : 'Choose a date before saving.';

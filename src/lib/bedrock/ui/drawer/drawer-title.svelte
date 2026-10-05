@@ -6,7 +6,7 @@
 	import DrawerTitle from '#lib/shadcn/ui/drawer/drawer-title.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DrawerTitle> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DrawerTitle> = $props();
 </script>
 
-<DrawerTitle {...props} />
+<DrawerTitle bind:ref {...props} />

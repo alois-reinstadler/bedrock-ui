@@ -6,7 +6,7 @@
 	import MenubarSub from '#lib/shadcn/ui/menubar/menubar-sub.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof MenubarSub> = $props();
+	let { open = $bindable(false), ...props }: ComponentProps<typeof MenubarSub> = $props();
 </script>
 
-<MenubarSub {...props} />
+<MenubarSub bind:open {...props} />

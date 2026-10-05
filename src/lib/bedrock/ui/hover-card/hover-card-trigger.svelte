@@ -6,7 +6,7 @@
 	import HoverCardTrigger from '#lib/shadcn/ui/hover-card/hover-card-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof HoverCardTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof HoverCardTrigger> = $props();
 </script>
 
-<HoverCardTrigger {...props} />
+<HoverCardTrigger bind:ref {...props} />

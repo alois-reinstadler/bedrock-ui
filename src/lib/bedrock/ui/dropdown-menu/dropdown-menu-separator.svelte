@@ -6,7 +6,7 @@
 	import DropdownMenuSeparator from '#lib/shadcn/ui/dropdown-menu/dropdown-menu-separator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DropdownMenuSeparator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DropdownMenuSeparator> = $props();
 </script>
 
-<DropdownMenuSeparator {...props} />
+<DropdownMenuSeparator bind:ref {...props} />

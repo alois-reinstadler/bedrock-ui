@@ -1,8 +1,9 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
+	import { tick, type Snippet } from 'svelte';
 	import type { TransitionConfig } from 'svelte/transition';
 	import { cn } from '#lib/utils.js';
-	import { resolveMotionDuration } from './policy.js';
+	import { elementPrefersReducedMotion } from './policy.js';
+	import { withLiveReduction } from './presence.js';
 	import { motionEasings, motionPresets } from './tokens.js';
 
 	let {
@@ -23,6 +24,33 @@
 		class?: string;
 		children: Snippet;
 	} = $props();
+
+	function retireCopy(node: HTMLElement) {
+		const active = document.activeElement;
+		const ownedFocus = active instanceof HTMLElement && node.contains(active);
+		const shell = node.parentElement;
+		node.inert = true;
+		node.setAttribute('aria-hidden', 'true');
+		if (!ownedFocus) return;
+		// Replacement DOM is committed before choosing its corresponding action.
+		void tick().then(() => {
+			if (!shell?.isConnected) return;
+			const currentFocus = document.activeElement;
+			if (currentFocus !== active && currentFocus !== document.body) return;
+			const incoming = [...shell.children].find(
+				(child) => child instanceof HTMLElement && !child.inert
+			) as HTMLElement | undefined;
+			if (!incoming) return;
+			const target = incoming.querySelector<HTMLElement>(
+				'button:not(:disabled), a[href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])'
+			);
+			if (target) target.focus({ preventScroll: true });
+			else {
+				shell.tabIndex = -1;
+				shell.focus({ preventScroll: true });
+			}
+		});
+	}
 
 	function clampProgress(t: number): number {
 		return Math.min(Math.max(t, 0), 1);
@@ -46,11 +74,11 @@
 		}
 	): TransitionConfig {
 		const opacity = Number.parseFloat(getComputedStyle(node).opacity);
-		const resolvedDuration = resolveMotionDuration(params.duration);
+		const resolvedDuration = elementPrefersReducedMotion(node) ? 0 : params.duration;
 		if (params.effect === 'slide-up') {
 			const travel = slideDistance(node);
 			const sign = params.direction === 'forward' ? 1 : -1;
-			return {
+			return withLiveReduction(node, {
 				duration: resolvedDuration,
 				css: (t) => {
 					const progress = contentProgress(t, 'in');
@@ -60,12 +88,12 @@
 						`opacity: ${progress * opacity};`
 					);
 				}
-			};
+			});
 		}
-		return {
+		return withLiveReduction(node, {
 			duration: resolvedDuration,
 			css: (t) => `opacity: ${contentProgress(t, 'in') * opacity};`
-		};
+		});
 	}
 
 	function copyOut(
@@ -76,6 +104,8 @@
 			direction: 'forward' | 'backward';
 		}
 	): TransitionConfig {
+		// Capture focus before Svelte schedules the outgoing animation frame.
+		retireCopy(node);
 		const style = getComputedStyle(node);
 		const opacity = Number.parseFloat(style.opacity);
 		const rect = node.getBoundingClientRect();
@@ -84,10 +114,10 @@
 		const top = parentRect ? rect.top - parentRect.top : node.offsetTop;
 		const width = node.offsetWidth;
 		const height = node.offsetHeight;
-		const resolvedDuration = resolveMotionDuration(params.duration);
+		const resolvedDuration = elementPrefersReducedMotion(node) ? 0 : params.duration;
 		const travel = slideDistance(node);
 		const sign = params.direction === 'forward' ? -1 : 1;
-		return {
+		return withLiveReduction(node, {
 			duration: resolvedDuration,
 			css: (t) => {
 				const progress = contentProgress(t, 'out');
@@ -105,7 +135,7 @@
 					`pointer-events: none;`
 				);
 			}
-		};
+		});
 	}
 </script>
 
@@ -119,6 +149,7 @@
 >
 	{#key key}
 		<span
+			data-slot="swap-copy"
 			class="inline-flex items-center justify-center gap-2 [grid-area:1/1]"
 			in:copyIn={{
 				effect,

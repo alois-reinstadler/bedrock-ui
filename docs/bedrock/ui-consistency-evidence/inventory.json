@@ -1,0 +1,2485 @@
+{
+	"pages": [
+		"src/routes/+page.svelte",
+		"src/routes/demo/+page.svelte",
+		"src/routes/demo/chat/+page.svelte",
+		"src/routes/demo/component-motion/+page.svelte",
+		"src/routes/demo/contrast/+page.svelte",
+		"src/routes/demo/erp/+page.svelte",
+		"src/routes/demo/motion/+page.svelte",
+		"src/routes/demo/motion/accessibility/+page.svelte",
+		"src/routes/demo/motion/components/+page.svelte",
+		"src/routes/demo/motion/concurrency/+page.svelte",
+		"src/routes/demo/motion/continuity/+page.svelte",
+		"src/routes/demo/motion/foundations/+page.svelte",
+		"src/routes/demo/motion-route-prototype/detail/[id]/+page.svelte",
+		"src/routes/demo/motion-route-prototype/list/+page.svelte",
+		"src/routes/demo/motion-test/+page.svelte",
+		"src/routes/demo/playwright/+page.svelte",
+		"src/routes/demo/ui/+page.svelte",
+		"src/routes/demo/ui-page-transitions/+page.svelte",
+		"src/routes/docs/+page.svelte",
+		"src/routes/docs/blocks/+page.svelte",
+		"src/routes/docs/blocks/[slug]/+page.svelte",
+		"src/routes/docs/changelog/+page.svelte",
+		"src/routes/docs/components/+page.svelte",
+		"src/routes/docs/components/[slug]/+page.svelte",
+		"src/routes/docs/forms/+page.svelte",
+		"src/routes/docs/installation/+page.svelte",
+		"src/routes/docs/motion/+page.svelte",
+		"src/routes/docs/shaders/+page.svelte",
+		"src/routes/docs/shaders/[slug]/+page.svelte",
+		"src/routes/docs/skills/+page.svelte",
+		"src/routes/docs/templates/+page.svelte",
+		"src/routes/docs/theming/+page.svelte",
+		"src/routes/motion/+page.svelte",
+		"src/routes/templates/email-client/+page.svelte",
+		"src/routes/templates/email-client/calendar/+page.svelte",
+		"src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+		"src/routes/templates/email-client/tasks/+page.svelte",
+		"src/routes/templates/music-player/+page.svelte",
+		"src/routes/templates/music-player/album/[slug]/+page.svelte",
+		"src/routes/templates/music-player/credits/+page.svelte",
+		"src/routes/templates/music-player/discover/+page.svelte",
+		"src/routes/templates/music-player/library/+page.svelte",
+		"src/routes/templates/music-player/liked/+page.svelte",
+		"src/routes/templates/music-player/lyrics/+page.svelte",
+		"src/routes/templates/music-player/recent/+page.svelte",
+		"src/routes/templates/music-player/visualizer/+page.svelte",
+		"src/routes/templates/social-network/+page.svelte",
+		"src/routes/templates/social-network/bookmarks/+page.svelte",
+		"src/routes/templates/social-network/explore/+page.svelte",
+		"src/routes/templates/social-network/notifications/+page.svelte",
+		"src/routes/templates/social-network/post/[id]/+page.svelte",
+		"src/routes/templates/social-network/profile/[handle]/+page.svelte",
+		"src/routes/templates/video-library/+page.svelte",
+		"src/routes/templates/video-library/genres/[genre]/+page.svelte",
+		"src/routes/templates/video-library/my-list/+page.svelte",
+		"src/routes/templates/video-library/search/+page.svelte",
+		"src/routes/templates/video-library/title/[slug]/+page.svelte",
+		"src/routes/templates/video-library/watch/[slug]/+page.svelte"
+	],
+	"routes": [
+		{
+			"url": "/",
+			"file": "src/routes/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo",
+			"file": "src/routes/demo/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/chat",
+			"file": "src/routes/demo/chat/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/component-motion",
+			"file": "src/routes/demo/component-motion/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/contrast",
+			"file": "src/routes/demo/contrast/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/erp",
+			"file": "src/routes/demo/erp/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/motion",
+			"file": "src/routes/demo/motion/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/motion-route-prototype/detail/a",
+			"file": "src/routes/demo/motion-route-prototype/detail/[id]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/demo/motion-route-prototype/detail/b",
+			"file": "src/routes/demo/motion-route-prototype/detail/[id]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/demo/motion-route-prototype/list",
+			"file": "src/routes/demo/motion-route-prototype/list/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/motion-test",
+			"file": "src/routes/demo/motion-test/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/motion/accessibility",
+			"file": "src/routes/demo/motion/accessibility/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/motion/components",
+			"file": "src/routes/demo/motion/components/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/motion/concurrency",
+			"file": "src/routes/demo/motion/concurrency/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/motion/continuity",
+			"file": "src/routes/demo/motion/continuity/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/motion/foundations",
+			"file": "src/routes/demo/motion/foundations/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/playwright",
+			"file": "src/routes/demo/playwright/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/ui",
+			"file": "src/routes/demo/ui/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/demo/ui-page-transitions",
+			"file": "src/routes/demo/ui-page-transitions/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs",
+			"file": "src/routes/docs/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/blocks",
+			"file": "src/routes/docs/blocks/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/blocks/authentication-panel",
+			"file": "src/routes/docs/blocks/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/blocks/settings-section",
+			"file": "src/routes/docs/blocks/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/changelog",
+			"file": "src/routes/docs/changelog/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/components",
+			"file": "src/routes/docs/components/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/components/accordion",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/alert",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/alert-dialog",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/animated-gradient",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/animated-signature",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/aspect-ratio",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/async-button",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/attachment",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/avatar",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/badge",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/banner",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/blockquote",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/breadcrumb",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/bubble",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/button",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/button-group",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/calendar",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/card",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/carousel",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/chart",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/chat",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/checkbox",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/checkbox-list",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/citation",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/clickable-card",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/code-block",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/collapsible",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/color-area",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/color-field",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/color-picker",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/color-slider",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/color-swatch",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/color-swatch-picker",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/combobox",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/command",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/context-menu",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/data-table",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/date-input",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/date-range-input",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/date-time-input",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/dialog",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/diff",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/dot-pattern",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/drawer",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/dropdown-menu",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/emoji",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/empty",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/feedback",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/field",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/field-status",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/file-input",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/form",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/grid-pattern",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/heading",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/hover-card",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/icon",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/icon-button",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/image",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/indicator",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/input",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/input-group",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/input-otp",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/item",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/kbd",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/label",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/light-rays",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/lightbox",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/link",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/list",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/map",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/markdown",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/marker",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/marquee",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/menubar",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/message",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/metadata-list",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/multi-selector",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/native-select",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/navigation-menu",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/noise-overlay",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/number-input",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/outline",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/overflow-list",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/pagination",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/pdf-viewer",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/phone-input",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/popover",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/progress",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/progressive-blur",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/qr-code",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/radio-group",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/range-calendar",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/resizable",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/scroll-area",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/select",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/selectable-card",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/selector",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/separator",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/shapes",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/sheet",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/sidebar",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/skeleton",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/slider",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/sonner",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/spinner",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/spotlight",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/status-dot",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/stepped-form",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/stepper",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/switch",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/table",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/tabs",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/text",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/text-highlight",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/text-shimmer",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/textarea",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/thumbnail",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/tilt-card",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/time-input",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/timestamp",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/toggle",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/toggle-group",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/token",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/tokenizer",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/tooltip",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/video-player",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/components/visually-hidden",
+			"file": "src/routes/docs/components/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/forms",
+			"file": "src/routes/docs/forms/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/installation",
+			"file": "src/routes/docs/installation/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/motion",
+			"file": "src/routes/docs/motion/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/shaders",
+			"file": "src/routes/docs/shaders/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/shaders/dithering",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/fluted-glass",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/god-rays",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/grain-gradient",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/halftone-dots",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/heatmap",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/image-dithering",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/liquid-metal",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/mesh-gradient",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/neuro-noise",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/warp",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/shaders/water",
+			"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/docs/skills",
+			"file": "src/routes/docs/skills/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/templates",
+			"file": "src/routes/docs/templates/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/docs/theming",
+			"file": "src/routes/docs/theming/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/motion",
+			"file": "src/routes/motion/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/email-client",
+			"file": "src/routes/templates/email-client/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/email-client/calendar",
+			"file": "src/routes/templates/email-client/calendar/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/email-client/mail/archive",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/archive/arden-contract",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/archive/eli-field-recordings",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/archive/june-research-window",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/archive/marin-launch-notes",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/archive/mina-weekly-digest",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/archive/nora-prototype",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/archive/theo-studio-key",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/drafts",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/drafts/arden-contract",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/drafts/eli-field-recordings",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/drafts/june-research-window",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/drafts/marin-launch-notes",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/drafts/mina-weekly-digest",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/drafts/nora-prototype",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/drafts/theo-studio-key",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/inbox",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/inbox/arden-contract",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/inbox/eli-field-recordings",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/inbox/june-research-window",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/inbox/marin-launch-notes",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/inbox/mina-weekly-digest",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/inbox/nora-prototype",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/inbox/theo-studio-key",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/sent",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/sent/arden-contract",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/sent/eli-field-recordings",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/sent/june-research-window",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/sent/marin-launch-notes",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/sent/mina-weekly-digest",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/sent/nora-prototype",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/sent/theo-studio-key",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/starred",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/starred/arden-contract",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/starred/eli-field-recordings",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/starred/june-research-window",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/starred/marin-launch-notes",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/starred/mina-weekly-digest",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/starred/nora-prototype",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/mail/starred/theo-studio-key",
+			"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/email-client/tasks",
+			"file": "src/routes/templates/email-client/tasks/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/music-player",
+			"file": "src/routes/templates/music-player/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/music-player/album/after-hours",
+			"file": "src/routes/templates/music-player/album/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/music-player/album/slow-mornings",
+			"file": "src/routes/templates/music-player/album/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/music-player/album/sunday-drive",
+			"file": "src/routes/templates/music-player/album/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/music-player/album/the-lounge",
+			"file": "src/routes/templates/music-player/album/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/music-player/credits",
+			"file": "src/routes/templates/music-player/credits/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/music-player/discover",
+			"file": "src/routes/templates/music-player/discover/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/music-player/library",
+			"file": "src/routes/templates/music-player/library/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/music-player/liked",
+			"file": "src/routes/templates/music-player/liked/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/music-player/lyrics",
+			"file": "src/routes/templates/music-player/lyrics/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/music-player/recent",
+			"file": "src/routes/templates/music-player/recent/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/music-player/visualizer",
+			"file": "src/routes/templates/music-player/visualizer/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/social-network",
+			"file": "src/routes/templates/social-network/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/social-network/bookmarks",
+			"file": "src/routes/templates/social-network/bookmarks/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/social-network/explore",
+			"file": "src/routes/templates/social-network/explore/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/social-network/notifications",
+			"file": "src/routes/templates/social-network/notifications/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/social-network/post/city-after-dark",
+			"file": "src/routes/templates/social-network/post/[id]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/post/good-interfaces",
+			"file": "src/routes/templates/social-network/post/[id]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/post/human-scale",
+			"file": "src/routes/templates/social-network/post/[id]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/post/in-motion",
+			"file": "src/routes/templates/social-network/post/[id]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/post/less-but-better",
+			"file": "src/routes/templates/social-network/post/[id]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/post/long-way-home",
+			"file": "src/routes/templates/social-network/post/[id]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/profile/aya",
+			"file": "src/routes/templates/social-network/profile/[handle]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/profile/leo",
+			"file": "src/routes/templates/social-network/profile/[handle]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/profile/mina",
+			"file": "src/routes/templates/social-network/profile/[handle]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/profile/nora",
+			"file": "src/routes/templates/social-network/profile/[handle]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/social-network/profile/sam",
+			"file": "src/routes/templates/social-network/profile/[handle]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library",
+			"file": "src/routes/templates/video-library/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/video-library/genres/action",
+			"file": "src/routes/templates/video-library/genres/[genre]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/genres/animation",
+			"file": "src/routes/templates/video-library/genres/[genre]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/genres/comedy",
+			"file": "src/routes/templates/video-library/genres/[genre]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/genres/fantasy",
+			"file": "src/routes/templates/video-library/genres/[genre]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/genres/science-fiction",
+			"file": "src/routes/templates/video-library/genres/[genre]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/my-list",
+			"file": "src/routes/templates/video-library/my-list/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/video-library/search",
+			"file": "src/routes/templates/video-library/search/+page.svelte",
+			"kind": "static"
+		},
+		{
+			"url": "/templates/video-library/title/big-buck-bunny",
+			"file": "src/routes/templates/video-library/title/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/title/caminandes",
+			"file": "src/routes/templates/video-library/title/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/title/sintel",
+			"file": "src/routes/templates/video-library/title/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/title/tears-of-steel",
+			"file": "src/routes/templates/video-library/title/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/watch/big-buck-bunny",
+			"file": "src/routes/templates/video-library/watch/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/watch/caminandes",
+			"file": "src/routes/templates/video-library/watch/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/watch/sintel",
+			"file": "src/routes/templates/video-library/watch/[slug]/+page.svelte",
+			"kind": "dynamic"
+		},
+		{
+			"url": "/templates/video-library/watch/tears-of-steel",
+			"file": "src/routes/templates/video-library/watch/[slug]/+page.svelte",
+			"kind": "dynamic"
+		}
+	],
+	"components": [
+		{
+			"slug": "accordion",
+			"title": "Accordion",
+			"description": "A vertically stacked set of collapsible sections.",
+			"category": "layout"
+		},
+		{
+			"slug": "alert",
+			"title": "Alert",
+			"description": "Inline feedback for a page or section.",
+			"category": "display"
+		},
+		{
+			"slug": "alert-dialog",
+			"title": "Alert Dialog",
+			"description": "A modal that requires an explicit confirmation.",
+			"category": "overlay"
+		},
+		{
+			"slug": "animated-gradient",
+			"title": "Animated Gradient",
+			"category": "display",
+			"description": "A flowing mesh gradient with a static CSS fallback. Requires WebGL2.",
+			"requirements": ["webgl2"]
+		},
+		{
+			"slug": "animated-signature",
+			"title": "Animated Signature",
+			"category": "display",
+			"description": "A decorative handwriting reveal from SVG paths or text with a supplied font."
+		},
+		{
+			"slug": "aspect-ratio",
+			"title": "Aspect Ratio",
+			"description": "Locks media to a consistent ratio.",
+			"category": "layout"
+		},
+		{
+			"slug": "async-button",
+			"title": "Async Button",
+			"description": "A button that runs an async action with pending and result states.",
+			"category": "form"
+		},
+		{
+			"slug": "attachment",
+			"title": "Attachment",
+			"description": "File previews with upload states and independent actions.",
+			"category": "content"
+		},
+		{
+			"slug": "avatar",
+			"title": "Avatar",
+			"description": "A photo or initials for a person or team.",
+			"category": "display"
+		},
+		{
+			"slug": "badge",
+			"title": "Badge",
+			"description": "A compact label for status or category.",
+			"category": "display"
+		},
+		{
+			"slug": "banner",
+			"title": "Banner",
+			"description": "App- or page-level notice with an optional close action.",
+			"category": "display"
+		},
+		{
+			"slug": "blockquote",
+			"title": "Blockquote",
+			"description": "A quotation with accessible attribution.",
+			"category": "content"
+		},
+		{
+			"slug": "breadcrumb",
+			"title": "Breadcrumb",
+			"description": "Shows the current location in a hierarchy.",
+			"category": "navigation"
+		},
+		{
+			"slug": "bubble",
+			"title": "Bubble",
+			"description": "Conversation surfaces with variants and anchored reactions.",
+			"category": "content"
+		},
+		{
+			"slug": "button",
+			"title": "Button",
+			"description": "Triggers an action or navigates to a route.",
+			"category": "form"
+		},
+		{
+			"slug": "button-group",
+			"title": "Button Group",
+			"description": "Joins related actions into a single control.",
+			"category": "form"
+		},
+		{
+			"slug": "calendar",
+			"title": "Calendar",
+			"description": "Pick a date from a monthly grid.",
+			"category": "form"
+		},
+		{
+			"slug": "card",
+			"title": "Card",
+			"description": "Groups related content on a raised surface.",
+			"category": "layout"
+		},
+		{
+			"slug": "carousel",
+			"title": "Carousel",
+			"description": "A sliding sequence of items.",
+			"category": "display"
+		},
+		{
+			"slug": "chart",
+			"title": "Chart",
+			"description": "Plots series data with LayerChart.",
+			"category": "display"
+		},
+		{
+			"slug": "chat",
+			"title": "Chat",
+			"description": "Message list, bubbles, metadata, and composer for conversations.",
+			"category": "display"
+		},
+		{
+			"slug": "checkbox",
+			"title": "Checkbox",
+			"description": "Toggles a single option on or off.",
+			"category": "form"
+		},
+		{
+			"slug": "indicator",
+			"title": "Checkbox Indicator",
+			"description": "Decorative checkbox, check, and radio selection visuals.",
+			"category": "display"
+		},
+		{
+			"slug": "checkbox-list",
+			"title": "Checkbox List",
+			"description": "A labelled group of checkboxes bound to one value array.",
+			"category": "form"
+		},
+		{
+			"slug": "citation",
+			"title": "Citation",
+			"description": "Inline source references for AI responses and articles.",
+			"category": "content"
+		},
+		{
+			"slug": "clickable-card",
+			"title": "Clickable Card",
+			"description": "A whole-card navigation or action target.",
+			"category": "layout"
+		},
+		{
+			"slug": "code-block",
+			"title": "Code Block",
+			"description": "Syntax-highlighted code with copy, titles, and line numbers.",
+			"category": "content"
+		},
+		{
+			"slug": "collapsible",
+			"title": "Collapsible",
+			"description": "Shows or hides a block of content.",
+			"category": "layout"
+		},
+		{
+			"slug": "color-area",
+			"title": "Color Area",
+			"category": "form",
+			"description": "A two-dimensional saturation and brightness control for a shared or standalone color."
+		},
+		{
+			"slug": "color-field",
+			"title": "Color Field",
+			"category": "form",
+			"description": "Editable color text with parsing, format selection and validation feedback."
+		},
+		{
+			"slug": "color-picker",
+			"title": "Color Picker",
+			"description": "HSV color selection with hex, RGB, and HSL entry.",
+			"category": "form"
+		},
+		{
+			"slug": "color-slider",
+			"title": "Color Slider",
+			"category": "form",
+			"description": "A labeled color-channel slider for hue, saturation, brightness or alpha."
+		},
+		{
+			"slug": "color-swatch",
+			"title": "Color Swatch",
+			"category": "display",
+			"description": "A reusable color preview with a transparency checkerboard and accessible label."
+		},
+		{
+			"slug": "color-swatch-picker",
+			"title": "Color Swatch Picker",
+			"category": "form",
+			"description": "A selectable palette of named colors with a visible current selection."
+		},
+		{
+			"slug": "combobox",
+			"title": "Combobox",
+			"description": "A searchable, data-driven single select.",
+			"category": "form"
+		},
+		{
+			"slug": "command",
+			"title": "Command",
+			"description": "A searchable command palette.",
+			"category": "overlay"
+		},
+		{
+			"slug": "context-menu",
+			"title": "Context Menu",
+			"description": "Actions anchored to a right-click.",
+			"category": "overlay"
+		},
+		{
+			"slug": "data-table",
+			"title": "Data Table",
+			"description": "Sortable, filterable records with selection, views, and grouping.",
+			"category": "data"
+		},
+		{
+			"slug": "date-input",
+			"title": "Date Input",
+			"description": "Segmented date entry with a calendar popover.",
+			"category": "form"
+		},
+		{
+			"slug": "date-range-input",
+			"title": "Date Range Input",
+			"description": "Start and end dates with presets and a dual-month picker.",
+			"category": "form"
+		},
+		{
+			"slug": "date-time-input",
+			"title": "Date Time Input",
+			"description": "Date and time in one segmented field.",
+			"category": "form"
+		},
+		{
+			"slug": "dialog",
+			"title": "Dialog",
+			"description": "A modal for a focused task.",
+			"category": "overlay"
+		},
+		{
+			"slug": "diff",
+			"title": "Diff",
+			"description": "Compare text with unified and side-by-side views, line numbers, and change markers.",
+			"category": "content"
+		},
+		{
+			"slug": "dot-pattern",
+			"title": "Dot Pattern",
+			"category": "display",
+			"description": "A static dot texture with adjustable spacing, contrast and radial fading."
+		},
+		{
+			"slug": "drawer",
+			"title": "Drawer",
+			"description": "A panel that slides up from the edge.",
+			"category": "overlay"
+		},
+		{
+			"slug": "dropdown-menu",
+			"title": "Dropdown Menu",
+			"description": "A list of actions triggered by a button.",
+			"category": "overlay"
+		},
+		{
+			"slug": "emoji",
+			"title": "Emoji",
+			"description": "Apple emoji images with consistent rendering, inline text, and native fallbacks.",
+			"category": "display"
+		},
+		{
+			"slug": "empty",
+			"title": "Empty",
+			"description": "A placeholder when a view has no data.",
+			"category": "display"
+		},
+		{
+			"slug": "feedback",
+			"title": "Feedback",
+			"description": "Native page annotations for developer feedback and customer website reviews.",
+			"category": "overlay"
+		},
+		{
+			"slug": "field",
+			"title": "Field",
+			"description": "Label, control, and helper text as one unit.",
+			"category": "form"
+		},
+		{
+			"slug": "field-status",
+			"title": "Field Status",
+			"description": "Info, success, warning, or error feedback for a field.",
+			"category": "form"
+		},
+		{
+			"slug": "file-input",
+			"title": "File Input",
+			"description": "File selection with drag and drop, constraints, and summaries.",
+			"category": "form"
+		},
+		{
+			"slug": "form",
+			"title": "Form",
+			"description": "Formsnap bindings for Superforms.",
+			"category": "form"
+		},
+		{
+			"slug": "grid-pattern",
+			"title": "Grid Pattern",
+			"category": "display",
+			"description": "A static line grid with adjustable spacing, weight and radial fading."
+		},
+		{
+			"slug": "heading",
+			"title": "Heading",
+			"description": "Document headings with separable visual scale.",
+			"category": "content"
+		},
+		{
+			"slug": "hover-card",
+			"title": "Hover Card",
+			"description": "Preview content on hover.",
+			"category": "overlay"
+		},
+		{
+			"slug": "icon",
+			"title": "Icon",
+			"description": "Semantic icon names resolved through the global registry.",
+			"category": "display"
+		},
+		{
+			"slug": "icon-button",
+			"title": "Icon Button",
+			"description": "An accessible icon-only button with a required label.",
+			"category": "form"
+		},
+		{
+			"slug": "image",
+			"title": "Image",
+			"description": "An image with a loading skeleton, stable dimensions, and a resilient fallback.",
+			"category": "display"
+		},
+		{
+			"slug": "input",
+			"title": "Input",
+			"description": "A single-line text field.",
+			"category": "form"
+		},
+		{
+			"slug": "input-group",
+			"title": "Input Group",
+			"description": "An input with addons on either side.",
+			"category": "form"
+		},
+		{
+			"slug": "input-otp",
+			"title": "Input OTP",
+			"description": "Segmented entry for one-time codes.",
+			"category": "form"
+		},
+		{
+			"slug": "item",
+			"title": "Item",
+			"description": "A row for lists, menus, and pickers.",
+			"category": "display"
+		},
+		{
+			"slug": "kbd",
+			"title": "Kbd",
+			"description": "A keyboard shortcut glyph.",
+			"category": "display"
+		},
+		{
+			"slug": "label",
+			"title": "Label",
+			"description": "Names a form control.",
+			"category": "form"
+		},
+		{
+			"slug": "light-rays",
+			"title": "Light Rays",
+			"category": "display",
+			"description": "Spell UI’s light rays, ported to Svelte with the original shader and defaults. Requires WebGL2.",
+			"requirements": ["webgl2"]
+		},
+		{
+			"slug": "lightbox",
+			"title": "Lightbox",
+			"description": "Full-screen viewer for images and documents.",
+			"category": "overlay"
+		},
+		{
+			"slug": "link",
+			"title": "Link",
+			"description": "Inline and standalone links, with external-link handling.",
+			"category": "content"
+		},
+		{
+			"slug": "list",
+			"title": "List",
+			"description": "Content lists with markers, numbering, or dividers.",
+			"category": "content"
+		},
+		{
+			"slug": "map",
+			"requirements": ["webgl2"],
+			"title": "Map",
+			"description": "Interactive maps with controls, markers, popups, routes, arcs, GeoJSON and clusters.",
+			"category": "data"
+		},
+		{
+			"slug": "markdown",
+			"title": "Markdown",
+			"description": "Renders markdown through Bedrock components, safely.",
+			"category": "content"
+		},
+		{
+			"slug": "marker",
+			"title": "Marker",
+			"description": "Inline conversation status, system notes, and labeled separators.",
+			"category": "content"
+		},
+		{
+			"slug": "marquee",
+			"title": "Marquee",
+			"category": "display",
+			"description": "A continuous horizontal or vertical content track with accessible pause behavior."
+		},
+		{
+			"slug": "menubar",
+			"title": "Menubar",
+			"description": "A horizontal set of menus.",
+			"category": "navigation"
+		},
+		{
+			"slug": "message",
+			"title": "Message",
+			"description": "Conversation rows with avatars, headers, footers, and grouping.",
+			"category": "content"
+		},
+		{
+			"slug": "metadata-list",
+			"title": "Metadata List",
+			"description": "Label and value pairs for record detail panels.",
+			"category": "data"
+		},
+		{
+			"slug": "multi-selector",
+			"title": "Multi Selector",
+			"description": "Checkbox dropdown for multiple values, with badges.",
+			"category": "form"
+		},
+		{
+			"slug": "native-select",
+			"title": "Native Select",
+			"description": "The platform select, styled to match.",
+			"category": "form"
+		},
+		{
+			"slug": "navigation-menu",
+			"title": "Navigation Menu",
+			"description": "A site menu with optional panels.",
+			"category": "navigation"
+		},
+		{
+			"slug": "noise-overlay",
+			"title": "Noise Overlay",
+			"category": "display",
+			"description": "A deterministic SVG noise texture for gently textured surfaces."
+		},
+		{
+			"slug": "number-input",
+			"title": "Number Input",
+			"description": "Locale-aware numbers with steppers, units, and clamping.",
+			"category": "form"
+		},
+		{
+			"slug": "outline",
+			"title": "Outline",
+			"description": "In-page table of contents with scroll-spy.",
+			"category": "navigation"
+		},
+		{
+			"slug": "overflow-list",
+			"title": "Overflow List",
+			"description": "Shows what fits and collapses the rest behind a count.",
+			"category": "layout"
+		},
+		{
+			"slug": "pagination",
+			"title": "Pagination",
+			"description": "Move between pages of results.",
+			"category": "navigation"
+		},
+		{
+			"slug": "pdf-viewer",
+			"title": "PDF Viewer",
+			"description": "Renders PDF documents in the page.",
+			"category": "display"
+		},
+		{
+			"slug": "phone-input",
+			"title": "Phone Input",
+			"category": "form",
+			"description": "An international telephone field with country selection and normalized number metadata."
+		},
+		{
+			"slug": "popover",
+			"title": "Popover",
+			"description": "Floating content anchored to a trigger.",
+			"category": "overlay"
+		},
+		{
+			"slug": "progress",
+			"title": "Progress",
+			"description": "Shows completion of a determinate task.",
+			"category": "display"
+		},
+		{
+			"slug": "progressive-blur",
+			"title": "Progressive Blur",
+			"description": "A directional backdrop blur for scroll edges and layered surfaces.",
+			"category": "layout"
+		},
+		{
+			"slug": "qr-code",
+			"title": "QR Code",
+			"category": "display",
+			"description": "An SVG QR code with configurable module styling and an accessible text alternative.",
+			"importName": "QRCode"
+		},
+		{
+			"slug": "radio-group",
+			"title": "Radio Group",
+			"description": "Pick exactly one option from a set.",
+			"category": "form"
+		},
+		{
+			"slug": "range-calendar",
+			"title": "Range Calendar",
+			"description": "Pick a start and end date.",
+			"category": "form"
+		},
+		{
+			"slug": "resizable",
+			"title": "Resizable",
+			"description": "Panels the user can drag to resize.",
+			"category": "layout"
+		},
+		{
+			"slug": "scroll-area",
+			"title": "Scroll Area",
+			"description": "A region with a styled scrollbar.",
+			"category": "layout"
+		},
+		{
+			"slug": "select",
+			"title": "Select",
+			"description": "A custom listbox for choosing a value.",
+			"category": "form"
+		},
+		{
+			"slug": "selectable-card",
+			"title": "Selectable Card",
+			"description": "A card that toggles a selected state.",
+			"category": "layout"
+		},
+		{
+			"slug": "selector",
+			"title": "Selector",
+			"description": "Rich data-driven single select with groups and search.",
+			"category": "form"
+		},
+		{
+			"slug": "separator",
+			"title": "Separator",
+			"description": "A visual divider between sections.",
+			"category": "layout"
+		},
+		{
+			"slug": "shapes",
+			"title": "Shapes",
+			"category": "display",
+			"description": "72 individual SVG components from ShapesGallery, styled with native SVG attributes and CSS."
+		},
+		{
+			"slug": "sheet",
+			"title": "Sheet",
+			"description": "A panel that slides in from the side.",
+			"category": "overlay"
+		},
+		{
+			"slug": "sidebar",
+			"title": "Sidebar",
+			"description": "App navigation that can collapse or sheet.",
+			"category": "navigation"
+		},
+		{
+			"slug": "skeleton",
+			"title": "Skeleton",
+			"description": "A placeholder while content loads.",
+			"category": "display"
+		},
+		{
+			"slug": "slider",
+			"title": "Slider",
+			"description": "Pick a value from a numeric range.",
+			"category": "form"
+		},
+		{
+			"slug": "sonner",
+			"title": "Sonner",
+			"description": "A toast queue for brief messages.",
+			"category": "overlay",
+			"importName": "Toaster"
+		},
+		{
+			"slug": "spinner",
+			"title": "Spinner",
+			"description": "An indeterminate loading indicator.",
+			"category": "display"
+		},
+		{
+			"slug": "spotlight",
+			"title": "Spotlight",
+			"category": "display",
+			"description": "Pointer-following surface and border illumination, individually or across a card group."
+		},
+		{
+			"slug": "status-dot",
+			"title": "Status Dot",
+			"description": "Record state at a glance.",
+			"category": "display"
+		},
+		{
+			"slug": "stepped-form",
+			"title": "Stepped Form",
+			"description": "Coordinates validation, navigation, and submission across form sections.",
+			"category": "form"
+		},
+		{
+			"slug": "stepper",
+			"title": "Stepper",
+			"description": "Multi-step progress with status and optional navigation.",
+			"category": "navigation"
+		},
+		{
+			"slug": "switch",
+			"title": "Switch",
+			"description": "A binary toggle with an immediate effect.",
+			"category": "form"
+		},
+		{
+			"slug": "table",
+			"title": "Table",
+			"description": "Tabular data with header, body, and footer.",
+			"category": "display"
+		},
+		{
+			"slug": "tabs",
+			"title": "Tabs",
+			"description": "Switch between related views.",
+			"category": "navigation"
+		},
+		{
+			"slug": "text",
+			"title": "Text",
+			"description": "Semantic body, label, supporting, code, and display text.",
+			"category": "content"
+		},
+		{
+			"slug": "text-highlight",
+			"title": "Text Highlight",
+			"category": "content",
+			"description": "Semantic highlighted text with an optional animated background or underline treatment."
+		},
+		{
+			"slug": "text-shimmer",
+			"title": "Text Shimmer",
+			"category": "content",
+			"description": "A restrained moving highlight across text with a readable static presentation."
+		},
+		{
+			"slug": "textarea",
+			"title": "Textarea",
+			"description": "A multi-line text field.",
+			"category": "form"
+		},
+		{
+			"slug": "thumbnail",
+			"title": "Thumbnail",
+			"description": "A small preview for images and files.",
+			"category": "display"
+		},
+		{
+			"slug": "tilt-card",
+			"title": "Tilt Card",
+			"category": "display",
+			"description": "A perspective card surface with bounded pointer tilt and a neutral touch presentation."
+		},
+		{
+			"slug": "time-input",
+			"title": "Time Input",
+			"description": "Segmented time entry via the platform field primitive.",
+			"category": "form"
+		},
+		{
+			"slug": "timestamp",
+			"title": "Timestamp",
+			"description": "Relative or absolute time via Intl, kept current.",
+			"category": "display"
+		},
+		{
+			"slug": "toggle",
+			"title": "Toggle",
+			"description": "A button that stays pressed.",
+			"category": "form"
+		},
+		{
+			"slug": "toggle-group",
+			"title": "Toggle Group",
+			"description": "A set of toggles with shared selection.",
+			"category": "form"
+		},
+		{
+			"slug": "token",
+			"title": "Token",
+			"description": "An interactive entity chip: removable, clickable, or linked.",
+			"category": "display"
+		},
+		{
+			"slug": "tokenizer",
+			"title": "Tokenizer",
+			"description": "Chips-in-input multi-select with search and creation.",
+			"category": "form"
+		},
+		{
+			"slug": "tooltip",
+			"title": "Tooltip",
+			"description": "A short hint on hover or focus.",
+			"category": "overlay"
+		},
+		{
+			"slug": "video-player",
+			"title": "Video Player",
+			"description": "Media playback with accessible design-system controls.",
+			"category": "display"
+		},
+		{
+			"slug": "visually-hidden",
+			"title": "Visually Hidden",
+			"description": "Screen-reader-only content.",
+			"category": "display"
+		}
+	],
+	"blocks": [
+		{
+			"slug": "authentication-panel",
+			"title": "Authentication Panel",
+			"description": "A focused sign-in surface with recovery, validation, and alternate actions.",
+			"category": "forms",
+			"importName": "AuthenticationPanel",
+			"components": ["Card", "Field", "Input", "Button"],
+			"anatomy": [
+				{
+					"name": "Header",
+					"description": "Sets task context with a short title and supporting copy."
+				},
+				{
+					"name": "Credentials",
+					"description": "Groups labeled identity and secret fields."
+				},
+				{
+					"name": "Primary action",
+					"description": "Submits credentials and owns pending feedback."
+				},
+				{
+					"name": "Recovery action",
+					"description": "Provides a clear, lower-emphasis escape route."
+				}
+			],
+			"bestPractices": [
+				"Keep the panel focused on one authentication task. Native required/email validation focuses invalid fields before submission.",
+				"Submission results use a polite status region. Service errors preserve credentials for retry; success clears the password.",
+				"Preserve the entered identity when authentication fails."
+			],
+			"properties": [
+				{
+					"name": "title",
+					"type": "string",
+					"default": "'Sign in'",
+					"description": "Task heading."
+				},
+				{
+					"name": "pending",
+					"type": "boolean",
+					"default": "false",
+					"description": "Disables duplicate submission and updates the primary action."
+				},
+				{
+					"name": "onSubmit",
+					"kind": "callback",
+					"type": "(values: { email: string; password: string }) => void | Promise<void>",
+					"default": "—",
+					"required": true,
+					"description": "Receives validated credential values."
+				},
+				{
+					"name": "recoveryHref",
+					"type": "string",
+					"default": "undefined",
+					"description": "Shows the recovery action when provided."
+				}
+			]
+		},
+		{
+			"slug": "settings-section",
+			"title": "Settings Section",
+			"description": "A named group of related preferences with explicit save feedback.",
+			"category": "settings",
+			"importName": "SettingsSection",
+			"components": ["Card", "Button"],
+			"anatomy": [
+				{
+					"name": "Section header",
+					"description": "Names the preference domain and its consequences."
+				},
+				{
+					"name": "Preference rows",
+					"description": "Pair each control with a durable label and explanation."
+				},
+				{
+					"name": "Save region",
+					"description": "Communicates dirty, pending, success, and error states."
+				}
+			],
+			"bestPractices": [
+				"Group only preferences that users understand as one decision area. Label every child control; the block names its fieldset and announces save results.",
+				"Say when a change takes effect and whether it affects other people.",
+				"Avoid autosave when a change is destructive or difficult to reverse."
+			],
+			"properties": [
+				{
+					"name": "title",
+					"type": "string",
+					"default": "—",
+					"required": true,
+					"description": "Section heading."
+				},
+				{
+					"name": "description",
+					"type": "string",
+					"default": "undefined",
+					"description": "Scope and consequence of the settings."
+				},
+				{
+					"name": "dirty",
+					"type": "boolean",
+					"default": "false",
+					"description": "Controls unsaved-change feedback."
+				},
+				{
+					"name": "children",
+					"kind": "snippet",
+					"type": "Snippet",
+					"default": "—",
+					"required": true,
+					"description": "Labeled preference controls. Values remain owned by the caller."
+				},
+				{
+					"name": "onSave",
+					"kind": "callback",
+					"type": "() => void | Promise<void>",
+					"default": "—",
+					"required": true,
+					"description": "Persists all values in the section."
+				}
+			]
+		}
+	],
+	"shaders": [
+		{
+			"slug": "mesh-gradient",
+			"title": "Mesh Gradient",
+			"category": "Backgrounds",
+			"description": "Slow-moving color fields for expressive hero sections.",
+			"fallback": "linear-gradient(135deg, #241d9a, #f75092, #e0eaff)"
+		},
+		{
+			"slug": "warp",
+			"title": "Warp",
+			"category": "Backgrounds",
+			"description": "Fluid, marbled ribbons with deep violet swirls.",
+			"fallback": "linear-gradient(35deg, #121212, #9470ff, #121212, #8838ff)"
+		},
+		{
+			"slug": "grain-gradient",
+			"title": "Grain Gradient",
+			"category": "Backgrounds",
+			"description": "Soft pools of color with a textured, cinematic finish.",
+			"fallback": "radial-gradient(ellipse at top left, #eba8ff, #7300ff, #000)"
+		},
+		{
+			"slug": "dithering",
+			"title": "Dithering",
+			"category": "Backgrounds",
+			"description": "Animated pixel patterns with a retro digital feel.",
+			"fallback": "radial-gradient(circle, #00b2ff, #000 70%)"
+		},
+		{
+			"slug": "neuro-noise",
+			"title": "Neuro Noise",
+			"category": "Backgrounds",
+			"description": "Electric blue networks that flow and reconnect.",
+			"fallback": "radial-gradient(ellipse, #47a6ff, #000 75%)"
+		},
+		{
+			"slug": "god-rays",
+			"title": "God Rays",
+			"category": "Backgrounds",
+			"description": "Atmospheric shafts of light with a luminous bloom.",
+			"fallback": "conic-gradient(from 150deg at 50% 0%, #000, #6200ff, #33fff5, #000)"
+		},
+		{
+			"slug": "liquid-metal",
+			"title": "Liquid Metal",
+			"category": "Text",
+			"description": "Reflective chrome flowing across your typography.",
+			"fallback": "#171719"
+		},
+		{
+			"slug": "heatmap",
+			"title": "Heatmap",
+			"category": "Text",
+			"description": "A molten spectrum tracing the contours of each letter.",
+			"fallback": "#080c1c"
+		},
+		{
+			"slug": "fluted-glass",
+			"title": "Fluted Glass",
+			"category": "Images",
+			"description": "Ribbed glass that refracts and obscures your photos.",
+			"fallback": "#17212b"
+		},
+		{
+			"slug": "image-dithering",
+			"title": "Image Dithering",
+			"category": "Images",
+			"description": "Turn photography into crisp, limited-palette pixel art.",
+			"fallback": "#000c38"
+		},
+		{
+			"slug": "halftone-dots",
+			"title": "Halftone Dots",
+			"category": "Images",
+			"description": "Editorial print texture made from a field of tiny dots.",
+			"fallback": "#f2f1e8"
+		},
+		{
+			"slug": "water",
+			"title": "Water",
+			"category": "Images",
+			"description": "Rippling refraction and caustic light over an image.",
+			"fallback": "#223c4b"
+		}
+	],
+	"musicCollections": ["after-hours", "slow-mornings", "the-lounge", "sunday-drive"],
+	"films": ["tears-of-steel", "caminandes", "big-buck-bunny", "sintel"],
+	"people": ["mina", "leo", "nora", "sam", "aya"],
+	"posts": [
+		"long-way-home",
+		"good-interfaces",
+		"in-motion",
+		"human-scale",
+		"less-but-better",
+		"city-after-dark"
+	],
+	"mailboxes": ["inbox", "starred", "drafts", "sent", "archive"],
+	"messages": [
+		"marin-launch-notes",
+		"eli-field-recordings",
+		"june-research-window",
+		"theo-studio-key",
+		"mina-weekly-digest",
+		"arden-contract",
+		"nora-prototype"
+	],
+	"uiFamilies": [
+		"accordion",
+		"alert",
+		"alert-dialog",
+		"animated-gradient",
+		"animated-signature",
+		"aspect-ratio",
+		"async-button",
+		"attachment",
+		"avatar",
+		"backgrounds",
+		"badge",
+		"banner",
+		"blockquote",
+		"breadcrumb",
+		"bubble",
+		"button",
+		"button-group",
+		"calendar",
+		"card",
+		"carousel",
+		"chart",
+		"chat",
+		"checkbox",
+		"checkbox-list",
+		"citation",
+		"clickable-card",
+		"code-block",
+		"collapsible",
+		"color-area",
+		"color-field",
+		"color-picker",
+		"color-slider",
+		"color-swatch",
+		"color-swatch-picker",
+		"combobox",
+		"command",
+		"context-menu",
+		"data-table",
+		"date-input",
+		"date-range-input",
+		"date-time-input",
+		"dialog",
+		"diff",
+		"dot-pattern",
+		"drawer",
+		"dropdown-menu",
+		"emoji",
+		"empty",
+		"feedback",
+		"field",
+		"field-status",
+		"file-input",
+		"form",
+		"grid-pattern",
+		"heading",
+		"hover-card",
+		"icon",
+		"icon-button",
+		"image",
+		"indicator",
+		"input",
+		"input-group",
+		"input-otp",
+		"item",
+		"kbd",
+		"label",
+		"light-rays",
+		"lightbox",
+		"link",
+		"list",
+		"map",
+		"markdown",
+		"marker",
+		"marquee",
+		"menubar",
+		"message",
+		"metadata-list",
+		"multi-selector",
+		"native-select",
+		"navigation-menu",
+		"noise-overlay",
+		"number-input",
+		"outline",
+		"overflow-list",
+		"pagination",
+		"pdf-viewer",
+		"phone-input",
+		"popover",
+		"progress",
+		"progressive-blur",
+		"qr-code",
+		"radio-group",
+		"range-calendar",
+		"resizable",
+		"scroll-area",
+		"select",
+		"selectable-card",
+		"selector",
+		"separator",
+		"shapes",
+		"sheet",
+		"sidebar",
+		"skeleton",
+		"slider",
+		"sonner",
+		"spinner",
+		"spotlight",
+		"status-dot",
+		"stepped-form",
+		"stepper",
+		"switch",
+		"table",
+		"tabs",
+		"text",
+		"text-highlight",
+		"text-shimmer",
+		"textarea",
+		"thumbnail",
+		"tilt-card",
+		"time-input",
+		"timestamp",
+		"toggle",
+		"toggle-group",
+		"token",
+		"tokenizer",
+		"tooltip",
+		"video-player",
+		"visually-hidden"
+	]
+}

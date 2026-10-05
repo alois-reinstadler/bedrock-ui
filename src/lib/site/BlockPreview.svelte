@@ -1,10 +1,9 @@
 <script lang="ts">
 	import ExampleCard from './ExampleCard.svelte';
 	import { Button } from '#lib/bedrock/ui/button';
-	let { kind }: { kind: 'authentication-panel' | 'data-toolbar' | 'settings-section' } = $props();
+	let { kind }: { kind: 'authentication-panel' | 'settings-section' } = $props();
 	const loaders = {
 		'authentication-panel': () => import('./block-examples/authentication-panel.svelte'),
-		'data-toolbar': () => import('./block-examples/data-toolbar.svelte'),
 		'settings-section': () => import('./block-examples/settings-section.svelte')
 	};
 	let attempt = $state(0);

@@ -6,7 +6,7 @@
 	import ChartContainer from '#lib/shadcn/ui/chart/chart-container.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ChartContainer> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ChartContainer> = $props();
 </script>
 
-<ChartContainer {...props} />
+<ChartContainer bind:ref {...props} />

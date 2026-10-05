@@ -6,7 +6,7 @@
 	import CommandShortcut from '#lib/shadcn/ui/command/command-shortcut.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CommandShortcut> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CommandShortcut> = $props();
 </script>
 
-<CommandShortcut {...props} />
+<CommandShortcut bind:ref {...props} />

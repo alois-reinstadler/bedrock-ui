@@ -1,0 +1,246 @@
+{
+	"method": "Read-only isolated shared-CDP manual checks. CSS zoom is not browser chrome zoom.",
+	"evidence": [
+		{
+			"name": "normal",
+			"width": 1280,
+			"reducedMotion": "no-preference",
+			"dir": "ltr",
+			"zoom": 1,
+			"pending": {
+				"state": "pending",
+				"busy": "true",
+				"disabled": "true",
+				"focused": true,
+				"labels": [
+					{
+						"text": "Save draft",
+						"hidden": "true",
+						"inert": true
+					},
+					{
+						"text": " Saving…",
+						"hidden": null,
+						"inert": false
+					}
+				],
+				"scope": "full",
+				"scrollOverflow": false
+			},
+			"result": {
+				"state": "success",
+				"busy": null,
+				"focused": true,
+				"semanticLabels": [" Saved"]
+			},
+			"avatarBefore": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"scope": "full"
+			},
+			"avatarAfter": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"runningAnimations": 0,
+				"scrollOverflow": false,
+				"rect": {
+					"x": 152.5,
+					"right": 280.5
+				},
+				"viewport": 1280
+			}
+		},
+		{
+			"name": "reduced",
+			"width": 1280,
+			"reducedMotion": "reduce",
+			"dir": "ltr",
+			"zoom": 1,
+			"pending": {
+				"state": "pending",
+				"busy": "true",
+				"disabled": "true",
+				"focused": true,
+				"labels": [
+					{
+						"text": " Saving…",
+						"hidden": null,
+						"inert": false
+					}
+				],
+				"scope": "reduced",
+				"scrollOverflow": false
+			},
+			"result": {
+				"state": "success",
+				"busy": null,
+				"focused": true,
+				"semanticLabels": [" Saved"]
+			},
+			"avatarBefore": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"scope": "reduced"
+			},
+			"avatarAfter": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"runningAnimations": 0,
+				"scrollOverflow": false,
+				"rect": {
+					"x": 152.5,
+					"right": 280.5
+				},
+				"viewport": 1280
+			}
+		},
+		{
+			"name": "mobile",
+			"width": 390,
+			"reducedMotion": "no-preference",
+			"dir": "ltr",
+			"zoom": 1,
+			"pending": {
+				"state": "pending",
+				"busy": "true",
+				"disabled": "true",
+				"focused": true,
+				"labels": [
+					{
+						"text": "Save draft",
+						"hidden": "true",
+						"inert": true
+					},
+					{
+						"text": " Saving…",
+						"hidden": null,
+						"inert": false
+					}
+				],
+				"scope": "full",
+				"scrollOverflow": false
+			},
+			"result": {
+				"state": "success",
+				"busy": null,
+				"focused": true,
+				"semanticLabels": [" Saved"]
+			},
+			"avatarBefore": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"scope": "full"
+			},
+			"avatarAfter": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"runningAnimations": 0,
+				"scrollOverflow": true,
+				"rect": {
+					"x": 16,
+					"right": 144
+				},
+				"viewport": 390
+			}
+		},
+		{
+			"name": "rtl",
+			"width": 1280,
+			"reducedMotion": "no-preference",
+			"dir": "rtl",
+			"zoom": 1,
+			"pending": {
+				"state": "pending",
+				"busy": "true",
+				"disabled": "true",
+				"focused": true,
+				"labels": [
+					{
+						"text": "Save draft",
+						"hidden": "true",
+						"inert": true
+					},
+					{
+						"text": " Saving…",
+						"hidden": null,
+						"inert": false
+					}
+				],
+				"scope": "full",
+				"scrollOverflow": false
+			},
+			"result": {
+				"state": "success",
+				"busy": null,
+				"focused": true,
+				"semanticLabels": [" Saved"]
+			},
+			"avatarBefore": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"scope": "full"
+			},
+			"avatarAfter": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"runningAnimations": 0,
+				"scrollOverflow": false,
+				"rect": {
+					"x": 984.5,
+					"right": 1112.5
+				},
+				"viewport": 1280
+			}
+		},
+		{
+			"name": "css-zoom-200",
+			"width": 1280,
+			"reducedMotion": "no-preference",
+			"dir": "ltr",
+			"zoom": 2,
+			"pending": {
+				"state": "pending",
+				"busy": "true",
+				"disabled": "true",
+				"focused": true,
+				"labels": [
+					{
+						"text": "Save draft",
+						"hidden": "true",
+						"inert": true
+					},
+					{
+						"text": " Saving…",
+						"hidden": null,
+						"inert": false
+					}
+				],
+				"scope": "full",
+				"scrollOverflow": false
+			},
+			"result": {
+				"state": "success",
+				"busy": null,
+				"focused": true,
+				"semanticLabels": [" Saved"]
+			},
+			"avatarBefore": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"scope": "full"
+			},
+			"avatarAfter": {
+				"focused": "Alois Reinstadler",
+				"buttons": 5,
+				"runningAnimations": 0,
+				"scrollOverflow": false,
+				"rect": {
+					"x": 64,
+					"right": 320
+				},
+				"viewport": 1280
+			}
+		}
+	],
+	"failures": []
+}

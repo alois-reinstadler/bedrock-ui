@@ -6,7 +6,7 @@
 	import Menubar from '#lib/shadcn/ui/menubar/menubar.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Menubar> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof Menubar> = $props();
 </script>
 
-<Menubar {...props} />
+<Menubar bind:ref {...props} />

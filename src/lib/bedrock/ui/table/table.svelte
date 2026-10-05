@@ -6,7 +6,7 @@
 	import Table from '#lib/shadcn/ui/table/table.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Table> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof Table> = $props();
 </script>
 
-<Table {...props} />
+<Table bind:ref {...props} />

@@ -6,7 +6,7 @@
 	import FieldDescription from '#lib/shadcn/ui/field/field-description.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FieldDescription> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FieldDescription> = $props();
 </script>
 
-<FieldDescription {...props} />
+<FieldDescription bind:ref {...props} />

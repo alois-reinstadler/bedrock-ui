@@ -1,10 +1,11 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { NumberInput } from '#lib/bedrock/ui/number-input';
 
 	let storage = $state<number | null>(64);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Workspace storage estimate</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -32,4 +33,4 @@
 			Sample pricing: €0.20 per GB. Enter a value from 0 to 1,000 GB.
 		</p>
 	</div>
-</section>
+</Card.Root>

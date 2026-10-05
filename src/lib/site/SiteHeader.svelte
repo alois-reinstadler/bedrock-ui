@@ -5,11 +5,14 @@
 	import Logo from './Logo.svelte';
 	import ThemeToggle from './ThemeToggle.svelte';
 
+	let { fullWidth = false }: { fullWidth?: boolean } = $props();
+
 	const links = [
 		{ href: '/', label: 'Bedrock' },
 		{ href: '/docs', label: 'Docs' },
 		{ href: '/docs/components', label: 'Components' },
 		{ href: '/docs/blocks', label: 'Blocks' },
+		{ href: '/docs/shaders', label: 'Shaders' },
 		{ href: '/docs/templates', label: 'Templates' }
 	] as const;
 
@@ -27,8 +30,15 @@
 	);
 </script>
 
-<header class="sticky top-0 z-40 border-b border-border/80 bg-background/80 backdrop-blur-md">
-	<div class="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-2 px-4 md:px-8">
+<header
+	class="sticky top-0 z-40 h-14 shrink-0 border-b border-border/80 bg-background/80 backdrop-blur-md"
+>
+	<div
+		class={[
+			'mx-auto flex h-full items-center justify-between gap-2 px-4',
+			!fullWidth && 'max-w-[1400px] md:px-8'
+		]}
+	>
 		<a
 			href={resolve('/')}
 			class="hidden shrink-0 text-sm text-foreground sm:inline-flex"
@@ -37,7 +47,10 @@
 			<Logo />
 		</a>
 		<div class="flex min-w-0 items-center gap-1">
-			<nav aria-label="Primary" class="flex min-w-0 items-center gap-0.5 overflow-x-auto sm:gap-1">
+			<nav
+				aria-label="Primary"
+				class="no-scrollbar flex min-w-0 items-center gap-0.5 overflow-x-auto overflow-y-hidden p-1 sm:gap-1"
+			>
 				{#each links as link (link.href)}
 					<Button
 						href={link.href}

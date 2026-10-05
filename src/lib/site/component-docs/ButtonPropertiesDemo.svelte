@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { NativeSelect } from '#lib/bedrock/ui/native-select';
 	import ExampleCard from '#lib/site/ExampleCard.svelte';
 	import { Button, type ButtonSize, type ButtonVariant } from '#lib/bedrock/ui/button';
 	import { Label } from '#lib/bedrock/ui/label';
@@ -32,23 +33,23 @@
 		<div class="space-y-4">
 			<label class="grid gap-1.5 text-sm font-medium">
 				Variant
-				<select
+				<NativeSelect
 					name="variant"
 					bind:value={variant}
-					class="h-9 rounded-lg border bg-background px-3 font-normal"
+					class={['control-site-component-docs-buttonpropertiesdemo', 'w-full font-normal']}
 				>
 					{#each variants as option (option)}<option value={option}>{option}</option>{/each}
-				</select>
+				</NativeSelect>
 			</label>
 			<label class="grid gap-1.5 text-sm font-medium">
 				Size
-				<select
+				<NativeSelect
 					name="size"
 					bind:value={size}
-					class="h-9 rounded-lg border bg-background px-3 font-normal"
+					class={['control-site-component-docs-buttonpropertiesdemo', 'w-full font-normal']}
 				>
 					{#each sizes as option (option)}<option value={option}>{option}</option>{/each}
-				</select>
+				</NativeSelect>
 			</label>
 			<div class="flex items-center justify-between gap-4">
 				<Label for="button-demo-disabled">Disabled</Label>

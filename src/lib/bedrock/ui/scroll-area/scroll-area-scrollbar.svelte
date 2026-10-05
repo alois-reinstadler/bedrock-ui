@@ -6,7 +6,7 @@
 	import ScrollAreaScrollbar from '#lib/shadcn/ui/scroll-area/scroll-area-scrollbar.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ScrollAreaScrollbar> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ScrollAreaScrollbar> = $props();
 </script>
 
-<ScrollAreaScrollbar {...props} />
+<ScrollAreaScrollbar bind:ref {...props} />

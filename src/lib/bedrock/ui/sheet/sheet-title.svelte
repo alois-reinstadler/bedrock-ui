@@ -6,7 +6,7 @@
 	import SheetTitle from '#lib/shadcn/ui/sheet/sheet-title.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SheetTitle> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SheetTitle> = $props();
 </script>
 
-<SheetTitle {...props} />
+<SheetTitle bind:ref {...props} />

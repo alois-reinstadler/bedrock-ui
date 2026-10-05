@@ -1,12 +1,42 @@
-<script lang="ts" module>
-	export * from '#lib/shadcn/ui/command/command-dialog.svelte';
-</script>
-
 <script lang="ts">
-	import CommandDialog from '#lib/shadcn/ui/command/command-dialog.svelte';
-	import type { ComponentProps } from 'svelte';
+	import * as Dialog from '#lib/bedrock/ui/dialog';
+	import { cn, type WithoutChildrenOrChild } from '#lib/utils.js';
+	import Command from './command.svelte';
+	import type { Command as CommandPrimitive, Dialog as DialogPrimitive } from 'bits-ui';
+	import type { Snippet } from 'svelte';
 
-	let props: ComponentProps<typeof CommandDialog> = $props();
+	let {
+		open = $bindable(false),
+		ref = $bindable(null),
+		value = $bindable(''),
+		title = 'Command Palette',
+		description = 'Search for a command to run...',
+		showCloseButton = false,
+		portalProps,
+		children,
+		class: className,
+		...restProps
+	}: WithoutChildrenOrChild<DialogPrimitive.RootProps> &
+		WithoutChildrenOrChild<CommandPrimitive.RootProps> & {
+			portalProps?: DialogPrimitive.PortalProps;
+			children: Snippet;
+			title?: string;
+			description?: string;
+			showCloseButton?: boolean;
+			class?: string;
+		} = $props();
 </script>
 
-<CommandDialog {...props} />
+<Dialog.Root bind:open {...restProps}>
+	<Dialog.Header class="sr-only">
+		<Dialog.Title>{title}</Dialog.Title>
+		<Dialog.Description>{description}</Dialog.Description>
+	</Dialog.Header>
+	<Dialog.Content
+		class={cn('top-1/3 translate-y-0 overflow-hidden rounded-xl! p-0', className)}
+		{showCloseButton}
+		{portalProps}
+	>
+		<Command {...restProps} bind:value bind:ref {children} />
+	</Dialog.Content>
+</Dialog.Root>

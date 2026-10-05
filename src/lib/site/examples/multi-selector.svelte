@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { MultiSelector } from '#lib/bedrock/ui/multi-selector';
 	import type { SelectorOption } from '#lib/bedrock/ui/selector';
 
@@ -13,7 +14,7 @@
 	let counted = $state(['eu-central', 'eu-west']);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Regional rollout audience</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -36,4 +37,4 @@
 				</li>{/each}
 		</ul>
 	</div>
-</section>
+</Card.Root>

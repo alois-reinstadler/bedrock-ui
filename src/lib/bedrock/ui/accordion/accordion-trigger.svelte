@@ -6,7 +6,7 @@
 	import AccordionTrigger from '#lib/shadcn/ui/accordion/accordion-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AccordionTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AccordionTrigger> = $props();
 </script>
 
-<AccordionTrigger {...props} />
+<AccordionTrigger bind:ref {...props} />

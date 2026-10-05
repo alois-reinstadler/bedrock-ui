@@ -6,7 +6,7 @@
 	import PopoverClose from '#lib/shadcn/ui/popover/popover-close.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof PopoverClose> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof PopoverClose> = $props();
 </script>
 
-<PopoverClose {...props} />
+<PopoverClose bind:ref {...props} />

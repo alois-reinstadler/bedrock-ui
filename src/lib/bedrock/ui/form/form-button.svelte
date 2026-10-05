@@ -6,7 +6,7 @@
 	import FormButton from '#lib/shadcn/ui/form/form-button.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FormButton> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FormButton> = $props();
 </script>
 
-<FormButton {...props} />
+<FormButton bind:ref {...props} />

@@ -6,7 +6,7 @@
 	import SidebarMenuItem from '#lib/shadcn/ui/sidebar/sidebar-menu-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SidebarMenuItem> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SidebarMenuItem> = $props();
 </script>
 
-<SidebarMenuItem {...props} />
+<SidebarMenuItem bind:ref {...props} />

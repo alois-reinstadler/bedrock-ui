@@ -1601,6 +1601,7 @@ export const formGuides = {
 		behavior: [
 			'`value` and `ref` are bindable; Root’s `type` distinguishes a single number from multiple values.',
 			'The Bits primitive owns pointer, touch, keyboard stepping, orientation, min/max, step, disabled state, and ARIA slider semantics.',
+			'Set thumbVisibility="hover" to hide the thumb until hover, keyboard focus, or dragging. Touch devices keep the thumb visible; the default is "always".',
 			'Horizontal is the default; vertical changes both layout and track geometry. Consumers must provide an accessible name for each thumb where the primitive API permits it.'
 		],
 		examplePlan: [

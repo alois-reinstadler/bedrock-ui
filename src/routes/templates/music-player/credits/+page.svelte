@@ -6,7 +6,7 @@
 <div class="page-heading">
 	<p class="eyebrow">MADE BY REAL MUSICIANS</p>
 	<h1>Music & credits</h1>
-	<p>Eight classic NCS releases. Full tracks, original artists, original artwork.</p>
+	<p>{tracks.length} NCS releases. Full tracks, original artists, original artwork.</p>
 </div>
 <div class="credits-copy">
 	<p>

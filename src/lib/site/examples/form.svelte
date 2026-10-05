@@ -24,7 +24,7 @@
 	let saved = $state(false);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<section class="w-full space-y-5 rounded-xl border bg-card p-5 corner-theme">
 	<header>
 		<h3 class="text-lg font-semibold">Account recovery email</h3>
 		<p class="mt-1 text-sm text-muted-foreground">

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
+	import { NativeSelect } from '#lib/bedrock/ui/native-select';
 	import { browser } from '$app/env';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
@@ -28,13 +30,18 @@
 <div class="page-heading">
 	<p class="eyebrow">STEP OUTSIDE YOUR ROTATION</p>
 	<h1>{query ? `Results for “${query}”` : 'Discover'}</h1>
-	<p>Eight NCS classics. Find your sound, from house to drum &amp; bass.</p>
+	<p>{tracks.length} NCS releases. Find your sound, from house to drum &amp; bass.</p>
 </div>
 <div class="genre-filters" aria-label="Filter by genre">
-	{#each ['All', ...genres] as item (item)}<button
-			class:active={genre === item}
+	{#each ['All', ...genres] as item (item)}<Button
+			variant="ghost"
+			type="button"
+			class={[
+				'control-templates-music-player-discover-page h-auto whitespace-normal',
+				{ active: genre === item }
+			]}
 			aria-pressed={genre === item}
-			onclick={() => filter('genre', item)}>{item}</button
+			onclick={() => filter('genre', item)}>{item}</Button
 		>{/each}
 </div>
 {#if !query}<CollectionGrid
@@ -48,12 +55,13 @@
 	<div class="section-heading">
 		<h2>{query ? `${results.length} songs` : 'Explore the tracks'}</h2>
 		<label
-			>Sort by <select
+			>Sort by <NativeSelect
+				class={['control-templates-music-player-discover-page']}
 				aria-label="Sort tracks"
 				value={sort}
 				onchange={(e) => filter('sort', e.currentTarget.value)}
 				><option value="curated">Curated order</option><option value="title">Track title</option
-				></select
+				></NativeSelect
 			></label
 		>
 	</div>
@@ -71,13 +79,13 @@
 		gap: 8px;
 		margin-bottom: 30px;
 	}
-	.genre-filters button {
+	.genre-filters :global(button.control-templates-music-player-discover-page) {
 		font-size: 11px;
 		padding: 9px 18px;
 		border: 1px solid var(--border);
 		border-radius: 25px;
 	}
-	.genre-filters button.active {
+	.genre-filters :global(button.control-templates-music-player-discover-page.active) {
 		background: var(--foreground);
 		color: var(--background);
 		border-color: var(--foreground);
@@ -91,12 +99,5 @@
 		display: flex;
 		gap: 8px;
 		align-items: center;
-	}
-	select {
-		padding: 8px;
-		background: var(--background);
-		border: 1px solid var(--border);
-		border-radius: 6px;
-		font-size: 10px;
 	}
 </style>

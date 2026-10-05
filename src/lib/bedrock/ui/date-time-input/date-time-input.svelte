@@ -100,7 +100,7 @@
 		>
 	</div>
 	<DatePicker.Content
-		class="z-50 motion-popover rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
+		class="motion-popover z-50 rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
 	>
 		<Calendar
 			type="single"

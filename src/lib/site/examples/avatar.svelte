@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Avatar from '#lib/bedrock/ui/avatar';
 	import { Button } from '#lib/bedrock/ui/button';
 	let assigned = $state('Mara Vale');
@@ -16,7 +17,7 @@
 			Keep a visible name beside each avatar; initials remain useful when a teammate has no photo.
 		</p>
 	</header>
-	<div class="divide-y rounded-xl border bg-card">
+	<Card.Root class="block gap-0 divide-y py-0">
 		{#each reviewers as reviewer (reviewer.name)}<div class="flex flex-wrap items-center gap-3 p-4">
 				<Avatar.Root><Avatar.Fallback>{reviewer.initials}</Avatar.Fallback></Avatar.Root>
 				<div class="min-w-32 flex-1">
@@ -31,6 +32,6 @@
 					>{assigned === reviewer.name ? 'Assigned' : 'Assign reviewer'}</Button
 				>
 			</div>{/each}
-	</div>
+	</Card.Root>
 	<p role="status" class="text-sm text-muted-foreground">Next review: {assigned}</p>
 </section>

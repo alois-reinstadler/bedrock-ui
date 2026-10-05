@@ -2,7 +2,13 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from 'vitest-browser-svelte';
 import Fixture from './outline.test.svelte';
 
-afterEach(() => cleanup());
+let scrollContainer: HTMLDivElement | undefined;
+
+afterEach(() => {
+	cleanup();
+	scrollContainer?.remove();
+	scrollContainer = undefined;
+});
 
 const items = [
 	{ id: 'intro', label: 'Introduction', level: 1 },
@@ -15,6 +21,48 @@ function anchors(container: Element): HTMLAnchorElement[] {
 }
 
 describe('Outline', () => {
+	async function renderScrollSpy() {
+		scrollContainer = document.createElement('div');
+		scrollContainer.style.cssText = 'height:240px; overflow:auto; position:relative';
+		// The parent and child remain intersecting as the child crosses the
+		// activation line, matching the nested sections in the documentation.
+		scrollContainer.innerHTML = `
+			<section id="intro" style="height:1050px; position:relative">
+				<section id="setup" style="position:absolute; top:300px; height:300px">Setup</section>
+				<section id="usage" style="position:absolute; top:950px; height:100px">Usage</section>
+			</section>`;
+		document.body.append(scrollContainer);
+		const view = await render(Fixture, {
+			props: { items, scrollSpy: true, withTargets: false, scrollContainer, offset: 40 }
+		});
+		const active = () => view.container.querySelector('[aria-current="location"]')?.textContent;
+		await expect.poll(active).toBe('Introduction');
+		return { scroller: scrollContainer, active };
+	}
+
+	it('tracks section starts in both directions while sections remain intersecting', async () => {
+		const { scroller, active } = await renderScrollSpy();
+		scroller.scrollTop = 250;
+		await expect.poll(() => scroller.scrollTop).toBe(250);
+		await expect.poll(active).toBe('Introduction');
+		scroller.scrollTop = 270;
+		await expect.poll(active).toBe('Setup');
+		scroller.scrollTop = 250;
+		await expect.poll(active).toBe('Introduction');
+	});
+
+	it('selects the short final section at the bottom and updates when scrolling back', async () => {
+		const { scroller, active } = await renderScrollSpy();
+		scroller.scrollTop = scroller.scrollHeight;
+		await expect.poll(active).toBe('Usage');
+		const last = scroller.querySelector('#usage')!;
+		expect(last.getBoundingClientRect().top - scroller.getBoundingClientRect().top).toBeGreaterThan(
+			40
+		);
+		scroller.scrollTop -= 50;
+		await expect.poll(active).toBe('Setup');
+	});
+
 	it('renders all items inside a labelled nav, indented by level', async () => {
 		const view = await render(Fixture, { props: { items } });
 		const nav = view.container.querySelector('nav[data-slot="outline"]');
@@ -59,6 +107,24 @@ describe('Outline', () => {
 		const active = anchors(view.container)[1];
 		expect(active.getAttribute('aria-current')).toBe('location');
 		expect(active.hasAttribute('data-active')).toBe(true);
+	});
+
+	it('targets its own content while a previous route still has matching heading IDs', async () => {
+		const previous = document.createElement('section');
+		previous.innerHTML = '<h2 id="setup">Previous route</h2>';
+		document.body.append(previous);
+		const oldScroll = vi.spyOn(previous.firstElementChild!, 'scrollIntoView');
+		try {
+			const view = await render(Fixture, { props: { items } });
+			const current = view.container.querySelector<HTMLElement>('#setup')!;
+			const currentScroll = vi.spyOn(current, 'scrollIntoView');
+			anchors(view.container)[1].click();
+			expect(currentScroll).toHaveBeenCalledOnce();
+			expect(oldScroll).not.toHaveBeenCalled();
+		} finally {
+			previous.remove();
+			vi.restoreAllMocks();
+		}
 	});
 
 	it('highlights a controlled activeId without scroll-spy', async () => {

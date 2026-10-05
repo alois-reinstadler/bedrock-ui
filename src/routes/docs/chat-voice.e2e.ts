@@ -1,4 +1,4 @@
-import { expect, test } from './shared-browser';
+import { expect, test } from '../../../scripts/shared-browser-test';
 import AxeBuilder from '@axe-core/playwright';
 
 test('voice capture states preserve drafts, gate send, and insert a reviewable transcript', async ({

@@ -81,7 +81,8 @@
 	align-items: center;
 	gap: 16px;
 	padding: 12px 14px;
-	border-radius: 28px;
+	border-radius: 9999px;
+	corner-shape: round;
 	font-size: 17px;
 }
 .desktop-nav > a:hover,
@@ -106,6 +107,7 @@
 	width: 19px;
 	text-align: center;
 	border-radius: 50%;
+	corner-shape: round;
 }
 .primary-button {
 	display: inline-flex;
@@ -115,7 +117,8 @@
 	background: var(--social-green);
 	color: var(--social-bg) !important;
 	border: 0;
-	border-radius: 24px;
+	border-radius: 9999px;
+	corner-shape: round;
 	padding: 9px 24px;
 	font-weight: 700;
 	line-height: 1.4;
@@ -138,7 +141,8 @@
 	border: 0;
 	background: none;
 	padding: 10px;
-	border-radius: 30px;
+	border-radius: 9999px;
+	corner-shape: round;
 	text-align: left;
 }
 .account-button:hover {
@@ -166,7 +170,8 @@
 	border: 1px solid var(--social-line);
 	padding: 8px;
 	background: var(--social-bg);
-	border-radius: 15px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	box-shadow: 0 12px 40px #0002;
 	z-index: 20;
 }
@@ -178,7 +183,8 @@
 .account-menu a {
 	display: block;
 	padding: 12px;
-	border-radius: 8px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 }
 .account-menu a:hover {
 	background: var(--social-soft);
@@ -188,6 +194,7 @@
 	height: 42px;
 	object-fit: cover;
 	border-radius: 50%;
+	corner-shape: round;
 	flex-shrink: 0;
 }
 .social-main {
@@ -231,6 +238,7 @@
 	width: 6px;
 	background: var(--social-green);
 	border-radius: 50%;
+	corner-shape: round;
 }
 .feed-tabs {
 	display: flex;
@@ -278,7 +286,8 @@
 	width: 100%;
 	padding: 10px 12px;
 	border: 1px solid transparent;
-	border-radius: 9px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	background: transparent;
 	color: var(--social-ink);
 	font: inherit;
@@ -316,6 +325,7 @@
 	height: 32px;
 	border: 0;
 	border-radius: 50%;
+	corner-shape: round;
 	background: none;
 	display: inline-grid;
 	place-items: center;
@@ -428,7 +438,8 @@ video.post-media {
 	padding: 6px 9px;
 	min-width: 32px;
 	width: auto;
-	border-radius: 8px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	background: none;
 	border: 0;
 	font-size: 11px;
@@ -455,7 +466,8 @@ video.post-media {
 .quoted-post {
 	display: block;
 	border: 1px solid var(--social-line);
-	border-radius: 12px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	padding: 13px;
 	margin-top: 14px;
 	font-size: 13px;
@@ -473,6 +485,7 @@ video.post-media {
 	height: 19px;
 	object-fit: cover;
 	border-radius: 50%;
+	corner-shape: round;
 }
 .quote-author > span {
 	color: var(--social-muted);
@@ -491,7 +504,8 @@ video.post-media {
 }
 .community-note {
 	background: var(--social-soft);
-	border-radius: 10px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	margin-top: 15px;
 	padding: 14px;
 	font-size: 12px;
@@ -538,7 +552,8 @@ video.post-media {
 	gap: 9px;
 	background: var(--social-soft);
 	border: 1px solid var(--social-line);
-	border-radius: 30px;
+	border-radius: 9999px;
+	corner-shape: round;
 	padding: 0 15px;
 	color: var(--social-muted);
 	height: 46px;
@@ -576,7 +591,8 @@ video.post-media {
 	position: relative;
 	display: block;
 	overflow: hidden;
-	border-radius: 12px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	min-height: 149px;
 	color: white !important;
 }
@@ -682,7 +698,8 @@ video.post-media {
 	background: var(--social-ink);
 	color: var(--social-bg);
 	padding: 6px 12px;
-	border-radius: 20px;
+	border-radius: 9999px;
+	corner-shape: round;
 	font-size: 11px;
 	font-weight: 700;
 	flex-shrink: 0;
@@ -784,7 +801,8 @@ video.post-media {
 	padding: 7px 12px;
 	border: 1px solid var(--social-line);
 	background: none;
-	border-radius: 20px;
+	border-radius: 9999px;
+	corner-shape: round;
 	font-size: 12px;
 }
 .profile-cover {
@@ -807,6 +825,7 @@ video.post-media {
 	height: 92px;
 	object-fit: cover;
 	border-radius: 50%;
+	corner-shape: round;
 	border: 5px solid var(--social-bg);
 }
 .profile-toolbar button {
@@ -850,7 +869,8 @@ video.post-media {
 	background: var(--social-soft);
 	border: 1px solid var(--social-line);
 	padding: 12px;
-	border-radius: 8px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	color: var(--social-ink);
 	font: inherit;
 }
@@ -1073,7 +1093,8 @@ video.post-media {
 	}
 	.mobile-nav a {
 		padding: 9px 12px;
-		border-radius: 25px;
+		border-radius: 9999px;
+		corner-shape: round;
 		color: var(--social-muted);
 	}
 	.mobile-nav a.active {

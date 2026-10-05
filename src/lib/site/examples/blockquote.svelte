@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Blockquote } from '#lib/bedrock/ui/blockquote';
 </script>
 
@@ -10,7 +11,7 @@
 			source.
 		</p>
 	</header>
-	<article class="space-y-4 rounded-xl border bg-card p-6">
+	<Card.Root role="article" class="block gap-0 space-y-4 p-6">
 		<p class="text-xs font-medium tracking-wide text-muted-foreground uppercase">
 			Fictional research note · Interview 04
 		</p>
@@ -25,5 +26,5 @@
 		<p class="text-sm leading-relaxed text-muted-foreground">
 			Design response: name the next step on the primary action and keep a short summary beside it.
 		</p>
-	</article>
+	</Card.Root>
 </section>

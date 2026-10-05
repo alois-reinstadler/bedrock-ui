@@ -6,7 +6,7 @@
 	import SelectScrollDownButton from '#lib/shadcn/ui/select/select-scroll-down-button.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SelectScrollDownButton> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SelectScrollDownButton> = $props();
 </script>
 
-<SelectScrollDownButton {...props} />
+<SelectScrollDownButton bind:ref {...props} />

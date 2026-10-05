@@ -1,8 +1,9 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Text } from '#lib/bedrock/ui/text';
 </script>
 
-<article class="max-w-xl space-y-4 rounded-xl border p-6">
+<Card.Root role="article" class="block max-w-xl gap-0 space-y-4 p-6">
 	<Text type="supporting" as="p">FIELD NOTES · 6 MIN READ</Text><Text
 		type="display-3"
 		as="div"
@@ -17,4 +18,4 @@
 		as="p"
 		>Collect non-urgent questions in a daily note, then review them together at a predictable time.</Text
 	><Text type="supporting" as="p">Written by Mara Chen · Updated September 14, 2026</Text>
-</article>
+</Card.Root>

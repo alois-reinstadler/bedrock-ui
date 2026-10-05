@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import { rubricDimensions } from './types.js';
 
 	let scores = $state<Record<string, number>>({});
@@ -20,10 +21,12 @@
 				<div><strong>{name}</strong><span>{question}</span></div>
 				<div class="score" role="group" aria-label={`${name} bewerten`}>
 					{#each [0, 1, 2] as value (value)}
-						<button
+						<Button
+							variant="ghost"
+							class={['control-site-motion-lab-evaluationpanel h-auto whitespace-normal']}
 							type="button"
 							aria-pressed={(scores[name] ?? 0) === value}
-							onclick={() => (scores[name] = value)}>{value}</button
+							onclick={() => (scores[name] = value)}>{value}</Button
 						>
 					{/each}
 				</div>
@@ -102,7 +105,7 @@
 		flex: none;
 		gap: 0.2rem;
 	}
-	.score button {
+	.score :global(button.control-site-motion-lab-evaluationpanel) {
 		display: grid;
 		width: 1.65rem;
 		height: 1.65rem;
@@ -112,7 +115,7 @@
 		color: var(--muted-foreground);
 		font-size: 0.7rem;
 	}
-	.score button[aria-pressed='true'] {
+	.score :global(button.control-site-motion-lab-evaluationpanel[aria-pressed='true']) {
 		background: var(--foreground);
 		color: var(--background);
 	}

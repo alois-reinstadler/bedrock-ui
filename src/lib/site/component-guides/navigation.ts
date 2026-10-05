@@ -324,7 +324,7 @@ export const navigationGuides = {
 		behavior: [
 			'Exactly one outline link is in the tab order. ArrowUp and ArrowDown move one item, Home and End jump to the limits, and Enter or Space activates the focused item.',
 			'Activation updates the URL hash with history.replaceState, applies offset as scroll margin, and scrolls smoothly unless reduced motion is requested.',
-			'activeId is bindable. Set scrollSpy=false to own it completely; otherwise IntersectionObserver selects the heading nearest the activation line in the document or supplied scrollContainer.',
+			'activeId is bindable. Set scrollSpy=false to own it completely; otherwise scrolling selects the last section start above the activation line in the document or supplied scrollContainer. At the bottom, the final visible section is selected even if it cannot reach that line.',
 			'onNavigateStart fires before scrolling and onNavigateEnd fires once after settling, an instant reduced-motion jump, a missing target, or user interruption.',
 			'Every item id must match an element id. The active indicator uses Bedrock shared-layout motion, while its visibility uses the state timing token.'
 		],
@@ -463,7 +463,7 @@ export const navigationGuides = {
 			{
 				name: 'Sidebar.Root',
 				description:
-					'Required responsive sidebar surface; side, variant, and collapsible determine placement and desktop collapse behavior. Sidebar is its flat alias.',
+					'Required responsive sidebar surface; side, variant, and collapsible determine placement and desktop collapse behavior. Shared hover and active highlights are enabled by default across its menus; set highlights=false for custom highlighting. Sidebar is its flat alias.',
 				required: true
 			},
 			{
@@ -586,7 +586,7 @@ export const navigationGuides = {
 			'Ctrl+B or Command+B toggles the current desktop or mobile presentation. Trigger remains the keyboard-operable control; Rail has tabindex=-1.',
 			'Below the mobile breakpoint, a collapsible Root becomes a Sheet with its own focus and dismissal behavior. collapsible="none" stays a fixed-width region instead.',
 			'Desktop off-canvas and icon collapse currently transition width and side position over 200ms with linear easing; group labels and row geometry use the same generated-sidebar timing rather than Bedrock motion tokens.',
-			'MenuButton renders a button unless its child snippet delegates the merged props to a link. isActive is presentation supplied by the consumer, and tooltipContent appears only for a collapsed desktop sidebar.',
+			'MenuButton renders a button unless its child snippet delegates the merged props to a link. Consumers supply isActive; Root moves the shared active highlight from a visible previous row, or fades and slides it in locally when that row is offscreen. Hover uses its own shared surface. tooltipContent appears only for a collapsed desktop sidebar.',
 			'Root can sit on either logical side and supports sidebar, floating, and inset surfaces; essential destinations must remain reachable when icon-only mode hides labels, badges, actions, and nested menus.'
 		],
 		examplePlan: [
@@ -688,7 +688,7 @@ export const navigationGuides = {
 			{
 				name: 'Tabs.List',
 				description:
-					'Required tablist with default or line styling. Its Bedrock indicator prop adds the shared sliding pill to the default variant and defaults to true; TabsList is its flat alias.',
+					'Required tablist with default or line styling. Its Bedrock indicator prop adds a shared sliding pill or underline in either orientation and defaults to true; TabsList is its flat alias.',
 				required: true
 			},
 			{
@@ -713,7 +713,7 @@ export const navigationGuides = {
 			'Exactly one enabled Trigger participates as the current tab stop. Arrow keys follow orientation, Home and End jump to the limits, and loop optionally wraps at the ends.',
 			'Automatic activation selects a tab when focus reaches it; activationMode="manual" waits for Enter, Space, or click. value and bind:value expose selection changes.',
 			'Trigger and Content ids are associated through aria-controls and aria-labelledby; each active panel is focusable and inactive panels are hidden.',
-			'The default List measures the active Trigger and animates one shared pill with the Bedrock layout engine, including interruption and container scrolling. Set indicator=false for no pill; the line variant always uses its per-trigger underline.',
+			'List measures the active Trigger and moves one shared selection surface: a pill for default tabs or an underline for line tabs, in either orientation. It shares positioning with the sidebar, handles interruption and container scrolling, and supports indicator=false for per-trigger selection styling.',
 			'Content changes and keyboard highlight traversal stay immediate; reduced motion preserves the final selected state without making motion a prerequisite.'
 		],
 		examplePlan: [

@@ -6,7 +6,7 @@
 	import CarouselPrevious from '#lib/shadcn/ui/carousel/carousel-previous.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CarouselPrevious> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CarouselPrevious> = $props();
 </script>
 
-<CarouselPrevious {...props} />
+<CarouselPrevious bind:ref {...props} />

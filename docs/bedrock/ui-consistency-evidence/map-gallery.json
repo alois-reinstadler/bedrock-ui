@@ -1,0 +1,134 @@
+[
+	{
+		"value": "LocationsExample",
+		"label": "Map — Location finder",
+		"rendered": true,
+		"text": "Explore Vienna\n\nChoose a place from the list or its map marker.\n\nStephansplatz\nStephansplatz, 1010 Vienna\nMuseumsQuartier\nMuseumsplatz 1, 1070 Vienna\nBelvedere\nPrinz Eugen-Straße 27, 1030 Vienna\n\nSelected: Stephansplatz\n\n© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "LazyMapExample",
+		"label": "Map — Lazy loading",
+		"rendered": true,
+		"text": "Interactive map\n\nLoad map"
+	},
+	{
+		"value": "BasicMapExample",
+		"label": "Map — Basic map",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "ControlledMapExample",
+		"label": "Map — Controlled viewport",
+		"rendered": true,
+		"text": "lng: -74.006\nlat: 40.713\nzoom: 8.0\nbearing: 0.0°\npitch: 0.0°\n© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "CustomStyleExample",
+		"label": "Map — Custom styles",
+		"rendered": true,
+		"text": "Default (Carto)\nOpenStreetMap\nOpenStreetMap 3D\n© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "BlankMapExample",
+		"label": "Map — Blank map",
+		"rendered": true,
+		"text": ""
+	},
+	{
+		"value": "MapControlsExample",
+		"label": "Controls — Map controls",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "MarkersExample",
+		"label": "Markers — Custom markers",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "DraggableMarkerExample",
+		"label": "Markers — Draggable marker",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "LayerMarkersExample",
+		"label": "Markers — Layer markers",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "PopupExample",
+		"label": "Popups — Marker popups",
+		"rendered": true,
+		"text": "Museum\nLandmark\nTransit\n© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "StandalonePopupExample",
+		"label": "Popups — Standalone popup",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "RouteExample",
+		"label": "Routes — Routes and tooltips",
+		"rendered": true,
+		"text": "1\n2\n3\n4\n© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "RouteProgressExample",
+		"label": "Routes — Route progress",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors\nProgress\n45%"
+	},
+	{
+		"value": "OsrmRouteExample",
+		"label": "Routes — OSRM routing",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors\n1h 5m\n78.4 km\n1h 14m\n79.9 km"
+	},
+	{
+		"value": "ArcExample",
+		"label": "Arcs — Arc connections",
+		"rendered": true,
+		"text": "London\nNew York\nSão Paulo\nCape Town\nDubai\nMumbai\nSingapore\nTokyo\nSydney\nSan Francisco\n© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "InteractiveArcExample",
+		"label": "Arcs — Interactive arcs",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors\nAir\nSea"
+	},
+	{
+		"value": "GeoJSONExample",
+		"label": "GeoJSON — Interactive regions",
+		"rendered": true,
+		"text": ""
+	},
+	{
+		"value": "ClusterExample",
+		"label": "Clusters — Earthquake clusters",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "AdvancedUsageExample",
+		"label": "Advanced — Camera controls",
+		"rendered": true,
+		"text": "3D View\nReset\nPitch: 0°\nBearing: 0°\n© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "CustomLayerExample",
+		"label": "Advanced — Custom layers",
+		"rendered": true,
+		"text": "Show Parks\n© CARTO, © OpenStreetMap contributors"
+	},
+	{
+		"value": "MapOverlayExample",
+		"label": "Advanced — Map overlays",
+		"rendered": true,
+		"text": "© CARTO, © OpenStreetMap contributors"
+	}
+]

@@ -1,25 +1,15 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../../scripts/shared-browser-test';
 
 test.describe('ERP demo', () => {
-	test('PowerSearch filters the orders table', async ({ page }) => {
+	test('orders remain searchable through the data table', async ({ page }) => {
 		await page.goto('/demo/erp');
-		const search = page.locator('[data-slot="power-search"]');
-		await expect(search).toBeVisible();
-		await expect(search.getByText('37 Treffer')).toBeVisible();
-
-		const input = search.locator('[data-slot="power-search-input"]');
-		await input.click();
-		await input.fill('Status');
-		await page.locator('[data-slot="power-search-field-option"]', { hasText: 'Status' }).click();
-		await page.getByText('Storniert', { exact: true }).click();
-		await page.getByRole('button', { name: 'Übernehmen' }).click();
-
-		await expect(search.locator('[data-slot="token"]')).toContainText('Status');
-		await expect(search.getByText('Treffer')).not.toHaveText('37 Treffer');
-
-		// Chip removal restores the full result set.
-		await search.getByRole('button', { name: /entfernen/ }).click();
-		await expect(search.getByText('37 Treffer')).toBeVisible();
+		const table = page.locator('[data-slot="data-table"]');
+		const input = table.getByRole('searchbox', { name: 'Tabelle durchsuchen' });
+		await input.fill('no-matching-order-12345');
+		await expect(table.getByText('Keine Ergebnisse.')).toBeVisible();
+		await input.clear();
+		await expect(table.getByText('Keine Ergebnisse.')).toHaveCount(0);
+		await expect(table.locator('tbody tr').first()).toBeVisible();
 	});
 
 	test('orders table keeps its German localization overrides', async ({ page }) => {

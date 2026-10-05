@@ -1,4 +1,4 @@
-import { expect, test } from './shared-browser';
+import { expect, test } from '../../../scripts/shared-browser-test';
 import AxeBuilder from '@axe-core/playwright';
 
 const families = ['attachment', 'bubble', 'message', 'marker'];
@@ -27,7 +27,6 @@ for (const family of families) {
 				'true'
 			);
 			await expect(card.getByRole('tabpanel', { name: 'Preview', exact: true })).toBeVisible();
-			const height = (await card.boundingBox())!.height;
 			await card.getByRole('tab', { name: 'Preview', exact: true }).focus();
 			await page.keyboard.press('ArrowRight');
 			await expect(card.getByRole('tab', { name: 'Code', exact: true })).toHaveAttribute(
@@ -38,7 +37,14 @@ for (const family of families) {
 				await request.get(`/docs/examples/${kind}/${family}/source.json`)
 			).json();
 			await expect(card.locator('pre')).toHaveText(source.code);
-			expect(Math.abs((await card.boundingBox())!.height - height)).toBeLessThan(2);
+			// Example panels size to content, with scrolling for longer source listings.
+			const codePanel = card.getByRole('tabpanel', { name: 'Code', exact: true });
+			const bounds = await codePanel.evaluate((element) => ({
+				height: element.getBoundingClientRect().height,
+				max: parseFloat(getComputedStyle(element).maxHeight)
+			}));
+			expect(bounds.height).toBeLessThanOrEqual(bounds.max);
+			await expect(card.getByRole('tab', { name: 'Code', exact: true })).toBeFocused();
 			await page.keyboard.press('ArrowLeft');
 			await expect(card.getByRole('tabpanel', { name: 'Preview', exact: true })).toBeVisible();
 		}

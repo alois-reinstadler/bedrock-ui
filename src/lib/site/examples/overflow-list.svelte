@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { OverflowList } from '#lib/bedrock/ui/overflow-list';
 
@@ -17,7 +18,7 @@
 	let width = $state(320);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Issue labels in a narrow sidebar</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -34,7 +35,7 @@
 	</div>
 
 	<div
-		class="resize-x overflow-hidden rounded-lg border border-dashed p-3"
+		class="resize-x overflow-hidden rounded-lg border border-dashed p-3 corner-theme"
 		style:max-width="100%"
 		style:width={`${width}px`}
 	>
@@ -48,4 +49,4 @@
 			Drag the container edge — hidden tags collapse behind a count.
 		</p>
 	</div>
-</section>
+</Card.Root>

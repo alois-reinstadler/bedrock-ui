@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../../scripts/shared-browser-test';
 
 test('imports are highlighted without JavaScript', async ({ browser, baseURL }) => {
 	const context = await browser.newContext({ javaScriptEnabled: false });
@@ -22,8 +22,8 @@ test('source loads on demand and renders colored tokens in both themes', async (
 	await expect(page.locator('#preview')).toBeVisible();
 	await expect(page.locator('#examples')).toContainText('In practice');
 	expect(requests.some((url) => url.includes('/source.json'))).toBe(false);
-	await page.locator('#example-source-trigger-avatar').click();
-	const source = page.locator('#example-source-content-avatar');
+	await page.locator('#preview').getByRole('tab', { name: 'Code', exact: true }).click();
+	const source = page.locator('#preview').getByRole('tabpanel', { name: 'Code' });
 	await expect(source.locator('pre')).toBeVisible();
 	expect(requests.some((url) => url.includes('/source.json'))).toBe(true);
 	for (const dark of [false, true]) {
@@ -69,14 +69,20 @@ test('contextual examples perform real local workflows', async ({ page }) => {
 	await page.goto('/docs/components/avatar');
 	const example = page.locator('#examples');
 	await example.getByRole('button', { name: 'Assign reviewer' }).first().click();
-	await expect(example.getByRole('status')).toContainText('Kai Holt');
+	await expect(
+		example.getByRole('tabpanel', { name: 'Preview', exact: true }).getByRole('status')
+	).toContainText('Kai Holt');
 	await page.goto('/docs/components/input');
 	await example.getByLabel('Work email').fill('reader@example.com');
 	await example.getByRole('button', { name: 'Subscribe to the digest' }).click();
-	await expect(example.getByRole('status')).toContainText('reader@example.com');
+	await expect(
+		example.getByRole('tabpanel', { name: 'Preview', exact: true }).getByRole('status')
+	).toContainText('reader@example.com');
 	await page.goto('/docs/components/table');
 	await example.getByRole('button', { name: 'Restock labels' }).click();
-	await expect(example.getByRole('status')).toContainText('restock request');
+	await expect(
+		example.getByRole('tabpanel', { name: 'Preview', exact: true }).getByRole('status')
+	).toContainText('restock request');
 });
 
 test('form and selectable-card examples survive interaction and tab navigation', async ({
@@ -88,13 +94,17 @@ test('form and selectable-card examples survive interaction and tab navigation',
 	const example = page.locator('#examples');
 	await example.getByLabel('Email address').fill('recovery@example.com');
 	await example.getByRole('button', { name: 'Save recovery email' }).click();
-	await expect(example.getByRole('status')).toContainText('recovery@example.com');
+	await expect(
+		example.getByRole('tabpanel', { name: 'Preview', exact: true }).getByRole('status')
+	).toContainText('recovery@example.com');
 	await page.getByRole('link', { name: 'Properties', exact: true }).click();
 	await expect(page.locator('[data-doc-tab="properties"]')).toBeVisible();
 	await page.getByRole('link', { name: 'Overview', exact: true }).click();
 	await expect(example.getByLabel('Email address')).toBeVisible();
 	await page.goto('/docs/components/selectable-card');
 	await example.getByRole('checkbox', { name: 'Select core sample 07' }).click();
-	await expect(example.getByRole('status')).toContainText('1 sample selected');
+	await expect(
+		example.getByRole('tabpanel', { name: 'Preview', exact: true }).getByRole('status')
+	).toContainText('1 sample selected');
 	expect(errors).toEqual([]);
 });

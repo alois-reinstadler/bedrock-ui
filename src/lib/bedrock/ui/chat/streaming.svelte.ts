@@ -1,8 +1,12 @@
-import { prefersReducedMotion } from '#lib/bedrock/motion/index.js';
+import { prefersReducedMotion } from '#lib/bedrock/motion/policy.js';
 
 export type StreamTextSpeed = 'natural' | 'fast' | 'instant';
-export type StreamTextOptions = { speed?: StreamTextSpeed };
-export type TextStream = { readonly text: string; readonly done: boolean };
+export type StreamTextOptions = {
+	speed?: StreamTextSpeed;
+	/** Effective application policy, e.g. () => policy.reduced. OS reduction always applies. */
+	reduced?: () => boolean;
+};
+export type TextStream = { readonly text: string; readonly done: boolean; dispose(): void };
 
 /** Steady reveal pace in characters per frame. */
 const NATURAL_STEP = 2;
@@ -14,28 +18,52 @@ const WORD_LOOKAHEAD = 12;
 class RevealedTextStream implements TextStream {
 	#getTarget: () => string;
 	#speed: 'natural' | 'fast';
+	#reduced: () => boolean;
+	#disposed = false;
 	#revealed = $state(0);
+	#settledLength = 0;
 	#frame: number | undefined;
 
-	constructor(getTarget: () => string, speed: 'natural' | 'fast') {
+	constructor(getTarget: () => string, speed: 'natural' | 'fast', reduced: () => boolean) {
 		this.#getTarget = getTarget;
 		this.#speed = speed;
+		this.#reduced = reduced;
 	}
 
 	get text(): string {
 		const target = this.#getTarget();
-		const shown = Math.min(this.#revealed, target.length);
+		if (this.#disposed || this.#reduced()) {
+			this.#cancel();
+			this.#settledLength = target.length;
+			return target;
+		}
+		const shown = Math.min(Math.max(this.#revealed, this.#settledLength), target.length);
 		if (shown < target.length) this.#schedule();
 		return target.slice(0, shown);
 	}
 
 	get done(): boolean {
 		const target = this.#getTarget();
-		if (this.#revealed < target.length) {
+		if (this.#disposed || this.#reduced()) {
+			this.#cancel();
+			this.#settledLength = target.length;
+			return true;
+		}
+		if (Math.max(this.#revealed, this.#settledLength) < target.length) {
 			this.#schedule();
 			return false;
 		}
 		return true;
+	}
+
+	dispose() {
+		this.#disposed = true;
+		this.#cancel();
+	}
+
+	#cancel() {
+		if (this.#frame !== undefined) cancelAnimationFrame(this.#frame);
+		this.#frame = undefined;
 	}
 
 	#schedule() {
@@ -46,7 +74,11 @@ class RevealedTextStream implements TextStream {
 	#advance() {
 		this.#frame = undefined;
 		const target = this.#getTarget();
-		const current = Math.min(this.#revealed, target.length);
+		if (this.#disposed || this.#reduced()) {
+			this.#revealed = target.length;
+			return;
+		}
+		const current = Math.min(Math.max(this.#revealed, this.#settledLength), target.length);
 		if (current >= target.length) {
 			this.#revealed = current;
 			return;
@@ -82,10 +114,14 @@ class InstantTextStream implements TextStream {
 	get done(): boolean {
 		return true;
 	}
+
+	dispose() {
+		// Immediate streams own no scheduled work.
+	}
 }
 
 /**
- * A rAF-driven reveal of a (possibly still growing) target string.
+ * Immediate streaming text by default; optional explicitly paced presentation.
  *
  * `natural` advances ~2 characters per frame, `fast` proportionally to the
  * backlog; both snap to word boundaries where possible. `instant`, reduced
@@ -98,15 +134,13 @@ class InstantTextStream implements TextStream {
  * const stream = streamText(() => message.content);
  * ```
  * then render `{stream.text}` — or pass it to `Markdown` with `streaming`.
+ * Explicit paced streams must call `stream.dispose()` on owner teardown.
  */
 export function streamText(getTarget: () => string, options: StreamTextOptions = {}): TextStream {
-	const speed = options.speed ?? 'natural';
-	if (
-		speed === 'instant' ||
-		typeof requestAnimationFrame === 'undefined' ||
-		prefersReducedMotion()
-	) {
+	const speed = options.speed ?? 'instant';
+	const reduced = () => prefersReducedMotion() || Boolean(options.reduced?.());
+	if (speed === 'instant' || typeof requestAnimationFrame === 'undefined' || reduced()) {
 		return new InstantTextStream(getTarget);
 	}
-	return new RevealedTextStream(getTarget, speed);
+	return new RevealedTextStream(getTarget, speed, reduced);
 }

@@ -6,7 +6,7 @@
 	import CalendarNav from '#lib/shadcn/ui/calendar/calendar-nav.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CalendarNav> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CalendarNav> = $props();
 </script>
 
-<CalendarNav {...props} />
+<CalendarNav bind:ref {...props} />

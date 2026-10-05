@@ -6,7 +6,7 @@
 	import PaginationPrevButton from '#lib/shadcn/ui/pagination/pagination-prev-button.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof PaginationPrevButton> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof PaginationPrevButton> = $props();
 </script>
 
-<PaginationPrevButton {...props} />
+<PaginationPrevButton bind:ref {...props} />

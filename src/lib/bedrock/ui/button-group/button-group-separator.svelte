@@ -6,7 +6,7 @@
 	import ButtonGroupSeparator from '#lib/shadcn/ui/button-group/button-group-separator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ButtonGroupSeparator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ButtonGroupSeparator> = $props();
 </script>
 
-<ButtonGroupSeparator {...props} />
+<ButtonGroupSeparator bind:ref {...props} />

@@ -1,3 +1,5 @@
+import type { ChatActivityStatus } from './activity-types';
+
 /** Stable identities are application-owned; labels may be localized. */
 export type ChatContext = { id: string; label: string; description?: string; disabled?: boolean };
 export type ChatCommand = { id: string; label: string; description?: string; disabled?: boolean };
@@ -21,7 +23,7 @@ export type ChatActivityStep = {
 	id: string;
 	title: string;
 	kind?: 'tool' | 'task' | 'reasoning';
-	status: 'pending' | 'running' | 'complete' | 'error';
+	status: ChatActivityStatus;
 	duration?: string;
 	progress?: number;
 	detail?: string;

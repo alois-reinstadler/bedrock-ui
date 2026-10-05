@@ -6,7 +6,11 @@
 	import Avatar from '#lib/shadcn/ui/avatar/avatar.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Avatar> = $props();
+	let {
+		ref = $bindable(null),
+		loadingStatus = $bindable('loading'),
+		...props
+	}: ComponentProps<typeof Avatar> = $props();
 </script>
 
-<Avatar {...props} />
+<Avatar bind:ref bind:loadingStatus {...props} />

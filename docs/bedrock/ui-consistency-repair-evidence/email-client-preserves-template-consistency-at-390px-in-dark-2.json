@@ -1,0 +1,37 @@
+{
+	"slug": "email-client",
+	"width": 390,
+	"colorScheme": "dark",
+	"initialControls": {
+		"radius": "22.4px",
+		"corner": "superellipse(3)"
+	},
+	"overriddenControls": {
+		"radius": "33.6px",
+		"corner": "superellipse(0)"
+	},
+	"navigation": [
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		}
+	],
+	"outsideDate": {
+		"text": "31",
+		"foreground": [161, 161, 161],
+		"background": [10, 10, 10],
+		"opacity": "1",
+		"contrast": 7.662827876742547
+	},
+	"pageErrors": [],
+	"consoleErrors": [],
+	"failedRequests": []
+}

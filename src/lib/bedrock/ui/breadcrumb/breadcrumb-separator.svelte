@@ -6,7 +6,7 @@
 	import BreadcrumbSeparator from '#lib/shadcn/ui/breadcrumb/breadcrumb-separator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof BreadcrumbSeparator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof BreadcrumbSeparator> = $props();
 </script>
 
-<BreadcrumbSeparator {...props} />
+<BreadcrumbSeparator bind:ref {...props} />

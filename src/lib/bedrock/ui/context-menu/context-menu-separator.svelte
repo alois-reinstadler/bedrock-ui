@@ -6,7 +6,7 @@
 	import ContextMenuSeparator from '#lib/shadcn/ui/context-menu/context-menu-separator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ContextMenuSeparator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ContextMenuSeparator> = $props();
 </script>
 
-<ContextMenuSeparator {...props} />
+<ContextMenuSeparator bind:ref {...props} />

@@ -6,7 +6,7 @@
 	import DialogTrigger from '#lib/shadcn/ui/dialog/dialog-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DialogTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DialogTrigger> = $props();
 </script>
 
-<DialogTrigger {...props} />
+<DialogTrigger bind:ref {...props} />

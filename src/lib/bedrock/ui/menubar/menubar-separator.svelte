@@ -6,7 +6,7 @@
 	import MenubarSeparator from '#lib/shadcn/ui/menubar/menubar-separator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof MenubarSeparator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof MenubarSeparator> = $props();
 </script>
 
-<MenubarSeparator {...props} />
+<MenubarSeparator bind:ref {...props} />

@@ -6,7 +6,7 @@
 	import SidebarRail from '#lib/shadcn/ui/sidebar/sidebar-rail.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SidebarRail> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SidebarRail> = $props();
 </script>
 
-<SidebarRail {...props} />
+<SidebarRail bind:ref {...props} />

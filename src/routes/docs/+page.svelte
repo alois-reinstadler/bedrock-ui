@@ -9,6 +9,12 @@
 
 	const collections = [
 		{
+			title: 'Shaders',
+			description: 'Expressive Paper effects for backgrounds, typography, and images.',
+			href: '/docs/shaders',
+			count: '12 interactive effects'
+		},
+		{
 			title: 'Components',
 			description: 'Focused UI primitives and families with public APIs.',
 			href: '/docs/components',
@@ -43,7 +49,7 @@
 		description="Bedrock is an in-tree Svelte design system: accessible primitives, reusable product patterns, and complete application shells that your team can inspect and own."
 	/>
 
-	<section class="mt-10 grid gap-5 lg:grid-cols-3" aria-label="Documentation collections">
+	<section class="mt-10 grid gap-5 lg:grid-cols-2" aria-label="Documentation collections">
 		{#each collections as collection (collection.href)}
 			<Card.Root>
 				<Card.Header>
@@ -69,7 +75,7 @@
 		<h2 id="model-heading" class="mt-2 text-2xl font-medium tracking-tight">
 			Choose the smallest useful layer.
 		</h2>
-		<div class="mt-6 overflow-hidden rounded-2xl border">
+		<div class="mt-6 overflow-hidden rounded-xl border corner-theme">
 			{#each [['Component', 'A focused primitive or related family.', 'Use it to compose your own product behavior.'], ['Block', 'A reusable multi-component product pattern.', 'Use it when the workflow repeats but the data differs.'], ['Template', 'A complete page or application shell.', 'Use it to accelerate a whole product surface.']] as row, index (row[0])}
 				<div class="grid gap-2 bg-card p-5 sm:grid-cols-[8rem_1fr_1fr]" class:border-t={index > 0}>
 					<strong class="text-sm">{row[0]}</strong><span class="text-sm text-muted-foreground"
@@ -82,7 +88,7 @@
 
 	<section class="mt-16 grid gap-5 md:grid-cols-3" aria-label="Bedrock principles">
 		{#each [['Accessible by contract', 'Keyboard, focus, labeling, contrast, and reduced motion are documented behavior—not polish added later.'], ['Motion with intent', 'Shared tokens keep feedback quick, spatial changes legible, and exits quieter than entrances.'], ['Source you can own', 'Stable local imports let teams change implementation details without rewriting product code.']] as principle (principle[0])}
-			<div class="rounded-2xl border p-5">
+			<div class="rounded-xl border p-5 corner-theme">
 				<h2 class="font-medium">{principle[0]}</h2>
 				<p class="mt-2 text-sm leading-relaxed text-muted-foreground">{principle[1]}</p>
 			</div>

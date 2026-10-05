@@ -6,7 +6,7 @@
 	import PaginationNext from '#lib/shadcn/ui/pagination/pagination-next.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof PaginationNext> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof PaginationNext> = $props();
 </script>
 
-<PaginationNext {...props} />
+<PaginationNext bind:ref {...props} />

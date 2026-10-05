@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { CalendarDate } from '@internationalized/date';
 	import { DateRangeInput, type DateRangeInputValue } from '#lib/bedrock/ui/date-range-input';
 	import { Button } from '#lib/bedrock/ui/button';
@@ -22,7 +23,7 @@
 			A date range defines an inclusive report window; a preset offers a useful shortcut.
 		</p>
 	</header>
-	<div class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-4 p-5">
 		<fieldset class="space-y-2">
 			<legend class="mb-2 text-sm font-medium">Activity report dates</legend><DateRangeInput
 				bind:value
@@ -39,5 +40,5 @@
 			>Prepare report</Button
 		>
 		<p role="status" class="text-sm">{status}</p>
-	</div>
+	</Card.Root>
 </section>

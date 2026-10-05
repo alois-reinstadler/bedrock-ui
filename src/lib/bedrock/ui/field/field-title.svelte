@@ -6,7 +6,7 @@
 	import FieldTitle from '#lib/shadcn/ui/field/field-title.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FieldTitle> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FieldTitle> = $props();
 </script>
 
-<FieldTitle {...props} />
+<FieldTitle bind:ref {...props} />

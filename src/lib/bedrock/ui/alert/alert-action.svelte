@@ -6,7 +6,7 @@
 	import AlertAction from '#lib/shadcn/ui/alert/alert-action.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AlertAction> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AlertAction> = $props();
 </script>
 
-<AlertAction {...props} />
+<AlertAction bind:ref {...props} />

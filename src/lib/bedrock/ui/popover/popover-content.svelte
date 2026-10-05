@@ -3,11 +3,30 @@
 </script>
 
 <script lang="ts">
+	import { surfaceInteraction, surfacePresence } from '#lib/bedrock/motion/surface-interaction.js';
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
 	import PopoverContent from '#lib/shadcn/ui/popover/popover-content.svelte';
 	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let { class: className, ...restProps }: ComponentProps<typeof PopoverContent> = $props();
+	const policy = useMotionPolicy();
+
+	let {
+		ref = $bindable(null),
+		class: className,
+		motion = 'default',
+		...restProps
+	}: ComponentProps<typeof PopoverContent> & {
+		/** Optional expressive entry; labels never stagger. */ motion?: 'default' | 'soft';
+	} = $props();
 </script>
 
-<PopoverContent class={cn('motion-popover', className)} {...restProps} />
+<PopoverContent
+	bind:ref
+	{@attach policy.attach}
+	{@attach surfacePresence}
+	{@attach surfaceInteraction}
+	data-motion-style={motion}
+	class={cn('motion-popover', className)}
+	{...restProps}
+/>

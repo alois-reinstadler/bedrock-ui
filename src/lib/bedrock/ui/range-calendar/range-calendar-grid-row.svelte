@@ -6,7 +6,7 @@
 	import RangeCalendarGridRow from '#lib/shadcn/ui/range-calendar/range-calendar-grid-row.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof RangeCalendarGridRow> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof RangeCalendarGridRow> = $props();
 </script>
 
-<RangeCalendarGridRow {...props} />
+<RangeCalendarGridRow bind:ref {...props} />

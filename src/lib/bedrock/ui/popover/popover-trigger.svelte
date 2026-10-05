@@ -6,7 +6,7 @@
 	import PopoverTrigger from '#lib/shadcn/ui/popover/popover-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof PopoverTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof PopoverTrigger> = $props();
 </script>
 
-<PopoverTrigger {...props} />
+<PopoverTrigger bind:ref {...props} />

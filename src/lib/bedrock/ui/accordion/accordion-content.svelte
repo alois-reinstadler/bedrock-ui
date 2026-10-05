@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Accordion as AccordionPrimitive } from 'bits-ui';
 	import { cn, type WithoutChild } from '#lib/utils.js';
-	import { reveal } from '#lib/bedrock/motion/index.js';
+	import { disclosureProse, disclosureExit } from '#lib/bedrock/motion/disclosure-prose.js';
+	import { reveal } from '#lib/bedrock/motion/presence.js';
 
 	let {
 		ref = $bindable(null),
@@ -9,8 +10,12 @@
 		children,
 		forceMount = false,
 		hiddenUntilFound = false,
+		textMotion = 'none',
 		...restProps
-	}: WithoutChild<AccordionPrimitive.ContentProps> = $props();
+	}: WithoutChild<AccordionPrimitive.ContentProps> & {
+		/** Early sharpening for brief, noninteractive prose only. */
+		textMotion?: 'none' | 'prose';
+	} = $props();
 </script>
 
 <!-- Svelte owns retention and reversal. Two independent CSS keyframes restore
@@ -25,7 +30,13 @@
 >
 	{#snippet child({ props, open })}
 		{#if open || forceMount || hiddenUntilFound}
-			<div {...props} transition:reveal>
+			<div
+				{...props}
+				inert={!open && !forceMount && !hiddenUntilFound}
+				transition:reveal
+				{@attach disclosureProse(textMotion === 'prose')}
+				{@attach disclosureExit(!forceMount && !hiddenUntilFound)}
+			>
 				<div
 					class={cn(
 						'pt-0 pb-2.5 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4',

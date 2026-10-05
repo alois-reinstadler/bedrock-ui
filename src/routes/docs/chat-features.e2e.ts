@@ -1,4 +1,4 @@
-import { expect, test } from './shared-browser';
+import { expect, test } from '../../../scripts/shared-browser-test';
 import AxeBuilder from '@axe-core/playwright';
 
 test('message retry, edit/resend, cancellation, and feedback undo work', async ({ page }) => {

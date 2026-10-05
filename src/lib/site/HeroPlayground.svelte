@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { Attachment } from 'svelte/attachments';
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
 	import ActivityIcon from '@lucide/svelte/icons/activity';
 	import CommandIcon from '@lucide/svelte/icons/command';
 	import SparklesIcon from '@lucide/svelte/icons/sparkles';
@@ -13,20 +15,28 @@
 	import { Switch } from '#lib/bedrock/ui/switch';
 	import { Token } from '#lib/bedrock/ui/token';
 
+	const policy = useMotionPolicy();
+	const settleScene: Attachment<HTMLElement> = (node) => {
+		if (policy.reduced) {
+			node.style.setProperty('--scene-x', '0deg');
+			node.style.setProperty('--scene-y', '0deg');
+		}
+	};
+
 	let live = $state(true);
 	let query = $state('');
 	let tags = $state(['Motion', 'Forms', 'Data']);
 
 	let searchResults = $derived(
 		query.trim()
-			? ['Power Search', 'Command', 'Combobox'].filter((item) =>
+			? ['Selector', 'Command', 'Combobox'].filter((item) =>
 					item.toLowerCase().includes(query.toLowerCase())
 				)
 			: []
 	);
 
 	function tilt(event: PointerEvent) {
-		if (event.pointerType === 'touch') return;
+		if (policy.reduced || event.pointerType === 'touch') return;
 		const node = event.currentTarget as HTMLElement;
 		const rect = node.getBoundingClientRect();
 		const x = (event.clientX - rect.left) / rect.width - 0.5;
@@ -61,6 +71,8 @@
 
 <section
 	class="constellation"
+	data-reduced-motion={policy.reduced}
+	{@attach settleScene}
 	aria-label="Interactive Bedrock component constellation"
 	onpointermove={tilt}
 	onpointerleave={resetTilt}
@@ -69,7 +81,7 @@
 	<div class="scene-grid"></div>
 	<div class="world">
 		<div class="float float-a plane plane-command">
-			<div class="surface p-3 shadow-xl">
+			<Card.Root class="hero-surface block gap-0 p-3 shadow-xl">
 				<div class="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
 					<CommandIcon class="size-3.5" />
 					<span class="font-code">Quick find</span>
@@ -88,18 +100,20 @@
 							<a
 								href={`/docs/components/${result.toLowerCase().replaceAll(' ', '-')}`}
 								data-sveltekit-reload
-								class="w-full rounded-md px-2 py-1.5 text-left text-xs motion-state hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+								class="w-full rounded-md px-2 py-1.5 text-left text-xs motion-state corner-theme hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
 								>{result}</a
 							>
 						{/each}
 					</div>
 				{/if}
-			</div>
+			</Card.Root>
 		</div>
 
 		<div class="float float-b plane plane-status">
-			<div class="surface flex items-center gap-3 p-3 shadow-lg">
-				<span class="grid size-9 place-items-center rounded-lg bg-emerald-500/10 text-emerald-600">
+			<Card.Root class="hero-surface flex-row items-center gap-3 p-3 shadow-lg">
+				<span
+					class="grid size-9 place-items-center rounded-lg bg-emerald-500/10 text-emerald-600 corner-theme"
+				>
 					<ActivityIcon class="size-4" />
 				</span>
 				<div class="min-w-0">
@@ -110,11 +124,11 @@
 					</p>
 				</div>
 				<Switch class="ms-auto" bind:checked={live} aria-label="Toggle live telemetry" />
-			</div>
+			</Card.Root>
 		</div>
 
 		<div class="float float-c plane plane-main">
-			<Card.Root class="surface overflow-hidden border-foreground/10 shadow-2xl">
+			<Card.Root class="hero-surface overflow-hidden border-foreground/10 shadow-2xl">
 				<Card.Header class="border-b bg-card/85">
 					<div class="flex items-start justify-between gap-3">
 						<div>
@@ -150,7 +164,7 @@
 		</div>
 
 		<div class="float float-d plane plane-tokens">
-			<div class="surface p-3 shadow-xl">
+			<Card.Root class="hero-surface block gap-0 p-3 shadow-xl">
 				<div class="mb-2 flex items-center gap-2">
 					<SparklesIcon class="size-3.5 text-violet-500" />
 					<p class="text-xs font-medium">Active filters</p>
@@ -167,11 +181,11 @@
 						<p class="text-xs text-muted-foreground">All filters cleared.</p>
 					{/each}
 				</div>
-			</div>
+			</Card.Root>
 		</div>
 
 		<div class="float float-e plane plane-note">
-			<div class="surface flex items-start gap-3 p-3 shadow-xl">
+			<Card.Root class="hero-surface flex-row items-start gap-3 p-3 shadow-xl">
 				<span class="mt-0.5 size-2 shrink-0 rounded-full bg-sky-500 ring-4 ring-sky-500/15"></span>
 				<div>
 					<p class="text-xs font-medium">Motion with a reason</p>
@@ -179,7 +193,7 @@
 						State changes move. Decoration stays quiet.
 					</p>
 				</div>
-			</div>
+			</Card.Root>
 		</div>
 	</div>
 </section>
@@ -253,9 +267,7 @@
 		filter: drop-shadow(0 22px 28px color-mix(in oklab, black 18%, transparent));
 	}
 
-	.surface {
-		border: 1px solid color-mix(in oklab, var(--foreground) 11%, transparent);
-		border-radius: 0.9rem;
+	.constellation :global(.hero-surface) {
 		background: color-mix(in oklab, var(--card) 92%, transparent);
 		backdrop-filter: blur(18px) saturate(1.15);
 	}
@@ -264,40 +276,40 @@
 		width: 15rem;
 		transform: translate3d(-7%, 2%, 30px) rotateY(8deg) rotateZ(-2deg);
 	}
-	.plane-command:hover,
-	.plane-command:focus-within {
+	.constellation:not([data-reduced-motion='true']) .plane-command:hover,
+	.constellation:not([data-reduced-motion='true']) .plane-command:focus-within {
 		transform: translate3d(-7%, -2%, 90px) rotateY(3deg) rotateZ(-1deg) scale(1.025);
 	}
 	.plane-status {
 		width: 16rem;
 		transform: translate3d(93%, 18%, 4px) rotateY(-9deg) rotateZ(2deg);
 	}
-	.plane-status:hover,
-	.plane-status:focus-within {
+	.constellation:not([data-reduced-motion='true']) .plane-status:hover,
+	.constellation:not([data-reduced-motion='true']) .plane-status:focus-within {
 		transform: translate3d(93%, 13%, 80px) rotateY(-3deg) rotateZ(1deg) scale(1.025);
 	}
 	.plane-main {
 		width: min(22rem, 78vw);
 		transform: translate3d(28%, 44%, 65px) rotateX(1deg) rotateY(-2deg);
 	}
-	.plane-main:hover,
-	.plane-main:focus-within {
+	.constellation:not([data-reduced-motion='true']) .plane-main:hover,
+	.constellation:not([data-reduced-motion='true']) .plane-main:focus-within {
 		transform: translate3d(28%, 40%, 125px) rotateX(0deg) rotateY(0deg) scale(1.025);
 	}
 	.plane-tokens {
 		width: 14rem;
 		transform: translate3d(-2%, 315%, 8px) rotateY(9deg) rotateZ(2deg);
 	}
-	.plane-tokens:hover,
-	.plane-tokens:focus-within {
+	.constellation:not([data-reduced-motion='true']) .plane-tokens:hover,
+	.constellation:not([data-reduced-motion='true']) .plane-tokens:focus-within {
 		transform: translate3d(-2%, 308%, 78px) rotateY(3deg) rotateZ(1deg) scale(1.025);
 	}
 	.plane-note {
 		width: 14rem;
 		transform: translate3d(120%, 365%, 35px) rotateY(-8deg) rotateZ(-2deg);
 	}
-	.plane-note:hover,
-	.plane-note:focus-within {
+	.constellation:not([data-reduced-motion='true']) .plane-note:hover,
+	.constellation:not([data-reduced-motion='true']) .plane-note:focus-within {
 		transform: translate3d(120%, 355%, 95px) rotateY(-2deg) rotateZ(-1deg) scale(1.025);
 	}
 
@@ -319,6 +331,8 @@
 			position: relative;
 			animation: none;
 		}
+		.constellation:not([data-reduced-motion='true']) .plane:hover,
+		.constellation:not([data-reduced-motion='true']) .plane:focus-within,
 		.plane-command,
 		.plane-status,
 		.plane-main,
@@ -337,6 +351,11 @@
 			width: 100%;
 			transform: none;
 		}
+	}
+
+	.constellation[data-reduced-motion='true'] .world,
+	.constellation[data-reduced-motion='true'] .plane {
+		transition: none;
 	}
 
 	@media (prefers-reduced-motion: reduce) {

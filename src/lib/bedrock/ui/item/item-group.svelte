@@ -6,7 +6,7 @@
 	import ItemGroup from '#lib/shadcn/ui/item/item-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ItemGroup> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ItemGroup> = $props();
 </script>
 
-<ItemGroup {...props} />
+<ItemGroup bind:ref {...props} />

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
 
 for (const reducedMotion of ['no-preference', 'reduce'] as const) {
 	test(`template route transitions: ${reducedMotion}`, async ({ page }) => {
@@ -114,3 +114,34 @@ for (const [slug, destination] of appPages) {
 		await expect(page.locator(`#${slug}`)).toBeInViewport();
 	});
 }
+
+test('video navigation commits even when outgoing paint is paused', async ({ page }) => {
+	await page.goto('/templates/video-library');
+	await expect(page.locator('[data-template="video-library"]')).toHaveAttribute(
+		'data-ready',
+		'true'
+	);
+	await page.evaluate(() => {
+		const animate = Element.prototype.animate;
+		Element.prototype.animate = function (keyframes, options) {
+			const animation = animate.call(this, keyframes, options);
+			if (
+				typeof options === 'object' &&
+				options?.fill === 'forwards' &&
+				this.closest('[data-template="video-library"]')
+			) {
+				animation.pause();
+				document.documentElement.dataset.pausedRoutePaint = 'true';
+			}
+			return animation;
+		};
+	});
+	await page
+		.locator('a[href="/templates/video-library/my-list"]')
+		.filter({ visible: true })
+		.first()
+		.click();
+	await expect(page).toHaveURL('/templates/video-library/my-list');
+	await expect(page.locator('html')).toHaveAttribute('data-paused-route-paint', 'true');
+	await expect(page.locator('[data-template="video-library"]')).toBeVisible();
+});

@@ -1,0 +1,115 @@
+
+Running 3 tests using 1 worker
+
+(node:67461) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/3] src/routes/demo/ui-consistency.e2e.ts:10:2 › /demo/erp keeps content reachable on narrow screens
+  1) src/routes/demo/ui-consistency.e2e.ts:10:2 › /demo/erp keeps content reachable on narrow screens
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    56
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      4 | 	await expect
+      5 | 		.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth))
+    > 6 | 		.toBeLessThanOrEqual(1);
+        | 		 ^
+      7 | }
+      8 |
+      9 | for (const route of ['/demo/erp', '/demo/motion/continuity', '/demo/motion-test']) {
+        at expectViewportFit (/home/node/repos/bedrock-ui/src/routes/demo/ui-consistency.e2e.ts:6:4)
+        at /home/node/repos/bedrock-ui/src/routes/demo/ui-consistency.e2e.ts:21:11
+
+    Error Context: test-results/src-routes-demo-ui-consist-e05ba-reachable-on-narrow-screens/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/src-routes-demo-ui-consist-e05ba-reachable-on-narrow-screens/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/src-routes-demo-ui-consist-e05ba-reachable-on-narrow-screens/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:67630) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/3] src/routes/demo/ui-consistency.e2e.ts:10:2 › /demo/motion/continuity keeps content reachable on narrow screens
+  2) src/routes/demo/ui-consistency.e2e.ts:10:2 › /demo/motion/continuity keeps content reachable on narrow screens
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    381
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      4 | 	await expect
+      5 | 		.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth))
+    > 6 | 		.toBeLessThanOrEqual(1);
+        | 		 ^
+      7 | }
+      8 |
+      9 | for (const route of ['/demo/erp', '/demo/motion/continuity', '/demo/motion-test']) {
+        at expectViewportFit (/home/node/repos/bedrock-ui/src/routes/demo/ui-consistency.e2e.ts:6:4)
+        at /home/node/repos/bedrock-ui/src/routes/demo/ui-consistency.e2e.ts:21:11
+
+    Error Context: test-results/src-routes-demo-ui-consist-a7b3f-reachable-on-narrow-screens/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/src-routes-demo-ui-consist-a7b3f-reachable-on-narrow-screens/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/src-routes-demo-ui-consist-a7b3f-reachable-on-narrow-screens/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:67800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/3] src/routes/demo/ui-consistency.e2e.ts:10:2 › /demo/motion-test keeps content reachable on narrow screens
+  3) src/routes/demo/ui-consistency.e2e.ts:10:2 › /demo/motion-test keeps content reachable on narrow screens
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1
+    Received:    178
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      4 | 	await expect
+      5 | 		.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth))
+    > 6 | 		.toBeLessThanOrEqual(1);
+        | 		 ^
+      7 | }
+      8 |
+      9 | for (const route of ['/demo/erp', '/demo/motion/continuity', '/demo/motion-test']) {
+        at expectViewportFit (/home/node/repos/bedrock-ui/src/routes/demo/ui-consistency.e2e.ts:6:4)
+        at /home/node/repos/bedrock-ui/src/routes/demo/ui-consistency.e2e.ts:21:11
+
+    Error Context: test-results/src-routes-demo-ui-consist-81e36-reachable-on-narrow-screens/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/src-routes-demo-ui-consist-81e36-reachable-on-narrow-screens/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/src-routes-demo-ui-consist-81e36-reachable-on-narrow-screens/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3 failed
+    src/routes/demo/ui-consistency.e2e.ts:10:2 › /demo/erp keeps content reachable on narrow screens
+    src/routes/demo/ui-consistency.e2e.ts:10:2 › /demo/motion/continuity keeps content reachable on narrow screens
+    src/routes/demo/ui-consistency.e2e.ts:10:2 › /demo/motion-test keeps content reachable on narrow screens

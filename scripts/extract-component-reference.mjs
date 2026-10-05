@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import ts from 'typescript';
+import { collectPropDefaults } from './component-prop-defaults.mjs';
 import { format, resolveConfig } from 'prettier';
 
 const root = process.cwd();
@@ -152,7 +153,6 @@ for (const directory of fs.readdirSync('src/lib/bedrock/ui')) {
 		if (!alias) continue;
 		const type = checker.getTypeFromTypeNode(alias.type);
 		const own = props.get(file);
-		const defaults = new Map();
 		const sources = [own];
 		for (let i = 0; i < sources.length; i++) {
 			for (const match of sources[i].source.matchAll(/from ['"](#lib\/[^'"]+\.svelte)['"]/g)) {
@@ -160,17 +160,7 @@ for (const directory of fs.readdirSync('src/lib/bedrock/ui')) {
 				if (inherited && !sources.includes(inherited)) sources.push(inherited);
 			}
 		}
-		for (const own of [...sources].reverse())
-			if (ts.isObjectBindingPattern(own.declaration.name))
-				for (const binding of own.declaration.name.elements) {
-					if (binding.dotDotDotToken) continue;
-					const name = (binding.propertyName ?? binding.name).getText(own.ast);
-					const value = binding.initializer?.getText(own.ast);
-					defaults.set(name, {
-						default: value?.replace(/^\$bindable\((.*)\)$/, '$1') || undefined,
-						bindable: value?.startsWith('$bindable(')
-					});
-				}
+		const defaults = collectPropDefaults(sources);
 		const entries = [];
 		const properties = new Map(
 			checker.getPropertiesOfType(type).map((property) => [property.name, property])

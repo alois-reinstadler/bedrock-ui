@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Accordion from '#lib/bedrock/ui/accordion';
 </script>
 
@@ -9,7 +10,7 @@
 			Single expansion keeps booking questions easy to scan without hiding the main booking details.
 		</p>
 	</header>
-	<div class="rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 p-5">
 		<p class="font-medium">Field notes workshop · September 18</p>
 		<p class="mb-4 text-sm text-muted-foreground">Studio 4 · 10:00–12:30 · Materials included</p>
 		<Accordion.Root type="single" value="materials"
@@ -29,5 +30,5 @@
 				></Accordion.Item
 			></Accordion.Root
 		>
-	</div>
+	</Card.Root>
 </section>

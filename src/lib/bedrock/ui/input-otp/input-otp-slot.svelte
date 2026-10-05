@@ -6,7 +6,7 @@
 	import InputOtpSlot from '#lib/shadcn/ui/input-otp/input-otp-slot.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof InputOtpSlot> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof InputOtpSlot> = $props();
 </script>
 
-<InputOtpSlot {...props} />
+<InputOtpSlot bind:ref {...props} />

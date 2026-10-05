@@ -6,7 +6,7 @@
 	import EmptyTitle from '#lib/shadcn/ui/empty/empty-title.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof EmptyTitle> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof EmptyTitle> = $props();
 </script>
 
-<EmptyTitle {...props} />
+<EmptyTitle bind:ref {...props} />

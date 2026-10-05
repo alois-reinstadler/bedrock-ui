@@ -1,8 +1,13 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, render } from 'vitest-browser-svelte';
+import { flushSync } from 'svelte';
 import Fixture from './video-player.test.svelte';
 
-afterEach(() => cleanup());
+afterEach(() => {
+	vi.useRealTimers();
+	vi.restoreAllMocks();
+	cleanup();
+});
 
 function stubDuration(video: HTMLVideoElement, seconds: number) {
 	Object.defineProperty(video, 'duration', { configurable: true, value: seconds });
@@ -10,6 +15,29 @@ function stubDuration(video: HTMLVideoElement, seconds: number) {
 }
 
 describe('VideoPlayer', () => {
+	it('keeps fullscreen controls visible while keyboard focus remains inside', async () => {
+		const view = await render(Fixture);
+		const root = view.container.querySelector<HTMLElement>('[data-slot="video-player"]')!;
+		const video = root.querySelector('video')!;
+		const controls = root.querySelector<HTMLElement>('[data-slot="video-player-controls"]')!;
+		const button = controls.querySelector<HTMLButtonElement>('button')!;
+		vi.spyOn(document, 'fullscreenElement', 'get').mockReturnValue(root);
+		vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+		flushSync(() => {
+			document.dispatchEvent(new Event('fullscreenchange'));
+			video.dispatchEvent(new Event('play'));
+			button.focus();
+		});
+		vi.advanceTimersByTime(3100);
+		flushSync();
+		expect(document.activeElement).toBe(button);
+		expect(controls.classList.contains('opacity-0')).toBe(false);
+		flushSync(() => button.blur());
+		vi.advanceTimersByTime(3100);
+		flushSync();
+		expect(controls.classList.contains('opacity-0')).toBe(true);
+	});
+
 	it('names the region and exposes a labelled ARIA scrubber', async () => {
 		const view = await render(Fixture);
 		const root = view.container.querySelector('[data-slot="video-player"]')!;

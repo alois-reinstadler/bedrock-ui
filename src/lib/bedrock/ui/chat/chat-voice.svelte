@@ -20,8 +20,12 @@
 		state?: ChatVoiceState;
 		/** Recording duration in seconds. */
 		elapsed?: number;
-		/** Live microphone level between 0 and 1; omitted levels render no meter. */
+		/** Raw microphone RMS between 0 and 1; omitted input renders a still baseline. */
 		level?: number;
+		/** App-owned analyser for a live waveform; takes precedence over level. */
+		analyser?: AnalyserNode;
+		/** Visual gain for quiet speech. Defaults to 2.2; recorded audio is unchanged. */
+		sensitivity?: number;
 		error?: string;
 		disabled?: boolean;
 		labels?: Partial<ChatVoiceLabels>;
@@ -41,11 +45,14 @@
 	import { StatusDot } from '#lib/bedrock/ui/status-dot';
 	import MicOff from '@lucide/svelte/icons/mic-off';
 	import Feedback from './chat-feedback.svelte';
+	import Waveform from './chat-waveform.svelte';
 	import { cn } from '#lib/utils.js';
 	let {
 		state: voiceState = 'idle',
 		elapsed = 0,
 		level,
+		analyser,
+		sensitivity,
 		error = '',
 		disabled = false,
 		labels = {},
@@ -76,14 +83,9 @@
 		...labels
 	});
 	const expanded = $derived(voiceState !== 'idle' || !!failure);
-	const bars = [
-		0.2, 0.35, 0.6, 0.45, 0.8, 0.55, 0.95, 0.7, 0.4, 0.65, 1, 0.75, 0.5, 0.85, 0.6, 0.35, 0.7, 0.95,
-		0.55, 0.8, 0.45, 0.65, 0.3, 0.2
-	];
 	const active = $derived(['requesting', 'recording', 'processing'].includes(voiceState));
 	const seconds = $derived(Number.isFinite(elapsed) ? Math.max(0, Math.floor(elapsed)) : 0);
 	const duration = $derived(`${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`);
-	const volume = $derived(Number.isFinite(level) ? Math.max(0, Math.min(1, level!)) : 0);
 	async function invoke(callback: ChatVoiceOptions['onStart'], cancel = false) {
 		if (disabled || !callback || (pending && !cancel)) return;
 		const current = ++operation;
@@ -150,22 +152,7 @@
 		</div>
 		{#if voiceState === 'recording'}
 			<div class="flex items-center gap-3">
-				<div
-					class="flex h-10 min-w-0 flex-1 items-center justify-center gap-1 overflow-hidden"
-					aria-hidden="true"
-				>
-					{#each bars as height, i (i)}<span
-							class="w-1 min-w-0 rounded-full bg-foreground/60 transition-[height] duration-100 motion-reduce:transition-none"
-							style:height={`${level === undefined ? 4 : 4 + height * volume * 30}px`}
-						></span>{/each}
-				</div>
-				{#if level !== undefined}<meter
-						min="0"
-						max="1"
-						value={volume}
-						aria-label={text.level}
-						class="sr-only"
-					></meter>{/if}
+				<Waveform {level} {analyser} {sensitivity} label={text.level} class="h-12 flex-1" />
 				<div class="flex shrink-0 items-center gap-1">
 					{#if onCancel}<IconButton
 							icon={X}

@@ -6,7 +6,7 @@
 	import EmptyMedia from '#lib/shadcn/ui/empty/empty-media.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof EmptyMedia> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof EmptyMedia> = $props();
 </script>
 
-<EmptyMedia {...props} />
+<EmptyMedia bind:ref {...props} />

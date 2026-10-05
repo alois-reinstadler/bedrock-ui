@@ -6,7 +6,7 @@
 	import EmptyHeader from '#lib/shadcn/ui/empty/empty-header.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof EmptyHeader> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof EmptyHeader> = $props();
 </script>
 
-<EmptyHeader {...props} />
+<EmptyHeader bind:ref {...props} />

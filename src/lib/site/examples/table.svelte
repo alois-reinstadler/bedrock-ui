@@ -1,10 +1,11 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Table from '#lib/bedrock/ui/table';
 	import { Button } from '#lib/bedrock/ui/button';
 	let requested = $state(false);
 </script>
 
-<section class="max-w-xl space-y-4 rounded-xl border p-5">
+<Card.Root class="block max-w-xl gap-0 space-y-4 p-5">
 	<h3 class="font-medium">Warehouse replenishment</h3>
 	<p class="text-sm text-muted-foreground">
 		Compare stock against the reorder level. The action belongs to the low-stock row, so its effect
@@ -43,4 +44,4 @@
 			? 'A sample restock request for shipping labels has been added.'
 			: '1 item below its reorder level.'}
 	</p>
-</section>
+</Card.Root>

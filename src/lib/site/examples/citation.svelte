@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Citation } from '#lib/bedrock/ui/citation';
 </script>
 
@@ -9,7 +10,7 @@
 			Keep the claim readable and attach a source that readers can inspect independently.
 		</p>
 	</header>
-	<article class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root role="article" class="block gap-0 space-y-4 p-5">
 		<p class="text-xs tracking-wide text-muted-foreground uppercase">Accessibility review</p>
 		<h4 class="text-xl font-semibold">Label controls by their purpose</h4>
 		<p class="text-sm leading-7">
@@ -28,5 +29,5 @@
 				variant="number"
 			/>
 		</p>
-	</article>
+	</Card.Root>
 </section>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Kbd } from '#lib/bedrock/ui/kbd';
 	import { KbdGroup } from '#lib/bedrock/ui/kbd';
 
@@ -22,7 +23,7 @@
 
 <svelte:window onkeydown={toggleHelp} />
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Keyboard shortcut reference</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -46,4 +47,4 @@
 			<dt>Dismiss an open dialog</dt>
 			<dd><Kbd>Escape</Kbd></dd>
 		</dl>{/if}
-</section>
+</Card.Root>

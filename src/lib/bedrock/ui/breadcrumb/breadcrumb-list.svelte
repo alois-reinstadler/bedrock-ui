@@ -6,7 +6,7 @@
 	import BreadcrumbList from '#lib/shadcn/ui/breadcrumb/breadcrumb-list.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof BreadcrumbList> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof BreadcrumbList> = $props();
 </script>
 
-<BreadcrumbList {...props} />
+<BreadcrumbList bind:ref {...props} />

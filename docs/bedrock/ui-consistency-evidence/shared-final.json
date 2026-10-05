@@ -1,0 +1,101 @@
+[
+	{
+		"name": "data-table-frame",
+		"data": {
+			"radius": "16px",
+			"corner": "superellipse(1)",
+			"bg": "rgba(0, 0, 0, 0)",
+			"color": "oklch(0.145 0 0)"
+		}
+	},
+	{
+		"name": "select-keyboard",
+		"blocked": "TimeoutError: locator.focus: Timeout 7000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('combobox', { name: 'Material preview', exact: true })\u001b[22m\n"
+	},
+	{
+		"name": "dropdown-keyboard",
+		"data": {
+			"focused": "Abandon face",
+			"closed": true,
+			"focusRestored": true
+		}
+	},
+	{
+		"name": "tabs-orientations",
+		"data": [
+			{
+				"variant": "default",
+				"orientation": "horizontal",
+				"selected": "Activity log",
+				"style": {
+					"radius": "12.8px",
+					"corner": "superellipse(3)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"color": "oklch(0.145 0 0)"
+				},
+				"panel": "02:14 hold. 03:02 pumps on. 04:18 face clear."
+			},
+			{
+				"variant": "default",
+				"orientation": "vertical",
+				"selected": "Activity log",
+				"style": {
+					"radius": "12.8px",
+					"corner": "superellipse(3)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"color": "oklch(0.145 0 0)"
+				},
+				"panel": "02:14 hold. 03:02 pumps on. 04:18 face clear."
+			},
+			{
+				"variant": "line",
+				"orientation": "horizontal",
+				"selected": "Activity log",
+				"style": {
+					"radius": "12.8px",
+					"corner": "superellipse(3)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"color": "oklch(0.145 0 0)"
+				},
+				"panel": "02:14 hold. 03:02 pumps on. 04:18 face clear."
+			},
+			{
+				"variant": "line",
+				"orientation": "vertical",
+				"selected": "Activity log",
+				"style": {
+					"radius": "12.8px",
+					"corner": "superellipse(3)",
+					"bg": "rgba(0, 0, 0, 0)",
+					"color": "oklch(0.145 0 0)"
+				},
+				"panel": "02:14 hold. 03:02 pumps on. 04:18 face clear."
+			}
+		]
+	},
+	{
+		"name": "tooltip-hover-focus",
+		"blocked": "TimeoutError: locator.waitFor: Timeout 7000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tooltip') to be visible\u001b[22m\n"
+	},
+	{
+		"name": "video-footer",
+		"data": {
+			"radius": "0px",
+			"corner": "superellipse(1)",
+			"bg": "rgba(0, 0, 0, 0)",
+			"color": "rgb(121, 121, 130)"
+		}
+	},
+	{
+		"name": "music-placeholder",
+		"data": {
+			"color": "oklch(0.556 0 0)",
+			"background": "rgba(0, 0, 0, 0)",
+			"placeholder": "oklch(0.556 0 0)",
+			"opacity": "1",
+			"size": "12px",
+			"rootMuted": "oklch(55.6% 0 0)",
+			"musicMuted": "oklch(55.6% 0 0)"
+		}
+	}
+]

@@ -6,7 +6,7 @@
 	import FormLegend from '#lib/shadcn/ui/form/form-legend.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FormLegend> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FormLegend> = $props();
 </script>
 
-<FormLegend {...props} />
+<FormLegend bind:ref {...props} />

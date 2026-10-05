@@ -6,7 +6,7 @@
 	import DropdownMenuGroup from '#lib/shadcn/ui/dropdown-menu/dropdown-menu-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DropdownMenuGroup> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DropdownMenuGroup> = $props();
 </script>
 
-<DropdownMenuGroup {...props} />
+<DropdownMenuGroup bind:ref {...props} />

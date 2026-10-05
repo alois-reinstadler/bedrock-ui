@@ -6,7 +6,7 @@
 	import DrawerFooter from '#lib/shadcn/ui/drawer/drawer-footer.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DrawerFooter> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DrawerFooter> = $props();
 </script>
 
-<DrawerFooter {...props} />
+<DrawerFooter bind:ref {...props} />

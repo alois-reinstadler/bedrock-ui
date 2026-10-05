@@ -1,4 +1,4 @@
-export type BlockSlug = 'authentication-panel' | 'data-toolbar' | 'settings-section';
+export type BlockSlug = 'authentication-panel' | 'settings-section';
 
 export type BlockProperty = {
 	name: string;
@@ -13,7 +13,7 @@ export type BlockDoc = {
 	slug: BlockSlug;
 	title: string;
 	description: string;
-	category: 'forms' | 'data' | 'settings';
+	category: 'forms' | 'settings';
 	importName: string;
 	components: string[];
 	anatomy: Array<{ name: string; description: string }>;
@@ -61,59 +61,6 @@ export const blocks: BlockDoc[] = [
 				type: 'string',
 				default: 'undefined',
 				description: 'Shows the recovery action when provided.'
-			}
-		]
-	},
-	{
-		slug: 'data-toolbar',
-		title: 'Data Toolbar',
-		description: 'Search, filters, result context, and primary actions for a data collection.',
-		category: 'data',
-		importName: 'DataToolbar',
-		components: ['Input', 'Button'],
-		anatomy: [
-			{ name: 'Search', description: 'Narrows the current collection by a plain-language query.' },
-			{ name: 'Filters', description: 'Exposes common constraints and summarizes active values.' },
-			{ name: 'Result context', description: 'Reports the current count or selection.' },
-			{ name: 'Actions', description: 'Keeps the primary collection action close to the results.' }
-		],
-		bestPractices: [
-			'Filters are toggle buttons with aria-pressed; give each a unique ID and a clear label.',
-			'Reflect filter state in the URL when users may share or revisit the view.',
-			'Do not clear a query when an unrelated action completes.'
-		],
-		properties: [
-			{
-				name: 'query',
-				type: 'string',
-				default: "''",
-				description: 'Current search query; bindable in the implementation.'
-			},
-			{
-				name: 'resultCount',
-				type: 'number',
-				default: '—',
-				required: true,
-				description: 'Number of visible results.'
-			},
-			{
-				name: 'filters',
-				type: '{ id: string; label: string }[]',
-				default: '[]',
-				description: 'Available and active collection constraints.'
-			},
-			{
-				name: 'activeFilters',
-				type: 'string[]',
-				default: '[]',
-				description: 'Bindable list of active filter IDs; the consumer filters its data.'
-			},
-			{
-				name: 'actions',
-				kind: 'snippet',
-				type: 'Snippet',
-				default: 'undefined',
-				description: 'Optional snippet rendered after filters.'
 			}
 		]
 	},

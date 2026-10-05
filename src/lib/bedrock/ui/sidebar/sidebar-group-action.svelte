@@ -6,7 +6,7 @@
 	import SidebarGroupAction from '#lib/shadcn/ui/sidebar/sidebar-group-action.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SidebarGroupAction> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SidebarGroupAction> = $props();
 </script>
 
-<SidebarGroupAction {...props} />
+<SidebarGroupAction bind:ref {...props} />

@@ -6,7 +6,7 @@
 	import SelectItem from '#lib/shadcn/ui/select/select-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SelectItem> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SelectItem> = $props();
 </script>
 
-<SelectItem {...props} />
+<SelectItem bind:ref {...props} />

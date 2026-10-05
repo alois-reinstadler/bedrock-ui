@@ -6,7 +6,7 @@
 	import ContextMenuShortcut from '#lib/shadcn/ui/context-menu/context-menu-shortcut.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ContextMenuShortcut> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ContextMenuShortcut> = $props();
 </script>
 
-<ContextMenuShortcut {...props} />
+<ContextMenuShortcut bind:ref {...props} />

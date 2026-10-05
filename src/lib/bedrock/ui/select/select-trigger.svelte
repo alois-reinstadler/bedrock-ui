@@ -6,7 +6,7 @@
 	import SelectTrigger from '#lib/shadcn/ui/select/select-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SelectTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SelectTrigger> = $props();
 </script>
 
-<SelectTrigger {...props} />
+<SelectTrigger bind:ref {...props} />

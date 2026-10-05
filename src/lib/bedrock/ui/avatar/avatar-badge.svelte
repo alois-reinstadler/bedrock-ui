@@ -6,7 +6,7 @@
 	import AvatarBadge from '#lib/shadcn/ui/avatar/avatar-badge.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AvatarBadge> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AvatarBadge> = $props();
 </script>
 
-<AvatarBadge {...props} />
+<AvatarBadge bind:ref {...props} />

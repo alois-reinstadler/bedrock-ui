@@ -6,7 +6,12 @@
 	import ContextMenuCheckboxItem from '#lib/shadcn/ui/context-menu/context-menu-checkbox-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ContextMenuCheckboxItem> = $props();
+	let {
+		ref = $bindable(null),
+		checked = $bindable(false),
+		indeterminate = $bindable(false),
+		...props
+	}: ComponentProps<typeof ContextMenuCheckboxItem> = $props();
 </script>
 
-<ContextMenuCheckboxItem {...props} />
+<ContextMenuCheckboxItem bind:ref bind:checked bind:indeterminate {...props} />

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as DropdownMenu from '#lib/bedrock/ui/dropdown-menu';
 	import { Button } from '#lib/bedrock/ui/button';
 	let pinned = $state(false);
@@ -12,7 +13,7 @@
 			Keep secondary actions in a menu with explicit names and visible feedback.
 		</p>
 	</header>
-	<div class="flex flex-wrap items-center justify-between gap-4 rounded-xl border bg-card p-5">
+	<Card.Root class="flex flex-row flex-wrap items-center justify-between gap-4 p-5">
 		<div>
 			<p class="font-medium">Field journal {pinned ? '· Pinned' : ''}</p>
 			<p class="text-sm text-muted-foreground">8 documents · Updated today</p>
@@ -37,6 +38,6 @@
 				></DropdownMenu.Content
 			></DropdownMenu.Root
 		>
-	</div>
+	</Card.Root>
 	<p role="status" class="text-sm">{status}</p>
 </section>

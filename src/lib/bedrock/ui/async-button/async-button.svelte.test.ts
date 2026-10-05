@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 import { cleanup, render } from 'vitest-browser-svelte';
 import Fixture from './async-button.test.svelte';
 
@@ -59,11 +60,49 @@ describe('AsyncButton', () => {
 
 		await settle(200);
 		expect(button.dataset.state).toBe('idle');
-		expect(button.querySelector('[data-slot="swap"]')?.getAttribute('data-direction')).toBe(
+		expect(button.querySelector('[data-direction]')?.getAttribute('data-direction')).toBe(
 			'backward'
 		);
 		expect(button.getAttribute('aria-busy')).toBeNull();
 		expect(button.getAttribute('aria-disabled')).toBeNull();
+	});
+
+	it('keeps only the current retained label accessible during rapid changes', async () => {
+		const gate = deferred();
+		const view = await render(Fixture, { props: { action: () => gate.promise, resetAfter: 1000 } });
+		const { button } = parts(view.container);
+		button.click();
+		await settle(30);
+		const outgoing = button.querySelector('[data-slot="async-button-label"][data-present="false"]');
+		expect(outgoing?.getAttribute('aria-hidden')).toBe('true');
+		expect(outgoing?.hasAttribute('inert')).toBe(true);
+		expect(
+			button.querySelectorAll('[data-slot="async-button-label"][data-present="true"]')
+		).toHaveLength(1);
+		gate.resolve();
+		await settle(600);
+		expect(button.querySelectorAll('[data-slot="async-button-label"]')).toHaveLength(1);
+		expect(button.querySelector('[data-slot="async-button-label"]')?.textContent).toContain('Done');
+	});
+
+	it('settles retained labels and decorative spin when application reduction changes live', async () => {
+		const gate = deferred();
+		const action = () => gate.promise;
+		const view = await render(Fixture, { props: { action, resetAfter: 1000 } });
+		const { button } = parts(view.container);
+		button.focus();
+		await userEvent.keyboard('{Enter}');
+		await settle(30);
+		expect(document.activeElement).toBe(button);
+		await view.rerender({ action, resetAfter: 1000, reduced: true });
+		await settle(60);
+		expect(button.getAttribute('data-bedrock-motion')).toBe('reduced');
+		expect(button.querySelectorAll('[data-slot="async-button-label"]')).toHaveLength(1);
+		expect(button.querySelector('.animate-spin')).toBeNull();
+		gate.resolve();
+		await settle(60);
+		expect(button.dataset.state).toBe('success');
+		expect(button.querySelectorAll('[data-slot="async-button-label"]')).toHaveLength(1);
 	});
 
 	it('reports rejections through onError and shows the error label', async () => {

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import Heart from '@lucide/svelte/icons/heart';
 	import User from '@lucide/svelte/icons/user-round';
 	import Repeat from '@lucide/svelte/icons/repeat-2';
@@ -12,19 +13,36 @@
 <header class="feed-header">
 	<div class="header-title">
 		<h1>Notifications</h1>
-		<button
-			class="small-button"
+		<Button
+			variant="ghost"
+			type="button"
+			class={[
+				'control-templates-social-network-notifications-page h-auto whitespace-normal',
+				'small-button'
+			]}
 			onclick={() => social.notifications.forEach((item) => (item.read = true))}
-			>Mark all read</button
+			>Mark all read</Button
 		>
 	</div>
 	<div class="feed-tabs">
-		<button
-			class:active={!unreadOnly}
+		<Button
+			variant="ghost"
+			type="button"
+			class={[
+				'control-templates-social-network-notifications-page h-auto whitespace-normal',
+				{ active: !unreadOnly }
+			]}
 			aria-pressed={!unreadOnly}
-			onclick={() => (unreadOnly = false)}>All</button
-		><button class:active={unreadOnly} aria-pressed={unreadOnly} onclick={() => (unreadOnly = true)}
-			>Unread</button
+			onclick={() => (unreadOnly = false)}>All</Button
+		><Button
+			variant="ghost"
+			type="button"
+			class={[
+				'control-templates-social-network-notifications-page h-auto whitespace-normal',
+				{ active: unreadOnly }
+			]}
+			aria-pressed={unreadOnly}
+			onclick={() => (unreadOnly = true)}>Unread</Button
 		>
 	</div>
 </header>
@@ -53,9 +71,12 @@
 			</p>
 			<small>{item.time} ago</small>
 		</div>
-		{#if !item.read}<button
+		{#if !item.read}<Button
+				variant="ghost"
+				type="button"
+				class={['control-templates-social-network-notifications-page h-auto whitespace-normal']}
 				aria-label={`Mark notification from ${author.name} read`}
-				onclick={() => (item.read = true)}>Mark read</button
+				onclick={() => (item.read = true)}>Mark read</Button
 			>{/if}
 	</article>{:else}<div class="empty-state">
 		<h2>You’re up to date.</h2>

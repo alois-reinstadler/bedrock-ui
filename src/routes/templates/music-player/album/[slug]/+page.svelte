@@ -3,6 +3,7 @@
 	import { tracks, collections, formatTime } from '#lib/templates/music-player/data.js';
 	import { usePlayer } from '#lib/templates/music-player/player.svelte.js';
 	import { albumMotion } from '#lib/templates/music-player/motion.js';
+	import { albumScrollHeader } from '#lib/templates/music-player/scroll-header.js';
 	import TrackList from '#lib/templates/music-player/TrackList.svelte';
 	import CollectionGrid from '#lib/templates/music-player/CollectionGrid.svelte';
 	import Play from '@lucide/svelte/icons/play';
@@ -16,14 +17,22 @@
 </script>
 
 <svelte:head><title>{collection.title} — Drift</title></svelte:head>
-<section class="album-header" data-album-layout>
+<section
+	class="album-header"
+	data-album-layout
+	{@attach (element) => {
+		// Reset the collapse when the persistent album route changes collection.
+		void collection.id;
+		return albumScrollHeader(element);
+	}}
+>
 	<div class="cover-stage">
 		{#key collection.id}<img
 				data-album-cover
 				src={collection.artwork}
 				alt={`${collection.title} collection cover`}
-				in:albumMotion={{ duration: 280 }}
-				out:albumMotion={{ duration: 180 }}
+				in:albumMotion
+				out:albumMotion
 			/>{/key}
 	</div>
 	<div class="album-copy">
@@ -33,7 +42,7 @@
 					{#each collection.title.split(' ') as word, index (`${collection.id}-${index}`)}<span
 							aria-hidden="true"
 							in:albumMotion|global={{ delay: 40 + index * 35 }}
-							out:albumMotion|global={{ delay: index * 20, duration: 160 }}>{word}</span
+							out:albumMotion|global={{ delay: index * 20 }}>{word}</span
 						>{/each}
 				</h1>{/key}
 		</div>
@@ -49,15 +58,27 @@
 	</div>
 </section>
 <div class="album-actions">
-	<Button class="primary-button" onclick={() => player.play(items[0], items)}
-		><Play size={15} fill="currentColor" />Play collection</Button
-	><button
-		class="outline-button"
+	<Button
+		class="primary-button"
+		onclick={() => player.play(items[0], items)}
+		aria-label="Play collection"
+		><Play size={15} fill="currentColor" /><span class="action-label">Play collection</span></Button
+	>
+	<Button
+		variant="ghost"
+		type="button"
+		class={[
+			'control-templates-music-player-album-slug-page h-auto whitespace-normal',
+			'outline-button'
+		]}
+		aria-label={player.saved.includes(collection.id) ? 'In your library' : 'Save collection'}
 		aria-pressed={player.saved.includes(collection.id)}
 		onclick={() => player.save(collection.id)}
 		>{#if player.saved.includes(collection.id)}<Check size={16} />{:else}<Plus
 				size={16}
-			/>{/if}{player.saved.includes(collection.id) ? 'In your library' : 'Save collection'}</button
+			/>{/if}<span class="action-label"
+			>{player.saved.includes(collection.id) ? 'In your library' : 'Save collection'}</span
+		></Button
 	>
 </div>
 <TrackList {items} listKey={collection.id} />
@@ -78,13 +99,18 @@
 		display: grid;
 		grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
 		gap: 38px;
-		align-items: end;
+		align-items: start;
 		padding: 12px 0 35px;
+		isolation: isolate;
 	}
 	.cover-stage {
 		display: grid;
 		aspect-ratio: 1;
 		isolation: isolate;
+		transform: translate3d(0, var(--album-cover-y, 0px), 0) scale(var(--album-scale, 1));
+		transform-origin: center center;
+		opacity: var(--album-cover-opacity, 1);
+		will-change: transform, opacity;
 	}
 	.cover-stage img {
 		grid-area: 1/1;
@@ -97,22 +123,25 @@
 	.album-copy {
 		min-width: 0;
 		container-type: inline-size;
-		padding-bottom: 7px;
 	}
 	.album-copy .eyebrow {
 		line-height: 1.5;
-		min-height: 3em;
+		min-height: 1.5em;
 	}
 	.title-stage {
 		display: grid;
-		margin: 18px 0;
+		margin: 12px 0;
+		transform: translate3d(0, var(--album-title-y, 0px), 0) scale(var(--album-title-scale, 1));
+		transform-origin: left center;
+		opacity: var(--album-title-opacity, 1);
+		will-change: transform, opacity;
 	}
 	.title-stage h1 {
 		grid-area: 1/1;
 		max-width: 500px;
-		font-size: clamp(28px, 12cqi, 78px);
+		font-size: clamp(28px, 12cqi, 64px);
 		min-height: 2.04em;
-		letter-spacing: -3.6px;
+		letter-spacing: -2.8px;
 		line-height: 1.02;
 	}
 	.title-stage h1 span {
@@ -121,14 +150,14 @@
 	.description {
 		font-size: 13px;
 		color: var(--music-muted);
-		line-height: 1.8;
+		line-height: 1.6;
 		max-width: 480px;
-		min-height: 3.6em;
+		min-height: 3.2em;
 	}
 	.album-meta {
 		display: grid;
 		grid-template-rows: repeat(2, 1.8em);
-		margin-top: 20px;
+		margin-top: 12px;
 		font-size: 10px;
 		line-height: 1.8;
 	}
@@ -139,12 +168,26 @@
 		color: var(--music-muted);
 	}
 	.album-actions {
+		position: relative;
+		z-index: 2;
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		gap: 14px;
-		padding: 22px 0 30px;
-		border-top: 1px solid var(--border);
+		min-height: 80px;
+		margin-inline: calc(-1 * var(--music-gutter));
+		padding: 16px var(--music-gutter);
+		background: var(--background);
 	}
+	.album-actions :global(button) {
+		flex-shrink: 0;
+	}
+	.album-copy .eyebrow,
+	.description,
+	.album-meta {
+		opacity: var(--album-details-opacity, 1);
+	}
+
 	.attribution {
 		margin-top: 20px;
 		font-size: 10px;
@@ -166,7 +209,7 @@
 			letter-spacing: -2px;
 		}
 		.description {
-			min-height: 5.4em;
+			min-height: 4.8em;
 		}
 		.album-meta {
 			font-size: 9px;
@@ -189,6 +232,7 @@
 		}
 		.album-copy .eyebrow {
 			font-size: 8px;
+			min-height: 3em;
 		}
 		.description {
 			display: none;
@@ -199,11 +243,20 @@
 		}
 		.album-actions {
 			gap: 8px;
-			flex-wrap: wrap;
-			padding-top: 20px;
+			height: 74px;
+			min-height: 74px;
 		}
 		.more {
 			margin-top: 35px;
 		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.cover-stage,
+		.title-stage {
+			transform: none;
+		}
+	}
+	:global([data-bedrock-motion='reduced']) :is(.cover-stage, .title-stage) {
+		transform: none;
 	}
 </style>

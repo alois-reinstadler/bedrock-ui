@@ -1,6 +1,7 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { Checkbox as CheckboxPrimitive } from 'bits-ui';
-	import CheckIcon from '@lucide/svelte/icons/check';
+	import CheckMark from '../../../bedrock/ui/checkbox/check-mark.svelte';
 	import MinusIcon from '@lucide/svelte/icons/minus';
 	import { cn, type WithoutChildrenOrChild } from '#lib/utils.js';
 
@@ -11,6 +12,10 @@
 		class: className,
 		...restProps
 	}: WithoutChildrenOrChild<CheckboxPrimitive.RootProps> = $props();
+	let ready = $state(false);
+	onMount(() => {
+		ready = true;
+	});
 </script>
 
 <CheckboxPrimitive.Root
@@ -30,9 +35,9 @@
 			class="grid place-content-center text-current transition-none [&>svg]:size-3.5"
 		>
 			{#if checked}
-				<CheckIcon />
+				<CheckMark animate={ready} />
 			{:else if indeterminate}
-				<MinusIcon />
+				<MinusIcon aria-hidden="true" />
 			{/if}
 		</div>
 	{/snippet}

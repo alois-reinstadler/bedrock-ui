@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Popover from '#lib/bedrock/ui/popover';
 	import { Button } from '#lib/bedrock/ui/button';
 
@@ -6,7 +7,7 @@
 	let rows = $state<number | null>(3);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Report display settings</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -42,4 +43,4 @@
 				{entry}
 			</li>{/each}
 	</ul>
-</section>
+</Card.Root>

@@ -6,7 +6,7 @@
 	import DropdownMenuTrigger from '#lib/shadcn/ui/dropdown-menu/dropdown-menu-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DropdownMenuTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DropdownMenuTrigger> = $props();
 </script>
 
-<DropdownMenuTrigger {...props} />
+<DropdownMenuTrigger bind:ref {...props} />

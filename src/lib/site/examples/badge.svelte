@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Button } from '#lib/bedrock/ui/button';
 	let approved = $state(false);
@@ -11,7 +12,7 @@
 			Combine text labels with state; color alone must never communicate whether work is ready.
 		</p>
 	</header>
-	<div class="divide-y rounded-xl border bg-card">
+	<Card.Root class="block gap-0 divide-y py-0">
 		<div class="flex flex-wrap items-center justify-between gap-3 p-4">
 			<div>
 				<p class="font-medium">Keyboard navigation review</p>
@@ -36,5 +37,5 @@
 				{approved ? 'All checklist items are ready.' : 'One item still needs review.'}
 			</p>
 		</div>
-	</div>
+	</Card.Root>
 </section>

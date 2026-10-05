@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../../scripts/shared-browser-test';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 test('records composited text contrast across variants, states, surfaces and themes', async ({

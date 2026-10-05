@@ -1,0 +1,28 @@
+
+ RUN  v4.1.11 /home/node/repos/bedrock-ui
+
+ ❯ |server| src/lib/bedrock/motion/policy.test.ts (15 tests | 1 failed) 1008ms
+     × warns when vanish cannot preserve a stable local containing block 13ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |server| src/lib/bedrock/motion/policy.test.ts > presence policy integration > warns when vanish cannot preserve a stable local containing block
+AssertionError: expected "warn" to be called with arguments: [ StringContaining{…}, …(1) ]
+
+Number of calls: 0
+
+ ❯ src/lib/bedrock/motion/policy.test.ts:138:16
+    136|   const node = element();
+    137|   vanish(node);
+    138|   expect(warn).toHaveBeenCalledWith(
+       |                ^
+    139|    expect.stringContaining('stable local containing block'),
+    140|    node
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 50 passed (51)
+      Tests  1 failed | 267 passed (268)
+   Start at  21:49:12
+   Duration  15.99s (transform 38.86s, setup 0ms, import 53.61s, tests 4.69s, environment 39ms)

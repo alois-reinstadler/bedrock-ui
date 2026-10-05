@@ -14,7 +14,7 @@
 		</p>
 	</div>
 
-	<ul class="max-w-md divide-y rounded-xl border px-4">
+	<ul class="max-w-md divide-y rounded-xl border px-4 corner-theme">
 		<li class="flex items-center gap-3 py-4">
 			<Thumbnail src={image} alt="Abstract landscape" size="lg" />
 			<div>

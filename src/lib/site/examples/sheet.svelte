@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Sheet from '#lib/bedrock/ui/sheet';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Textarea } from '#lib/bedrock/ui/textarea';
@@ -8,7 +9,7 @@
 	let open = $state(false);
 </script>
 
-<section class="max-w-md space-y-3 rounded-xl border p-5">
+<Card.Root class="block max-w-md gap-0 space-y-3 p-5">
 	<h3 class="font-medium">Customer delivery notes</h3>
 	<p class="text-sm text-muted-foreground">
 		Keep the order visible while editing details in a side panel.
@@ -41,4 +42,4 @@
 			</form></Sheet.Content
 		></Sheet.Root
 	>
-</section>
+</Card.Root>

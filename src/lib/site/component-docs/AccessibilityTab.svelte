@@ -79,7 +79,7 @@
 					foreground and background colors as they appear together on screen.
 				</Text>
 			</div>
-			<div class="overflow-x-auto rounded-xl border bg-card">
+			<div class="overflow-x-auto rounded-xl border bg-card corner-theme">
 				<table class="w-full min-w-[56rem] border-collapse text-left text-sm">
 					<thead class="bg-muted/40 text-xs tracking-wide text-muted-foreground uppercase">
 						<tr>

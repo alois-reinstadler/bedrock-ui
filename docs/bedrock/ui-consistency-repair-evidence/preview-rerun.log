@@ -1,0 +1,13 @@
+
+Running 5 tests using 1 worker
+
+(node:89482) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/5] src/lib/site/component-previews.e2e.ts:5:2 › icon-button mounts its lazy preview and example in both layouts
+[2/5] src/lib/site/component-previews.e2e.ts:5:2 › input-otp mounts its lazy preview and example in both layouts
+[3/5] src/lib/site/component-previews.e2e.ts:5:2 › pdf-viewer mounts its lazy preview and example in both layouts
+[4/5] src/lib/site/component-previews.e2e.ts:5:2 › shapes mounts its lazy preview and example in both layouts
+[5/5] src/lib/site/component-previews.e2e.ts:5:2 › thumbnail mounts its lazy preview and example in both layouts
+  5 passed (7.1s)

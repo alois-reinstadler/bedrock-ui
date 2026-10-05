@@ -6,7 +6,7 @@
 	import SidebarTrigger from '#lib/shadcn/ui/sidebar/sidebar-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SidebarTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SidebarTrigger> = $props();
 </script>
 
-<SidebarTrigger {...props} />
+<SidebarTrigger bind:ref {...props} />

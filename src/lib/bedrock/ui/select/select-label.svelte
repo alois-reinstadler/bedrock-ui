@@ -6,7 +6,7 @@
 	import SelectLabel from '#lib/shadcn/ui/select/select-label.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SelectLabel> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SelectLabel> = $props();
 </script>
 
-<SelectLabel {...props} />
+<SelectLabel bind:ref {...props} />

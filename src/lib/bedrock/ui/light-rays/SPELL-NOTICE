@@ -1,0 +1,10 @@
+Light Rays — ported from Spell UI
+Copyright (c) 2025 Spell UI
+MIT licensed; see SPELL-LICENSE.
+
+Source: https://spell.sh/r/light-rays.json
+Repository: https://github.com/xxtomm/spell-ui
+
+The fragment shader and color conversion helpers preserve Spell UI's rendering calculations. The Svelte lifecycle uses Paper ShaderMount
+to manage the WebGL2 canvas, with pause, visibility, and context recovery.
+Paper attribution: ../backgrounds/PAPER-LICENSE and PAPER-NOTICE.

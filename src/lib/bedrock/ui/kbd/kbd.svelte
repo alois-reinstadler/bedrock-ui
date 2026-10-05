@@ -7,7 +7,11 @@
 	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let { class: className, ...restProps }: ComponentProps<typeof Kbd> = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		...restProps
+	}: ComponentProps<typeof Kbd> = $props();
 </script>
 
-<Kbd class={cn('font-code', className)} {...restProps} />
+<Kbd bind:ref class={cn('font-code', className)} {...restProps} />

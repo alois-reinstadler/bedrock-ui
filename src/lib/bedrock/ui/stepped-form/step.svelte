@@ -36,38 +36,8 @@
 	aria-hidden={!active}
 	inert={!active}
 	hidden={!active}
-	class={cn(
-		'm-0 min-w-0 border-0 p-0',
-		active && 'bedrock-stepped-form-enter flex flex-col gap-5',
-		className
-	)}
+	class={cn('m-0 min-w-0 border-0 p-0', active && 'flex flex-col gap-5', className)}
 	{...restProps}
 >
 	{@render children?.()}
 </fieldset>
-
-<style>
-	.bedrock-stepped-form-enter[data-direction='forward'] {
-		animation: stepped-form-forward var(--motion-reveal) var(--motion-ease-enter);
-	}
-	.bedrock-stepped-form-enter[data-direction='backward'] {
-		animation: stepped-form-backward var(--motion-reveal) var(--motion-ease-enter);
-	}
-	@keyframes stepped-form-forward {
-		from {
-			opacity: 0;
-			transform: translateX(0.75rem);
-		}
-	}
-	@keyframes stepped-form-backward {
-		from {
-			opacity: 0;
-			transform: translateX(-0.75rem);
-		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.bedrock-stepped-form-enter[data-direction] {
-			animation: none;
-		}
-	}
-</style>

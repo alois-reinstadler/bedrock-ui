@@ -6,7 +6,7 @@
 	import NavigationMenuList from '#lib/shadcn/ui/navigation-menu/navigation-menu-list.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof NavigationMenuList> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof NavigationMenuList> = $props();
 </script>
 
-<NavigationMenuList {...props} />
+<NavigationMenuList bind:ref {...props} />

@@ -1,10 +1,11 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as NativeSelect from '#lib/bedrock/ui/native-select';
 
 	let value = $state('pending');
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Order fulfillment</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -31,4 +32,4 @@
 				? 'Payment approved. Pack the order and print its shipping label.'
 				: 'Order dispatched. The customer can now track delivery.'}
 	</p>
-</section>
+</Card.Root>

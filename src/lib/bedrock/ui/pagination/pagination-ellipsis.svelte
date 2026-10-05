@@ -6,7 +6,7 @@
 	import PaginationEllipsis from '#lib/shadcn/ui/pagination/pagination-ellipsis.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof PaginationEllipsis> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof PaginationEllipsis> = $props();
 </script>
 
-<PaginationEllipsis {...props} />
+<PaginationEllipsis bind:ref {...props} />

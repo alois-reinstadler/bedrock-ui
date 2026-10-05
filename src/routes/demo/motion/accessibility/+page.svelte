@@ -41,7 +41,7 @@
 		['Slider', 'Pointer bleibt 1:1; Snap wird instant.'],
 		['Toast', 'Kurze Opacity statt Stack-Reise; Live-Region bleibt.'],
 		['Spinner', 'Rotation stoppt; statisches Statusglyph bleibt.'],
-		['Skeleton', 'Puls stoppt; statische Platzhalter bleiben.'],
+		['Skeleton', 'Ladeanimation bleibt aktiv; statische Platzhalter sind explizit wählbar.'],
 		['Navigation', 'Richtungstranslation entfällt; Inhalt wechselt mit Opacity.']
 	] as const;
 

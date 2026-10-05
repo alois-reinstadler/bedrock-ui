@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
+	import { IconButton } from '#lib/bedrock/ui/icon-button';
 	import { socialFilmSource } from '../media.js';
 	import Heart from '@lucide/svelte/icons/heart';
 	import Repeat from '@lucide/svelte/icons/repeat-2';
@@ -77,10 +79,13 @@
 					<strong><BookOpen size={16} /> Readers added context</strong>
 					<p>{post.note}</p>
 					<div>
-						<a href={post.noteSource} target="_blank" rel="noreferrer">Read source ↗</a><button
+						<a href={post.noteSource} target="_blank" rel="noreferrer">Read source ↗</a><Button
+							variant="ghost"
+							type="button"
+							class={['control-templates-social-network-post h-auto whitespace-normal']}
 							aria-pressed={noteHelpful}
 							onclick={() => (noteHelpful = !noteHelpful)}
-							>{noteHelpful ? 'Thanks for your feedback' : 'Helpful?'}</button
+							>{noteHelpful ? 'Thanks for your feedback' : 'Helpful?'}</Button
 						>
 					</div>
 				</aside>{/if}
@@ -90,39 +95,53 @@
 						>{count(post.replies + (social.replies[post.id]?.length ?? 0))}</span
 					></a
 				>
-				<button
-					class:reposted={social.reposted.includes(post.id)}
+				<Button
+					variant="ghost"
+					type="button"
+					class={[
+						'control-templates-social-network-post h-auto whitespace-normal',
+						{ reposted: social.reposted.includes(post.id) }
+					]}
 					aria-label={`Repost ${author.name}'s post`}
 					aria-pressed={social.reposted.includes(post.id)}
 					onclick={() => social.toggle('reposted', post.id)}
 					><Repeat size={18} /><span
 						>{count(post.reposts + Number(social.reposted.includes(post.id)))}</span
-					></button
+					></Button
 				>
-				<button
-					class:liked={social.liked.includes(post.id)}
+				<Button
+					variant="ghost"
+					type="button"
+					class={[
+						'control-templates-social-network-post h-auto whitespace-normal',
+						{ liked: social.liked.includes(post.id) }
+					]}
 					aria-label={`Like ${author.name}'s post`}
 					aria-pressed={social.liked.includes(post.id)}
 					onclick={() => social.toggle('liked', post.id)}
 					><Heart size={18} fill={social.liked.includes(post.id) ? 'currentColor' : 'none'} /><span
 						>{count(post.likes + Number(social.liked.includes(post.id)))}</span
-					></button
+					></Button
 				>
-				<button
-					aria-label={`Quote ${author.name}'s post`}
+				<IconButton
+					type="button"
+					icon={Quote}
+					label={`Quote ${author.name}'s post`}
+					class={['control-templates-social-network-post']}
 					aria-expanded={quoting}
-					onclick={() => (quoting = !quoting)}><Quote size={18} /></button
-				>
-				<button
-					class:accent={social.saved.includes(post.id)}
-					aria-label={social.saved.includes(post.id) ? 'Remove bookmark' : 'Bookmark post'}
+					onclick={() => (quoting = !quoting)}
+				/>
+				<IconButton
+					type="button"
+					icon={Bookmark}
+					label={social.saved.includes(post.id) ? 'Remove bookmark' : 'Bookmark post'}
+					class={[
+						'control-templates-social-network-post',
+						{ accent: social.saved.includes(post.id) }
+					]}
 					aria-pressed={social.saved.includes(post.id)}
 					onclick={() => social.toggle('saved', post.id)}
-					><Bookmark
-						size={18}
-						fill={social.saved.includes(post.id) ? 'currentColor' : 'none'}
-					/></button
-				>
+				/>
 			</div>
 			{#if quoting}<div class="quote-compose">
 					<strong>Quote this post</strong><Composer

@@ -1,4 +1,4 @@
-const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+export const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 
 export type MotionEnvironment = {
 	matchMedia: (query: string) => { matches: boolean };
@@ -28,4 +28,31 @@ export function resolveMotionDuration(
 	environment = globalMotionEnvironment()
 ): number {
 	return prefersReducedMotion(environment) ? 0 : duration;
+}
+
+/** DOM-side counterpart for retained helpers that cannot read component context.
+ * Any reduced ancestor wins, including a portal root carrying policy.attach. */
+export function elementPrefersReducedMotion(element?: Element | null): boolean {
+	return prefersReducedMotion() || Boolean(element?.closest?.('[data-bedrock-motion="reduced"]'));
+}
+
+/** Observe only this element's ancestor chain, never unrelated document scopes. */
+export function observeMotionReduction(
+	element: Element,
+	changed: (reduced: boolean) => void
+): () => void {
+	const query = typeof matchMedia === 'function' ? matchMedia(REDUCED_MOTION_QUERY) : undefined;
+	const notify = () => changed(elementPrefersReducedMotion(element));
+	query?.addEventListener?.('change', notify);
+	const observer =
+		typeof MutationObserver === 'function' ? new MutationObserver(notify) : undefined;
+	let ancestor: Element | null = element;
+	while (ancestor) {
+		observer?.observe(ancestor, { attributes: true, attributeFilter: ['data-bedrock-motion'] });
+		ancestor = ancestor.parentElement;
+	}
+	return () => {
+		query?.removeEventListener?.('change', notify);
+		observer?.disconnect();
+	};
 }

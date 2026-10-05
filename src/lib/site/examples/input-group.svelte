@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as InputGroup from '#lib/bedrock/ui/input-group';
 	import { Icon } from '#lib/bedrock/ui/icon';
 
@@ -9,7 +10,7 @@
 	);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Order lookup</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -37,4 +38,4 @@
 			</li>{/each}
 	</ul>
 	<p role="status" class="text-xs text-muted-foreground">{matches.length} matching orders</p>
-</section>
+</Card.Root>

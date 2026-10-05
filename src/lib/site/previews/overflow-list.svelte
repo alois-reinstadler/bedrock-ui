@@ -15,7 +15,7 @@
 </script>
 
 <div
-	class="resize-x overflow-hidden rounded-lg border border-dashed p-3"
+	class="resize-x overflow-hidden rounded-lg border border-dashed p-3 corner-theme"
 	style="max-width: 100%; width: 20rem;"
 >
 	<OverflowList items={tags}>

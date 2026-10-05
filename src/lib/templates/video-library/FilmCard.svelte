@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import PlayIcon from '@lucide/svelte/icons/play';
 	import { base, poster, runtime, type Film } from './catalog.js';
 	import { getLibrary } from './library.svelte.js';
@@ -27,12 +28,14 @@
 			<a href={`${base}/title/${film.slug}`}>{film.title}</a>
 			<p>{film.year} <span>·</span> {runtime(film)} <span>·</span> {film.genres[0]}</p>
 		</div>
-		<button
-			class="save-small"
+		<Button
+			variant="ghost"
+			type="button"
+			class={['control-templates-video-library-filmcard h-auto whitespace-normal', 'save-small']}
 			aria-label={`${library.saved.includes(film.slug) ? 'Remove' : 'Add'} ${film.title} ${library.saved.includes(film.slug) ? 'from' : 'to'} my list`}
 			aria-pressed={library.saved.includes(film.slug)}
 			onclick={() => library.toggle(film.slug)}
-			>{library.saved.includes(film.slug) ? '✓' : '+'}</button
+			>{library.saved.includes(film.slug) ? '✓' : '+'}</Button
 		>
 	</div>
 </article>

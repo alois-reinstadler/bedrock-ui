@@ -1,0 +1,29 @@
+<script lang="ts">
+	import { untrack } from 'svelte';
+	import { cn } from '#lib/utils.js';
+	import type { ShapeProps } from './types.js';
+	let { ref = $bindable(null), label, class: className, ...restProps }: ShapeProps = $props();
+</script>
+
+<svg
+	{@attach (node: SVGSVGElement) => {
+		if (untrack(() => ref) !== node) ref = node;
+		return () => {
+			if (ref === node) ref = null;
+		};
+	}}
+	xmlns="http://www.w3.org/2000/svg"
+	viewBox="0 0 256 256"
+	fill="currentColor"
+	role={label ? 'img' : undefined}
+	aria-label={label || undefined}
+	aria-hidden={label ? undefined : true}
+	focusable="false"
+	data-slot="shape"
+	class={cn('size-24 shrink-0', className)}
+	{...restProps}
+>
+	<path
+		d="M 64 192 L 256 192 L 256 256 L 0 256 L 0 0 L 64 0 Z M 256 160 L 96 160 L 96 0 L 256 0 Z M 176 48 C 158.327 48 144 62.327 144 80 C 144 97.673 158.327 112 176 112 C 193.673 112 208 97.673 208 80 C 208 62.327 193.673 48 176 48 Z"
+	/>
+</svg>

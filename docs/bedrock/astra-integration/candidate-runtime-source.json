@@ -1,0 +1,15 @@
+{
+	"captured": "2026-09-29T03:39:50.575Z",
+	"root": "/home/node/repos/bedrock-ui/",
+	"node": "v24.20.0",
+	"files": {
+		"pnpm-lock.yaml": "604c61231a8e4cf34b8d95f602e3e04c097bf81661a27ef137800429947630ed",
+		"vendor/astra-motion.json": "8f09becb11a8a70cc6fd2349582fa15d9834cab76a6b260b75029959ddd2c8af",
+		"src/lib/bedrock/ui/async-button/async-button.svelte": "dc7e3cb97d9c4e9352672adb03277afb7748e1924c4256c0219faa6f74c9663d",
+		"src/lib/bedrock/ui/async-button/async-button-label.svelte": "e24d18b66e8d360dfd893fc7c066ffe5023df217e15be1d481ced99f9d180f61",
+		"src/lib/bedrock/ui/avatar/avatar-stack.svelte": "c04cc3176eb402bf6acdeaa179a88b4d68189d2b8049e946fd27adbdf07d882e",
+		"src/lib/bedrock/ui/chat/chat-composer.svelte": "8d525cf49c7303bc1bad1c4a32873f97570e8134868559d7788f554680b3d712",
+		"src/lib/bedrock/ui/chat/chat-voice.svelte": "bcddc42da3b9be22981b785d16943b1e52e94abba14077ef465de53ce3a27503",
+		".svelte-kit/output/client/.vite/manifest.json": "4c4b1650d8352b75efbf49a3b9ac87cc7e0882777835a6a1c121600a45995fe4"
+	}
+}

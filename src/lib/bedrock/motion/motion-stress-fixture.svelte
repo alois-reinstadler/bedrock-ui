@@ -1,6 +1,7 @@
 <script lang="ts">
 	import LayoutGroup from './layout-group.svelte';
 	import { layout } from './layout.svelte.js';
+	import { ScrollArea } from '#lib/bedrock/ui/scroll-area';
 
 	const stressTransition = {
 		duration: 140,
@@ -21,22 +22,29 @@
 	<button type="button" onclick={() => (shifted = !shifted)}>Raster umschalten</button>
 </div>
 
-<LayoutGroup
-	class={`stress-root ${shifted ? 'is-shifted' : ''}`}
-	data-motion-stress-root
-	data-testid="stress-root"
-	data-count={count}
+<ScrollArea
+	class="h-[272px] w-full min-w-0"
+	orientation="horizontal"
+	role="region"
+	aria-label="Bewegungsraster"
 >
-	{#each items as id (id)}
-		<div
-			{@attach stressItem}
-			class="stress-item"
-			style={`--from-x: ${(id % 10) * 56}px; --to-x: ${(9 - (id % 10)) * 56}px; --y: ${Math.floor(id / 10) * 28}px;`}
-		>
-			{id + 1}
-		</div>
-	{/each}
-</LayoutGroup>
+	<LayoutGroup
+		class={`stress-root ${shifted ? 'is-shifted' : ''}`}
+		data-motion-stress-root
+		data-testid="stress-root"
+		data-count={count}
+	>
+		{#each items as id (id)}
+			<div
+				{@attach stressItem}
+				class="stress-item"
+				style={`--from-x: ${(id % 10) * 56}px; --to-x: ${(9 - (id % 10)) * 56}px; --y: ${Math.floor(id / 10) * 28}px;`}
+			>
+				{id + 1}
+			</div>
+		{/each}
+	</LayoutGroup>
+</ScrollArea>
 
 <button type="button" onclick={() => (expanded = !expanded)}>Größe umschalten</button>
 <LayoutGroup
@@ -51,6 +59,7 @@
 <style>
 	.stress-controls {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 0.5rem;
 		margin-bottom: 0.75rem;
 	}

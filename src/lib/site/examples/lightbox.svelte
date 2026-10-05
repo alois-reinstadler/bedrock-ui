@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Lightbox, type LightboxItem } from '#lib/bedrock/ui/lightbox';
 	import { Thumbnail } from '#lib/bedrock/ui/thumbnail';
 
@@ -12,7 +13,7 @@
 	];
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Inspection evidence</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -35,4 +36,4 @@
 	<p class="text-sm text-muted-foreground">
 		Open the evidence, move between attachments, then press Escape to return to the report.
 	</p>
-</section>
+</Card.Root>

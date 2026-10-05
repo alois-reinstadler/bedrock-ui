@@ -6,7 +6,7 @@
 	import FieldSet from '#lib/shadcn/ui/field/field-set.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FieldSet> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FieldSet> = $props();
 </script>
 
-<FieldSet {...props} />
+<FieldSet bind:ref {...props} />

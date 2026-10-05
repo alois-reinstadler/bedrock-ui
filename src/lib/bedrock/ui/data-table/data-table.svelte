@@ -1,75 +1,11 @@
 <script lang="ts" module>
-	import {
-		columnFilteringFeature,
-		columnGroupingFeature,
-		columnOrderingFeature,
-		columnVisibilityFeature,
-		createExpandedRowModel,
-		createFilteredRowModel,
-		createGroupedRowModel,
-		createPaginatedRowModel,
-		createSortedRowModel,
-		filterFn_includesString,
-		globalFilteringFeature,
-		rowExpandingFeature,
-		rowPaginationFeature,
-		rowSelectionFeature,
-		rowSortingFeature,
-		sortFn_alphanumeric,
-		tableFeatures
-	} from '@tanstack/svelte-table';
-
-	const features = tableFeatures({
-		rowSortingFeature,
-		sortedRowModel: createSortedRowModel(),
-		sortFns: { alphanumeric: sortFn_alphanumeric },
-		rowSelectionFeature,
-		columnVisibilityFeature,
-		columnFilteringFeature,
-		globalFilteringFeature,
-		filteredRowModel: createFilteredRowModel(),
-		filterFns: { includesString: filterFn_includesString },
-		columnOrderingFeature,
-		columnGroupingFeature,
-		groupedRowModel: createGroupedRowModel(),
-		rowExpandingFeature,
-		expandedRowModel: createExpandedRowModel(),
-		rowPaginationFeature,
-		paginatedRowModel: createPaginatedRowModel()
-	});
-	const PAGE_SIZES = [10, 25, 50, 100];
-	const ALL_VIEW_KEY = '__bedrock_all__';
-
-	const defaultLabels = {
-		all: 'All',
-		views: 'Views',
-		searchPlaceholder: 'Search…',
-		searchAria: 'Search table',
-		group: 'Group by',
-		groupNone: 'None',
-		columns: 'Columns',
-		selected: 'selected',
-		clearSelection: 'Clear selection',
-		selectAll: 'Select all rows',
-		selectRow: 'Select row',
-		selectGroup: 'Select group',
-		noResults: 'No results.',
-		showAll: 'Show all',
-		entries: (shown: number, total: number) => `${shown} of ${total} entries`,
-		rowsPerPage: 'Rows per page',
-		pageOf: (page: number, pages: number) => `Page ${page} of ${pages}`,
-		firstPage: 'First page',
-		previousPage: 'Previous page',
-		nextPage: 'Next page',
-		lastPage: 'Last page',
-		reorderHint: 'Drag the column or move it with Alt+Arrow keys',
-		reorderAria: (header: string) => `${header} — move with Alt+Arrow keys`
-	};
-
-	export type DataTableLabels = Partial<typeof defaultLabels>;
+	import type { DataTableLabels as Labels } from './model.js';
+	export type DataTableLabels = Labels;
 </script>
 
 <script lang="ts" generics="TData extends import('@tanstack/svelte-table').RowData">
+	import { features, PAGE_SIZES, ALL_VIEW_KEY, defaultLabels } from './model.js';
+	import DataTableViews from './data-table-views.svelte';
 	import ArrowDownIcon from '@lucide/svelte/icons/arrow-down';
 	import ArrowUpIcon from '@lucide/svelte/icons/arrow-up';
 	import ChevronDownIcon from '@lucide/svelte/icons/chevron-down';
@@ -83,7 +19,6 @@
 	import Settings2Icon from '@lucide/svelte/icons/settings-2';
 	import XIcon from '@lucide/svelte/icons/x';
 	import { createTable } from '@tanstack/svelte-table';
-	import { Swap, createLayoutGroup, layout } from '#lib/bedrock/motion/index.js';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Checkbox } from '#lib/bedrock/ui/checkbox';
@@ -92,7 +27,6 @@
 	import * as NativeSelect from '#lib/bedrock/ui/native-select';
 	import * as Table from '#lib/bedrock/ui/table';
 	import { cn } from '#lib/utils.js';
-	import { onDestroy } from 'svelte';
 	import type { Snippet } from 'svelte';
 	import { formatCellValue, formatCurrencyParts } from './formatters.js';
 	import type { DataTableColumn, DataTableView } from './types.js';
@@ -215,34 +149,6 @@
 		table.setPageIndex(0);
 	}
 
-	// One indicator slides between tabs instead of each tab toggling its own.
-	// The tablist is its own layout group; the indicator is the only
-	// registered node, so discrete left/width writes become spring projections.
-	const tabGroup = createLayoutGroup();
-	const tabIndicatorLayout = layout();
-	onDestroy(() => tabGroup.destroy());
-	let tablistEl = $state<HTMLDivElement | null>(null);
-	let tabIndicator = $state({ x: 0, width: 0 });
-
-	function measureTabIndicator() {
-		const activeTab = tablistEl?.querySelector<HTMLElement>('[role="tab"][aria-selected="true"]');
-		if (!activeTab) return;
-		tabIndicator = { x: activeTab.offsetLeft + 8, width: Math.max(activeTab.offsetWidth - 16, 0) };
-	}
-
-	$effect(() => {
-		void activeViewKey;
-		void views;
-		void viewCounts;
-		measureTabIndicator();
-	});
-
-	$effect(() => {
-		if (!tablistEl) return;
-		const observer = new ResizeObserver(() => measureTabIndicator());
-		observer.observe(tablistEl);
-		return () => observer.disconnect();
-	});
 	const isGrouped = $derived(grouping.length > 0);
 
 	function setGrouping(key: string) {
@@ -332,20 +238,6 @@
 		dropTarget = null;
 	}
 
-	function onTabKeydown(event: KeyboardEvent, position: number) {
-		const keys = [ALL_VIEW_KEY, ...(views ?? []).map((view) => view.key)];
-		let target: number;
-		if (event.key === 'ArrowRight') target = (position + 1) % keys.length;
-		else if (event.key === 'ArrowLeft') target = (position - 1 + keys.length) % keys.length;
-		else if (event.key === 'Home') target = 0;
-		else if (event.key === 'End') target = keys.length - 1;
-		else return;
-		event.preventDefault();
-		selectView(keys[target]);
-		const tablist = (event.currentTarget as HTMLElement).closest('[role="tablist"]');
-		(tablist?.querySelectorAll<HTMLElement>('[role="tab"]')[target] as HTMLElement)?.focus();
-	}
-
 	function onHeaderKeydown(event: KeyboardEvent, id: string) {
 		if (!reorderable || !event.altKey) return;
 		if (event.key === 'ArrowLeft') {
@@ -372,55 +264,14 @@
 
 <div data-slot="data-table" class={cn('flex w-full flex-col gap-3', className)}>
 	{#if views?.length}
-		<div
-			bind:this={tablistEl}
-			{@attach tabGroup.bindRoot}
-			class="relative flex items-center gap-1 overflow-x-auto border-b border-border"
-			role="tablist"
-			aria-label={l.views}
-		>
-			<span
-				{@attach tabIndicatorLayout}
-				aria-hidden="true"
-				class={cn(
-					'bedrock-tab-indicator absolute bottom-0 h-0.5 rounded-full bg-primary',
-					tabIndicator.width === 0 && 'opacity-0'
-				)}
-				style:left="{tabIndicator.x}px"
-				style:width="{tabIndicator.width}px"
-			></span>
-			<button
-				type="button"
-				role="tab"
-				aria-selected={activeViewKey === ALL_VIEW_KEY}
-				tabindex={activeViewKey === ALL_VIEW_KEY ? 0 : -1}
-				class={cn(
-					'min-h-11 shrink-0 px-3 text-sm font-medium focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-					activeViewKey === ALL_VIEW_KEY ? 'text-foreground' : 'text-muted-foreground'
-				)}
-				onclick={() => selectView(ALL_VIEW_KEY)}
-				onkeydown={(event: KeyboardEvent) => onTabKeydown(event, 0)}
-			>
-				{l.all} <span class="ml-1 tabular-nums">{data.length}</span>
-			</button>
-			{#each views as view, viewIndex (view.key)}
-				{@const count = viewCounts.get(view.key) ?? 0}
-				<button
-					type="button"
-					role="tab"
-					aria-selected={activeViewKey === view.key}
-					tabindex={activeViewKey === view.key ? 0 : -1}
-					class={cn(
-						'min-h-11 shrink-0 px-3 text-sm font-medium focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
-						activeViewKey === view.key ? 'text-foreground' : 'text-muted-foreground'
-					)}
-					onclick={() => selectView(view.key)}
-					onkeydown={(event: KeyboardEvent) => onTabKeydown(event, viewIndex + 1)}
-				>
-					{view.label} <span class="ml-1 tabular-nums">{count}</span>
-				</button>
-			{/each}
-		</div>
+		<DataTableViews
+			{views}
+			{activeViewKey}
+			{viewCounts}
+			total={data.length}
+			labels={l}
+			onSelect={selectView}
+		/>
 	{/if}
 
 	{#if searchable || groupable?.length || hideableColumns.length || exportActions}
@@ -475,7 +326,7 @@
 		</div>
 	{/if}
 
-	<div class="overflow-x-auto rounded-lg border border-border">
+	<div class="overflow-x-auto rounded-lg border border-border corner-theme">
 		<Table.Root>
 			{#if caption}<Table.Caption class="sr-only">{caption}</Table.Caption>{/if}
 			<Table.Header
@@ -640,7 +491,7 @@
 			class="bedrock-selection-bar sticky bottom-4 z-10 mx-auto flex items-center gap-2 rounded-full border border-border bg-background/95 py-1.5 pr-1.5 pl-4 shadow-lg supports-backdrop-filter:backdrop-blur-sm"
 		>
 			<span class="flex items-center gap-1 text-sm font-medium tabular-nums">
-				<Swap key={selectedRows.length}>{selectedRows.length}</Swap>
+				{selectedRows.length}
 				{l.selected}
 			</span>
 			{@render actions?.(selectedRows)}
@@ -657,7 +508,7 @@
 
 	<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
 		<span class="tabular-nums">{l.entries(filteredRows.length, data.length)}</span>
-		{#if pageSize && !isGrouped}<div class="ml-auto flex items-center gap-4">
+		{#if pageSize && !isGrouped}<div class="ml-auto flex flex-wrap items-center gap-x-4 gap-y-2">
 				<label class="flex items-center gap-2" for="{uid}-page-size"
 					>{l.rowsPerPage}<NativeSelect.Root
 						id="{uid}-page-size"
@@ -704,11 +555,6 @@
 </div>
 
 <style>
-	/* Movement comes from the shared-layout engine; only visibility fades. */
-	.bedrock-tab-indicator {
-		transition: opacity var(--motion-state) var(--motion-ease-enter);
-	}
-
 	.bedrock-selection-bar {
 		transition:
 			translate var(--motion-enter) var(--motion-ease-enter),

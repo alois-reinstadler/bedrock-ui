@@ -18,6 +18,8 @@
 	};
 
 	export type SteppedFormProps = Omit<HTMLFormAttributes, 'onsubmit'> & {
+		/** Optional panel change; never animates the initial step. */
+		motion?: 'none' | 'panel';
 		steps: SteppedFormStep[];
 		value?: string;
 		defaultValue?: string;
@@ -40,6 +42,7 @@
 </script>
 
 <script lang="ts">
+	import { panelChange } from '#lib/bedrock/motion/panel-change.js';
 	import { cn } from '#lib/utils.js';
 	import { onMount, tick, type Snippet } from 'svelte';
 	import type { Attachment } from 'svelte/attachments';
@@ -53,6 +56,7 @@
 
 	let {
 		ref = $bindable(null),
+		motion = 'none',
 		class: className,
 		steps,
 		value = $bindable(),
@@ -307,6 +311,11 @@
 		await retryAction?.();
 	}
 
+	const attachPanel = panelChange(
+		() => ({ key: current, motion, direction }),
+		'[data-slot="stepped-form-step"]:not([hidden])'
+	);
+
 	const attachForm: Attachment<HTMLFormElement> = (node) => {
 		ref = node;
 		return () => {
@@ -335,6 +344,8 @@
 </script>
 
 <form
+	{@attach attachPanel}
+	data-panel-motion={motion}
 	{@attach attachForm}
 	data-slot="stepped-form"
 	data-status={status}

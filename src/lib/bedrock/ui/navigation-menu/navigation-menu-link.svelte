@@ -6,7 +6,7 @@
 	import NavigationMenuLink from '#lib/shadcn/ui/navigation-menu/navigation-menu-link.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof NavigationMenuLink> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof NavigationMenuLink> = $props();
 </script>
 
-<NavigationMenuLink {...props} />
+<NavigationMenuLink bind:ref {...props} />

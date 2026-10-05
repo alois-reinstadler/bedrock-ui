@@ -6,7 +6,7 @@
 	import NativeSelectOption from '#lib/shadcn/ui/native-select/native-select-option.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof NativeSelectOption> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof NativeSelectOption> = $props();
 </script>
 
-<NativeSelectOption {...props} />
+<NativeSelectOption bind:ref {...props} />

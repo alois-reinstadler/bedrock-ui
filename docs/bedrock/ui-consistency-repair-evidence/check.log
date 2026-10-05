@@ -1,0 +1,19 @@
+$ svelte-kit sync && svelte-check --tsconfig ./tsconfig.json
+Loading svelte-check in workspace: /home/node/repos/bedrock-ui
+Getting Svelte diagnostics...
+
+/home/node/repos/bedrock-ui/src/routes/templates/video-library/+layout.svelte:87:24
+Error: Object literal may only specify known properties, and '"modal"' does not exist in type '{ open?: boolean | undefined; onOpenChange?: OnChangeFn<boolean> | undefined; onOpenChangeComplete?: OnChangeFn<boolean> | undefined; dir?: Direction | undefined; } & { ...; }'. (ts)
+				<a href={base} aria-current={page.url.pathname === base ? 'page' : undefined}>Home</a>
+				<DropdownMenu.Root modal={false}>
+					<DropdownMenu.Trigger class="genre-menu-trigger"
+
+/home/node/repos/bedrock-ui/src/routes/templates/video-library/+layout.svelte:124:23
+Error: Object literal may only specify known properties, and '"modal"' does not exist in type '{ open?: boolean | undefined; onOpenChange?: OnChangeFn<boolean> | undefined; onOpenChangeComplete?: OnChangeFn<boolean> | undefined; dir?: Direction | undefined; } & { ...; }'. (ts)
+			</form>
+			<DropdownMenu.Root modal={false}>
+				<DropdownMenu.Trigger class="account-menu-trigger" aria-label="Your account">
+
+====================================
+svelte-check found 2 errors and 0 warnings in 1 file
+[ELIFECYCLE] Command failed with exit code 1.

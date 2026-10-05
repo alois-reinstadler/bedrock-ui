@@ -88,7 +88,12 @@
 	});
 </script>
 
-<div data-slot="example-card" class="min-w-0 overflow-hidden rounded-xl border bg-background">
+<!-- Chromium drops descendant backdrop masks inside a superellipse clipping surface.
+     Keep the demo frame round so examples render their actual blur. -->
+<div
+	data-slot="example-card"
+	class="min-w-0 overflow-hidden rounded-xl border bg-background corner-round"
+>
 	<Tabs.Root value={active} onValueChange={selectTab} class="gap-0">
 		<div class="flex min-h-12 flex-wrap items-center justify-between gap-2 border-b px-3 py-2">
 			<Tabs.List variant="line" aria-label={`${label} view`}
@@ -111,10 +116,10 @@
 						: 'Copy code'}</Button
 			>
 		</div>
-		<Tabs.Content value="preview" class="h-96 flex-none overflow-auto p-4 sm:p-6 md:h-[28rem]">
+		<Tabs.Content value="preview" class="example-panel flex-none overflow-auto p-4 sm:p-6">
 			{@render children()}
 		</Tabs.Content>
-		<Tabs.Content value="code" class="h-96 flex-none overflow-auto md:h-[28rem]">
+		<Tabs.Content value="code" class="example-panel flex-none overflow-auto">
 			{#if source}
 				{#if source.html}
 					<div class="example-source font-code text-[13px] leading-relaxed">
@@ -151,6 +156,12 @@
 </div>
 
 <style>
+	/* Short examples size to their content; long examples remain a bounded scroll region. */
+	:global(.example-panel) {
+		min-height: 10rem;
+		max-height: max(10rem, min(40rem, 75svh));
+	}
+
 	.example-source :global(pre) {
 		margin: 0;
 		padding: 1.5rem;

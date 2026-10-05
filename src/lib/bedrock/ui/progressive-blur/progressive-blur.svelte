@@ -79,7 +79,7 @@
 	data-visible={visible}
 	aria-hidden="true"
 	class={cn(
-		'pointer-events-none absolute isolate z-10 overflow-hidden',
+		'pointer-events-none absolute z-10 overflow-hidden',
 		resolvedOrientation === 'vertical'
 			? 'inset-x-0 h-(--progressive-blur-size)'
 			: 'inset-y-0 w-(--progressive-blur-size)',
@@ -99,13 +99,16 @@
 
 <style>
 	[data-slot='progressive-blur'] {
-		contain: paint;
+		/* The filters must sample content outside this decorative wrapper. Do not
+		   isolate or paint-contain it; keep stacking on the shared content parent. */
 		pointer-events: none;
+		max-width: 100%;
+		max-height: 100%;
 		--progressive-blur-direction: to top;
 	}
 
-	/* Protect controls sharing this decorative layer's positioned parent. */
-	:global(*:focus-within > [data-slot='progressive-blur']) {
+	/* Protect keyboard focus without hiding decoration for transient pointer focus. */
+	:global(*:is(:focus-visible, :has(:focus-visible)) > [data-slot='progressive-blur']) {
 		--progressive-blur-opacity: 0;
 		--progressive-blur-duration: 0s;
 	}
@@ -115,21 +118,33 @@
 	}
 
 	[data-side='top'] {
+		border-top-left-radius: inherit;
+		border-top-right-radius: inherit;
+
 		top: 0;
 		--progressive-blur-direction: to bottom;
 	}
 
 	[data-side='right'] {
+		border-top-right-radius: inherit;
+		border-bottom-right-radius: inherit;
+
 		right: 0;
 		--progressive-blur-direction: to left;
 	}
 
 	[data-side='bottom'] {
+		border-bottom-left-radius: inherit;
+		border-bottom-right-radius: inherit;
+
 		bottom: 0;
 		--progressive-blur-direction: to top;
 	}
 
 	[data-side='left'] {
+		border-top-left-radius: inherit;
+		border-bottom-left-radius: inherit;
+
 		left: 0;
 		--progressive-blur-direction: to right;
 	}
@@ -140,7 +155,8 @@
 	[data-blur-fallback],
 	[data-blur-tint] {
 		position: absolute;
-		inset: -1px;
+		inset: 0;
+		border-radius: inherit;
 		opacity: var(--progressive-blur-opacity, 1);
 		transition: opacity var(--progressive-blur-duration, var(--motion-state, 160ms))
 			var(--motion-ease-enter, ease-out);

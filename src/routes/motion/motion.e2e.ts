@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
 import AxeBuilder from '@axe-core/playwright';
 
 test.beforeEach(async ({ page }) => {
@@ -111,3 +111,40 @@ for (const route of ['/docs/motion', '/motion']) {
 		});
 	}
 }
+
+test('coordinated projects preserve keyboard focus and settle reduced layout', async ({ page }) => {
+	const trigger = page.getByRole('button', { name: 'View research details' });
+	await trigger.focus();
+	await trigger.press('Enter');
+	await expect(page.getByRole('button', { name: 'Hide research details' })).toBeFocused();
+	await page.getByRole('button', { name: 'Done with research' }).click();
+	await expect(trigger).toBeFocused();
+	await expect(page.getByRole('button', { name: 'Done with research' })).toHaveCount(0);
+	await page.getByTestId('bedrock-motion-reduced').check();
+	await trigger.click();
+	await expect(page.getByRole('button', { name: 'Done with research' })).toBeVisible();
+	await page.getByTestId('composition-reorder').click();
+	const cards = page.getByTestId('motion-composition').locator('article');
+	await expect(cards.first()).toHaveAttribute('data-testid', 'project-delivery');
+	await expect(page.getByRole('button', { name: 'Done with research' })).toBeVisible();
+});
+
+test('live reduction completes retained engine and project exits', async ({ page }) => {
+	await page.getByRole('button', { name: 'View research details' }).click();
+	const detail = page.getByTestId('project-research').locator('[id$="-details"]');
+	await expect(detail).toHaveCSS('opacity', '1');
+	await page.getByRole('button', { name: 'Hide research details' }).click();
+	await expect
+		.poll(() => detail.evaluate((node) => Number(getComputedStyle(node).opacity)))
+		.toBeLessThan(1);
+	await page.getByTestId('bedrock-motion-reduced').check();
+	await expect(detail).toHaveCount(0, { timeout: 150 });
+	await page.getByTestId('bedrock-motion-reduced').uncheck();
+	const panel = page.getByTestId('bedrock-engine-panel');
+	await page.getByTestId('bedrock-engine-toggle').click();
+	await expect
+		.poll(() => panel.evaluate((node) => Number(getComputedStyle(node).opacity)))
+		.toBeLessThan(1);
+	await page.getByTestId('bedrock-motion-reduced').check();
+	await expect(panel).toHaveCount(0, { timeout: 150 });
+});

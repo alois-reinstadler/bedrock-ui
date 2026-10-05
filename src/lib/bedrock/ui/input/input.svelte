@@ -6,7 +6,16 @@
 	import Input from '#lib/shadcn/ui/input/input.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Input> = $props();
+	let {
+		ref = $bindable(null),
+		value = $bindable(),
+		files = $bindable(),
+		...props
+	}: ComponentProps<typeof Input> = $props();
 </script>
 
-<Input {...props} />
+{#if props.type === 'file'}
+	<Input {...props} type="file" bind:ref bind:value bind:files />
+{:else}
+	<Input {...props} bind:ref bind:value />
+{/if}

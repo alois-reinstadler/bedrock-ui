@@ -1,15 +1,16 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as NavigationMenu from '#lib/bedrock/ui/navigation-menu';
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 overflow-visible p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Product resource navigation</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
 			Group related destinations while keeping the documentation entry directly reachable.
 		</p>
 	</header>
-	<div class="flex flex-wrap items-center gap-4 rounded-lg border p-3">
+	<div class="flex flex-wrap items-center gap-4 rounded-lg border p-3 corner-theme">
 		<span class="font-semibold">Workspace resources</span>
 
 		<NavigationMenu.Root>
@@ -35,4 +36,4 @@
 		Find the component reference or installation instructions from the Products menu. Docs remains a
 		direct link for returning readers.
 	</p>
-</section>
+</Card.Root>

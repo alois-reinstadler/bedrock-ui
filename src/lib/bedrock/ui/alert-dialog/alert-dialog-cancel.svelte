@@ -6,7 +6,7 @@
 	import AlertDialogCancel from '#lib/shadcn/ui/alert-dialog/alert-dialog-cancel.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AlertDialogCancel> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AlertDialogCancel> = $props();
 </script>
 
-<AlertDialogCancel {...props} />
+<AlertDialogCancel bind:ref {...props} />

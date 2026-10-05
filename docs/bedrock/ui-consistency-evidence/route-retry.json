@@ -1,0 +1,329 @@
+[
+	{
+		"slug": "aspect-ratio",
+		"checks": [
+			{
+				"tab": "overview",
+				"width": 1440,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio",
+				"title": "Aspect Ratio — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "overview",
+				"width": 1440,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio",
+				"title": "Aspect Ratio — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "overview",
+				"width": 390,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio",
+				"title": "Aspect Ratio — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			},
+			{
+				"tab": "overview",
+				"width": 390,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio",
+				"title": "Aspect Ratio — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			},
+			{
+				"tab": "properties",
+				"width": 1440,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio?tab=properties",
+				"title": "Aspect Ratio properties — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "properties",
+				"width": 1440,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio?tab=properties",
+				"title": "Aspect Ratio properties — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "properties",
+				"width": 390,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio?tab=properties",
+				"title": "Aspect Ratio properties — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			},
+			{
+				"tab": "properties",
+				"width": 390,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio?tab=properties",
+				"title": "Aspect Ratio properties — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			},
+			{
+				"tab": "accessibility",
+				"width": 1440,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio?tab=accessibility",
+				"title": "Aspect Ratio accessibility — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "accessibility",
+				"width": 1440,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio?tab=accessibility",
+				"title": "Aspect Ratio accessibility — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "accessibility",
+				"width": 390,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio?tab=accessibility",
+				"title": "Aspect Ratio accessibility — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 688
+				}
+			},
+			{
+				"tab": "accessibility",
+				"width": 390,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/aspect-ratio?tab=accessibility",
+				"title": "Aspect Ratio accessibility — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 688
+				}
+			}
+		],
+		"errors": []
+	},
+	{
+		"slug": "async-button",
+		"checks": [
+			{
+				"tab": "overview",
+				"width": 1440,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/async-button",
+				"title": "Async Button — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "overview",
+				"width": 1440,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/async-button",
+				"title": "Async Button — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "overview",
+				"width": 390,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/async-button",
+				"title": "Async Button — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			},
+			{
+				"tab": "overview",
+				"width": 390,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/async-button",
+				"title": "Async Button — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			},
+			{
+				"tab": "properties",
+				"width": 1440,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/async-button?tab=properties",
+				"title": "Async Button properties — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "properties",
+				"width": 1440,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/async-button?tab=properties",
+				"title": "Async Button properties — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "properties",
+				"width": 390,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/async-button?tab=properties",
+				"title": "Async Button properties — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			},
+			{
+				"tab": "properties",
+				"width": 390,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/async-button?tab=properties",
+				"title": "Async Button properties — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			},
+			{
+				"tab": "accessibility",
+				"width": 1440,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/async-button?tab=accessibility",
+				"title": "Async Button accessibility — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "accessibility",
+				"width": 1440,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/async-button?tab=accessibility",
+				"title": "Async Button accessibility — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "accessibility",
+				"width": 390,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/async-button?tab=accessibility",
+				"title": "Async Button accessibility — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 688
+				}
+			},
+			{
+				"tab": "accessibility",
+				"width": 390,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/async-button?tab=accessibility",
+				"title": "Async Button accessibility — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 688
+				}
+			}
+		],
+		"errors": []
+	},
+	{
+		"slug": "form",
+		"checks": [
+			{
+				"tab": "overview",
+				"width": 1440,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/form",
+				"title": "Form — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "overview",
+				"width": 1440,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/form",
+				"title": "Form — Bedrock",
+				"metrics": {
+					"width": 1440,
+					"scroll": 1440
+				}
+			},
+			{
+				"tab": "overview",
+				"width": 390,
+				"theme": "light",
+				"url": "http://127.0.0.1:4513/docs/components/form",
+				"title": "Form — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			},
+			{
+				"tab": "overview",
+				"width": 390,
+				"theme": "dark",
+				"url": "http://127.0.0.1:4513/docs/components/form",
+				"title": "Form — Bedrock",
+				"metrics": {
+					"width": 390,
+					"scroll": 390
+				}
+			}
+		],
+		"errors": [],
+		"blocked": "TimeoutError: locator.click: Timeout 16000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'Properties', exact: true })\u001b[22m\n"
+	}
+]

@@ -1,3 +1,4 @@
+import { mapAccessibility } from './map';
 import { semantics, keyboard } from './semantics';
 import type { ComponentAccessibilityGuide, ComponentReference } from './types';
 
@@ -91,7 +92,7 @@ function buttonAccessibility(): ComponentAccessibilityGuide {
 				criteria: 'WCAG 1.4.3: Contrast (Minimum)',
 				appliesTo: 'Rest, Hover, Pointer down',
 				guidance:
-					'Badge text needs at least 4.5:1 against its badge background. Badges are composed content, not a Button color prop. Audit all six built-in Badge variants in three states on page and surface backgrounds in both themes: 72 generated pairs (36 per theme). This is coverage, not a passing claim; the frozen tinted destructive Badge exception remains unresolved.'
+					'Badge text needs at least 4.5:1 against its badge background. Badges are composed content, not a Button color prop. Audit all six built-in Badge variants in three states on page and surface backgrounds in both themes: 72 generated pairs (36 per theme). This is coverage, not a passing claim; Bedrock uses a separate destructive-ink text token for tinted badges. Measure custom theme overrides and interactive states independently.'
 			},
 			{
 				requirement: 'Visible control boundary',
@@ -225,10 +226,66 @@ function steppedFormAccessibility(): ComponentAccessibilityGuide {
 }
 
 export function createComponentReference(slug: string, category: Category): ComponentReference {
+	if (slug === 'map') return { api: [], accessibility: mapAccessibility() };
 	if (slug === 'stepped-form') return { api: [], accessibility: steppedFormAccessibility() };
 	const accessibility = slug === 'button' ? buttonAccessibility() : baseAccessibility(category);
 	if (semantics[slug]) accessibility.semantics = [semantics[slug]];
 	if (keyboard[slug]) accessibility.keyboard = [keyboard[slug]];
+	if (slug === 'feedback') {
+		accessibility.semantics = [
+			'The launcher exposes expanded state and controls a named nonmodal region. Feedback leaves the page available for inspection; it is not a dialog or a focus trap.'
+		];
+		accessibility.keyboard = [
+			'Use Page note without a pointer. In selection mode, Tab to a page control and press Enter or Space to annotate it. Escape cancels the draft, cancels selection, or closes the panel.'
+		];
+		accessibility.focus = [
+			'The composer receives focus after selection. Cancel returns to the previous surviving control; closing returns focus to the launcher. Review the panel position so it does not obscure the target.'
+		];
+		accessibility.announcements = [
+			'A polite status region reports local edits, export and delivery results. Draft storage errors use an alert.'
+		];
+		accessibility.knownGaps = [
+			'Non-interactive page content cannot be reached by Tab for element selection; Page note is the keyboard alternative. Native top-layer dialogs and focus-trapping modal integrations are not yet supported.'
+		];
+	}
+	if (slug === 'skeleton' || slug === 'pdf-viewer') {
+		accessibility.reducedMotion = [
+			'Skeleton and SkeletonGroup resolve to static placeholders when the OS or application requests reduced motion, including preference changes while loading. Choose variant="static" to keep placeholders still in every motion mode.'
+		];
+	}
+	if (slug === 'image') {
+		accessibility.keyboard = [
+			'Image is non-interactive and adds no tab stop. Place it in a labelled link or button when an action is needed.'
+		];
+		accessibility.focus = [
+			'Loading, failure, and source replacement do not move focus. Keep fallback snippets non-interactive.'
+		];
+		accessibility.labels = [
+			'Supply alt describing the image’s purpose, or alt="" for decorative media. The fallback retains this alternative without duplicating the hidden broken image.'
+		];
+		accessibility.announcements = [
+			'The frame exposes aria-busy during loading. Skeletons and ordinary load completion are not live announcements; provide a separate status message if a user action needs confirmation.'
+		];
+		accessibility.reducedMotion = [
+			'With reduced motion, the image opacity transition is disabled and the loading skeleton remains static.'
+		];
+		accessibility.knownGaps = [
+			'Image loading state requires JavaScript. Use native img for a no-JavaScript page.'
+		];
+	}
+	if (slug === 'emoji') {
+		accessibility.keyboard = [
+			'Emoji is non-interactive and adds no tab stops. Put reactions inside labelled native buttons.'
+		];
+		accessibility.focus = ['Image loading, fallback, and source changes never move focus.'];
+		accessibility.labels = [
+			'Single emoji are named by their Unicode; mixed content reads as ordinary text. Use label to name the entire value, or decorative when nearby text already names it. Artwork is hidden from assistive technology; the original text remains available.'
+		];
+		accessibility.announcements = [
+			'No live region is added automatically. Emoji preserves the reading order of text and emoji.'
+		];
+		accessibility.reducedMotion = ['These components have no animation.'];
+	}
 	if (['dialog', 'alert-dialog', 'drawer', 'sheet', 'lightbox'].includes(slug)) {
 		accessibility.focus = [
 			'On opening, focus moves inside the named dialog. Tab and Shift+Tab stay inside while modal; closing restores focus to the surviving trigger or a logical alternative.',
@@ -262,13 +319,13 @@ export function createComponentReference(slug: string, category: Category): Comp
 
 	if (slug === 'badge') {
 		accessibility.knownGaps = [
-			'The tinted destructive Badge contrast exception is currently allowlisted in the frozen shadcn layer. Treat it as unresolved, not compliant.',
+			'Tinted destructive badges use Bedrock’s destructive-ink token. Their default colors are covered by the unfiltered axe scans; custom themes still need contrast checks.',
 			'The anchor Badge diagnostic also measured light-theme outline and ghost hover/press text near 4.35:1, below the 4.5:1 text threshold. These inherited treatments remain unchanged. Static badges, icons, and focus rings require separate checks.'
 		];
 	}
 	if (slug === 'avatar') {
 		accessibility.knownGaps = [
-			'Avatar internals retain a frozen shadcn contrast exception. Supply meaningful adjacent identity text and do not treat the image alone as the accessible name.'
+			'Custom fallback colors and identity backgrounds can reduce contrast. The default fallback and overflow count use the foreground token and have no audit exemptions. Supply meaningful adjacent identity text rather than relying on the image alone.'
 		];
 	}
 	if (slug === 'slider') {

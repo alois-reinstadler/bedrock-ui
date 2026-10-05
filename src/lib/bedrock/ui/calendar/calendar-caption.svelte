@@ -6,7 +6,7 @@
 	import CalendarCaption from '#lib/shadcn/ui/calendar/calendar-caption.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CalendarCaption> = $props();
+	let { placeholder = $bindable(), ...props }: ComponentProps<typeof CalendarCaption> = $props();
 </script>
 
-<CalendarCaption {...props} />
+<CalendarCaption bind:placeholder {...props} />

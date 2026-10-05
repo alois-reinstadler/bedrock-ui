@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Button } from '#lib/bedrock/ui/button';
 	import * as Item from '#lib/bedrock/ui/item';
@@ -7,7 +8,7 @@
 	let opened = $state(false);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Project handoff files</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -38,11 +39,11 @@
 			>
 		</Item.Root>
 	</Item.Group>
-	{#if opened}<div class="rounded-lg bg-muted p-4 text-sm">
+	{#if opened}<div class="rounded-lg bg-muted p-4 text-sm corner-theme">
 			<h4 class="font-medium">Site photos · handoff notes</h4>
 			<p class="mt-2">
 				14 inspection images are ready for review. Check the entrance clearance and mark any missing
 				signage before opening day.
 			</p>
 		</div>{/if}
-</section>
+</Card.Root>

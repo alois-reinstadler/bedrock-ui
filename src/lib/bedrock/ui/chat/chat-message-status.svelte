@@ -16,7 +16,7 @@
 </script>
 
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { createChatAction } from './agent-action.svelte';
 	import { Button } from '#lib/bedrock/ui/button';
 	import Feedback from './chat-feedback.svelte';
 	import { cn } from '#lib/utils.js';
@@ -37,24 +37,11 @@
 		labels?: ChatMessageStatusLabels;
 	} = $props();
 	const labels = $derived({ ...defaults, ...overrides });
-	let pending = $state(false);
-	let retryError = $state(false);
-	let disposed = false;
-	onDestroy(() => {
-		disposed = true;
-	});
+	const action = createChatAction();
 	const recoverable = $derived(status === 'failed' || status === 'interrupted');
 	async function retry() {
-		if (disabled || pending || !onRetry) return;
-		pending = true;
-		retryError = false;
-		try {
-			await onRetry();
-		} catch {
-			if (!disposed) retryError = true;
-		} finally {
-			if (!disposed) pending = false;
-		}
+		if (disabled || !onRetry) return;
+		await action.run(onRetry);
 	}
 </script>
 
@@ -66,7 +53,7 @@
 >
 	<Feedback
 		role="status"
-		tone={pending
+		tone={action.pending
 			? 'info'
 			: status === 'failed'
 				? 'error'
@@ -75,15 +62,15 @@
 					: status === 'sent'
 						? 'success'
 						: 'info'}
-		busy={pending || ['sending', 'waiting', 'streaming'].includes(status)}
-		message={pending ? labels.retrying : (detail ?? labels[status])}
+		busy={action.pending || ['sending', 'waiting', 'streaming'].includes(status)}
+		message={action.pending ? labels.retrying : (detail ?? labels[status])}
 	/>
 	{#if recoverable && onRetry}<Button
 			type="button"
 			size="sm"
 			variant="ghost"
-			disabled={disabled || pending}
+			disabled={disabled || action.pending}
 			onclick={retry}>{labels.retry}</Button
 		>{/if}
-	{#if retryError && recoverable}<Feedback tone="error" message={labels.retryFailed} />{/if}
+	{#if action.failed && recoverable}<Feedback tone="error" message={labels.retryFailed} />{/if}
 </div>

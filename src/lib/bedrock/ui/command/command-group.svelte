@@ -6,7 +6,7 @@
 	import CommandGroup from '#lib/shadcn/ui/command/command-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CommandGroup> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CommandGroup> = $props();
 </script>
 
-<CommandGroup {...props} />
+<CommandGroup bind:ref {...props} />

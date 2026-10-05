@@ -6,7 +6,7 @@
 	import SidebarGroupContent from '#lib/shadcn/ui/sidebar/sidebar-group-content.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SidebarGroupContent> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SidebarGroupContent> = $props();
 </script>
 
-<SidebarGroupContent {...props} />
+<SidebarGroupContent bind:ref {...props} />

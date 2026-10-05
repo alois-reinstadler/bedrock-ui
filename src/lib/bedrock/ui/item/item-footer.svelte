@@ -6,7 +6,7 @@
 	import ItemFooter from '#lib/shadcn/ui/item/item-footer.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ItemFooter> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ItemFooter> = $props();
 </script>
 
-<ItemFooter {...props} />
+<ItemFooter bind:ref {...props} />

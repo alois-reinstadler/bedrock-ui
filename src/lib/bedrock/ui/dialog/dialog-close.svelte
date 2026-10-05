@@ -6,7 +6,7 @@
 	import DialogClose from '#lib/shadcn/ui/dialog/dialog-close.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DialogClose> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DialogClose> = $props();
 </script>
 
-<DialogClose {...props} />
+<DialogClose bind:ref {...props} />

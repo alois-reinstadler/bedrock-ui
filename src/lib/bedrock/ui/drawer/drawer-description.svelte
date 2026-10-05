@@ -6,7 +6,7 @@
 	import DrawerDescription from '#lib/shadcn/ui/drawer/drawer-description.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DrawerDescription> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DrawerDescription> = $props();
 </script>
 
-<DrawerDescription {...props} />
+<DrawerDescription bind:ref {...props} />

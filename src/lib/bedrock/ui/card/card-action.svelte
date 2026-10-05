@@ -6,7 +6,7 @@
 	import CardAction from '#lib/shadcn/ui/card/card-action.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CardAction> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CardAction> = $props();
 </script>
 
-<CardAction {...props} />
+<CardAction bind:ref {...props} />

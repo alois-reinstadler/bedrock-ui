@@ -6,7 +6,11 @@
 	import DrawerNested from '#lib/shadcn/ui/drawer/drawer-nested.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DrawerNested> = $props();
+	let {
+		open = $bindable(false),
+		activeSnapPoint = $bindable(null),
+		...props
+	}: ComponentProps<typeof DrawerNested> = $props();
 </script>
 
-<DrawerNested {...props} />
+<DrawerNested bind:open bind:activeSnapPoint {...props} />

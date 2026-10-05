@@ -6,7 +6,11 @@
 	import ContextMenuRadioGroup from '#lib/shadcn/ui/context-menu/context-menu-radio-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ContextMenuRadioGroup> = $props();
+	let {
+		ref = $bindable(null),
+		value = $bindable(''),
+		...props
+	}: ComponentProps<typeof ContextMenuRadioGroup> = $props();
 </script>
 
-<ContextMenuRadioGroup {...props} />
+<ContextMenuRadioGroup bind:ref bind:value {...props} />

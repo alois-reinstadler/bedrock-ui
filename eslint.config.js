@@ -34,8 +34,62 @@ export default defineConfig(
 		}
 	},
 	{
-		// Override or add rule settings here, such as:
-		// 'svelte/button-has-type': 'error'
-		rules: {}
+		files: ['src/routes/**/*.{ts,svelte}', 'src/lib/{site,templates}/**/*.{ts,svelte}'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: ['#lib/shadcn/**', '#lib/components/ui/**', '$lib/shadcn/**'],
+							message: 'Product and documentation surfaces consume the Bedrock public API.'
+						}
+					]
+				}
+			]
+		}
+	},
+	{
+		files: ['src/lib/bedrock/**/*.{ts,svelte}'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					patterns: [
+						{
+							group: [
+								'#lib/site/**',
+								'#lib/templates/**',
+								'#lib/server/**',
+								'$lib/site/**',
+								'$lib/templates/**',
+								'$lib/server/**',
+								'$app/**'
+							],
+							message:
+								'Bedrock must stay independent of application routes, documentation and templates.'
+						}
+					]
+				}
+			]
+		}
+	},
+	{
+		files: ['src/**/*.e2e.ts'],
+		rules: {
+			'no-restricted-imports': [
+				'error',
+				{
+					paths: [
+						{
+							name: '@playwright/test',
+							importNames: ['test', 'default'],
+							message:
+								'Import test from scripts/shared-browser-test so suites share the configured browser lifecycle.'
+						}
+					]
+				}
+			]
+		}
 	}
 );

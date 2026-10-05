@@ -6,7 +6,7 @@
 	import SheetHeader from '#lib/shadcn/ui/sheet/sheet-header.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SheetHeader> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SheetHeader> = $props();
 </script>
 
-<SheetHeader {...props} />
+<SheetHeader bind:ref {...props} />

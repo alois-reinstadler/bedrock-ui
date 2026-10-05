@@ -6,7 +6,7 @@
 	import MenubarShortcut from '#lib/shadcn/ui/menubar/menubar-shortcut.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof MenubarShortcut> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof MenubarShortcut> = $props();
 </script>
 
-<MenubarShortcut {...props} />
+<MenubarShortcut bind:ref {...props} />

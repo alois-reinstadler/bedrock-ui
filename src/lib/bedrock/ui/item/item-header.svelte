@@ -6,7 +6,7 @@
 	import ItemHeader from '#lib/shadcn/ui/item/item-header.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ItemHeader> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ItemHeader> = $props();
 </script>
 
-<ItemHeader {...props} />
+<ItemHeader bind:ref {...props} />

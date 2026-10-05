@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import PlayIcon from '@lucide/svelte/icons/play';
 	import { base, films, poster, runtime, genreSlug } from '#lib/templates/video-library/catalog.js';
 	import { getLibrary } from '#lib/templates/video-library/library.svelte.js';
@@ -22,15 +23,20 @@
 			{film.year}<span>·</span>{runtime(film)}<span>·</span>{film.genres.join(' / ')}
 		</p>
 		<div class="film-actions">
-			<a class="frame-button primary" href={`${base}/watch/${film.slug}`}
+			<Button class="frame-button primary" href={`${base}/watch/${film.slug}`}
 				><PlayIcon size={17} fill="currentColor" aria-hidden="true" />
 				{library.progress[film.slug] ? 'Resume' : 'Play'}
-				{film.kind === 'Trailer' ? 'trailer' : 'film'}</a
-			><button
-				class="frame-button secondary"
+				{film.kind === 'Trailer' ? 'trailer' : 'film'}</Button
+			><Button
+				variant="ghost"
+				type="button"
+				class={[
+					'control-templates-video-library-title-slug-page h-auto whitespace-normal',
+					'frame-button secondary'
+				]}
 				aria-pressed={library.saved.includes(film.slug)}
 				onclick={() => library.toggle(film.slug)}
-				>{library.saved.includes(film.slug) ? '✓ In my list' : '+ My list'}</button
+				>{library.saved.includes(film.slug) ? '✓ In my list' : '+ My list'}</Button
 			>
 		</div>
 	</div>

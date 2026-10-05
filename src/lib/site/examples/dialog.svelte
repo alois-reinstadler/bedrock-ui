@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Dialog from '#lib/bedrock/ui/dialog';
 	import { Input } from '#lib/bedrock/ui/input';
 	import { Button } from '#lib/bedrock/ui/button';
@@ -14,7 +15,7 @@
 			A dialog is useful for a short focused edit. Preserve the current name until the user saves.
 		</p>
 	</header>
-	<div class="flex flex-wrap items-center justify-between gap-4 rounded-xl border bg-card p-5">
+	<Card.Root class="flex flex-row flex-wrap items-center justify-between gap-4 p-5">
 		<div>
 			<p class="font-medium">{name}</p>
 			<p class="text-sm text-muted-foreground">8 documents · Private workspace</p>
@@ -63,6 +64,6 @@
 				</form></Dialog.Content
 			></Dialog.Root
 		>
-	</div>
+	</Card.Root>
 	<p role="status" class="text-sm text-muted-foreground">Current project: {name}</p>
 </section>

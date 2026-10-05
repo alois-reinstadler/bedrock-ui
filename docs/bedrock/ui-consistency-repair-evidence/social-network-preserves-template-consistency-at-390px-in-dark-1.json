@@ -1,0 +1,67 @@
+{
+	"slug": "social-network",
+	"width": 390,
+	"colorScheme": "dark",
+	"initialControls": {
+		"radius": "22.4px",
+		"corner": "superellipse(3)"
+	},
+	"overriddenControls": {
+		"radius": "33.6px",
+		"corner": "superellipse(0)"
+	},
+	"pills": [
+		{
+			"radius": "9999px",
+			"corner": "superellipse(1)"
+		},
+		{
+			"radius": "9999px",
+			"corner": "superellipse(1)"
+		},
+		{
+			"radius": "9999px",
+			"corner": "superellipse(1)"
+		},
+		{
+			"radius": "9999px",
+			"corner": "superellipse(1)"
+		},
+		{
+			"radius": "9999px",
+			"corner": "superellipse(1)"
+		},
+		{
+			"radius": "9999px",
+			"corner": "superellipse(1)"
+		},
+		{
+			"radius": "9999px",
+			"corner": "superellipse(1)"
+		}
+	],
+	"pageErrors": [],
+	"consoleErrors": [],
+	"failedRequests": [
+		{
+			"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+			"error": "net::ERR_ABORTED"
+		},
+		{
+			"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+			"error": "net::ERR_ABORTED"
+		},
+		{
+			"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+			"error": "net::ERR_ABORTED"
+		},
+		{
+			"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+			"error": "net::ERR_ABORTED"
+		},
+		{
+			"url": "https://upload.wikimedia.org/wikipedia/commons/transcoded/4/41/Big_Buck_Bunny_medium.ogv/Big_Buck_Bunny_medium.ogv.480p.vp9.webm",
+			"error": "net::ERR_ABORTED"
+		}
+	]
+}

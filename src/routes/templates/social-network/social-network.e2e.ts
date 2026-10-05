@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../../scripts/shared-browser-test';
 
 const base = '/templates/social-network';
 
@@ -54,6 +54,10 @@ test('thread and profile routes survive refresh; replies and account dropdown wo
 	await page.goto(`${base}/post/long-way-home`);
 	await expect(page.getByRole('heading', { name: 'Post', exact: true })).toBeVisible();
 	await page.reload();
+	await expect(page.getByRole('region', { name: 'Template preview controls' })).toHaveAttribute(
+		'data-ready',
+		'true'
+	);
 	await page.getByRole('textbox', { name: 'Write a reply' }).fill('Taking the long way tomorrow.');
 	await page.getByRole('button', { name: 'Reply', exact: true }).click();
 	await expect(page.getByText('Taking the long way tomorrow.')).toBeVisible();

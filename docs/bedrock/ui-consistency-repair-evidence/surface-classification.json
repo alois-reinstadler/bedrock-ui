@@ -1,0 +1,582 @@
+[
+	{
+		"file": "src/lib/site/examples/indicator.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/color-picker.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/time-input.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/accordion.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/animated-signature.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/carousel.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/timestamp.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/color-area.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/table.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/dialog.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/marquee.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/label.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/text.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/citation.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/avatar.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/pagination.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/input.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/outline.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/banner.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/overflow-list.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/radio-group.svelte",
+		"cards": 0,
+		"corners": 2
+	},
+	{
+		"file": "src/lib/site/examples/dot-pattern.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/emoji.svelte",
+		"cards": 2,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/multi-selector.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/noise-overlay.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/date-time-input.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/menubar.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/shapes.svelte",
+		"status": "repaired",
+		"reason": "Card settings panel; themed native named scroll group; SVG geometry retained"
+	},
+	{
+		"file": "src/lib/site/examples/checkbox-list.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/scroll-area.svelte",
+		"status": "repaired",
+		"reason": "Card pricing comparison panels; themed activity rows; custom scroll-grid geometry retained"
+	},
+	{
+		"file": "src/lib/site/examples/button-group.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/color-swatch-picker.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/color-swatch.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/blockquote.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/checkbox.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/field.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/grid-pattern.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/item.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/progress.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/separator.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/input-group.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/color-field.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/form.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/textarea.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/sidebar.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/file-input.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/toggle-group.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/chart.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/empty.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/token.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/thumbnail.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/color-slider.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/link.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/sheet.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/native-select.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/heading.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/markdown.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/popover.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/number-input.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/select.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/feedback.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/stepped-form.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/breadcrumb.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/pdf-viewer.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/date-input.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/toggle.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/map.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/tooltip.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/button.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/list.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/slider.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/date-range-input.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/switch.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/field-status.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/combobox.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/collapsible.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/alert-dialog.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/spinner.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/async-button.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/dropdown-menu.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/input-otp.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/metadata-list.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/icon.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/kbd.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/icon-button.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/alert.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/progressive-blur.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/skeleton.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/badge.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/tokenizer.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/navigation-menu.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/sonner.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/stepper.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/resizable.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/examples/lightbox.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/drawer.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/examples/phone-input.svelte",
+		"cards": 1,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/examples/hover-card.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/previews/carousel.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/color-area.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/previews/overflow-list.svelte",
+		"cards": 0,
+		"corners": 1
+	},
+	{
+		"file": "src/lib/site/previews/dot-pattern.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/noise-overlay.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/aspect-ratio.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/scroll-area.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/color-swatch-picker.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/previews/color-swatch.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/previews/grid-pattern.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/color-field.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/previews/form.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/sidebar.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/color-slider.svelte",
+		"cards": 1,
+		"corners": 0
+	},
+	{
+		"file": "src/lib/site/previews/chat.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/feedback.svelte",
+		"cards": 2,
+		"corners": 2
+	},
+	{
+		"file": "src/lib/site/previews/map.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	},
+	{
+		"file": "src/lib/site/previews/progressive-blur.svelte",
+		"status": "retained",
+		"reason": "Specialized demonstration / artwork / independently owned Form or Tooltip"
+	}
+]

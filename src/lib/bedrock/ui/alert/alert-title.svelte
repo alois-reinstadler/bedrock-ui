@@ -6,7 +6,7 @@
 	import AlertTitle from '#lib/shadcn/ui/alert/alert-title.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AlertTitle> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AlertTitle> = $props();
 </script>
 
-<AlertTitle {...props} />
+<AlertTitle bind:ref {...props} />

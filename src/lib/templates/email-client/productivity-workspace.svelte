@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
+	import { IconButton } from '#lib/bedrock/ui/icon-button';
+	import { Input } from '#lib/bedrock/ui/input';
 	import { page } from '$app/state';
 	import { browser } from '$app/env';
 	import { onMount } from 'svelte';
@@ -89,7 +92,15 @@
 				>{/each}
 		</nav>
 		<div class="sidebar-details">
-			<button class="compose-button" onclick={compose}><Plus size={17} />Compose</button>
+			<Button
+				variant="ghost"
+				type="button"
+				class={[
+					'control-templates-email-client-productivity-workspace h-auto whitespace-normal',
+					'compose-button'
+				]}
+				onclick={compose}><Plus size={17} />Compose</Button
+			>
 			<nav aria-label="Mailbox" class="folder-navigation">
 				<p>Mailboxes</p>
 				{#each mailboxes as folder (folder.id)}{@const FolderIcon = folderIcons[folder.id]}<a
@@ -125,14 +136,17 @@
 	</aside>
 	<div class="workspace-main">
 		<header class="workspace-topbar">
-			<button
-				class="mobile-folder-toggle"
+			<IconButton
+				type="button"
+				icon={Inbox}
+				label="Toggle mailboxes"
+				class={['control-templates-email-client-productivity-workspace', 'mobile-folder-toggle']}
 				onclick={() => (mobileFolders = !mobileFolders)}
 				aria-expanded={mobileFolders}
-				aria-label="Toggle mailboxes"><Inbox size={19} /></button
-			>
+			/>
 			<label class="workspace-search"
-				><Search size={17} /><input
+				><Search size={17} /><Input
+					class={['control-templates-email-client-productivity-workspace']}
 					id="mail-search"
 					aria-label={screen === 'mail'
 						? 'Search mail'
@@ -148,17 +162,26 @@
 				/><kbd>/</kbd></label
 			>
 			<div class="topbar-right">
-				<button class="mobile-compose" aria-label="Compose" onclick={compose}
-					><Plus size={19} /></button
-				>
+				<IconButton
+					type="button"
+					icon={Plus}
+					label="Compose"
+					class={['control-templates-email-client-productivity-workspace', 'mobile-compose']}
+					onclick={compose}
+				/>
 				<span class="workspace-date">Mon, Sep 14</span><DropdownMenu.Root
 					><DropdownMenu.Trigger
-						>{#snippet child({ props })}<button
+						>{#snippet child({ props })}<Button
+								variant="ghost"
+								type="button"
 								{...props}
-								class="account-button"
+								class={[
+									'control-templates-email-client-productivity-workspace h-auto whitespace-normal',
+									'account-button'
+								]}
 								aria-label="Open account menu"
 								><span class="account-avatar">AL</span><span class="account-name">Alex Lane</span
-								><ChevronDown size={14} /></button
+								><ChevronDown size={14} /></Button
 							>{/snippet}</DropdownMenu.Trigger
 					><DropdownMenu.Content align="end" class="w-64 max-w-[calc(100vw-2rem)]"
 						><DropdownMenu.Label class="whitespace-normal"
@@ -232,7 +255,7 @@
 		align-items: center;
 		gap: 11px;
 		padding: 10px 12px;
-		border-radius: 7px;
+		border-radius: var(--radius-lg);
 		color: var(--muted-foreground);
 		font-size: 13px;
 	}
@@ -260,14 +283,14 @@
 		overflow: auto;
 		padding: 18px 12px;
 	}
-	.compose-button {
+	:global(.control-templates-email-client-productivity-workspace.compose-button) {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		gap: 9px;
 		background: #5967c7;
 		color: white;
-		border-radius: 7px;
+		border-radius: var(--radius-lg);
 		align-self: flex-start;
 		min-height: 36px;
 		padding: 7px 13px;
@@ -344,7 +367,7 @@
 		color: var(--muted-foreground);
 		width: min(420px, 100%);
 	}
-	.workspace-search input {
+	.workspace-search :global(input.control-templates-email-client-productivity-workspace) {
 		border: 0;
 		outline: 0;
 		background: transparent;
@@ -360,7 +383,7 @@
 		font-size: 11px;
 	}
 	.topbar-right,
-	.account-button {
+	:global(.control-templates-email-client-productivity-workspace.account-button) {
 		display: flex;
 		align-items: center;
 		gap: 10px;
@@ -402,10 +425,10 @@
 		min-height: 0;
 		overflow: auto;
 	}
-	.mobile-compose {
+	:global(.control-templates-email-client-productivity-workspace.mobile-compose) {
 		display: none;
 	}
-	.mobile-folder-toggle {
+	:global(.control-templates-email-client-productivity-workspace.mobile-folder-toggle) {
 		display: none;
 	}
 	:global(.workspace-content .workspace-page-heading) {
@@ -502,7 +525,7 @@
 			padding: 0 15px;
 			gap: 14px;
 		}
-		.mobile-compose {
+		:global(.control-templates-email-client-productivity-workspace.mobile-compose) {
 			display: grid;
 			place-items: center;
 			min-width: 44px;
@@ -511,21 +534,21 @@
 		.topbar-right {
 			gap: 8px;
 		}
-		.compose-button {
+		:global(.control-templates-email-client-productivity-workspace.compose-button) {
 			min-height: 44px;
 		}
-		.mobile-folder-toggle {
+		:global(.control-templates-email-client-productivity-workspace.mobile-folder-toggle) {
 			display: block;
 		}
 		.account-name,
-		.account-button :global(svg),
+		:global(.control-templates-email-client-productivity-workspace.account-button) :global(svg),
 		.workspace-search kbd {
 			display: none;
 		}
-		.account-button {
+		:global(.control-templates-email-client-productivity-workspace.account-button) {
 			gap: 0;
 		}
-		.workspace-search input {
+		.workspace-search :global(input.control-templates-email-client-productivity-workspace) {
 			font-size: 12px;
 		}
 		:global(.workspace-content .workspace-page-heading) {

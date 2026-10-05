@@ -6,7 +6,11 @@
 	import Collapsible from '#lib/shadcn/ui/collapsible/collapsible.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Collapsible> = $props();
+	let {
+		ref = $bindable(null),
+		open = $bindable(false),
+		...props
+	}: ComponentProps<typeof Collapsible> = $props();
 </script>
 
-<Collapsible {...props} />
+<Collapsible bind:ref bind:open {...props} />

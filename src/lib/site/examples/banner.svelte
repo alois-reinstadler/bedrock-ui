@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Banner from '#lib/bedrock/ui/banner';
 	import { Button } from '#lib/bedrock/ui/button';
 	let open = $state(true);
@@ -12,7 +13,7 @@
 			draft.
 		</p>
 	</header>
-	<div class="overflow-hidden rounded-xl border bg-card">
+	<Card.Root class="block gap-0 overflow-hidden py-0">
 		{#if open}<Banner.Root variant="info"
 				><Banner.Content
 					>Saving will pause Saturday, 22:00–22:15 UTC. Download important drafts beforehand.</Banner.Content
@@ -27,5 +28,5 @@
 					>Show maintenance notice</Button
 				>{/if}
 		</div>
-	</div>
+	</Card.Root>
 </section>

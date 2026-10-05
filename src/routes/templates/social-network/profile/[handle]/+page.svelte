@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
+	import { Input } from '#lib/bedrock/ui/input';
+	import { Textarea } from '#lib/bedrock/ui/textarea';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import MapPin from '@lucide/svelte/icons/map-pin';
 	import { base, type Person } from '#lib/templates/social-network/data.js';
@@ -36,19 +39,29 @@
 			class="profile-avatar"
 			src={`/templates/social-network/${profile.avatar}.jpg`}
 			alt={profile.name}
-		/>{#if own}<button
-				class="small-button"
+		/>{#if own}<Button
+				variant="ghost"
+				type="button"
+				class={[
+					'control-templates-social-network-profile-handle-page h-auto whitespace-normal',
+					'small-button'
+				]}
 				onclick={() => {
 					name = social.profileName;
 					bio = social.profileBio;
 					editing = !editing;
-				}}>Edit profile</button
-			>{:else}<button
-				class="follow-button"
-				class:following={social.following.includes(profile.handle)}
+				}}>Edit profile</Button
+			>{:else}<Button
+				variant="ghost"
+				type="button"
+				class={[
+					'control-templates-social-network-profile-handle-page h-auto whitespace-normal',
+					'follow-button',
+					{ following: social.following.includes(profile.handle) }
+				]}
 				aria-pressed={social.following.includes(profile.handle)}
 				onclick={() => social.toggle('following', profile.handle)}
-				>{social.following.includes(profile.handle) ? 'Following' : 'Follow'}</button
+				>{social.following.includes(profile.handle) ? 'Following' : 'Follow'}</Button
 			>{/if}
 	</div>
 	<h2>{own ? social.profileName : profile.name}</h2>
@@ -75,14 +88,36 @@
 			}
 		}}
 	>
-		<label>Display name<input bind:value={name} required maxlength="40" /></label><label
-			>Bio<textarea bind:value={bio} maxlength="160"></textarea></label
+		<label
+			>Display name<Input
+				class={['control-templates-social-network-profile-handle-page']}
+				bind:value={name}
+				required
+				maxlength={40}
+			/></label
+		><label
+			>Bio<Textarea
+				class={['control-templates-social-network-profile-handle-page']}
+				bind:value={bio}
+				maxlength={160}
+			></Textarea></label
 		>
 		<div>
-			<button class="primary-button">Save profile</button><button
+			<Button
+				variant="ghost"
+				type="submit"
+				class={[
+					'control-templates-social-network-profile-handle-page h-auto whitespace-normal',
+					'primary-button'
+				]}>Save profile</Button
+			><Button
+				variant="ghost"
 				type="button"
-				class="small-button"
-				onclick={() => (editing = false)}>Cancel</button
+				class={[
+					'control-templates-social-network-profile-handle-page h-auto whitespace-normal',
+					'small-button'
+				]}
+				onclick={() => (editing = false)}>Cancel</Button
 			>
 		</div>
 	</form>{/if}

@@ -5,6 +5,7 @@
 	import * as Sidebar from '#lib/bedrock/ui/sidebar';
 	import DocsSidebar from '#lib/site/DocsSidebar.svelte';
 	import SiteHeader from '#lib/site/SiteHeader.svelte';
+	import { getShader } from '#lib/bedrock/shaders/catalog.js';
 	import { getBlock } from '#lib/site/blocks.js';
 	import { getComponent } from '#lib/site/registry';
 
@@ -28,13 +29,25 @@
 				{ href: path, label: label[0].toUpperCase() + label.slice(1), current: true }
 			];
 		}
-		if (path === '/docs/components' || path === '/docs/blocks' || path === '/docs/templates') {
+		if (
+			path === '/docs/components' ||
+			path === '/docs/blocks' ||
+			path === '/docs/templates' ||
+			path === '/docs/shaders'
+		) {
 			const label = path.split('/').at(-1) ?? 'Docs';
 			return [
 				{ href: '/docs', label: 'Docs', current: false },
 				{ href: path, label: label[0].toUpperCase() + label.slice(1), current: true }
 			];
 		}
+		const shaderMatch = path.match(/^\/docs\/shaders\/([^/]+)$/);
+		if (shaderMatch)
+			return [
+				{ href: '/docs', label: 'Docs', current: false },
+				{ href: '/docs/shaders', label: 'Shaders', current: false },
+				{ href: null, label: getShader(shaderMatch[1])?.title ?? shaderMatch[1], current: true }
+			];
 		const blockMatch = path.match(/^\/docs\/blocks\/([^/]+)$/);
 		if (blockMatch) {
 			const block = getBlock(blockMatch[1]);
@@ -62,7 +75,7 @@
 </script>
 
 <div class="flex min-h-dvh flex-col">
-	<SiteHeader />
+	<SiteHeader fullWidth />
 	<Sidebar.Provider class="min-h-0 flex-1">
 		<DocsSidebar />
 		<Sidebar.Inset>

@@ -6,7 +6,7 @@
 	import DialogTitle from '#lib/shadcn/ui/dialog/dialog-title.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DialogTitle> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DialogTitle> = $props();
 </script>
 
-<DialogTitle {...props} />
+<DialogTitle bind:ref {...props} />
