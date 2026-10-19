@@ -7,7 +7,7 @@
 </script>
 
 <form
-	class="max-w-md space-y-3 rounded-xl border p-5"
+	class="max-w-md space-y-3 rounded-xl border p-5 corner-theme"
 	onsubmit={(event) => {
 		event.preventDefault();
 		sent = true;

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import { base, films } from '#lib/templates/video-library/catalog.js';
 	import { getLibrary } from '#lib/templates/video-library/library.svelte.js';
 	import FilmCard from '#lib/templates/video-library/FilmCard.svelte';
@@ -17,6 +18,6 @@
 			<span>+</span>
 			<h2>Your next movie night starts here.</h2>
 			<p>Add a film to your list and it will be waiting for you.</p>
-			<a class="frame-button primary" href={base}>Find a film</a>
+			<Button class="frame-button primary" href={base}>Find a film</Button>
 		</div>{/if}
 </section>

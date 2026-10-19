@@ -6,7 +6,7 @@
 	import FormField from '#lib/shadcn/ui/form/form-field.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FormField> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FormField> = $props();
 </script>
 
-<FormField {...props} />
+<FormField bind:ref {...props} />

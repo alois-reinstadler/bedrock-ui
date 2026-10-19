@@ -1,0 +1,67 @@
+/* Product-specific recipes retain shared theme corners. Circular/pill controls
+   explicitly opt out so native links and Bedrock slots use the same shape. */
+.template-screen .month-grid {
+	corner-shape: var(--corner-shape);
+}
+
+.template-screen .message-summary:focus-visible {
+	corner-shape: var(--corner-shape);
+}
+
+.template-screen .attachment-card {
+	corner-shape: var(--corner-shape);
+}
+
+.template-screen .attachment-icon,
+.template-screen .empty-icon {
+	corner-shape: var(--corner-shape);
+}
+
+.template-screen .inline-reply {
+	corner-shape: var(--corner-shape);
+}
+
+.template-screen .app-navigation a,
+.template-screen .folder-navigation a {
+	corner-shape: var(--corner-shape);
+}
+
+.template-screen .control-templates-email-client-productivity-workspace.compose-button {
+	corner-shape: var(--corner-shape);
+}
+
+.template-screen .project-filter button.control-templates-email-client-tasks-screen {
+	corner-shape: var(--corner-shape);
+}
+
+.template-screen .task-list {
+	corner-shape: var(--corner-shape);
+}
+
+.template-screen .preview-controls {
+	corner-shape: var(--corner-shape);
+}
+
+.drift .sidebar nav a {
+	corner-shape: var(--corner-shape);
+}
+
+.drift .avatar {
+	corner-shape: round;
+}
+
+.drift .control-templates-music-player-layout.play-button {
+	corner-shape: round;
+}
+
+.drift .icon-button {
+	corner-shape: round;
+}
+
+.drift .primary-button {
+	corner-shape: round;
+}
+
+.drift .outline-button {
+	corner-shape: round;
+}

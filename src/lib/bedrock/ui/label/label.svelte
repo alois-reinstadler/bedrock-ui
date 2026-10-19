@@ -6,7 +6,7 @@
 	import Label from '#lib/shadcn/ui/label/label.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Label> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof Label> = $props();
 </script>
 
-<Label {...props} />
+<Label bind:ref {...props} />

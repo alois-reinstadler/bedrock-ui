@@ -6,7 +6,7 @@
 	import TableFooter from '#lib/shadcn/ui/table/table-footer.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof TableFooter> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof TableFooter> = $props();
 </script>
 
-<TableFooter {...props} />
+<TableFooter bind:ref {...props} />

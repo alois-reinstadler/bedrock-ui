@@ -1,0 +1,33 @@
+{
+	"viewport": [1280, 900],
+	"userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+	"runs": [
+		{
+			"samples": 192,
+			"p95": 16.700000000000728,
+			"maxGap": 33.30000000000291,
+			"longTasks": 0,
+			"maxLongTask": 0,
+			"totalLongTask": 0,
+			"finalText": "Save draft"
+		},
+		{
+			"samples": 193,
+			"p95": 16.700000000000728,
+			"maxGap": 16.799999999999272,
+			"longTasks": 0,
+			"maxLongTask": 0,
+			"totalLongTask": 0,
+			"finalText": "Save draft"
+		},
+		{
+			"samples": 193,
+			"p95": 16.799999999999272,
+			"maxGap": 33.29999999999927,
+			"longTasks": 0,
+			"maxLongTask": 0,
+			"totalLongTask": 0,
+			"finalText": "Save draft"
+		}
+	]
+}

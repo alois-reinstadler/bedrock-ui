@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import PlayIcon from '@lucide/svelte/icons/play';
 	import ArrowLeftIcon from '@lucide/svelte/icons/arrow-left';
 	import { untrack } from 'svelte';
@@ -82,8 +83,8 @@
 	{#if ended}<div class="watch-next">
 			<p>THE STORY CONTINUES</p>
 			<h2>{next.title}</h2>
-			<a class="frame-button primary" href={`${base}/watch/${next.slug}`}
-				><PlayIcon size={17} fill="currentColor" aria-hidden="true" /> Play next</a
+			<Button class="frame-button primary" href={`${base}/watch/${next.slug}`}
+				><PlayIcon size={17} fill="currentColor" aria-hidden="true" /> Play next</Button
 			><a href={base}>Back to browsing</a>
 		</div>{/if}
 </section>

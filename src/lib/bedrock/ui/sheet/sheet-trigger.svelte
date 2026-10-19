@@ -6,7 +6,7 @@
 	import SheetTrigger from '#lib/shadcn/ui/sheet/sheet-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SheetTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SheetTrigger> = $props();
 </script>
 
-<SheetTrigger {...props} />
+<SheetTrigger bind:ref {...props} />

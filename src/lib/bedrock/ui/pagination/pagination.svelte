@@ -6,7 +6,11 @@
 	import Pagination from '#lib/shadcn/ui/pagination/pagination.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Pagination> = $props();
+	let {
+		ref = $bindable(null),
+		page = $bindable(1),
+		...props
+	}: ComponentProps<typeof Pagination> = $props();
 </script>
 
-<Pagination {...props} />
+<Pagination bind:ref bind:page {...props} />

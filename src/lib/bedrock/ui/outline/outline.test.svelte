@@ -6,6 +6,8 @@
 		activeId = undefined,
 		scrollSpy = false,
 		withTargets = true,
+		scrollContainer = null,
+		offset = 0,
 		onNavigateStart,
 		onNavigateEnd
 	}: {
@@ -13,6 +15,8 @@
 		activeId?: string;
 		scrollSpy?: boolean;
 		withTargets?: boolean;
+		scrollContainer?: HTMLElement | null;
+		offset?: number;
 		onNavigateStart?: (id: string) => void;
 		onNavigateEnd?: (id: string) => void;
 	} = $props();
@@ -24,6 +28,14 @@
 	{/each}
 {/if}
 
-<Outline {items} bind:activeId {scrollSpy} {onNavigateStart} {onNavigateEnd} />
+<Outline
+	{items}
+	bind:activeId
+	{scrollSpy}
+	{scrollContainer}
+	{offset}
+	{onNavigateStart}
+	{onNavigateEnd}
+/>
 
 <output data-testid="active-id">{activeId ?? ''}</output>

@@ -1,4 +1,142 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
+
+test('hover highlight visibly fades both in and out', async ({ page }) => {
+	await page.setViewportSize({ width: 1440, height: 1000 });
+	await page.emulateMedia({ reducedMotion: 'no-preference' });
+	await page.goto('/docs');
+	const navigation = page.locator('[data-docs-navigation]');
+	const surface = navigation.locator('[data-hover-surface]');
+	await expect(navigation.locator('[data-slot="docs-active-highlight"]')).toBeVisible();
+
+	for (const event of ['pointerover', 'pointerleave'] as const) {
+		await navigation.evaluate((root, event) => {
+			const samples: { opacity: number; visibility: string }[] = [];
+			Reflect.set(root, 'hoverFadeSamples', samples);
+			root.addEventListener(
+				event,
+				() => {
+					const mark = root.querySelector('[data-slot="docs-hover-highlight"]')!;
+					const surface = mark.querySelector('[data-hover-surface]')!;
+					const sample = () => {
+						samples.push({
+							opacity: Number(getComputedStyle(surface).opacity),
+							visibility: getComputedStyle(mark).visibility
+						});
+						if (samples.length < 30) requestAnimationFrame(sample);
+					};
+					requestAnimationFrame(sample);
+				},
+				{ once: true }
+			);
+		}, event);
+		if (event === 'pointerover')
+			await navigation.getByRole('link', { name: 'Theming', exact: true }).hover();
+		else await page.mouse.move(500, 100);
+		await expect
+			.poll(() => navigation.evaluate((root) => Reflect.get(root, 'hoverFadeSamples').length))
+			.toBe(30);
+		const samples = await navigation.evaluate(
+			(root) => Reflect.get(root, 'hoverFadeSamples') as { opacity: number; visibility: string }[]
+		);
+		expect(
+			samples.some(
+				({ opacity, visibility }) => opacity > 0 && opacity < 1 && visibility === 'visible'
+			),
+			`${event} must remain painted during the fade`
+		).toBe(true);
+		await expect(surface).toHaveCSS('opacity', event === 'pointerover' ? '1' : '0');
+	}
+});
+
+test('hover re-enters at the new item with a fade instead of travelling from the old item', async ({
+	page
+}) => {
+	await page.setViewportSize({ width: 1440, height: 1000 });
+	await page.emulateMedia({ reducedMotion: 'no-preference' });
+	await page.goto('/docs');
+	const navigation = page.locator('[data-docs-navigation]');
+	const highlight = navigation.locator('[data-slot="docs-hover-highlight"]');
+	const surface = highlight.locator('[data-hover-surface]');
+	await expect(navigation.locator('[data-slot="docs-active-highlight"]')).toBeVisible();
+	await navigation.getByRole('link', { name: 'Introduction', exact: true }).hover();
+	await expect(surface).toHaveCSS('opacity', '1');
+	const original = await highlight.elementHandle();
+	await page.mouse.move(500, 100);
+	await expect(highlight).toBeHidden();
+	await expect(surface).toHaveCSS('opacity', '0');
+	const next = navigation.getByRole('link', { name: 'Badge', exact: true });
+	await next.scrollIntoViewIfNeeded();
+	const target = (await next.boundingBox())!;
+	const capture = navigation.evaluate(
+		(root) =>
+			new Promise<{ top: number; opacity: number }[]>((resolve) => {
+				root.addEventListener(
+					'pointerover',
+					() => {
+						const mark = root.querySelector('[data-slot="docs-hover-highlight"]')!;
+						const surface = mark.querySelector('[data-hover-surface]')!;
+						const samples: { top: number; opacity: number }[] = [];
+						const sample = () => {
+							samples.push({
+								top: surface.getBoundingClientRect().top,
+								opacity: Number(getComputedStyle(surface).opacity)
+							});
+							if (samples.length < 30) requestAnimationFrame(sample);
+							else resolve(samples);
+						};
+						requestAnimationFrame(sample);
+					},
+					{ once: true }
+				);
+			})
+	);
+	await next.hover();
+	const samples = await capture;
+	expect(samples.every((sample) => Math.abs(sample.top - target.y) <= 4)).toBe(true);
+	expect(samples.some((sample) => sample.opacity > 0 && sample.opacity < 1)).toBe(true);
+	await expect(surface).toHaveCSS('opacity', '1');
+	expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+});
+
+test('sidebar blur stays steady through pointer focus and route navigation', async ({ page }) => {
+	await page.setViewportSize({ width: 1440, height: 1000 });
+	await page.goto('/docs/components/accordion');
+	const area = page.locator('[data-slot="sidebar-inner"] [data-slot="scroll-area"]');
+	await area
+		.locator('[data-slot="scroll-area-viewport"]')
+		.evaluate((node) => node.scrollTo(0, 220));
+	const surfaces = area.locator('[data-scroll-edge] [data-blur-tint]');
+	await expect(surfaces).toHaveCount(2);
+	for (const surface of await surfaces.all()) await expect(surface).toHaveCSS('opacity', '1');
+	const original = await area.elementHandle();
+	const link = area.getByRole('link', { name: 'Alert', exact: true });
+	await link.hover();
+	await page.mouse.down();
+	await expect(link).toBeFocused();
+	// Holding pointer focus catches the brief disappearance before the router
+	// resets focus, even when navigation completes between browser frames.
+	for (const surface of await surfaces.all()) await expect(surface).toHaveCSS('opacity', '1');
+	const samples = area.evaluate(async (root) => {
+		const layers = root.querySelectorAll('[data-blur-layer], [data-blur-tint]');
+		const opacities: number[] = [];
+		for (let frame = 0; frame < 45; frame++) {
+			opacities.push(...Array.from(layers, (node) => Number(getComputedStyle(node).opacity)));
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		}
+		return opacities;
+	});
+	await page.mouse.up();
+	await expect(page).toHaveURL(/\/docs\/components\/alert$/);
+	expect(Math.min(...(await samples))).toBe(1);
+	expect(await original!.evaluate((node) => node.isConnected)).toBe(true);
+
+	await page.getByRole('textbox', { name: 'Search documentation' }).focus();
+	await page.keyboard.press('Tab');
+	for (const surface of await surfaces.all()) {
+		await expect(surface).toHaveCSS('opacity', '0');
+		await expect(surface).toHaveCSS('transition-duration', '0s');
+	}
+});
 
 test('sidebar keeps one shared highlight through navigation, scrolling and history', async ({
 	page
@@ -67,11 +205,21 @@ test('sidebar shared highlight settles immediately for reduced motion', async ({
 			})
 		)
 		.toBe(0);
+	const hover = navigation.locator('[data-slot="docs-hover-highlight"]');
+	const surface = hover.locator('[data-hover-surface]');
+	await navigation.getByRole('link', { name: 'Theming', exact: true }).hover();
+	await expect(surface).toHaveCSS('opacity', '1');
+	await expect(surface).toHaveCSS('transition-duration', '0s');
+	await page.mouse.move(500, 100);
+	await expect(hover).toBeHidden();
+	await expect(surface).toHaveCSS('opacity', '0');
 });
 
 test('mobile sidebar closes after choosing a documentation page', async ({ page }) => {
 	await page.setViewportSize({ width: 390, height: 844 });
 	await page.goto('/docs/components/accordion');
+	// The SSR desktop sidebar disappears once the mobile media query has hydrated.
+	await expect(page.locator('[data-slot="sidebar-container"]')).toHaveCount(0);
 	await page.getByRole('button', { name: 'Toggle Sidebar' }).click();
 	const drawer = page.getByRole('dialog', { name: 'Sidebar', exact: true });
 	await drawer.getByRole('link', { name: 'Alert', exact: true }).click();
@@ -193,6 +341,8 @@ test('block reference exits to the catalogue without reading another route data 
 	const errors: string[] = [];
 	page.on('pageerror', (error) => errors.push(error.message));
 	await page.goto('/docs/blocks/authentication-panel');
+	// Wait for hydration before asserting client-side document continuity.
+	await expect(page.locator('[data-slot="docs-active-highlight"]')).toBeVisible();
 	const original = await page.locator('[data-docs-navigation]').elementHandle();
 	await expect(page.locator('[data-doc-slug="authentication-panel"]')).toBeVisible();
 	await page
@@ -208,3 +358,65 @@ test('block reference exits to the catalogue without reading another route data 
 	await expect(page.locator('[data-doc-slug="authentication-panel"]')).toBeVisible();
 	expect(errors).toEqual([]);
 });
+
+for (const mode of ['visible', 'offscreen', 'reduced'] as const) {
+	test(`active sidebar highlight uses ${mode === 'visible' ? 'shared movement' : mode === 'offscreen' ? 'local fade and slide' : 'immediate selection'} from a ${mode === 'visible' ? 'visible' : 'clipped'} source`, async ({
+		page
+	}) => {
+		await page.setViewportSize({ width: 1440, height: 900 });
+		await page.emulateMedia({ reducedMotion: mode === 'reduced' ? 'reduce' : 'no-preference' });
+		await page.goto(`/docs/components/${mode === 'visible' ? 'accordion' : 'tabs'}`);
+		const navigation = page.locator('[data-docs-navigation]');
+		await expect
+			.poll(() =>
+				navigation
+					.locator('[data-slot="docs-active-highlight"]')
+					.evaluate((mark) => (mark as HTMLElement).style.width)
+			)
+			.not.toBe('');
+		const samples = await navigation.evaluate(async (root) => {
+			const mark = root.querySelector<HTMLElement>('[data-slot="docs-active-highlight"]')!;
+			const source = root.querySelector<HTMLElement>('[aria-current="page"]')!;
+			const target = root.querySelector<HTMLAnchorElement>('a[href="/docs/components/alert"]')!;
+			const viewport = root.closest('[data-slot="scroll-area-viewport"]')!.getBoundingClientRect();
+			const sourceBox = source.getBoundingClientRect();
+			const sourceVisible = sourceBox.bottom > viewport.top && sourceBox.top < viewport.bottom;
+			const positions: { y: number; opacity: number; offset: number }[] = [];
+			target.click();
+			const deadline = performance.now() + 5000;
+			let selectedAt = 0;
+			do {
+				await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+				if (target.getAttribute('aria-current') !== 'page') continue;
+				selectedAt ||= performance.now();
+				positions.push({
+					y: mark.getBoundingClientRect().y,
+					opacity: Number(getComputedStyle(mark).opacity),
+					offset: mark.getBoundingClientRect().y - target.getBoundingClientRect().y
+				});
+			} while (
+				performance.now() < deadline &&
+				(!selectedAt || performance.now() - selectedAt < 650)
+			);
+			return { sourceVisible, positions, connected: mark.isConnected };
+		});
+		expect(samples.sourceVisible).toBe(mode === 'visible');
+		expect(samples.connected).toBe(true);
+		expect(samples.positions.length).toBeGreaterThan(0);
+		expect(Math.abs(samples.positions.at(-1)!.offset)).toBeLessThan(1);
+		if (mode === 'visible') {
+			expect(samples.positions.some(({ offset }) => offset < -4 && offset > -32)).toBe(true);
+			expect(samples.positions.every(({ opacity }) => opacity === 1)).toBe(true);
+		} else {
+			expect(samples.positions.every(({ offset }) => Math.abs(offset) <= 3.1)).toBe(true);
+			if (mode === 'offscreen') {
+				expect(samples.positions.some(({ opacity }) => opacity > 0 && opacity < 1)).toBe(true);
+				expect(samples.positions.some(({ offset }) => offset > 0.1)).toBe(true);
+			} else {
+				expect(
+					samples.positions.every(({ opacity, offset }) => opacity === 1 && Math.abs(offset) < 1)
+				).toBe(true);
+			}
+		}
+	});
+}

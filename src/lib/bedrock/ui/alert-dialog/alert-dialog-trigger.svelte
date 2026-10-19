@@ -6,7 +6,7 @@
 	import AlertDialogTrigger from '#lib/shadcn/ui/alert-dialog/alert-dialog-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AlertDialogTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AlertDialogTrigger> = $props();
 </script>
 
-<AlertDialogTrigger {...props} />
+<AlertDialogTrigger bind:ref {...props} />

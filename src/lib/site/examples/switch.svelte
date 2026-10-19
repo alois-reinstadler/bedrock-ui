@@ -1,10 +1,11 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Switch } from '#lib/bedrock/ui/switch';
 	import { Label } from '#lib/bedrock/ui/label';
 	let checked = $state(true);
 </script>
 
-<section class="max-w-md space-y-5 rounded-xl border p-5">
+<Card.Root class="block max-w-md gap-0 space-y-5 p-5">
 	<h3 class="font-medium">Notification preferences</h3>
 	<div class="flex items-start justify-between gap-4">
 		<div class="space-y-1">
@@ -20,4 +21,4 @@
 			? 'Project emails are enabled.'
 			: 'Project emails are paused. You can still find updates in your inbox.'}
 	</p>
-</section>
+</Card.Root>

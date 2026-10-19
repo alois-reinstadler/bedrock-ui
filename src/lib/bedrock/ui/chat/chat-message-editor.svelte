@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { onDestroy, tick } from 'svelte';
+	import { tick } from 'svelte';
+	import { createChatAction } from './agent-action.svelte';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Textarea } from '#lib/bedrock/ui/textarea';
 	import { cn } from '#lib/utils.js';
@@ -27,29 +28,15 @@
 		class?: string;
 	} = $props();
 	const uid = $props.id();
-	let pending = $state(false);
-	let failed = $state(false);
-	let disposed = false;
+	const action = createChatAction();
 	let textarea: HTMLTextAreaElement;
-	onDestroy(() => {
-		disposed = true;
-	});
 	async function save() {
-		if (disabled || pending || !value.trim()) return;
-		pending = true;
-		failed = false;
-		try {
-			await onSave(value.trim());
-		} catch {
-			if (!disposed) failed = true;
-		} finally {
-			if (!disposed) {
-				pending = false;
-				await tick();
-				if (!disposed) textarea?.focus();
-			}
-		}
+		if (disabled || action.pending || !value.trim()) return;
+		await action.run(() => onSave(value.trim()));
+		await tick();
+		if (textarea?.isConnected) textarea.focus();
 	}
+
 	function focus(node: HTMLTextAreaElement) {
 		textarea = node;
 		node.focus();
@@ -59,7 +46,7 @@
 <form
 	data-slot="chat-message-editor"
 	aria-label={label}
-	aria-busy={pending}
+	aria-busy={action.pending}
 	class={cn('flex w-full min-w-0 flex-col gap-2 rounded-lg border bg-background p-3', className)}
 	onsubmit={(event) => {
 		event.preventDefault();
@@ -71,12 +58,12 @@
 		{@attach focus}
 		id={uid}
 		bind:value
-		disabled={disabled || pending}
-		aria-describedby={failed ? `${uid}-error` : undefined}
+		disabled={disabled || action.pending}
+		aria-describedby={action.failed ? `${uid}-error` : undefined}
 		rows={3}
 		onkeydown={(event) => {
 			if (event.isComposing) return;
-			if (event.key === 'Escape' && !disabled && !pending) {
+			if (event.key === 'Escape' && !disabled && !action.pending) {
 				event.preventDefault();
 				onCancel();
 			}
@@ -91,14 +78,14 @@
 			type="button"
 			variant="ghost"
 			size="sm"
-			disabled={disabled || pending}
+			disabled={disabled || action.pending}
 			onclick={onCancel}>{cancelLabel}</Button
 		>
-		<Button type="submit" size="sm" disabled={disabled || pending || !value.trim()}
-			>{pending ? savingLabel : saveLabel}</Button
+		<Button type="submit" size="sm" disabled={disabled || action.pending || !value.trim()}
+			>{action.pending ? savingLabel : saveLabel}</Button
 		>
 	</div>
-	{#if failed}<p id="{uid}-error" role="alert" class="text-sm text-destructive">
+	{#if action.failed}<p id="{uid}-error" role="alert" class="text-sm text-destructive">
 			{errorLabel}
 		</p>{/if}
 </form>

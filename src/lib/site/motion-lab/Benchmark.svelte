@@ -32,7 +32,7 @@
 	};
 </script>
 
-<article class="benchmark" {id} data-testid={`benchmark-${id}`} data-verdict={verdict}>
+<article class="benchmark corner-theme" {id} data-testid={`benchmark-${id}`} data-verdict={verdict}>
 	<header>
 		<div>
 			<div class="labels">
@@ -107,18 +107,23 @@
 
 <style>
 	.benchmark {
+		min-width: 0;
 		scroll-margin-top: 5rem;
 		overflow: clip;
 		border: 1px solid var(--border);
-		border-radius: 1.35rem;
+		border-radius: var(--radius-xl);
 		background: var(--card);
 	}
 	header {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: start;
 		justify-content: space-between;
 		gap: 1rem;
 		padding: 1.15rem 1.2rem 1rem;
+	}
+	header > div {
+		min-width: 0;
 	}
 	.labels {
 		display: flex;
@@ -166,6 +171,7 @@
 		line-height: 1.5;
 	}
 	.stage {
+		overflow-x: auto;
 		min-height: 10rem;
 		border-block: 1px solid var(--border);
 		background: color-mix(in oklab, var(--muted), transparent 42%);

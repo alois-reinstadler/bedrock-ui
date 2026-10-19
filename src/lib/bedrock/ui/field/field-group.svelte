@@ -6,7 +6,7 @@
 	import FieldGroup from '#lib/shadcn/ui/field/field-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FieldGroup> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FieldGroup> = $props();
 </script>
 
-<FieldGroup {...props} />
+<FieldGroup bind:ref {...props} />

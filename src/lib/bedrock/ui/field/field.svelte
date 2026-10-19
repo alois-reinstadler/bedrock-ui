@@ -6,7 +6,7 @@
 	import Field from '#lib/shadcn/ui/field/field.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Field> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof Field> = $props();
 </script>
 
-<Field {...props} />
+<Field bind:ref {...props} />

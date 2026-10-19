@@ -6,7 +6,7 @@
 	import SelectSeparator from '#lib/shadcn/ui/select/select-separator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SelectSeparator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SelectSeparator> = $props();
 </script>
 
-<SelectSeparator {...props} />
+<SelectSeparator bind:ref {...props} />

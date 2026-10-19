@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	export type ScrollAreaEdgeBlur = false | 'vertical' | 'horizontal' | 'both';
+	export type ScrollAreaEdgeBlur = boolean | 'vertical' | 'horizontal' | 'both';
 </script>
 
 <script lang="ts">
@@ -8,6 +8,7 @@
 	import { ScrollArea as ScrollAreaPrimitive } from 'bits-ui';
 	import { onMount, tick } from 'svelte';
 	import { Scrollbar } from './index.js';
+	import { horizontalWheel } from './horizontal-wheel.js';
 
 	let {
 		ref = $bindable(null),
@@ -16,6 +17,7 @@
 		orientation = 'vertical',
 		scrollbarXClasses = '',
 		scrollbarYClasses = '',
+		wheelToHorizontal = false,
 		edgeBlur = false,
 		edgeBlurSize = 64,
 		edgeBlurStrength = 16,
@@ -26,10 +28,21 @@
 		scrollbarXClasses?: string;
 		scrollbarYClasses?: string;
 		viewportRef?: HTMLElement | null;
+		/** Smoothly map vertical wheel input to horizontal scrolling; release it at either end. */
+		wheelToHorizontal?: boolean;
+		/** Show progressive blur at hidden edges. True follows orientation; false disables it. */
 		edgeBlur?: ScrollAreaEdgeBlur;
 		edgeBlurSize?: number | string;
 		edgeBlurStrength?: number;
 	} = $props();
+
+	const resolvedEdgeBlur = $derived(edgeBlur === true ? orientation : edgeBlur);
+
+	function attachHorizontalWheel(viewport: HTMLElement) {
+		if (!wheelToHorizontal || orientation === 'vertical') return;
+
+		return horizontalWheel(viewport);
+	}
 
 	function setScrollState(root: HTMLElement, viewport: HTMLElement, mode: ScrollAreaEdgeBlur) {
 		const verticalEnabled = mode === 'vertical' || mode === 'both';
@@ -75,7 +88,7 @@
 			if (disposed || !root || !viewport) return;
 
 			const update = () => {
-				if (edgeBlur) setScrollState(root, viewport, edgeBlur);
+				if (resolvedEdgeBlur) setScrollState(root, viewport, resolvedEdgeBlur);
 				else clearScrollState(root);
 			};
 			const resizeObserver = new ResizeObserver(update);
@@ -126,22 +139,32 @@
 	});
 </script>
 
+<!-- Chromium needs round clips and a painted backdrop for these filters. A
+     transparent clipping root can turn the blurred edge into a bright halo. -->
 <ScrollAreaPrimitive.Root
 	bind:ref
 	data-slot="scroll-area"
-	data-edge-blur={edgeBlur || undefined}
-	class={cn('relative overflow-hidden', className)}
+	data-edge-blur={resolvedEdgeBlur || undefined}
+	class={cn(
+		'relative isolate overflow-hidden',
+		resolvedEdgeBlur && 'bg-[color:var(--progressive-blur-surface,var(--background))] corner-round',
+		className
+	)}
 	{...restProps}
 >
 	<ScrollAreaPrimitive.Viewport
 		bind:ref={viewportRef}
+		{@attach attachHorizontalWheel}
 		data-slot="scroll-area-viewport"
-		class="cn-scroll-area-viewport size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1"
+		class={cn(
+			'cn-scroll-area-viewport relative z-0 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1',
+			resolvedEdgeBlur && 'corner-round'
+		)}
 	>
 		{@render children?.()}
 	</ScrollAreaPrimitive.Viewport>
 
-	{#if edgeBlur === 'vertical' || edgeBlur === 'both'}
+	{#if resolvedEdgeBlur === 'vertical' || resolvedEdgeBlur === 'both'}
 		<ProgressiveBlur
 			side="top"
 			data-scroll-edge="top"
@@ -155,7 +178,7 @@
 			strength={edgeBlurStrength}
 		/>
 	{/if}
-	{#if edgeBlur === 'horizontal' || edgeBlur === 'both'}
+	{#if resolvedEdgeBlur === 'horizontal' || resolvedEdgeBlur === 'both'}
 		<ProgressiveBlur
 			side="left"
 			data-scroll-edge="left"
@@ -171,15 +194,21 @@
 	{/if}
 
 	{#if orientation === 'vertical' || orientation === 'both'}
-		<Scrollbar orientation="vertical" class={scrollbarYClasses} />
+		<Scrollbar orientation="vertical" class={cn('z-20', scrollbarYClasses)} />
 	{/if}
 	{#if orientation === 'horizontal' || orientation === 'both'}
-		<Scrollbar orientation="horizontal" class={scrollbarXClasses} />
+		<Scrollbar orientation="horizontal" class={cn('z-20', scrollbarXClasses)} />
 	{/if}
 	<ScrollAreaPrimitive.Corner />
 </ScrollAreaPrimitive.Root>
 
 <style>
+	/* Overflow alone does not reliably clip composited backdrop filters in Chrome.
+	   Clip their shared content parent so sampling still includes the viewport. */
+	:global([data-slot='scroll-area'][data-edge-blur]) {
+		clip-path: border-box;
+	}
+
 	:global([data-slot='scroll-area'] > [data-scroll-edge]) {
 		--progressive-blur-opacity: 0;
 	}
@@ -193,8 +222,8 @@
 		--progressive-blur-opacity: 1;
 	}
 
-	/* A focused control must never sit underneath a decorative blur. */
-	:global([data-slot='scroll-area']:focus-within > [data-scroll-edge]) {
+	/* Keep keyboard focus clear without flashing the edges on pointer navigation. */
+	:global([data-slot='scroll-area']:is(:focus-visible, :has(:focus-visible)) > [data-scroll-edge]) {
 		--progressive-blur-opacity: 0;
 		--progressive-blur-duration: 0s;
 	}

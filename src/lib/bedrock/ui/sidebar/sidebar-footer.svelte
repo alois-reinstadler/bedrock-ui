@@ -6,7 +6,7 @@
 	import SidebarFooter from '#lib/shadcn/ui/sidebar/sidebar-footer.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SidebarFooter> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SidebarFooter> = $props();
 </script>
 
-<SidebarFooter {...props} />
+<SidebarFooter bind:ref {...props} />

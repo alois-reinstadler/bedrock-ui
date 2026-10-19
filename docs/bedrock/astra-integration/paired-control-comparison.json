@@ -1,0 +1,32 @@
+{
+	"method": "Original dirty baseline + ONLY concurrent chat commit0f18f48, frozen-lock Vite8.2.2, old Astra archive; production static resource closure, gzip per file.",
+	"root": "/workspace/wt/bedrock-astra-verify",
+	"baseHead": "5a3d29d2d8c0d0ed720e5711d9e2c76d978ac4af",
+	"concurrentCommit": "0f18f48",
+	"archive": "b99f2f8d46b4e6c3c515ad97fa6b9ac730e2e556ce25b5a505b13b800dc14afe",
+	"vite": "8.2.2",
+	"files": {
+		"pnpm-lock.yaml": "8a18110ca14936daa0336f37b9fd89c045435b0764ccbda1db73a8d1d93475e6",
+		"vendor/astra-motion.json": "e00d2325d85cfc63f002df0b7c9bb8dfe1eaf9c4967762eb3725dac9f0b98e9d",
+		"src/lib/bedrock/ui/chat/chat-composer.svelte": "8d525cf49c7303bc1bad1c4a32873f97570e8134868559d7788f554680b3d712",
+		"src/lib/bedrock/ui/chat/chat-voice.svelte": "bcddc42da3b9be22981b785d16943b1e52e94abba14077ef465de53ce3a27503",
+		"src/lib/bedrock/ui/chat/index.ts": "10d070fb41b7de9b19e78d48891ad39b739db87e3e08ca5ef80b29ab6cd47a2d",
+		"src/lib/site/guide-examples/chat-voice.svelte": "288e6d9b5a7674a92c49c3e28609f948493574fc6776e3aa0ed08ec45d09134b",
+		"src/routes/docs/components/[slug]/+page.svelte": "578cb1ac4a0f738e0668fc52fae09cf786d8b984067765dc6a055b17535dd3bf",
+		"src/lib/bedrock/ui/async-button/async-button.svelte": "9e404b65b720659faf3e740d780892ed1b76e06cbb061c256f62b1d9e7abc603",
+		"src/lib/bedrock/ui/avatar/avatar-stack.svelte": "7da64d73a794c513a7ede043601161fac9351d851094c8f2c0a60f593a6e8878",
+		".svelte-kit/output/client/.vite/manifest.json": "524f22782e0b24d0849fd91cc55c164ea503210108a593eff12320b3b2c2ae7d"
+	},
+	"erp": {
+		"controlGzip": 308238,
+		"candidateGzip": 352422,
+		"delta": 44184,
+		"allowance": 42304,
+		"ceiling": 350542,
+		"pass": false
+	},
+	"controlAgainstOriginal": {
+		"originalGzip": 307256,
+		"delta": 982
+	}
+}

@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
 
 test('rapid accordion reversals settle at natural height under fourfold CPU slowdown', async ({
 	page,

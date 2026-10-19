@@ -18,7 +18,7 @@ import {
 	type Projection,
 	type SpringOptions
 } from './layout-math.js';
-import { prefersReducedMotion } from './policy.js';
+import { elementPrefersReducedMotion, observeMotionReduction } from './policy.js';
 import { motionPresets, type LayoutMotion } from './tokens.js';
 import { describeLayoutGroup, motionDiagnostics } from './diagnostics.js';
 import {
@@ -209,7 +209,7 @@ export function createLayoutGroup(): LayoutGroupHandle {
 	const warned = new Set<string>();
 	let mutationObserver: MutationObserver | null = null;
 	let resizeObserver: ResizeObserver | null = null;
-	let motionQuery: MediaQueryList | null = null;
+	let stopObservingPolicy: (() => void) | undefined;
 	let applying = false;
 	let bound: HTMLElement | null = null;
 	let frame = 0;
@@ -827,9 +827,9 @@ export function createLayoutGroup(): LayoutGroupHandle {
 			}
 
 			const jobs: LayoutJob[] = [];
-			const reduced = prefersReducedMotion();
-			const shouldAnimate = mode === 'animate' && !reduced;
 			for (const node of nodes) {
+				const reduced = elementPrefersReducedMotion(node.el);
+				const shouldAnimate = mode === 'animate' && !reduced;
 				const to = targets.get(node);
 				if (!to || isDegenerateBox(to)) continue;
 				const snapshot = snapshots.get(node);
@@ -1006,8 +1006,8 @@ export function createLayoutGroup(): LayoutGroupHandle {
 		if (!applying) schedule('baseline', 'scroll');
 	}
 
-	function onMotionPreferenceChange(event: MediaQueryListEvent) {
-		if (!event.matches) return;
+	function onMotionPreferenceChange(reduced: boolean) {
+		if (!reduced) return;
 		for (const node of nodes) stop(node);
 		schedule('baseline', 'preference');
 	}
@@ -1026,9 +1026,7 @@ export function createLayoutGroup(): LayoutGroupHandle {
 		element.addEventListener('transitionend', onTransitionEnd, true);
 		element.addEventListener('transitioncancel', onTransitionEnd, true);
 		window.addEventListener('scroll', onScroll, true);
-		motionQuery =
-			typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
-		motionQuery?.addEventListener?.('change', onMotionPreferenceChange);
+		stopObservingPolicy = observeMotionReduction(element, onMotionPreferenceChange);
 		return () => {
 			mutationObserver?.disconnect();
 			resizeObserver?.disconnect();
@@ -1042,8 +1040,8 @@ export function createLayoutGroup(): LayoutGroupHandle {
 			element.removeEventListener('transitionend', onTransitionEnd, true);
 			element.removeEventListener('transitioncancel', onTransitionEnd, true);
 			window.removeEventListener('scroll', onScroll, true);
-			motionQuery?.removeEventListener?.('change', onMotionPreferenceChange);
-			motionQuery = null;
+			stopObservingPolicy?.();
+			stopObservingPolicy = undefined;
 			groups.delete(element);
 			if (bound === element) bound = null;
 		};
@@ -1115,7 +1113,7 @@ export function createLayoutGroup(): LayoutGroupHandle {
 	function destroy() {
 		mutationObserver?.disconnect();
 		resizeObserver?.disconnect();
-		motionQuery?.removeEventListener?.('change', onMotionPreferenceChange);
+		stopObservingPolicy?.();
 		if (frame) cancelAnimationFrame(frame);
 		for (const node of nodes) stop(node);
 		nodes.clear();

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import * as Marker from '#lib/bedrock/ui/marker';
 	import CheckIcon from '@lucide/svelte/icons/check';
 	import RefreshCwIcon from '@lucide/svelte/icons/refresh-cw';
@@ -16,13 +17,14 @@
 	>
 	<Marker.Root variant="border"><Marker.Content>Release notes updated</Marker.Content></Marker.Root>
 	<Marker.Root
-		>{#snippet child({ props })}<button
+		>{#snippet child({ props })}<Button
+				variant="ghost"
 				{...props}
 				type="button"
 				onclick={() => (complete = !complete)}
 				><Marker.Icon><RefreshCwIcon /></Marker.Icon><Marker.Content
 					>{complete ? 'Restart review' : 'Complete review'}</Marker.Content
-				></button
+				></Button
 			>{/snippet}</Marker.Root
 	>
 </section>

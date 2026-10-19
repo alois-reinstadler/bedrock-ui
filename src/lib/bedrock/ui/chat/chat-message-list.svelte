@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
 	import ArrowDownIcon from '@lucide/svelte/icons/arrow-down';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import { onDestroy, tick } from 'svelte';
@@ -6,6 +7,7 @@
 	import type { HTMLAttributes } from 'svelte/elements';
 
 	const STICK_THRESHOLD = 32;
+	const policy = useMotionPolicy();
 
 	let {
 		ref = $bindable(null),
@@ -44,6 +46,7 @@
 	let loadError = $state(false);
 	let disposed = false;
 	let lastHeight = 0;
+	let scrollingToBottom = false;
 	onDestroy(() => {
 		disposed = true;
 	});
@@ -84,15 +87,17 @@
 
 	function onscroll() {
 		if (!viewport || loadingMore) return;
-		stuck = distanceFromBottom(viewport) < STICK_THRESHOLD;
+		const distance = distanceFromBottom(viewport);
+		stuck = distance < STICK_THRESHOLD;
+		if (distance <= 1) scrollingToBottom = false;
 		if (stuck) hasNewContent = false;
 	}
 
 	function scrollToBottom(behavior: ScrollBehavior = 'smooth') {
-		viewport?.scrollTo({
-			top: viewport.scrollHeight,
-			behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : behavior
-		});
+		if (!viewport) return;
+		const resolvedBehavior = policy.reduced ? 'instant' : behavior;
+		scrollingToBottom = resolvedBehavior === 'smooth' && distanceFromBottom(viewport) > 1;
+		viewport.scrollTo({ top: viewport.scrollHeight, behavior: resolvedBehavior });
 	}
 
 	function observeContent(node: HTMLDivElement) {
@@ -146,11 +151,32 @@
 	<div
 		{@attach (node) => {
 			viewport = node;
+			const cancelPending = () => {
+				scrollingToBottom = false;
+			};
+			const cancelOnKey = (event: KeyboardEvent) => {
+				if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key))
+					cancelPending();
+			};
+			node.addEventListener('wheel', cancelPending, { passive: true });
+			node.addEventListener('touchstart', cancelPending, { passive: true });
+			node.addEventListener('keydown', cancelOnKey);
+			node.addEventListener('scrollend', cancelPending);
 			return () => {
+				node.removeEventListener('wheel', cancelPending);
+				node.removeEventListener('touchstart', cancelPending);
+				node.removeEventListener('keydown', cancelOnKey);
+				node.removeEventListener('scrollend', cancelPending);
 				viewport = null;
 			};
 		}}
 		data-slot="chat-message-viewport"
+		{@attach (node) => {
+			if (policy.reduced && scrollingToBottom) {
+				scrollingToBottom = false;
+				node.scrollTo({ top: node.scrollHeight, behavior: 'instant' });
+			}
+		}}
 		{onscroll}
 		class="min-h-0 flex-1 overflow-y-auto [overflow-anchor:none]"
 	>

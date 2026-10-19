@@ -1,6 +1,6 @@
 import type { TransitionConfig } from 'svelte/transition';
 import { springSamples } from './layout-math.js';
-import { resolveMotionDuration } from './policy.js';
+import { elementPrefersReducedMotion, observeMotionReduction } from './policy.js';
 import { motionEasings, motionPresets } from './tokens.js';
 import { motionDiagnostics } from './diagnostics.js';
 import { beginLayoutExit, clearLayoutExit, readCommittedLayoutOffset } from './layout-offset.js';
@@ -87,8 +87,10 @@ export function reveal(node: Element, params: RevealParams = {}): TransitionConf
 	const marginBottom = Number.parseFloat(style.marginBottom);
 	const borderTop = Number.parseFloat(style.borderTopWidth);
 	const borderBottom = Number.parseFloat(style.borderBottomWidth);
-	const duration = resolveMotionDuration(params.duration ?? motionPresets.reveal.duration);
-	return {
+	const duration = elementPrefersReducedMotion(node)
+		? 0
+		: (params.duration ?? motionPresets.reveal.duration);
+	return withLiveReduction(node, {
 		delay: duration === 0 ? 0 : (params.delay ?? 0),
 		duration,
 		easing: params.easing ?? motionEasings.enter,
@@ -103,7 +105,7 @@ export function reveal(node: Element, params: RevealParams = {}): TransitionConf
 			`margin-bottom: ${t * marginBottom}px;` +
 			`border-top-width: ${t * borderTop}px;` +
 			`border-bottom-width: ${t * borderBottom}px;`
-	};
+	});
 }
 
 export type AppearParams = {
@@ -118,8 +120,10 @@ export type AppearParams = {
 export function appear(node: Element, params: AppearParams = {}): TransitionConfig {
 	const opacity = Number.parseFloat(getComputedStyle(node).opacity);
 	const inset = clipInset(params.start ?? 0.9);
-	const duration = resolveMotionDuration(params.duration ?? motionPresets.enter.duration);
-	return {
+	const duration = elementPrefersReducedMotion(node)
+		? 0
+		: (params.duration ?? motionPresets.enter.duration);
+	return withLiveReduction(node, {
 		delay: duration === 0 ? 0 : (params.delay ?? 0),
 		duration,
 		easing: params.easing ?? motionEasings.enter,
@@ -128,7 +132,7 @@ export function appear(node: Element, params: AppearParams = {}): TransitionConf
 			const clipped = ((1 - progress) * inset).toFixed(4);
 			return `opacity: ${progress * opacity}; clip-path: inset(${clipped}%);`;
 		}
-	};
+	});
 }
 
 export type VanishParams = {
@@ -154,9 +158,11 @@ export function vanish(node: HTMLElement, params: VanishParams = {}): Transition
 	const top = (committed?.top ?? node.offsetTop) + visualOffset.y;
 	const width = committed?.width ?? node.offsetWidth;
 	const height = committed?.height ?? node.offsetHeight;
-	const duration = resolveMotionDuration(params.duration ?? motionPresets.exit.duration);
+	const duration = elementPrefersReducedMotion(node)
+		? 0
+		: (params.duration ?? motionPresets.exit.duration);
 	let minimumProgress = 1;
-	return {
+	return withLiveReduction(node, {
 		delay: duration === 0 ? 0 : (params.delay ?? 0),
 		duration,
 		easing: params.easing ?? motionEasings.exit,
@@ -181,7 +187,7 @@ export function vanish(node: HTMLElement, params: VanishParams = {}): Transition
 			minimumProgress = Math.min(minimumProgress, t);
 			if (t >= 0.999 && minimumProgress < 0.999) clearLayoutExit(node);
 		}
-	};
+	});
 }
 
 export type DrawerParams = {
@@ -198,8 +204,10 @@ export function drawer(node: Element, params: DrawerParams = {}): TransitionConf
 	const width = Number.parseFloat(style.width);
 	const paddingLeft = Number.parseFloat(style.paddingLeft);
 	const paddingRight = Number.parseFloat(style.paddingRight);
-	const duration = resolveMotionDuration(params.duration ?? motionPresets.overlay.duration);
-	return {
+	const duration = elementPrefersReducedMotion(node)
+		? 0
+		: (params.duration ?? motionPresets.overlay.duration);
+	return withLiveReduction(node, {
 		delay: duration === 0 ? 0 : (params.delay ?? 0),
 		duration,
 		easing: params.easing ?? motionEasings.drawer,
@@ -217,6 +225,50 @@ export function drawer(node: Element, params: DrawerParams = {}): TransitionConf
 				`padding-left: ${progress * paddingLeft}px;` +
 				`padding-right: ${progress * paddingRight}px;`
 			);
+		}
+	});
+}
+
+/** Mark only our Svelte-owned WAAPI transitions, so live reduction never finishes
+ * an unrelated gesture, layout owner, or author animation on this element. */
+export function withLiveReduction(node: Element, config: TransitionConfig): TransitionConfig {
+	if (!config.duration || typeof node.getAnimations !== 'function') return config;
+	const css = config.css;
+	const tick = config.tick;
+	let disposed = false;
+	const settle = () => {
+		if (disposed || !elementPrefersReducedMotion(node)) return;
+		for (const animation of node.getAnimations()) {
+			const effect = animation.effect;
+			if (!(effect instanceof KeyframeEffect)) continue;
+			if (!effect.getKeyframes().some((frame) => '--bedrock-presence' in frame)) continue;
+			if (animation.playState === 'running' || animation.playState === 'paused') animation.finish();
+		}
+	};
+	const stopObserving = observeMotionReduction(node, (reduced) => {
+		if (reduced) settle();
+	});
+	const cleanup = () => {
+		disposed = true;
+		stopObserving();
+		clearTimeout(timeout);
+		node.removeEventListener('introend', cleanup);
+		node.removeEventListener('outroend', cleanup);
+	};
+	// A destroyed/reversed transition may emit no end event. Bound listener lifetime.
+	const timeout = setTimeout(cleanup, (config.delay ?? 0) + config.duration + 100);
+	node.addEventListener('introend', cleanup);
+	node.addEventListener('outroend', cleanup);
+	return {
+		...config,
+		// Svelte's CSS parser stops at an empty declaration. Normalize the separator
+		// so both authored forms (with or without a trailing semicolon) keep the marker.
+		css: css ? (t, u) => `${css(t, u).replace(/[;\s]+$/, '')}; --bedrock-presence: 1;` : undefined,
+		tick: (t, u) => {
+			tick?.(t, u);
+			// Svelte creates a delay animation before its main animation. This also
+			// settles the latter if reduction arrived while the delay was active.
+			if (elementPrefersReducedMotion(node)) queueMicrotask(settle);
 		}
 	};
 }

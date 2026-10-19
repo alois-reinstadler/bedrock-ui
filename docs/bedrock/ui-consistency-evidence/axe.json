@@ -1,0 +1,88 @@
+[
+	{
+		"url": "/docs/templates",
+		"violations": []
+	},
+	{
+		"url": "/docs/components/button",
+		"violations": [
+			{
+				"id": "aria-prohibited-attr",
+				"impact": "serious",
+				"nodes": [
+					{
+						"target": [".h-32"],
+						"summary": "Fix all of the following:\n  aria-label attribute cannot be used on a div with no valid role attribute.",
+						"html": "<div class=\"h-32 rounded-lg bg-muted\" aria-label=\"Loading example\"></div>"
+					}
+				]
+			}
+		]
+	},
+	{
+		"url": "/templates/social-network",
+		"violations": []
+	},
+	{
+		"url": "/templates/music-player",
+		"violations": [
+			{
+				"id": "link-name",
+				"impact": "serious",
+				"nodes": [
+					{
+						"target": [".playing > a"],
+						"summary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute",
+						"html": "<a href=\"/templates/music-player/album/the-lounge\" class=\"svelte-9xkoaj\"><img src=\"/templates/music-player/on-and-on.jpg\" alt=\"\" class=\"svelte-9xkoaj\"></a>"
+					}
+				]
+			}
+		]
+	},
+	{
+		"url": "/templates/video-library",
+		"violations": [
+			{
+				"id": "color-contrast",
+				"impact": "serious",
+				"nodes": [
+					{
+						"target": ["summary[aria-label=\"Your account\"] > span:nth-child(1)"],
+						"summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.66 (foreground color: #ffffff, background color: #bd725c, font size: 8.3pt (11px), font weight: bold). Expected contrast ratio of 4.5:1",
+						"html": "<span>JD</span>"
+					},
+					{
+						"target": ["#film-credits > p"],
+						"summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #797982, background color: #111113, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1",
+						"html": "<p>Good stories deserve a screen.</p>"
+					},
+					{
+						"target": ["#film-credits > span"],
+						"summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #797982, background color: #111113, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1",
+						"html": "<span>Films by Blender Foundation and independent creators.</span>"
+					}
+				]
+			}
+		]
+	},
+	{
+		"url": "/templates/email-client/calendar",
+		"violations": [
+			{
+				"id": "color-contrast",
+				"impact": "serious",
+				"nodes": [
+					{
+						"target": ["button[aria-label=\"Monday, 31 August 2026\"] > .day-number"],
+						"summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.37 (foreground color: #4e4e4e, background color: #0a0a0a, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1",
+						"html": "<span class=\"day-number svelte-ihe8cd\">31</span>"
+					}
+				]
+			}
+		]
+	},
+	{
+		"url": "/demo/erp",
+		"violations": []
+	}
+]

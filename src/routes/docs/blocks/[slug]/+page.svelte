@@ -33,7 +33,7 @@
 		class="mx-auto max-w-5xl px-4 py-10 md:px-8"
 	>
 		<DocsPageHeader eyebrow="Block" title={block.title} description={block.description} />
-		<nav data-sveltekit-reload="off" aria-label="Block reference" class="mt-7 flex gap-1 border-b">
+		<nav data-sveltekit-reload aria-label="Block reference" class="mt-7 flex gap-1 border-b">
 			<Button
 				href="?tab=overview"
 				variant={tab === 'overview' ? 'secondary' : 'ghost'}

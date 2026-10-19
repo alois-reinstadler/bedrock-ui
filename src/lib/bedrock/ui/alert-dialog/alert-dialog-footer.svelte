@@ -6,7 +6,7 @@
 	import AlertDialogFooter from '#lib/shadcn/ui/alert-dialog/alert-dialog-footer.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AlertDialogFooter> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AlertDialogFooter> = $props();
 </script>
 
-<AlertDialogFooter {...props} />
+<AlertDialogFooter bind:ref {...props} />

@@ -6,7 +6,7 @@
 	import InputOtpSeparator from '#lib/shadcn/ui/input-otp/input-otp-separator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof InputOtpSeparator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof InputOtpSeparator> = $props();
 </script>
 
-<InputOtpSeparator {...props} />
+<InputOtpSeparator bind:ref {...props} />

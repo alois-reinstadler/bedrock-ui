@@ -7,11 +7,11 @@
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --primary: oklch(0.205 0 0);
-  --radius: 0.625rem;
-  --corner-shape: squircle;
+  --radius: 1rem;
+  --corner-shape: superellipse(3);
 }`;
 	const cornerCode = `:root {
-  --corner-shape: squircle; /* round, bevel, or superellipse(1.5) */
+  --corner-shape: superellipse(3); /* round, bevel, or superellipse(1.5) */
 }
 
 /* Override a section without changing component props. */
@@ -45,8 +45,8 @@
 		<p class="mt-2 mb-5 max-w-2xl text-muted-foreground">
 			<code>--radius</code> sets the corner size; <code>--corner-shape</code> sets its curve.
 			Buttons, cards, inputs, menus and other shared component surfaces use the same shape. The
-			default is <code>squircle</code>. Browsers without CSS corner-shape support keep the existing
-			rounded corners.
+			default is <code>superellipse(3)</code>. Browsers without CSS corner-shape support keep the
+			existing rounded corners.
 		</p>
 		<CodeBlock label="CSS" language="css" code={cornerCode} />
 		<p class="mt-4 max-w-2xl text-sm text-muted-foreground">

@@ -95,48 +95,61 @@
 	font-size: 10px;
 	border-radius: 3px;
 }
-.genre-menu,
-.account-menu {
-	position: relative;
-}
-.genre-menu summary,
-.account-menu summary {
-	list-style: none;
-	display: flex;
+/* The film canvas is deliberately dark. Portaled menus carry the same palette
+   explicitly so they remain legible when the surrounding preview is light. */
+.genre-menu-trigger,
+.account-menu-trigger {
+	display: inline-flex;
 	align-items: center;
 	gap: 8px;
+	background: transparent;
+	border-radius: var(--radius-md);
+	padding: 4px;
+	font: inherit;
 }
-.genre-menu summary::-webkit-details-marker,
-.account-menu summary::-webkit-details-marker {
-	display: none;
-}
-.genre-menu > div,
-.account-menu > div {
-	position: absolute;
-	top: calc(100% + 16px);
-	background: #242426;
-	border: 1px solid #ffffff1a;
-	box-shadow: 0 20px 40px #0009;
-	padding: 8px;
-	border-radius: 8px;
+.frame-menu {
+	--popover: #242426;
+	--popover-foreground: #f6f5f2;
+	--accent: #363638;
+	--accent-foreground: #fff;
+	--foreground: #f6f5f2;
+	--muted-foreground: #aaa9b0;
+	--border: #ffffff26;
+	color-scheme: dark;
 	min-width: 180px;
+	font-family: Arial, Helvetica, sans-serif;
 }
-.genre-menu > div > a,
-.account-menu > div > a {
-	display: block;
+.frame-menu [data-slot='dropdown-menu-item'] {
 	padding: 11px 12px;
-	border-radius: 4px;
+	cursor: pointer;
+	text-decoration: none;
 }
-.genre-menu > div > a:hover,
-.account-menu > div > a:hover {
-	background: #ffffff10;
+.frame-menu [data-slot='dropdown-menu-item']:focus-visible {
+	outline: 2px solid #f4ba5b;
+	outline-offset: -2px;
+}
+.frame-account-menu {
+	min-width: 230px;
+}
+.frame-account-menu strong,
+.frame-account-menu small {
+	display: block;
+}
+.frame-account-menu small {
+	color: var(--muted-foreground);
+	font-weight: 400;
+}
+.frame-account-menu a > span {
+	margin-left: auto;
+	color: #f4ba5b;
 }
 .frame-search {
 	display: flex;
 	align-items: center;
 	margin-left: auto;
 	border: 1px solid #ffffff30;
-	border-radius: 5px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	gap: 9px;
 	padding: 0 11px;
 	height: 36px;
@@ -164,34 +177,17 @@
 	font-size: 18px;
 	color: #b6b6bf;
 }
-.account-menu summary > span:first-child {
+.account-initials {
 	display: grid;
 	place-items: center;
 	width: 34px;
 	height: 34px;
-	background: #bd725c;
-	border-radius: 5px;
+	background: #a65f4c;
+	border-radius: var(--radius-md);
+	corner-shape: var(--corner-shape);
 	color: #fff;
 	font-weight: 700;
 	font-size: 11px;
-}
-.account-menu > div {
-	right: 0;
-	min-width: 230px;
-	font-size: 13px;
-}
-.account-menu strong,
-.account-menu small {
-	display: block;
-	padding: 5px 12px;
-}
-.account-menu small {
-	color: var(--frame-muted);
-	margin-bottom: 8px;
-}
-.account-menu > div > a > span {
-	float: right;
-	color: #f4ba5b;
 }
 .frame-hero {
 	min-height: 690px;
@@ -295,11 +291,12 @@
 	padding: 0 22px;
 	font-weight: 700;
 	font-size: 13px;
-	border-radius: 4px;
+	border-radius: var(--radius-md);
+	corner-shape: var(--corner-shape);
 	border: 1px solid transparent;
 	transition:
-		background 0.15s,
-		transform 0.15s;
+		background var(--motion-state) var(--motion-ease-enter),
+		transform var(--motion-state) var(--motion-ease-enter);
 }
 .frame-button:hover {
 	transform: translateY(-1px);
@@ -375,7 +372,8 @@
 	background: transparent;
 	width: 29px;
 	height: 28px;
-	border-radius: 3px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	font-size: 23px;
 	line-height: 1;
 }
@@ -549,7 +547,7 @@
 	display: flex;
 	align-items: center;
 	gap: 30px;
-	color: #797982;
+	color: var(--frame-muted);
 	flex-wrap: wrap;
 	font-size: 10px;
 }
@@ -686,7 +684,8 @@
 .genre-links a {
 	padding: 8px 13px;
 	border: 1px solid #ffffff26;
-	border-radius: 4px;
+	border-radius: var(--radius-md);
+	corner-shape: var(--corner-shape);
 	font-size: 12px;
 }
 .genre-links a[aria-current='page'] {
@@ -783,7 +782,8 @@
 	backdrop-filter: blur(12px);
 	padding: 30px;
 	border: 1px solid #ffffff20;
-	border-radius: 8px;
+	border-radius: var(--radius-lg);
+	corner-shape: var(--corner-shape);
 	max-width: 350px;
 }
 .watch-next p {
@@ -868,7 +868,7 @@
 	.frame-search button {
 		display: none;
 	}
-	.account-menu summary > span:first-child {
+	.account-initials {
 		width: 29px;
 		height: 29px;
 		font-size: 10px;
@@ -1059,4 +1059,8 @@
 		transition: none !important;
 		animation: none !important;
 	}
+}
+
+.frame-app :is(.save-small, .film-play) {
+	corner-shape: round;
 }

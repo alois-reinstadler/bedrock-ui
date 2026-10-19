@@ -6,7 +6,7 @@
 	import DrawerTrigger from '#lib/shadcn/ui/drawer/drawer-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DrawerTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DrawerTrigger> = $props();
 </script>
 
-<DrawerTrigger {...props} />
+<DrawerTrigger bind:ref {...props} />

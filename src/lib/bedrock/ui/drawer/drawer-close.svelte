@@ -6,7 +6,7 @@
 	import DrawerClose from '#lib/shadcn/ui/drawer/drawer-close.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DrawerClose> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DrawerClose> = $props();
 </script>
 
-<DrawerClose {...props} />
+<DrawerClose bind:ref {...props} />

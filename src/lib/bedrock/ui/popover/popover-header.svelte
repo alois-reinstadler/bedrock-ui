@@ -6,7 +6,7 @@
 	import PopoverHeader from '#lib/shadcn/ui/popover/popover-header.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof PopoverHeader> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof PopoverHeader> = $props();
 </script>
 
-<PopoverHeader {...props} />
+<PopoverHeader bind:ref {...props} />

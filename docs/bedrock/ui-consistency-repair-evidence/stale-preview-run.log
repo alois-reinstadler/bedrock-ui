@@ -1,0 +1,129 @@
+
+Running 64 tests using 1 worker
+
+(node:90815) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/64] src/lib/site/surface-consistency.e2e.ts:4:2 › hero honors live OS reduction and keeps mobile focus stationary: light
+  1) src/lib/site/surface-consistency.e2e.ts:4:2 › hero honors live OS reduction and keeps mobile focus stationary: light
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.constellation')
+    Expected: "true"
+    Received: "false"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.constellation')
+        14 × locator resolved to <section data-reduced-motion="false" class="constellation svelte-nvkqkc" aria-label="Interactive Bedrock component constellation">…</section>
+           - unexpected value "false"
+
+
+      20 | 			.not.toBe('0deg');
+      21 | 		await page.emulateMedia({ reducedMotion: 'reduce' });
+    > 22 | 		await expect(scene).toHaveAttribute('data-reduced-motion', 'true');
+         | 		                    ^
+      23 | 		await expect
+      24 | 			.poll(() => scene.evaluate((e) => e.style.getPropertyValue('--scene-x')))
+      25 | 			.toBe('0deg');
+        at /home/node/repos/bedrock-ui/src/lib/site/surface-consistency.e2e.ts:22:23
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-lib-site-surface-consi-9cf55-bile-focus-stationary-light/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-lib-site-surface-consi-9cf55-bile-focus-stationary-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-lib-site-surface-consi-9cf55-bile-focus-stationary-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:90872) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/64] src/lib/site/surface-consistency.e2e.ts:48:2 › gallery and documentation table frames inherit live corner tokens: light
+  2) src/lib/site/surface-consistency.e2e.ts:48:2 › gallery and documentation table frames inherit live corner tokens: light
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-doc-tab="properties"] .corner-theme').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-doc-tab="properties"] .corner-theme').first()
+
+
+      59 | 			await page.goto(path);
+      60 | 			const surface = page.locator(selector).first();
+    > 61 | 			await expect(surface).toBeVisible();
+         | 			                      ^
+      62 | 			await expect(surface).toHaveCSS('corner-shape', 'superellipse(3)');
+      63 | 			const radius = await surface.evaluate((e) => getComputedStyle(e).borderRadius);
+      64 | 			await page.evaluate(() =>
+        at /home/node/repos/bedrock-ui/src/lib/site/surface-consistency.e2e.ts:61:26
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-lib-site-surface-consi-081fa-it-live-corner-tokens-light/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-lib-site-surface-consi-081fa-it-live-corner-tokens-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-lib-site-surface-consi-081fa-it-live-corner-tokens-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:91004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/64] src/lib/site/surface-consistency.e2e.ts:4:2 › hero honors live OS reduction and keeps mobile focus stationary: dark
+  3) src/lib/site/surface-consistency.e2e.ts:4:2 › hero honors live OS reduction and keeps mobile focus stationary: dark
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.constellation')
+    Expected: "true"
+    Received: "false"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.constellation')
+        14 × locator resolved to <section data-reduced-motion="false" class="constellation svelte-nvkqkc" aria-label="Interactive Bedrock component constellation">…</section>
+           - unexpected value "false"
+
+
+      20 | 			.not.toBe('0deg');
+      21 | 		await page.emulateMedia({ reducedMotion: 'reduce' });
+    > 22 | 		await expect(scene).toHaveAttribute('data-reduced-motion', 'true');
+         | 		                    ^
+      23 | 		await expect
+      24 | 			.poll(() => scene.evaluate((e) => e.style.getPropertyValue('--scene-x')))
+      25 | 			.toBe('0deg');
+        at /home/node/repos/bedrock-ui/src/lib/site/surface-consistency.e2e.ts:22:23
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-lib-site-surface-consi-55841-obile-focus-stationary-dark/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-lib-site-surface-consi-55841-obile-focus-stationary-dark/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-lib-site-surface-consi-55841-obile-focus-stationary-dark/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:91071) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[4/64] src/lib/site/surface-consistency.e2e.ts:48:2 › gallery and documentation table frames inherit live corner tokens: dark

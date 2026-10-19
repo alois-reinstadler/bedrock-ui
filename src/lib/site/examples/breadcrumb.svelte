@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Breadcrumb from '#lib/bedrock/ui/breadcrumb';
 	import { Button } from '#lib/bedrock/ui/button';
 	let location = $state('Research plan');
@@ -11,7 +12,7 @@
 			Breadcrumbs show location; the current document stays plain text instead of linking to itself.
 		</p>
 	</header>
-	<div class="space-y-5 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-5 p-5">
 		<Breadcrumb.Root
 			><Breadcrumb.List
 				><Breadcrumb.Item
@@ -36,5 +37,5 @@
 		<Button variant="outline" size="sm" onclick={() => (location = 'Research plan')}
 			>Open research plan</Button
 		>
-	</div>
+	</Card.Root>
 </section>

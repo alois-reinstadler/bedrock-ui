@@ -1,0 +1,61 @@
+{
+	"captured": "2026-09-29T03:56:06.146Z",
+	"node": "v24.20.0",
+	"vite": "8.2.2",
+	"manifestSha256": "9103f20b6b251d94e19b91453f1ac5d7132a4e57a1794dac25d7333a41406677",
+	"routes": {
+		"button": {
+			"files": 96,
+			"gzip": 215290,
+			"originalBaselineGzip": 223532,
+			"delta": -8242,
+			"ceiling": 265836,
+			"pass": true,
+			"legacyLayoutMarkerFiles": []
+		},
+		"docs": {
+			"files": 71,
+			"gzip": 174697,
+			"originalBaselineGzip": 183146,
+			"delta": -8449,
+			"ceiling": 225450,
+			"pass": true,
+			"legacyLayoutMarkerFiles": []
+		},
+		"motion": {
+			"files": 47,
+			"gzip": 199760,
+			"originalBaselineGzip": 180638,
+			"delta": 19122,
+			"ceiling": 222942,
+			"pass": true,
+			"legacyLayoutMarkerFiles": []
+		},
+		"async-button": {
+			"files": 101,
+			"gzip": 261503,
+			"originalBaselineGzip": 226877,
+			"delta": 34626,
+			"ceiling": 269181,
+			"pass": true,
+			"legacyLayoutMarkerFiles": []
+		},
+		"erp": {
+			"files": 123,
+			"gzip": 345906,
+			"originalBaselineGzip": 307256,
+			"delta": 38650,
+			"ceiling": 349560,
+			"pass": true,
+			"legacyLayoutMarkerFiles": []
+		}
+	},
+	"erpAgainstMatchedControl": {
+		"controlGzip": 308238,
+		"candidateGzip": 345906,
+		"delta": 37668,
+		"allowance": 42304,
+		"ceiling": 350542,
+		"pass": true
+	}
+}

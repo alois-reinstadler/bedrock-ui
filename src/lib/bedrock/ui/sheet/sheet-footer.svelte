@@ -6,7 +6,7 @@
 	import SheetFooter from '#lib/shadcn/ui/sheet/sheet-footer.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SheetFooter> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SheetFooter> = $props();
 </script>
 
-<SheetFooter {...props} />
+<SheetFooter bind:ref {...props} />

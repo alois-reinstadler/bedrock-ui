@@ -112,7 +112,7 @@
 		>
 	</div>
 	<DateRangePicker.Content
-		class="z-50 flex motion-popover rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
+		class="motion-popover z-50 flex rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
 	>
 		{#if presets.length}<div class="flex min-w-28 flex-col gap-1 border-r border-border p-1">
 				{#each presets as preset (preset.label)}<button

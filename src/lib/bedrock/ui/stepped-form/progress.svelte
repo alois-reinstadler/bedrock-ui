@@ -45,22 +45,3 @@
 		{/each}
 	</Stepper.Root>
 </div>
-
-<style>
-	.stepped-progress {
-		container-type: inline-size;
-	}
-	@container (max-width: 28rem) {
-		.stepped-progress :global([data-slot='stepper']) {
-			flex-direction: column;
-			align-items: stretch;
-			gap: 0.75rem;
-		}
-		.stepped-progress :global([data-slot='stepper-step']) {
-			flex: none;
-		}
-		.stepped-progress :global([data-slot='stepper-connector']) {
-			display: none;
-		}
-	}
-</style>

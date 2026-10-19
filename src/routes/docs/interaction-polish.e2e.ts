@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
 
 for (const component of ['clickable-card', 'selectable-card'] as const) {
 	for (const forcedColors of ['none', 'active'] as const) {
@@ -106,18 +106,18 @@ test('icon and toggle examples update semantic state on each keyboard activation
 	await expect(favorite).toBeFocused();
 
 	await page.goto('/docs/components/toggle');
-	const toggle = page.getByRole('button', { name: 'Show only items assigned to me' });
+	const toggle = page.getByRole('button', { name: 'Save article' });
 	await expect(toggle).toHaveAttribute('aria-pressed', 'false');
 	await toggle.focus();
 	await page.keyboard.press('Space');
 	await expect(toggle).toHaveAttribute('aria-pressed', 'true');
 	await expect(
-		page.getByRole('status').filter({ hasText: 'Showing 2 review items' })
+		page.getByRole('status').filter({ hasText: 'Added to your reading list.' })
 	).toBeVisible();
 	await page.keyboard.press('Enter');
 	await expect(toggle).toHaveAttribute('aria-pressed', 'false');
 	await expect(
-		page.getByRole('status').filter({ hasText: 'Showing 3 review items' })
+		page.getByRole('status').filter({ hasText: 'Save this article to read it later.' })
 	).toBeVisible();
 	await expect(toggle).toBeFocused();
 });

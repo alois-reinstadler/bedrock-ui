@@ -20,13 +20,6 @@
 	} from '#lib/bedrock/ui/data-table';
 	import { Lightbox, type LightboxItem } from '#lib/bedrock/ui/lightbox';
 	import { OverflowList } from '#lib/bedrock/ui/overflow-list';
-	import {
-		PowerSearch,
-		applyPowerSearchFilters,
-		type PowerSearchConfig,
-		type PowerSearchFilter,
-		type PowerSearchLabels
-	} from '#lib/bedrock/ui/power-search';
 	import { StatusDot } from '#lib/bedrock/ui/status-dot';
 	import { Thumbnail } from '#lib/bedrock/ui/thumbnail';
 	import { Timestamp } from '#lib/bedrock/ui/timestamp';
@@ -104,66 +97,6 @@
 		lastPage: 'Letzte Seite',
 		reorderHint: 'Spalte ziehen oder mit Alt+Pfeiltasten verschieben',
 		reorderAria: (header) => `${header} — mit Alt+Pfeiltasten verschieben`
-	};
-
-	// Typed filter bar feeding the orders table; German labels continue the
-	// explicit-localization pattern of this demo.
-	const searchConfig: PowerSearchConfig = {
-		freeTextField: 'customer',
-		fields: [
-			{ key: 'customer', label: 'Kunde', type: 'string' },
-			{
-				key: 'status',
-				label: 'Status',
-				type: 'enumList',
-				values: [
-					{ value: 'open', label: 'Offen' },
-					{ value: 'confirmed', label: 'Bestätigt' },
-					{ value: 'delivered', label: 'Geliefert' },
-					{ value: 'cancelled', label: 'Storniert' }
-				],
-				operators: [
-					{ key: 'isAnyOf', label: 'ist eines von' },
-					{ key: 'isNoneOf', label: 'ist keines von' }
-				]
-			},
-			{
-				key: 'net',
-				label: 'Netto',
-				type: 'number',
-				operators: [
-					{ key: 'gte', label: '≥' },
-					{ key: 'lte', label: '≤' },
-					{ key: 'eq', label: '=' }
-				]
-			},
-			{
-				key: 'createdAt',
-				label: 'Angelegt',
-				type: 'date',
-				operators: [
-					{ key: 'after', label: 'nach' },
-					{ key: 'before', label: 'vor' },
-					{ key: 'is', label: 'am' }
-				]
-			}
-		]
-	};
-	let orderFilters = $state<PowerSearchFilter[]>([]);
-	const filteredOrders = $derived(applyPowerSearchFilters(orderFilters, orders));
-	const searchLabels: PowerSearchLabels = {
-		results: (count) => `${count} Treffer`,
-		clearAll: 'Filter löschen',
-		edit: (label) => `Filter ${label} bearbeiten`,
-		remove: (label) => `Filter ${label} entfernen`,
-		apply: 'Übernehmen',
-		noFields: 'Keine passenden Felder.',
-		operator: 'Operator',
-		searchValues: 'Werte suchen…',
-		added: (label) => `Filter ${label} hinzugefügt`,
-		updated: (label) => `Filter ${label} aktualisiert`,
-		removed: (label) => `Filter ${label} entfernt`,
-		cleared: 'Filter gelöscht'
 	};
 
 	const columns: DataTableColumn<Order>[] = $derived([
@@ -357,15 +290,8 @@
 
 		<section class="flex flex-col gap-3">
 			<h2 class="text-sm font-medium text-muted-foreground">Orders</h2>
-			<PowerSearch
-				config={searchConfig}
-				bind:filters={orderFilters}
-				placeholder="Bestellungen filtern…"
-				resultCount={filteredOrders.length}
-				labels={searchLabels}
-			/>
 			<DataTable
-				data={filteredOrders}
+				data={orders}
 				{columns}
 				selectable
 				searchable
@@ -415,7 +341,7 @@
 		</section>
 
 		<section class="grid gap-8 md:grid-cols-2">
-			<div class="flex flex-col gap-3">
+			<div class="flex min-w-0 flex-col gap-3">
 				<h2 class="text-sm font-medium text-muted-foreground">Combobox</h2>
 				<Combobox
 					items={customerItems}
@@ -468,7 +394,9 @@
 				<h2 class="mt-4 text-sm font-medium text-muted-foreground">
 					Tags (drag the container narrower)
 				</h2>
-				<div class="resize-x overflow-hidden rounded-lg border border-dashed border-border p-3">
+				<div
+					class="max-w-full resize-x overflow-hidden rounded-lg border border-dashed border-border p-3 corner-theme"
+				>
 					<OverflowList items={tags} moreLabel={(count) => `${count} weitere Einträge anzeigen`}>
 						{#snippet item(tag)}
 							<Badge variant="secondary">{tag}</Badge>
@@ -476,14 +404,14 @@
 					</OverflowList>
 				</div>
 
-				<div class="mt-4 flex items-center justify-between">
+				<div class="mt-4 flex flex-wrap items-center justify-between gap-2">
 					<h2 class="text-sm font-medium text-muted-foreground">Attachments</h2>
 					<Button size="sm" variant="ghost" onclick={downloadAllAttachments}>
 						<DownloadIcon />
 						Download all ({attachments.length})
 					</Button>
 				</div>
-				<div class="flex items-center gap-2">
+				<div class="flex flex-wrap items-center gap-2">
 					{#each attachments as attachment, index (attachment.src)}
 						{@const isPdf = attachment.src.toLowerCase().endsWith('.pdf')}
 						<Lightbox items={attachments} {index} labels={lightboxLabels}>
@@ -495,7 +423,7 @@
 				</div>
 			</div>
 
-			<div class="flex flex-col gap-3">
+			<div class="flex min-w-0 flex-col gap-3">
 				<h2 class="text-sm font-medium text-muted-foreground">Chat</h2>
 				<Chat.Root class="h-96 rounded-lg border border-border">
 					<Chat.MessageList scrollDownLabel="Nach unten scrollen">

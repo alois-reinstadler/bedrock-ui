@@ -6,7 +6,7 @@
 	import TabsContent from '#lib/shadcn/ui/tabs/tabs-content.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof TabsContent> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof TabsContent> = $props();
 </script>
 
-<TabsContent {...props} />
+<TabsContent bind:ref {...props} />

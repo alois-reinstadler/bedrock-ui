@@ -1,8 +1,9 @@
 import { fileURLToPath } from 'node:url';
+import { adaptSuperformsStores } from './src/lib/site/superforms-compat.ts';
 import { mdsvex } from 'mdsvex';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
-import { playwright } from '@vitest/browser-playwright';
+import { sharedBrowserProvider } from './scripts/shared-browser-provider.ts';
 import adapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 
@@ -32,6 +33,7 @@ export default defineConfig({
 			'formsnap',
 			'layerchart',
 			'marked',
+			'maplibre-gl',
 			'mode-watcher',
 			'paneforge',
 			'pdfjs-dist',
@@ -48,19 +50,17 @@ export default defineConfig({
 			// Superforms 2 imports two legacy stores. Keep its adapter narrow instead
 			// of overriding SvelteKit modules for application code or other packages.
 			transform(code, id) {
-				if (!id.replaceAll('\\', '/').endsWith('/sveltekit-superforms/dist/client/superForm.js'))
-					return;
-				return {
-					code: code.replace(
-						"from '$app/stores'",
-						`from ${JSON.stringify(fileURLToPath(new URL('./src/lib/site/superforms-stores.ts', import.meta.url)))}`
-					),
-					map: null
-				};
+				return adaptSuperformsStores(
+					code,
+					id,
+					fileURLToPath(new URL('./src/lib/site/superforms-stores.ts', import.meta.url))
+				);
 			}
 		},
 		tailwindcss(),
 		sveltekit({
+			// Unit tests must not overwrite the live preview's generated runtime.
+			outDir: runtimeEnvironment === 'test' ? '.svelte-kit-test' : '.svelte-kit',
 			compilerOptions: {
 				// Force runes mode for the project, except for libraries. Can be removed in svelte 6.
 				runes: ({ filename }) =>
@@ -80,9 +80,10 @@ export default defineConfig({
 				extends: './vite.config.ts',
 				test: {
 					name: 'client',
+					fileParallelism: false,
 					browser: {
 						enabled: true,
-						provider: playwright(),
+						provider: sharedBrowserProvider(),
 						instances: [{ browser: 'chromium', headless: true }]
 					},
 					include: ['src/**/*.svelte.{test,spec}.{js,ts}'],

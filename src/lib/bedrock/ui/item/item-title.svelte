@@ -6,7 +6,7 @@
 	import ItemTitle from '#lib/shadcn/ui/item/item-title.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ItemTitle> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ItemTitle> = $props();
 </script>
 
-<ItemTitle {...props} />
+<ItemTitle bind:ref {...props} />

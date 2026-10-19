@@ -35,6 +35,7 @@
 	import { browser } from '$app/env';
 	import { goto } from '$app/navigation';
 	import { useWorkspace, mailBase, messageHref } from './workspace.svelte.js';
+	import { createMailCommands } from './mail-commands.js';
 	import { demoToday } from './productivity-data.js';
 	const workspace = useWorkspace();
 	const active = true;
@@ -77,7 +78,17 @@
 	let attachmentOpen = $state(false);
 	afterNavigate(() => {
 		mobilePane = mailParams.message || workspace.compose.open ? 'reader' : 'list';
-		if (workspace.compose.open) document.getElementById('compose-to')?.focus();
+		// Route params and the mobile pane must reach the DOM before focusing.
+		// This hook runs in the mounted destination, including when navigation
+		// replaced the Mail instance that initiated it.
+		void tick().then(() => {
+			const id = workspace.compose.open
+				? 'compose-to'
+				: mailParams.message
+					? 'mail-reader-heading'
+					: 'mail-list-heading';
+			document.getElementById(id)?.focus();
+		});
 	});
 
 	const mailboxMessages = $derived.by(() => {
@@ -112,6 +123,24 @@
 			filteredMessages.every((message) => selectedIds.includes(message.id))
 	);
 
+	const commands = createMailCommands(
+		workspace,
+		() => currentMessage,
+		(message) => {
+			announcement = message;
+		}
+	);
+	const { toggleStar, persistDraft, restoreArchive } = commands;
+	function updateSelected(action: 'read' | 'archive' | 'delete') {
+		commands.updateMessages(selectedIds, action);
+		selectedIds = [];
+	}
+	function sendMessage(event: SubmitEvent) {
+		event.preventDefault();
+		commands.sendMessage();
+		void closeCompose();
+	}
+
 	async function chooseMessage(id: string) {
 		if (workspace.compose.open) {
 			persistDraft();
@@ -126,22 +155,12 @@
 			message.unread = false;
 			announcement = `${message.subject} marked as read`;
 		}
-		await tick();
-		await new Promise<void>((resolve) =>
-			requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
-		);
-		document.querySelector<HTMLHeadingElement>('#mail-reader-heading')?.focus();
 	}
 
 	async function backToMessages() {
 		mobilePane = 'list';
 		workspace.localMessageId = null;
 		await goto(`${mailBase}/mail/${selectedMailbox}`, { reset: false });
-		await tick();
-		await new Promise<void>((resolve) =>
-			requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
-		);
-		document.querySelector<HTMLHeadingElement>('#mail-list-heading')?.focus();
 	}
 
 	function updateCurrent(action: 'archive' | 'delete') {
@@ -149,13 +168,6 @@
 		selectedIds = [currentMessage.id];
 		updateSelected(action);
 		void backToMessages();
-	}
-
-	function toggleStar(id: string) {
-		const message = workspace.messages.find((item) => item.id === id);
-		if (!message) return;
-		message.starred = !message.starred;
-		announcement = `${message.subject} ${message.starred ? 'starred' : 'unstarred'}`;
 	}
 
 	function toggleSelection(id: string, checked: boolean) {
@@ -167,30 +179,6 @@
 		selectedIds = checked
 			? [...new Set([...selectedIds, ...visibleIds])]
 			: selectedIds.filter((id) => !visibleIds.includes(id));
-	}
-
-	function updateSelected(action: 'read' | 'archive' | 'delete') {
-		if (action === 'delete') {
-			workspace.messages = workspace.messages.filter(
-				(message) => !selectedIds.includes(message.id)
-			);
-			announcement = `${selectedIds.length} messages deleted locally`;
-		} else if (action === 'archive') {
-			workspace.undoArchive = workspace.messages
-				.filter((message) => selectedIds.includes(message.id))
-				.map((message) => ({ id: message.id, mailbox: message.mailbox }));
-			for (const message of workspace.messages) {
-				if (selectedIds.includes(message.id)) message.mailbox = 'archive';
-			}
-			announcement = `${selectedIds.length} messages archived`;
-		} else {
-			for (const message of workspace.messages) {
-				if (selectedIds.includes(message.id)) message.unread = false;
-			}
-			announcement = `${selectedIds.length} messages marked as read`;
-		}
-		selectedIds = [];
-		workspace.localMessageId = null;
 	}
 
 	async function openCompose(to = '', subject = '', body = '', replyId: string | null = null) {
@@ -260,92 +248,10 @@
 		persistDraft();
 		void closeCompose();
 	}
-	function composedBody() {
-		return workspace.compose.mode === 'forward' && currentMessage
-			? `${workspace.compose.body}\n\nForwarded message from ${currentMessage.from.name} <${currentMessage.from.email}>:\n${currentMessage.body.join('\n')}`
-			: workspace.compose.body;
-	}
-	function persistDraft() {
-		const draft = {
-			id: workspace.compose.draftId ?? `draft-${Date.now()}`,
-			mailbox: 'drafts' as const,
-			from: {
-				name: 'You',
-				email: 'alex@lumenmail.example',
-				initials: 'AL',
-				tone: 'bg-primary text-primary-foreground'
-			},
-			to: workspace.compose.to
-				.split(',')
-				.map((recipient) => recipient.trim())
-				.filter(Boolean),
-			subject: workspace.compose.subject || '(No subject)',
-			preview: workspace.compose.body,
-			body: composedBody().split('\n'),
-			time: 'Draft',
-			dateTime: new Date().toISOString(),
-			unread: false,
-			starred: false
-		};
-		workspace.messages = workspace.compose.draftId
-			? workspace.messages.map((message) =>
-					message.id === workspace.compose.draftId ? draft : message
-				)
-			: [draft, ...workspace.messages];
-		announcement = 'Draft saved locally. Find it in Drafts.';
-	}
-	function restoreArchive() {
-		for (const item of workspace.undoArchive) {
-			const message = workspace.messages.find((message) => message.id === item.id);
-			if (message) message.mailbox = item.mailbox;
-		}
-		announcement = `Restored ${workspace.undoArchive.length} messages.`;
-		workspace.undoArchive = [];
-	}
 	function editDraft() {
 		if (!currentMessage) return;
 		openCompose(currentMessage.to[0] ?? '', currentMessage.subject, currentMessage.body.join('\n'));
 		workspace.compose.draftId = currentMessage.id;
-	}
-	function sendMessage(event: SubmitEvent) {
-		event.preventDefault();
-		if (workspace.compose.draftId)
-			workspace.messages = workspace.messages.filter(
-				(message) => message.id !== workspace.compose.draftId
-			);
-		if (workspace.compose.replyId) {
-			const original = workspace.messages.find(
-				(message) => message.id === workspace.compose.replyId
-			);
-			if (original)
-				original.thread = [
-					...(original.thread ?? []),
-					{ author: 'You', time: 'Just now', body: workspace.compose.body }
-				];
-		}
-		workspace.messages.unshift({
-			id: `local-${Date.now()}`,
-			mailbox: 'sent',
-			from: {
-				name: 'You',
-				email: 'alex@lumenmail.example',
-				initials: 'AL',
-				tone: 'bg-primary text-primary-foreground'
-			},
-			to: workspace.compose.to
-				.split(',')
-				.map((recipient) => recipient.trim())
-				.filter(Boolean),
-			subject: workspace.compose.subject,
-			preview: workspace.compose.body,
-			body: composedBody().split('\n').filter(Boolean),
-			time: 'Now',
-			dateTime: new Date().toISOString(),
-			unread: false,
-			starred: false
-		});
-		announcement = `Demo message to ${workspace.compose.to} saved in Sent. No email was sent.`;
-		void closeCompose();
 	}
 
 	function navigateMessage(direction: 1 | -1) {
@@ -989,7 +895,7 @@
 	}
 
 	.message-summary:focus-visible {
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-lg);
 		box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent);
 	}
 
@@ -1127,7 +1033,7 @@
 		margin-top: 1rem;
 		border: 1px solid var(--border);
 		border-top: 2px solid #5967c7;
-		border-radius: 4px;
+		border-radius: var(--radius-lg);
 		background: var(--background);
 		box-shadow: 0 2px 8px #00000006;
 	}

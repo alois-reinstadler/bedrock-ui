@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { NativeSelect } from '#lib/bedrock/ui/native-select';
 	import { resolve } from '$app/paths';
 	import ArrowRightIcon from '@lucide/svelte/icons/arrow-right';
 	import { Badge } from '#lib/bedrock/ui/badge';
@@ -37,10 +38,10 @@
 				placeholder="Search product patterns"
 			/></label
 		><label
-			>Category<select bind:value={category} class="mt-1 block rounded-md border bg-background p-2"
+			>Category<NativeSelect bind:value={category} class="mt-1"
 				><option value="all">All categories</option><option value="forms">Forms</option><option
-					value="data">Data</option
-				><option value="settings">Settings</option></select
+					value="settings">Settings</option
+				></NativeSelect
 			></label
 		>
 	</div>

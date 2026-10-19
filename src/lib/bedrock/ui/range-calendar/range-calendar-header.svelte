@@ -6,7 +6,7 @@
 	import RangeCalendarHeader from '#lib/shadcn/ui/range-calendar/range-calendar-header.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof RangeCalendarHeader> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof RangeCalendarHeader> = $props();
 </script>
 
-<RangeCalendarHeader {...props} />
+<RangeCalendarHeader bind:ref {...props} />

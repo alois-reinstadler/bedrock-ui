@@ -6,7 +6,11 @@
 	import MenubarRadioGroup from '#lib/shadcn/ui/menubar/menubar-radio-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof MenubarRadioGroup> = $props();
+	let {
+		ref = $bindable(null),
+		value = $bindable(''),
+		...props
+	}: ComponentProps<typeof MenubarRadioGroup> = $props();
 </script>
 
-<MenubarRadioGroup {...props} />
+<MenubarRadioGroup bind:ref bind:value {...props} />

@@ -6,7 +6,7 @@
 	import CommandLoading from '#lib/shadcn/ui/command/command-loading.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CommandLoading> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CommandLoading> = $props();
 </script>
 
-<CommandLoading {...props} />
+<CommandLoading bind:ref {...props} />

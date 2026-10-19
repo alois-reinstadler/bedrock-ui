@@ -6,7 +6,9 @@
 		goodResponse: 'Good response',
 		badResponse: 'Bad response',
 		edit: 'Edit message',
-		copyFailed: 'Copy failed. Try again.'
+		copyFailed: 'Copy failed. Try again.',
+		retryFailed: 'Retry failed. Try again.',
+		feedbackFailed: 'Could not save feedback. Try again.'
 	};
 
 	export type ChatMessageActionsLabels = Partial<typeof defaultLabels>;
@@ -22,6 +24,7 @@
 	import { IconButton } from '#lib/bedrock/ui/icon-button';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import { onDestroy } from 'svelte';
+	import { createChatAction } from './agent-action.svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
 
 	let {
@@ -39,12 +42,13 @@
 	}: Omit<WithElementRef<HTMLAttributes<HTMLDivElement>>, 'children'> & {
 		/** Copy the message; the button shows built-in copied feedback. */
 		onCopy?: () => void | Promise<void>;
-		onRetry?: () => void;
-		onFeedback?: (kind: 'up' | 'down') => void;
+		onRetry?: (() => void) | (() => Promise<void>);
+		onFeedback?: ((kind: 'up' | 'down') => void) | ((kind: 'up' | 'down') => Promise<void>);
 		/** Bind the selection to persist it. Clicking the selected thumb clears it. */
 		feedback?: 'up' | 'down' | null;
 		/** Includes null when feedback is cleared; legacy onFeedback fires only for selections. */
-		onFeedbackChange?: (kind: 'up' | 'down' | null) => void;
+		onFeedbackChange?:
+			((kind: 'up' | 'down' | null) => void) | ((kind: 'up' | 'down' | null) => Promise<void>);
 		onEdit?: () => void;
 		disabled?: boolean;
 		labels?: ChatMessageActionsLabels;
@@ -53,37 +57,37 @@
 	const labels = $derived({ ...defaultLabels, ...labelOverrides });
 
 	let copied = $state(false);
-	let copying = $state(false);
-	let copyFailed = $state(false);
+	const copyAction = createChatAction();
+	const retryAction = createChatAction();
+	const feedbackAction = createChatAction();
 	let copyTimer: ReturnType<typeof setTimeout> | undefined;
 
-	let disposed = false;
 	onDestroy(() => {
-		disposed = true;
 		clearTimeout(copyTimer);
 	});
 
-	function choose(kind: 'up' | 'down') {
-		if (disabled) return;
-		feedback = feedback === kind ? null : kind;
-		onFeedbackChange?.(feedback);
-		if (feedback) onFeedback?.(feedback);
+	async function choose(kind: 'up' | 'down') {
+		if (disabled || feedbackAction.pending) return;
+		const next = feedback === kind ? null : kind;
+		if (
+			await feedbackAction.run(async () => {
+				await onFeedbackChange?.(next);
+				if (next) await onFeedback?.(next);
+			})
+		)
+			feedback = next;
+	}
+	async function retry() {
+		if (disabled || !onRetry) return;
+		await retryAction.run(onRetry);
 	}
 	async function copy() {
-		if (disabled || copying) return;
-		copying = true;
-		copyFailed = false;
+		if (disabled || copyAction.pending || !onCopy) return;
 		copied = false;
-		try {
-			await onCopy?.();
-			if (disposed) return;
+		clearTimeout(copyTimer);
+		if (await copyAction.run(onCopy)) {
 			copied = true;
-			clearTimeout(copyTimer);
 			copyTimer = setTimeout(() => (copied = false), 1400);
-		} catch {
-			if (!disposed) copyFailed = true;
-		} finally {
-			if (!disposed) copying = false;
 		}
 	}
 </script>
@@ -105,7 +109,7 @@
 				icon={copied ? 'checkDouble' : 'copy'}
 				label={copied ? labels.copied : labels.copy}
 				size="xs"
-				disabled={disabled || copying}
+				disabled={disabled || copyAction.pending}
 				onclick={copy}
 			/>
 		{/if}
@@ -121,8 +125,8 @@
 				icon={RefreshCwIcon}
 				label={labels.retry}
 				size="xs"
-				{disabled}
-				onclick={() => onRetry()}
+				disabled={disabled || retryAction.pending}
+				onclick={retry}
 			/>
 		{/if}
 		{#if onFeedback || onFeedbackChange}
@@ -130,7 +134,7 @@
 				icon={ThumbsUpIcon}
 				label={labels.goodResponse}
 				size="xs"
-				{disabled}
+				disabled={disabled || feedbackAction.pending}
 				aria-pressed={feedback === 'up'}
 				class={feedback === 'up' ? 'bg-muted text-foreground' : ''}
 				onclick={() => choose('up')}
@@ -139,13 +143,20 @@
 				icon={ThumbsDownIcon}
 				label={labels.badResponse}
 				size="xs"
-				{disabled}
+				disabled={disabled || feedbackAction.pending}
 				aria-pressed={feedback === 'down'}
 				class={feedback === 'down' ? 'bg-muted text-foreground' : ''}
 				onclick={() => choose('down')}
 			/>
 		{/if}
-		{#if copyFailed}<span role="alert" class="text-xs text-destructive">{labels.copyFailed}</span
+		{#if copyAction.failed}<span role="alert" class="text-xs text-destructive"
+				>{labels.copyFailed}</span
+			>{/if}
+		{#if retryAction.failed}<span role="alert" class="text-xs text-destructive"
+				>{labels.retryFailed}</span
+			>{/if}
+		{#if feedbackAction.failed}<span role="alert" class="text-xs text-destructive"
+				>{labels.feedbackFailed}</span
 			>{/if}
 	</div>
 {/if}

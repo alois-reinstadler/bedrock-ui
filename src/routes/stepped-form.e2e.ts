@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../scripts/shared-browser-test';
 import AxeBuilder from '@axe-core/playwright';
 
 for (const colorScheme of ['light', 'dark'] as const) {
@@ -21,8 +21,6 @@ for (const colorScheme of ['light', 'dark'] as const) {
 		await form.getByRole('button', { name: 'Back' }).click();
 		await expect(form.getByLabel('Workspace name')).toHaveValue('Field notes');
 		await form.getByRole('button', { name: 'Continue' }).click();
-		await form.getByRole('button', { name: 'Create workspace' }).click();
-		await expect(form.locator('[data-slot="stepped-form-status"]')).toContainText('successfully');
 		expect(
 			await form
 				.locator('[data-stepped-form-step="review"]')
@@ -30,6 +28,13 @@ for (const colorScheme of ['light', 'dark'] as const) {
 		).toBe('none');
 		const a11y = await new AxeBuilder({ page }).include('[data-slot="stepped-form"]').analyze();
 		expect(a11y.violations).toEqual([]);
+		await form.getByRole('button', { name: 'Create workspace' }).click();
+		await expect(page.getByRole('heading', { name: 'Welcome to Field notes' })).toBeVisible();
+		await expect(
+			page.getByRole('status').filter({ hasText: 'Your workspace is ready, Ada North.' })
+		).toBeVisible();
+		await page.getByRole('button', { name: 'Start again' }).click();
+		await expect(form.getByLabel('Full name')).toHaveValue('');
 		expect(errors).toEqual([]);
 	});
 }

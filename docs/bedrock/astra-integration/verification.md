@@ -1,5 +1,9 @@
 # Astra Motion integration verification
 
+> Historical integration evidence for the prior archive. The
+> [2026-09-29 implementation record](implementation.md) qualifies the updated package,
+> component migrations and policy. Removed CSS-backend descriptions below are historical.
+
 ## Architecture and preserved work
 
 Integration branch: `integration/astra-motion`, based on completed site expansion

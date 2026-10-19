@@ -1,0 +1,319 @@
+[
+	{
+		"name": "authentication-corrected",
+		"data": {
+			"invalid": true,
+			"pending": "true",
+			"error": "Email\nPassword\nTry again\n\nSign-in failed. Check your credentials and try again.",
+			"passwordCleared": true,
+			"success": true
+		},
+		"errors": []
+	},
+	{
+		"name": "settings-corrected",
+		"data": {
+			"initialDisabled": true,
+			"pendingDisabled": true,
+			"error": true,
+			"success": true
+		},
+		"errors": []
+	},
+	{
+		"name": "catalogue-empty-states",
+		"data": {
+			"blocked": "TimeoutError: locator.fill: Timeout 6500ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('textbox', { name: 'Find a template' })\u001b[22m\n"
+		},
+		"errors": []
+	},
+	{
+		"name": "all-map-gallery-variants",
+		"data": {
+			"blocked": "TimeoutError: locator.waitFor: Timeout 6500ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-map-example=\"PopupExample\"]') to be visible\u001b[22m\n"
+		},
+		"errors": []
+	},
+	{
+		"name": "erp-overflow-root-and-keyboard",
+		"data": {
+			"overflowing": [
+				{
+					"tag": "H2",
+					"slot": null,
+					"cls": "mt-4 text-sm font-medium text-muted-foreground",
+					"text": "Tags (drag the container narrower)",
+					"right": 445.890625
+				},
+				{
+					"tag": "SPAN",
+					"slot": "overflow-list-item",
+					"cls": "flex-none",
+					"text": "Framework contract",
+					"right": 397.734375
+				},
+				{
+					"tag": "SPAN",
+					"slot": "overflow-list-indicator",
+					"cls": "flex-none",
+					"text": "+4 ",
+					"right": 432.890625
+				},
+				{
+					"tag": "BUTTON",
+					"slot": "hover-card-trigger",
+					"cls": "inline-flex cursor-default items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+					"text": "+4",
+					"right": 432.890625
+				},
+				{
+					"tag": "SPAN",
+					"slot": null,
+					"cls": "flex-none",
+					"text": "2 % discount",
+					"right": 461.375
+				},
+				{
+					"tag": "SPAN",
+					"slot": null,
+					"cls": "flex-none",
+					"text": "Pickup",
+					"right": 517.609375
+				},
+				{
+					"tag": "SPAN",
+					"slot": null,
+					"cls": "flex-none",
+					"text": "New customer",
+					"right": 616.328125
+				},
+				{
+					"tag": "SPAN",
+					"slot": null,
+					"cls": "flex-none",
+					"text": "Open complaint",
+					"right": 724
+				},
+				{
+					"tag": "SPAN",
+					"slot": null,
+					"cls": "flex-none",
+					"text": "+8",
+					"right": 751.09375
+				},
+				{
+					"tag": "SPAN",
+					"slot": null,
+					"cls": "inline-flex items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-foreground",
+					"text": "+8",
+					"right": 751.09375
+				},
+				{
+					"tag": "DIV",
+					"slot": null,
+					"cls": "mt-4 flex items-center justify-between",
+					"text": "Attachments  Download all (4)",
+					"right": 445.890625
+				},
+				{
+					"tag": "BUTTON",
+					"slot": "button",
+					"cls": "border border-transparent bg-clip-padding font-medium focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 group/button inline-flex shrink-0 items-center justify-center whitespace-nowrap transition-all outline-none select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
+					"text": " Download all (4)",
+					"right": 445.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": null,
+					"cls": "flex items-center gap-2",
+					"text": "    ",
+					"right": 445.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": null,
+					"cls": "flex flex-col gap-3",
+					"text": "Chat   Today Hi! How can I help with this order? vor 5 Minut",
+					"right": 445.890625
+				},
+				{
+					"tag": "H2",
+					"slot": null,
+					"cls": "text-sm font-medium text-muted-foreground",
+					"text": "Chat",
+					"right": 445.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "chat",
+					"cls": "flex min-h-0 flex-col h-96 rounded-lg border border-border",
+					"text": "  Today Hi! How can I help with this order? vor 5 MinutenWhe",
+					"right": 445.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "chat-message-list",
+					"cls": "relative flex min-h-0 flex-1 flex-col",
+					"text": " Today Hi! How can I help with this order? vor 5 MinutenWhen",
+					"right": 444.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "chat-message-viewport",
+					"cls": "min-h-0 flex-1 overflow-y-auto [overflow-anchor:none]",
+					"text": "Today Hi! How can I help with this order? vor 5 MinutenWhen ",
+					"right": 444.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": null,
+					"cls": "flex flex-col gap-3 p-4",
+					"text": "Today Hi! How can I help with this order? vor 5 MinutenWhen ",
+					"right": 444.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "chat-message",
+					"cls": "group/message relative min-w-0 text-sm bedrock-chat-message group/chat-message flex w-full flex-col gap-1 data-[align=end]:flex-col items-start",
+					"text": "Hi! How can I help with this order? vor 5 Minuten",
+					"right": 428.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "chat-message",
+					"cls": "group/message relative min-w-0 text-sm bedrock-chat-message group/chat-message flex w-full flex-col gap-1 data-[align=end]:flex-col items-end",
+					"text": "When will PO-2026-1042 be delivered? vor 4 Minuten",
+					"right": 428.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "chat-message-bubble",
+					"cls": "max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed break-words md:max-w-[75%] group-data-[role=assistant]/chat-message:rounded-bl-sm group-data-[role=user]/chat-message:rounded-br-sm group-data-[role=assistant]/chat-message:bg-muted group-data-[role=assistant]/chat-message:text-foreground group-data-[role=user]/chat-message:bg-primary group-data-[role=user]/chat-message:text-primary-foreground",
+					"text": "When will PO-2026-1042 be delivered?",
+					"right": 428.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "chat-message-metadata",
+					"cls": "flex items-center gap-1.5 px-1 text-xs text-muted-foreground",
+					"text": "vor 4 Minuten",
+					"right": 428.890625
+				},
+				{
+					"tag": "TIME",
+					"slot": "timestamp",
+					"cls": "tabular-nums",
+					"text": "vor 4 Minuten",
+					"right": 424.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "chat-message",
+					"cls": "group/message relative min-w-0 text-sm bedrock-chat-message group/chat-message flex w-full flex-col gap-1 data-[align=end]:flex-col items-start",
+					"text": "PO-2026-1042 is confirmed for Thursday, September 3. The car",
+					"right": 428.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": null,
+					"cls": "p-3 pt-0",
+					"text": "         ",
+					"right": 444.890625
+				},
+				{
+					"tag": "FORM",
+					"slot": "chat-composer",
+					"cls": "flex min-w-0 flex-col gap-2 rounded-xl border border-input bg-background p-2 shadow-xs motion-state focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50",
+					"text": "         ",
+					"right": 432.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": null,
+					"cls": "flex items-end gap-2",
+					"text": "  ",
+					"right": 423.890625
+				},
+				{
+					"tag": "SPAN",
+					"slot": "swap",
+					"cls": "relative grid items-center justify-items-start shrink-0",
+					"text": "",
+					"right": 423.890625
+				},
+				{
+					"tag": "SPAN",
+					"slot": "swap-copy",
+					"cls": "inline-flex items-center justify-center gap-2 [grid-area:1/1]",
+					"text": "",
+					"right": 423.890625
+				},
+				{
+					"tag": "BUTTON",
+					"slot": "chat-send-button",
+					"cls": "border border-transparent bg-clip-padding text-sm font-medium focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg:not([class*='size-'])]:size-4 group/button inline-flex items-center justify-center whitespace-nowrap transition-all outline-none select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 bg-primary text-primary-foreground [a]:hover:bg-primary/80 size-7 in-data-[slot=button-group]:rounded-lg tap-target shrink-0 rounded-full motion-press motion-state",
+					"text": "",
+					"right": 423.890625
+				},
+				{
+					"tag": "path",
+					"slot": null,
+					"cls": {},
+					"text": "",
+					"right": 414.5572814941406
+				},
+				{
+					"tag": "path",
+					"slot": null,
+					"cls": {},
+					"text": "",
+					"right": 409.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "banner",
+					"cls": "bedrock-banner flex w-full items-center gap-3 px-4 py-2.5 text-sm *:[svg]:shrink-0 *:[svg:not([class*='size-'])]:size-4 border-border bg-muted text-foreground rounded-lg border svelte-9a1k9s",
+					"text": " All amounts are net in EUR.",
+					"right": 445.890625
+				},
+				{
+					"tag": "DIV",
+					"slot": "banner-content",
+					"cls": "flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 gap-y-0.5",
+					"text": "All amounts are net in EUR.",
+					"right": 428.890625
+				}
+			],
+			"tab": {
+				"label": "No matches 0",
+				"selected": "true"
+			},
+			"empty": 0
+		},
+		"errors": []
+	},
+	{
+		"name": "docs-toc-settled-recheck",
+		"data": {
+			"first": {
+				"y": 1444,
+				"h": 900,
+				"total": 2370,
+				"last": 511.875
+			},
+			"second": {
+				"y": 1470,
+				"h": 900,
+				"total": 2370
+			}
+		},
+		"errors": []
+	},
+	{
+		"name": "axe-selected-surfaces",
+		"data": {
+			"blocked": "Error: Cannot find module 'axe-core/axe.min.js'\nRequire stack:\n- /tmp/bedrock-state-checks.cjs"
+		},
+		"errors": []
+	}
+]

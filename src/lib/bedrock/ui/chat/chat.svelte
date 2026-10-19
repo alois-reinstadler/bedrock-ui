@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { cn, type WithElementRef } from '#lib/utils.js';
-	import { onDestroy, type Snippet } from 'svelte';
+	import type { Snippet } from 'svelte';
+	import { createChatAction } from './agent-action.svelte';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Icon } from '#lib/bedrock/ui/icon';
 	import type { HTMLAttributes } from 'svelte/elements';
@@ -35,21 +36,10 @@
 		/** Rendered centered while `isEmpty` — suggestions, a greeting, etc. */
 		empty?: Snippet;
 	} = $props();
-	let retrying = $state(false);
-	let disposed = false;
-	onDestroy(() => {
-		disposed = true;
-	});
+	const action = createChatAction();
 	async function retry() {
-		if (!onRetry || retrying) return;
-		retrying = true;
-		try {
-			await onRetry();
-		} catch {
-			/* Keep the error and retry control visible. */
-		} finally {
-			if (!disposed) retrying = false;
-		}
+		if (!onRetry) return;
+		await action.run(onRetry);
 	}
 </script>
 
@@ -87,8 +77,8 @@
 					type="button"
 					variant="outline"
 					size="sm"
-					disabled={retrying}
-					onclick={retry}>{retrying ? loadingLabel : retryLabel}</Button
+					disabled={action.pending}
+					onclick={retry}>{action.pending ? loadingLabel : retryLabel}</Button
 				>{/if}
 		</div>
 	{:else if isEmpty}

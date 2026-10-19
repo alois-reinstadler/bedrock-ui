@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import './template-geometry.css';
 	import { onNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import { Button } from '#lib/bedrock/ui/button';
 	import * as Popover from '#lib/bedrock/ui/popover';
 	import ThemeToggle from '#lib/site/ThemeToggle.svelte';
+	import TemplateFeedback from '#lib/site/TemplateFeedback.svelte';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import ChevronDown from '@lucide/svelte/icons/chevron-down';
 	import Check from '@lucide/svelte/icons/check';
@@ -48,8 +50,8 @@
 </script>
 
 <!-- These local workspaces own live state; speculative route forks must not replay it on hover. -->
-<div class="template-screen" data-sveltekit-preload-data="off">
-	{@render children()}
+<div class="template-screen" data-sveltekit-preload-data="false">
+	<div data-template-content class="contents">{@render children()}</div>
 
 	<div
 		class="preview-controls"
@@ -59,6 +61,7 @@
 		role="region"
 		aria-label="Template preview controls"
 		data-ready={ready}
+		data-feedback-ignore
 	>
 		<Button
 			variant="ghost"
@@ -97,6 +100,7 @@
 					{/snippet}
 				</Popover.Trigger>
 				<Popover.Content
+					data-feedback-ignore
 					side="top"
 					align="start"
 					sideOffset={12}
@@ -114,7 +118,7 @@
 								aria-current={current?.slug === template.slug ? 'page' : undefined}
 								aria-label={template.title}
 								onclick={() => (switcherOpen = false)}
-								class="flex items-start gap-3 rounded-lg p-3 hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring aria-[current=page]:bg-muted"
+								class="flex items-start gap-3 rounded-lg p-3 corner-theme hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring aria-[current=page]:bg-muted"
 							>
 								<span class="min-w-0 flex-1">
 									<span class="block text-sm font-medium">{template.title}</span>
@@ -133,6 +137,10 @@
 			</Popover.Root>
 			<span class="h-5 w-px bg-border" aria-hidden="true"></span>
 			<ThemeToggle />
+			{#if current}<span class="h-5 w-px bg-border" aria-hidden="true"></span>{/if}
+		{/if}
+		{#if current}
+			<TemplateFeedback template={current} compact={collapsed} />
 		{/if}
 	</div>
 </div>
@@ -149,9 +157,9 @@
 		padding: 0.25rem;
 		max-width: calc(100vw - 2rem);
 		border: 1px solid var(--border);
-		border-radius: 0.875rem;
+		border-radius: var(--radius-xl);
 		background: var(--background);
-		box-shadow: 0 4px 24px #0002;
+		box-shadow: var(--shadow-lg);
 	}
 	.watch-preview {
 		bottom: calc(6rem + env(safe-area-inset-bottom));

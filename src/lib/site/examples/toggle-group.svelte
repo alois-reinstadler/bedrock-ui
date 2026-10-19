@@ -1,9 +1,10 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as ToggleGroup from '#lib/bedrock/ui/toggle-group';
 	let value = $state('list');
 </script>
 
-<section class="space-y-4 rounded-xl border p-5">
+<Card.Root class="block gap-0 space-y-4 p-5">
 	<div class="flex flex-wrap items-center justify-between gap-3">
 		<h3 class="font-medium">Launch tasks</h3>
 		<ToggleGroup.Root
@@ -25,4 +26,4 @@
 				<p class="text-xs text-muted-foreground">{task.state}</p>
 			</div>{/each}
 	</div>
-</section>
+</Card.Root>

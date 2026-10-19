@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Pagination from '#lib/bedrock/ui/pagination';
 
 	let page = $state(2);
@@ -10,7 +11,7 @@
 	const visible = $derived(customers.slice((page - 1) * 10, page * 10));
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Customer directory</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -22,7 +23,7 @@
 		Showing {(page - 1) * 10 + 1}–{Math.min(page * 10, 57)} of 57 customers
 	</p>
 	<ul class="grid gap-2 text-sm sm:grid-cols-2">
-		{#each visible as customer (customer.id)}<li class="rounded-md border px-3 py-2">
+		{#each visible as customer (customer.id)}<li class="rounded-md border px-3 py-2 corner-theme">
 				{customer.name}
 			</li>{/each}
 	</ul>
@@ -44,4 +45,4 @@
 			</Pagination.Content>
 		{/snippet}
 	</Pagination.Root>
-</section>
+</Card.Root>

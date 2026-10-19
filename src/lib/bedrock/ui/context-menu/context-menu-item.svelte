@@ -6,7 +6,7 @@
 	import ContextMenuItem from '#lib/shadcn/ui/context-menu/context-menu-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ContextMenuItem> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ContextMenuItem> = $props();
 </script>
 
-<ContextMenuItem {...props} />
+<ContextMenuItem bind:ref {...props} />

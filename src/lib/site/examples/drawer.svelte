@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Drawer from '#lib/bedrock/ui/drawer';
 	import { Checkbox } from '#lib/bedrock/ui/checkbox';
 	import { Button } from '#lib/bedrock/ui/button';
@@ -15,7 +16,7 @@
 			summary.
 		</p>
 	</header>
-	<div class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-4 p-5">
 		<div class="flex items-center justify-between gap-3">
 			<p class="font-medium">Documents</p>
 			<Drawer.Root
@@ -60,5 +61,5 @@
 		<p role="status" class="text-sm text-muted-foreground">
 			{applied ? '1 document assigned to you' : '3 documents in this workspace'}
 		</p>
-	</div>
+	</Card.Root>
 </section>

@@ -5,7 +5,7 @@ import Fixture from './astra.test.svelte';
 
 afterEach(() => cleanup());
 
-describe('Astra native wrapper contracts', () => {
+describe('Astra custom component contracts', () => {
 	it('activates exactly once for pointer, Enter and Space', async () => {
 		const onactivate = vi.fn();
 		const view = await render(Fixture, { onactivate });
@@ -64,14 +64,14 @@ describe('Astra native wrapper contracts', () => {
 });
 
 describe('Astra provider policy', () => {
-	it('settles native movement when its provider changes after mount', async () => {
+	it('settles engine movement when its provider changes after mount', async () => {
 		const { default: PolicyFixture } = await import('./astra-policy.test.svelte');
 		const view = await render(PolicyFixture);
 		const panel = view.container.querySelector<HTMLElement>('[data-testid="policy-panel"]')!;
 		const translation = () => new DOMMatrixReadOnly(getComputedStyle(panel).transform).m41;
 		await expect.poll(translation).toBe(32);
 		await view.getByRole('button', { name: 'Change policy' }).click();
-		expect(translation()).toBe(32);
+		await expect.poll(translation).toBe(64);
 		expect(panel.getAnimations()).toHaveLength(0);
 		await view.getByRole('button', { name: 'Change policy' }).click();
 		await expect.poll(translation).toBe(32);

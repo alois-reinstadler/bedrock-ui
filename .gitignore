@@ -6,6 +6,7 @@ node_modules
 .netlify
 .wrangler
 /.svelte-kit
+/.svelte-kit-test
 /build
 
 # OS
@@ -32,3 +33,4 @@ test-results
 /static/**/*.wav
 /static/**/*.ogg
 /static/**/*.m4a
+.e2e/

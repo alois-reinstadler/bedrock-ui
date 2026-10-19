@@ -1,0 +1,20 @@
+{
+	"initialJavaScript": {
+		"raw": 96078,
+		"gzip": 35229
+	},
+	"lazyEntryOnly": {
+		"raw": 4891,
+		"gzip": 2512
+	},
+	"deferredJavaScript": {
+		"raw": 1028674,
+		"gzip": 272782
+	},
+	"mapLibre": {
+		"raw": 1012725,
+		"gzip": 265061
+	},
+	"workers": ["assets/maplibre-gl-worker-CL9gHS1m.js"],
+	"passed": true
+}

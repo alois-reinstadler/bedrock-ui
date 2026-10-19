@@ -37,7 +37,7 @@
 		<li>
 			<p class="text-sm font-medium">2. Tokens are already loaded</p>
 			<p class="mt-1 text-sm leading-relaxed text-muted-foreground">
-				<code class="font-mono text-foreground">src/routes/layout.css</code> defines the color,
+				<code class="font-mono text-foreground">src/lib/bedrock/styles.css</code> defines the color,
 				radius, and type scale. Instrument Sans is the UI font. Dark mode is the
 				<code class="font-mono text-foreground">.dark</code> class, toggled by mode-watcher.
 			</p>

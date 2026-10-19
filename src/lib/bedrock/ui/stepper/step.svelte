@@ -34,7 +34,6 @@
 	} = $props();
 
 	const context = getStepperContext();
-	$effect(() => context.register(step));
 
 	const activeStep = $derived(context.getActiveStep());
 	const orientation = $derived(context.getOrientation());
@@ -84,7 +83,9 @@
 		aria-hidden="true"
 		class={cn(
 			'overflow-hidden rounded-full bg-muted',
-			orientation === 'horizontal' ? 'h-1 min-w-6 flex-1' : 'ml-2.5 h-6 w-1'
+			orientation === 'horizontal'
+				? 'absolute top-3 right-[calc(50%+1.125rem)] h-0.5 w-[calc(100%-2.25rem)] -translate-y-1/2'
+				: 'ml-2.5 h-6 w-1'
 		)}
 	>
 		<div
@@ -113,9 +114,19 @@
 {/snippet}
 
 {#snippet text()}
-	<span class="flex min-w-0 flex-col text-left">
-		<span class="flex items-baseline gap-1.5 text-sm font-medium">
-			<span class="truncate">{label}</span>
+	<span
+		class={cn(
+			'flex min-w-0 flex-col',
+			orientation === 'horizontal' ? 'items-center text-center' : 'text-left'
+		)}
+	>
+		<span
+			class={cn(
+				'flex text-sm font-medium',
+				orientation === 'horizontal' ? 'flex-col items-center gap-0.5' : 'items-baseline gap-1.5'
+			)}
+		>
+			<span class="break-words">{label}</span>
 			{#if optional}
 				<span class="text-xs font-normal text-muted-foreground">{labels.optional}</span>
 			{/if}
@@ -127,13 +138,19 @@
 {/snippet}
 
 <li
-	bind:this={ref}
+	{@attach (node) => {
+		ref = node;
+		return () => {
+			if (ref === node) ref = null;
+		};
+	}}
+	{@attach () => context.register(step)}
 	data-slot="stepper-step"
 	data-status={status}
 	aria-current={current ? 'step' : undefined}
 	class={cn(
 		orientation === 'horizontal'
-			? ['flex items-center gap-3', step > 0 && 'min-w-0 flex-1']
+			? 'relative flex min-w-0 flex-1 flex-col items-center gap-3'
 			: 'flex flex-col gap-2',
 		className
 	)}
@@ -145,14 +162,23 @@
 	{#if clickable}
 		<button
 			type="button"
-			class="tap-target flex items-center gap-3 rounded-md motion-state"
+			class={cn(
+				'tap-target flex min-w-0 items-center gap-3 rounded-md motion-state',
+				orientation === 'horizontal' && 'w-full flex-col px-1'
+			)}
 			onclick={() => onStepClick?.(step)}
 		>
 			{@render mark()}
 			{@render text()}
 		</button>
 	{:else}
-		<div class={cn('flex items-center gap-3', disabled && 'opacity-50')}>
+		<div
+			class={cn(
+				'flex min-w-0 items-center gap-3',
+				orientation === 'horizontal' && 'w-full flex-col px-1',
+				disabled && 'opacity-50'
+			)}
+		>
 			{@render mark()}
 			{@render text()}
 		</div>

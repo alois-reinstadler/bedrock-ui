@@ -6,7 +6,7 @@
 	import Sheet from '#lib/shadcn/ui/sheet/sheet.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Sheet> = $props();
+	let { open = $bindable(false), ...props }: ComponentProps<typeof Sheet> = $props();
 </script>
 
-<Sheet {...props} />
+<Sheet bind:open {...props} />

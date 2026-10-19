@@ -6,7 +6,7 @@
 	import Carousel from '#lib/shadcn/ui/carousel/carousel.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Carousel> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof Carousel> = $props();
 </script>
 
-<Carousel {...props} />
+<Carousel bind:ref {...props} />

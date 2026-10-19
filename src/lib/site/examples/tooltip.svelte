@@ -5,7 +5,7 @@
 	let saved = $state(false);
 </script>
 
-<section class="max-w-md space-y-3 rounded-xl border p-5">
+<section class="max-w-md space-y-3 rounded-xl border p-5 corner-theme">
 	<div class="flex items-center justify-between gap-3">
 		<div>
 			<h3 class="font-medium">Quarterly planning notes</h3>

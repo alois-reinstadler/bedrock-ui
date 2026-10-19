@@ -6,7 +6,7 @@
 	import FormDescription from '#lib/shadcn/ui/form/form-description.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FormDescription> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FormDescription> = $props();
 </script>
 
-<FormDescription {...props} />
+<FormDescription bind:ref {...props} />

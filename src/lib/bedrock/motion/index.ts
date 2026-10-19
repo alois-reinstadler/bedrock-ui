@@ -12,10 +12,14 @@ export {
 	vanish
 } from './presence.js';
 export { prefersReducedMotion, resolveMotionDuration } from './policy.js';
-export { cubicBezier, motionEasings, motionPresets } from './tokens.js';
+export { cubicBezier, motionEasings, motionPresets, motionRecipes } from './tokens.js';
 export type { AppearParams, DrawerParams, RevealParams, VanishParams } from './presence.js';
 export type { AutoSizeOptions } from './auto-size.js';
 export type { MotionEnvironment } from './policy.js';
 export type { LayoutOptions } from './layout.svelte.js';
 export type { LayoutType } from './layout-math.js';
 export type { EasingFunction, LayoutMotion, MotionSpring } from './tokens.js';
+
+export { default as MotionProvider } from './MotionProvider.svelte';
+export { useMotionPolicy } from './policy.svelte.js';
+export type { MotionPolicy } from './policy.svelte.js';

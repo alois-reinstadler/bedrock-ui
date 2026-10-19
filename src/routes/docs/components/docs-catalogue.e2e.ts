@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../../scripts/shared-browser-test';
 import { components } from '../../../lib/site/registry';
 
 for (const component of components) {
@@ -8,7 +8,9 @@ for (const component of components) {
 		const response = await page.goto(`/docs/components/${component.slug}`);
 		expect(response?.status()).toBe(200);
 		await expect(page.locator('[data-doc-slug]')).toHaveAttribute('data-doc-slug', component.slug);
-		await expect(page.locator('#preview')).toContainText('Common variants');
+		await expect(page.locator('#preview')).toContainText(
+			component.slug === 'feedback' ? 'Interactive preview' : 'Common variants'
+		);
 		await expect(page.locator('#preview')).not.toContainText('Loading variants');
 		await expect(page.locator('#preview')).not.toContainText('could not load');
 		await expect(page.locator('[aria-label="Loading example"]')).toHaveCount(0);

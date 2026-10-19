@@ -6,7 +6,7 @@
 	import InputGroupButton from '#lib/shadcn/ui/input-group/input-group-button.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof InputGroupButton> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof InputGroupButton> = $props();
 </script>
 
-<InputGroupButton {...props} />
+<InputGroupButton bind:ref {...props} />

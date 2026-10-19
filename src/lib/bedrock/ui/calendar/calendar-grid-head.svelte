@@ -6,7 +6,7 @@
 	import CalendarGridHead from '#lib/shadcn/ui/calendar/calendar-grid-head.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CalendarGridHead> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CalendarGridHead> = $props();
 </script>
 
-<CalendarGridHead {...props} />
+<CalendarGridHead bind:ref {...props} />

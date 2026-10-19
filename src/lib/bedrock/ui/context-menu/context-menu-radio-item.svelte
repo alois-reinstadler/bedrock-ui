@@ -6,7 +6,7 @@
 	import ContextMenuRadioItem from '#lib/shadcn/ui/context-menu/context-menu-radio-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ContextMenuRadioItem> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ContextMenuRadioItem> = $props();
 </script>
 
-<ContextMenuRadioItem {...props} />
+<ContextMenuRadioItem bind:ref {...props} />

@@ -38,7 +38,7 @@
 		width: 100%;
 		aspect-ratio: 1;
 		object-fit: cover;
-		transition: transform 350ms ease;
+		transition: transform var(--motion-reveal) var(--motion-ease-enter);
 	}
 	.collection-card:hover img {
 		transform: scale(1.04);
@@ -67,7 +67,7 @@
 		color: #222;
 		border-radius: 50%;
 		opacity: 0;
-		transition: opacity 180ms;
+		transition: opacity var(--motion-state) var(--motion-ease-enter);
 	}
 	.collection-card:hover .play-hint,
 	.collection-card:focus-visible .play-hint {

@@ -6,7 +6,7 @@
 	import ItemContent from '#lib/shadcn/ui/item/item-content.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ItemContent> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ItemContent> = $props();
 </script>
 
-<ItemContent {...props} />
+<ItemContent bind:ref {...props} />

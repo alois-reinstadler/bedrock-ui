@@ -11,7 +11,7 @@ day, keyboard-first operators, dense data.
 - **Every interactive control has a hit area of at least 44×44px** (WCAG
   2.5.5 AAA), regardless of its visual size. The visual element may be
   smaller — a 16px icon, a 24px close button — but the target may not.
-- The `tap-target` utility (in `src/routes/layout.css`) expands a control's
+- The `tap-target` utility (in `src/lib/bedrock/styles.css`) expands a control's
   hit area via a pseudo-element without changing layout. Use it on every
   icon-only button below 44px visual size. The shadcn `Checkbox` already
   ships an equivalent (`after:-inset-x-3 after:-inset-y-2`).

@@ -6,7 +6,7 @@
 	import Empty from '#lib/shadcn/ui/empty/empty.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Empty> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof Empty> = $props();
 </script>
 
-<Empty {...props} />
+<Empty bind:ref {...props} />

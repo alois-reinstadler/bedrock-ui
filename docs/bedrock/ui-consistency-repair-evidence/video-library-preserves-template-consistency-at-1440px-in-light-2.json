@@ -1,0 +1,42 @@
+{
+	"slug": "video-library",
+	"width": 1440,
+	"colorScheme": "light",
+	"initialControls": {
+		"radius": "22.4px",
+		"corner": "superellipse(3)"
+	},
+	"overriddenControls": {
+		"radius": "33.6px",
+		"corner": "superellipse(0)"
+	},
+	"contrast": {
+		"initials": {
+			"text": "JD",
+			"foreground": [255, 255, 255],
+			"background": [166, 95, 76],
+			"opacity": "1",
+			"contrast": 4.813596523008449
+		},
+		"footer": {
+			"text": "Films by Blender Foundation and independent creators.",
+			"foreground": [170, 169, 176],
+			"background": [17, 17, 19],
+			"opacity": "1",
+			"contrast": 8.09338579544756
+		}
+	},
+	"menu": {
+		"radius": "24px",
+		"corner": "superellipse(0)",
+		"bounds": {
+			"x": 1131,
+			"y": 76.86426544189453,
+			"width": 230,
+			"height": 179.78124237060547
+		}
+	},
+	"pageErrors": [],
+	"consoleErrors": [],
+	"failedRequests": []
+}

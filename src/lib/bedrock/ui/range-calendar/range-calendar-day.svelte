@@ -6,7 +6,7 @@
 	import RangeCalendarDay from '#lib/shadcn/ui/range-calendar/range-calendar-day.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof RangeCalendarDay> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof RangeCalendarDay> = $props();
 </script>
 
-<RangeCalendarDay {...props} />
+<RangeCalendarDay bind:ref {...props} />

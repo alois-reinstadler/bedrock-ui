@@ -94,7 +94,7 @@
 							{...props}
 							type="button"
 							aria-label={moreLabel(hiddenItems.length)}
-							class="inline-flex cursor-default items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+							class="inline-flex cursor-default items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
 						>
 							+{hiddenItems.length}
 						</button>
@@ -120,7 +120,7 @@
 				{@render overflow(items)}
 			{:else}
 				<span
-					class="inline-flex items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-muted-foreground"
+					class="inline-flex items-center rounded-md border border-border bg-muted px-1.5 py-0.5 text-xs font-medium text-foreground"
 				>
 					+{items.length}
 				</span>

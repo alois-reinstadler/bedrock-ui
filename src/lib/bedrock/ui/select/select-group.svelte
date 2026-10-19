@@ -6,7 +6,7 @@
 	import SelectGroup from '#lib/shadcn/ui/select/select-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SelectGroup> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SelectGroup> = $props();
 </script>
 
-<SelectGroup {...props} />
+<SelectGroup bind:ref {...props} />

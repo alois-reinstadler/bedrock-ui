@@ -6,7 +6,7 @@
 	import ItemMedia from '#lib/shadcn/ui/item/item-media.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ItemMedia> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ItemMedia> = $props();
 </script>
 
-<ItemMedia {...props} />
+<ItemMedia bind:ref {...props} />

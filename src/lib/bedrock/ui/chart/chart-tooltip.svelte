@@ -6,7 +6,7 @@
 	import ChartTooltip from '#lib/shadcn/ui/chart/chart-tooltip.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ChartTooltip> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ChartTooltip> = $props();
 </script>
 
-<ChartTooltip {...props} />
+<ChartTooltip bind:ref {...props} />

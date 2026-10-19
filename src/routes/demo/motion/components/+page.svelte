@@ -199,18 +199,18 @@
 		title="Anchored Layers: Position, Ursprung und Kollision"
 		summary="Tooltip und Popover öffnen von oben, rechts, unten und links. Dropdown und Select prüfen Tastaturnavigation und konkurrierende Layer."
 		hardCase="Unteres Popover nahe der Viewportkante öffnen, Collision-Flip erzwingen und sofort schließen beziehungsweise wieder öffnen. Danach direkt ein zweites Layer öffnen."
-		verdict="problem"
-		finding="Anchored Layers verwenden einheitlich generische 100-ms-Fade/Zoom/Slide-Utilities, aber nicht Bedrocks enter/exit-Tokens. Transform-Ursprung ist nur in Teilen konsistent."
+		verdict="beobachten"
+		finding="Anchored Layers folgen Astryx-Tokens: Popover 200/150 ms, Tooltip 140 ms mit sofortigem Austritt. Bits verwaltet Präsenz und Fokus; CSS interpoliert ohne Zoom."
 		metadata={{
 			role: 'Eintritt',
-			duration: 'duration-100 (Eintritt und Austritt)',
-			easing: 'tw-animate-css default',
-			distance: '0.5rem placement slide; scale 0.95',
+			duration: 'Popover 200/150 ms; Tooltip 140 ms / sofort',
+			easing: 'Astryx enter / exit',
+			distance: '4 px für Popover; Tooltip ohne Translation',
 			origin: '--transform-origin, sofern Primitive bereitstellt',
 			properties: 'transform, opacity',
 			layout: 'Nein',
 			loop: 'Nein',
-			reduced: 'Keine bibliotheksweite Regel; Lab entfernt Translation/Scale.'
+			reduced: 'MotionProvider und OS reduzieren CSS und laufende JS-Bewegung.'
 		}}
 	>
 		<div class="placement-grid">
@@ -269,18 +269,18 @@
 		title="Dialog und Alert Dialog"
 		summary="Backdrop, Inhalt, Escape, Fokus-Rückgabe und explizite Bestätigung mit realen Komponenten."
 		hardCase="Dialog öffnen, vor Abschluss mit Escape schließen und sofort erneut öffnen. Fokus muss zum Trigger zurückkehren; kein altes Outro darf den neuen Inhalt entfernen."
-		verdict="problem"
-		finding="Dialog und Backdrop teilen symmetrische 100 ms. Das ist schneller als ein kleines Popover nicht langsamer – visuelles Gewicht wird nicht abgebildet."
+		verdict="beobachten"
+		finding="Dialogtext wird nach 140 ms lesbar, der Backdrop nutzt 410 ms. Der separate Präsenz-Takt erhält die Fläche; Austritt folgt 175 ms. Fokus bleibt unabhängig."
 		metadata={{
 			role: 'Overlay / große Fläche',
-			duration: 'duration-100; semantischer overlay-Token wäre 410 ms',
-			easing: 'tw-animate-css default',
-			distance: 'scale 0.95',
+			duration: 'Inhalt 140 ms; Backdrop/Präsenz 410 ms; Austritt 175 ms',
+			easing: 'Astryx enter / exit',
+			distance: 'Keine Skalierung',
 			origin: 'Mitte',
 			properties: 'transform, opacity, backdrop-filter',
 			layout: 'Nein',
 			loop: 'Nein',
-			reduced: 'Lab entfernt Scale; Bibliothek hat keine zentrale Alternative.'
+			reduced: 'Zentrale OS-/Anwendungspolicy erreicht auch portallierte Flächen.'
 		}}
 	>
 		<div class="layer-row">

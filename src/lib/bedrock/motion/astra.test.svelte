@@ -1,7 +1,12 @@
-<script lang="ts">
-	import type { Attachment } from 'svelte/attachments';
-	import { CssButton, CssPanel } from './css.js';
+<script lang="ts" module>
+	import { motion } from 'astra-motion';
+	import { Button } from '#lib/bedrock/ui/button';
+	const MotionButton = motion.create(Button);
+</script>
 
+<script lang="ts">
+	import { MotionConfig } from 'astra-motion';
+	import type { Attachment } from 'svelte/attachments';
 	let {
 		disabled = false,
 		href,
@@ -28,32 +33,30 @@
 	}
 </script>
 
-<CssButton
-	bind:ref={button}
-	data-testid="astra-button"
-	{disabled}
-	{href}
-	class="consumer-button"
-	style="color: rgb(12, 34, 56); --consumer-token: 7"
-	onclick={onactivate}
-	onpointerenter={onpointer}
-	{@attach consumerAttachment}
-	motion={{
-		initial: false,
-		animate: { scale: 1 },
-		whileHover: { scale: 1.05 },
-		transition: { duration: 0.01 }
-	}}>Consumer action</CssButton
->
-<CssPanel
-	bind:ref={panel}
-	data-testid="astra-panel"
-	class="consumer-panel"
-	style="padding: 13px; --consumer-token: 9"
-	{@attach consumerAttachment}
-	motion={{
-		initial: { opacity: 0.4, y: 12 },
-		animate: { opacity: 1, y: 0 },
-		transition: { duration: 0.01 }
-	}}>Server-rendered panel content</CssPanel
->
+<MotionConfig reducedMotion="user">
+	<MotionButton
+		bind:ref={button}
+		data-testid="astra-button"
+		{disabled}
+		{href}
+		class="consumer-button"
+		style="color: rgb(12, 34, 56); --consumer-token: 7"
+		onclick={onactivate}
+		onpointerenter={onpointer}
+		{@attach consumerAttachment}
+		initial={false}
+		animate={{ scale: 1 }}
+		whileHover={{ scale: 1.05 }}
+		transition={{ duration: 0.01 }}>Consumer action</MotionButton
+	>
+	<motion.div
+		bind:ref={panel}
+		data-testid="astra-panel"
+		class="consumer-panel"
+		style="padding: 13px; --consumer-token: 9"
+		{@attach consumerAttachment}
+		initial={{ opacity: 0.4, y: 12 }}
+		animate={{ opacity: 1, y: 0 }}
+		transition={{ duration: 0.01 }}>Server-rendered panel content</motion.div
+	>
+</MotionConfig>

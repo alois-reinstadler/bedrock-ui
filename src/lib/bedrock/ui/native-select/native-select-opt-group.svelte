@@ -6,7 +6,7 @@
 	import NativeSelectOptGroup from '#lib/shadcn/ui/native-select/native-select-opt-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof NativeSelectOptGroup> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof NativeSelectOptGroup> = $props();
 </script>
 
-<NativeSelectOptGroup {...props} />
+<NativeSelectOptGroup bind:ref {...props} />

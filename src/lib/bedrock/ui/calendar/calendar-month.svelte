@@ -6,7 +6,7 @@
 	import CalendarMonth from '#lib/shadcn/ui/calendar/calendar-month.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CalendarMonth> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CalendarMonth> = $props();
 </script>
 
-<CalendarMonth {...props} />
+<CalendarMonth bind:ref {...props} />

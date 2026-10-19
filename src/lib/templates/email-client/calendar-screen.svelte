@@ -213,11 +213,18 @@
 				<div class="month-days">
 					{#each monthDays as day (day.toString())}{@const dayItems = visibleEvents.filter(
 							(event) => event.date === day.toString()
-						)}<button
-							class="month-day"
-							class:outside={day.month !== month.month}
-							class:selected={day.toString() === selected.toString()}
-							class:today={day.toString() === demoToday}
+						)}<Button
+							variant="ghost"
+							type="button"
+							class={[
+								'control-templates-email-client-calendar-screen h-auto whitespace-normal',
+								'month-day justify-start rounded-none',
+								{
+									outside: day.month !== month.month,
+									selected: day.toString() === selected.toString(),
+									today: day.toString() === demoToday
+								}
+							]}
 							aria-label={dayLabel(day)}
 							aria-pressed={day.toString() === selected.toString()}
 							onclick={() => selectDay(day)}
@@ -229,18 +236,23 @@
 									><span>{event.start}</span>{event.title}</span
 								>{/each}{#if dayItems.length > 2}<span class="more-events"
 									>+{dayItems.length - 2} more</span
-								>{/if}</button
+								>{/if}</Button
 						>{/each}
 				</div>
 			</div>
 			<div class="calendar-filters">
-				{#each categories as kind (kind)}<button
+				{#each categories as kind (kind)}<Button
+						variant="ghost"
+						type="button"
+						class={[
+							'control-templates-email-client-calendar-screen h-auto whitespace-normal',
+							{ inactive: !workspace.calendarCategories.includes(kind) }
+						]}
 						aria-label={`Show ${kind} calendar`}
 						aria-pressed={workspace.calendarCategories.includes(kind)}
-						class:inactive={!workspace.calendarCategories.includes(kind)}
 						onclick={() => toggleCategory(kind)}
 						><i class:focus-dot={kind === 'Focus'} class:personal-dot={kind === 'Personal'}
-						></i>{kind}</button
+						></i>{kind}</Button
 					>{/each}
 			</div>
 		</div>
@@ -255,8 +267,13 @@
 				</p>
 			</header>
 			<div class="agenda-list">
-				{#each dayEvents as event (event.id)}<button
-						class="agenda-event"
+				{#each dayEvents as event (event.id)}<Button
+						variant="ghost"
+						type="button"
+						class={[
+							'control-templates-email-client-calendar-screen h-auto whitespace-normal',
+							'agenda-event justify-start p-0'
+						]}
 						onclick={() => edit(event)}
 						aria-label={`Edit ${event.title}`}
 						><span class="event-time">{event.start}<small>{event.end}</small></span><span
@@ -266,18 +283,21 @@
 							><strong>{event.title}</strong><span
 								><MapPin size={12} />{event.location || 'No location'}</span
 							><small>{event.note}</small></span
-						></button
+						></Button
 					>{:else}<p class="empty-day">No events scheduled for this day.</p>
 					<Button size="sm" variant="outline" onclick={() => edit()}>Add an event</Button>{/each}
 			</div>
 			<div class="upcoming">
 				<h3>Coming up</h3>
-				{#each upcoming as event (event.id)}<button
+				{#each upcoming as event (event.id)}<Button
+						variant="ghost"
+						type="button"
+						class={['control-templates-email-client-calendar-screen h-auto whitespace-normal']}
 						onclick={() => {
 							selectDay(parseDate(event.date));
 							month = selected;
 						}}
-						><small>{event.date.slice(5)} · {event.start}</small><span>{event.title}</span></button
+						><small>{event.date.slice(5)} · {event.start}</small><span>{event.title}</span></Button
 					>{/each}
 			</div>
 		</aside>
@@ -405,7 +425,7 @@
 	}
 	.month-grid {
 		border: 1px solid var(--border);
-		border-radius: 8px;
+		border-radius: var(--radius-lg);
 		overflow: hidden;
 	}
 	.weekdays,
@@ -423,7 +443,7 @@
 		text-align: center;
 		color: var(--muted-foreground);
 	}
-	.month-day {
+	:global(.control-templates-email-client-calendar-screen.month-day) {
 		min-width: 0;
 		min-height: 105px;
 		text-align: left;
@@ -435,14 +455,14 @@
 		flex-direction: column;
 		gap: 5px;
 	}
-	.month-day:nth-child(7n) {
+	:global(.control-templates-email-client-calendar-screen.month-day:nth-child(7n)) {
 		border-right: 0;
 	}
-	.month-day:hover,
-	.month-day.selected {
+	:global(.control-templates-email-client-calendar-screen.month-day:hover),
+	:global(.control-templates-email-client-calendar-screen.month-day.selected) {
 		background: color-mix(in oklab, #5967c7 6%, var(--background));
 	}
-	.month-day.selected {
+	:global(.control-templates-email-client-calendar-screen.month-day.selected) {
 		box-shadow: inset 0 0 0 1px #5967c7;
 	}
 	.day-number {
@@ -453,13 +473,12 @@
 		font-size: 11px;
 		border-radius: 50%;
 	}
-	.today .day-number {
+	:global(.control-templates-email-client-calendar-screen.today) .day-number {
 		background: #5967c7;
 		color: white;
 	}
-	.outside .day-number {
+	:global(.control-templates-email-client-calendar-screen.outside:not(.today)) .day-number {
 		color: var(--muted-foreground);
-		opacity: 0.45;
 	}
 	.calendar-entry {
 		display: block;
@@ -496,7 +515,7 @@
 		gap: 20px;
 		padding: 18px 2px;
 	}
-	.calendar-filters button {
+	.calendar-filters :global(button.control-templates-email-client-calendar-screen) {
 		display: flex;
 		align-items: center;
 		gap: 6px;
@@ -514,7 +533,7 @@
 	.calendar-filters .personal-dot {
 		background: #c7a57c;
 	}
-	.calendar-filters .inactive {
+	.calendar-filters :global(.control-templates-email-client-calendar-screen.inactive) {
 		opacity: 0.4;
 		text-decoration: line-through;
 	}
@@ -541,7 +560,7 @@
 	.agenda-list {
 		margin-top: 27px;
 	}
-	.agenda-event {
+	:global(.control-templates-email-client-calendar-screen.agenda-event) {
 		display: flex;
 		gap: 12px;
 		align-items: flex-start;
@@ -603,7 +622,8 @@
 		font-size: 11px;
 		font-weight: 600;
 	}
-	.upcoming button {
+	.upcoming :global(button.control-templates-email-client-calendar-screen) {
+		align-items: flex-start;
 		display: flex;
 		flex-direction: column;
 		gap: 4px;
@@ -644,7 +664,7 @@
 		.upcoming {
 			display: none;
 		}
-		.month-day {
+		:global(.control-templates-email-client-calendar-screen.month-day) {
 			min-height: 90px;
 		}
 	}
@@ -658,7 +678,7 @@
 		.month-toolbar h2 {
 			font-size: 14px;
 		}
-		.month-day {
+		:global(.control-templates-email-client-calendar-screen.month-day) {
 			min-height: 68px;
 			padding: 5px 2px;
 		}
@@ -689,7 +709,7 @@
 		.agenda-list {
 			display: block;
 		}
-		.agenda-event {
+		:global(.control-templates-email-client-calendar-screen.agenda-event) {
 			margin-bottom: 22px;
 		}
 		.weekdays span {

@@ -6,7 +6,7 @@
 	import DropdownMenuShortcut from '#lib/shadcn/ui/dropdown-menu/dropdown-menu-shortcut.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DropdownMenuShortcut> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DropdownMenuShortcut> = $props();
 </script>
 
-<DropdownMenuShortcut {...props} />
+<DropdownMenuShortcut bind:ref {...props} />

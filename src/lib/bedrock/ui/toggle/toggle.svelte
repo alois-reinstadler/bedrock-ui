@@ -6,7 +6,11 @@
 	import Toggle from '#lib/shadcn/ui/toggle/toggle.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Toggle> = $props();
+	let {
+		ref = $bindable(null),
+		pressed = $bindable(false),
+		...props
+	}: ComponentProps<typeof Toggle> = $props();
 </script>
 
-<Toggle {...props} />
+<Toggle bind:ref bind:pressed {...props} />

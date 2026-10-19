@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
 
 async function setRange(slider: import('@playwright/test').Locator, value: string) {
 	await slider.evaluate((node: HTMLInputElement, level) => {
@@ -13,7 +13,15 @@ test('music volume uses the same decibel taper on desktop and in the mobile queu
 	await page.goto('/templates/music-player');
 	await expect(page.locator('[data-music-shell]')).toHaveAttribute('data-ready', 'true');
 	const audio = page.locator('audio');
-	await setRange(page.getByRole('slider', { name: 'Volume', exact: true }), '0.5');
+	const desktopVolume = page.getByRole('slider', { name: 'Volume', exact: true });
+	await expect(desktopVolume).toHaveAttribute('data-slot', 'slider-thumb');
+	await expect(page.locator('.player-tools .lucide-volume-2')).toBeVisible();
+	await desktopVolume.press('Home');
+	await expect(page.locator('.player-tools .lucide-volume-x')).toBeVisible();
+	await desktopVolume.press('ArrowRight');
+	await expect(page.locator('.player-tools .lucide-volume-1')).toBeVisible();
+	await desktopVolume.press('Home');
+	for (let step = 0; step < 50; step++) await desktopVolume.press('ArrowRight');
 	await expect
 		.poll(() => audio.evaluate((node: HTMLAudioElement) => node.volume))
 		.toBeCloseTo(0.1, 5);
@@ -21,16 +29,19 @@ test('music volume uses the same decibel taper on desktop and in the mobile queu
 		'aria-valuetext',
 		'50%'
 	);
+	await expect(page.locator('.player-tools .lucide-volume-2')).toBeVisible();
 	await page.setViewportSize({ width: 390, height: 844 });
 	await page
 		.getByRole('button', { name: 'Open queue', exact: true })
 		.filter({ visible: true })
 		.click();
 	const queue = page.getByRole('slider', { name: 'Queue volume' });
-	await expect(queue).toHaveValue('0.5');
-	await setRange(queue, '0');
+	await expect(queue).toHaveAttribute('aria-valuenow', '0.5');
+	await queue.press('Home');
 	await expect.poll(() => audio.evaluate((node: HTMLAudioElement) => node.volume)).toBe(0);
-	await setRange(queue, '1');
+	await expect(page.locator('.player-tools .lucide-volume-x')).toHaveCount(1);
+	await queue.press('End');
+	await expect(page.locator('.player-tools .lucide-volume-2')).toHaveCount(1);
 	await expect.poll(() => audio.evaluate((node: HTMLAudioElement) => node.volume)).toBe(1);
 });
 

@@ -1,0 +1,533 @@
+{
+	"runs": [
+		{
+			"startTime": "2026-10-05T00:42:05.503Z",
+			"duration": 246074.514,
+			"expected": 47,
+			"skipped": 0,
+			"unexpected": 17,
+			"flaky": 0
+		},
+		{
+			"startTime": "2026-10-05T00:46:23.841Z",
+			"duration": 39715.888,
+			"expected": 18,
+			"skipped": 0,
+			"unexpected": 0,
+			"flaky": 0
+		}
+	],
+	"final_tests": [
+		{
+			"title": "hero honors live OS reduction and keeps mobile focus stationary: light",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1962,
+			"evidence": []
+		},
+		{
+			"title": "gallery and documentation table frames inherit live corner tokens: light",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 3955,
+			"evidence": []
+		},
+		{
+			"title": "hero honors live OS reduction and keeps mobile focus stationary: dark",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1964,
+			"evidence": []
+		},
+		{
+			"title": "gallery and documentation table frames inherit live corner tokens: dark",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 3577,
+			"evidence": []
+		},
+		{
+			"title": "Card migration preserves the blockquote article",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 955,
+			"evidence": []
+		},
+		{
+			"title": "Card migration preserves the citation article",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 817,
+			"evidence": []
+		},
+		{
+			"title": "Card migration preserves the text article",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 830,
+			"evidence": []
+		},
+		{
+			"title": "Card migration preserves the separator article",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1069,
+			"evidence": []
+		},
+		{
+			"title": "template cards retain article semantics",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1088,
+			"evidence": []
+		},
+		{
+			"title": "Navigation Menu popup escapes the example card and its last link remains usable",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1717,
+			"evidence": []
+		},
+		{
+			"title": "Tokenizer can create a topic from its popup below the example card",
+			"file": "src/lib/site/surface-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1240,
+			"evidence": []
+		},
+		{
+			"title": "/demo/erp keeps content reachable on narrow screens",
+			"file": "src/routes/demo/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 2598,
+			"evidence": ["demo-erp-keeps-content-reachable-on-narrow-screens-0.png"]
+		},
+		{
+			"title": "/demo/motion/continuity keeps content reachable on narrow screens",
+			"file": "src/routes/demo/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1945,
+			"evidence": ["demo-motion-continuity-keeps-content-reachable-on-narrow-screens-0.png"]
+		},
+		{
+			"title": "/demo/motion-test keeps content reachable on narrow screens",
+			"file": "src/routes/demo/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 854,
+			"evidence": ["demo-motion-test-keeps-content-reachable-on-narrow-screens-0.png"]
+		},
+		{
+			"title": "prototype delayed links disable speculative loading with valid values",
+			"file": "src/routes/docs/runtime-contracts.e2e.ts",
+			"status": "passed",
+			"duration": 455,
+			"evidence": []
+		},
+		{
+			"title": "block reference tabs retain valid full navigation and history",
+			"file": "src/routes/docs/runtime-contracts.e2e.ts",
+			"status": "passed",
+			"duration": 1982,
+			"evidence": []
+		},
+		{
+			"title": "tooltip exposes its description through focus, Escape and hover (light)",
+			"file": "src/routes/docs/runtime-contracts.e2e.ts",
+			"status": "passed",
+			"duration": 1474,
+			"evidence": []
+		},
+		{
+			"title": "tooltip exposes its description through focus, Escape and hover (dark)",
+			"file": "src/routes/docs/runtime-contracts.e2e.ts",
+			"status": "passed",
+			"duration": 1299,
+			"evidence": []
+		},
+		{
+			"title": "lazy Form mounts before and after docs tab navigation without removed-store errors",
+			"file": "src/routes/docs/runtime-contracts.e2e.ts",
+			"status": "passed",
+			"duration": 5131,
+			"evidence": []
+		},
+		{
+			"title": "404 recovery preserves status and accessible navigation at /docs/components/audit-missing",
+			"file": "src/routes/docs/runtime-contracts.e2e.ts",
+			"status": "passed",
+			"duration": 835,
+			"evidence": []
+		},
+		{
+			"title": "404 recovery preserves status and accessible navigation at /templates/video-library/title/audit-missing",
+			"file": "src/routes/docs/runtime-contracts.e2e.ts",
+			"status": "passed",
+			"duration": 757,
+			"evidence": []
+		},
+		{
+			"title": "404 recovery preserves status and accessible navigation at /audit-missing",
+			"file": "src/routes/docs/runtime-contracts.e2e.ts",
+			"status": "passed",
+			"duration": 731,
+			"evidence": []
+		},
+		{
+			"title": "music search and genre filters are query parameters and likes persist",
+			"file": "src/routes/templates/music-player/music-player.e2e.ts",
+			"status": "passed",
+			"duration": 3635,
+			"evidence": []
+		},
+		{
+			"title": "compact player exposes queue and volume without overflow and honors reduced motion",
+			"file": "src/routes/templates/music-player/music-player.e2e.ts",
+			"status": "passed",
+			"duration": 1195,
+			"evidence": []
+		},
+		{
+			"title": "album changes animate outgoing and incoming cover, title words and song rows",
+			"file": "src/routes/templates/music-player/music-player.e2e.ts",
+			"status": "passed",
+			"duration": 1728,
+			"evidence": []
+		},
+		{
+			"title": "album content anchors remain stable through fades at 390px",
+			"file": "src/routes/templates/music-player/music-player.e2e.ts",
+			"status": "passed",
+			"duration": 3675,
+			"evidence": []
+		},
+		{
+			"title": "album content anchors remain stable through fades at 768px",
+			"file": "src/routes/templates/music-player/music-player.e2e.ts",
+			"status": "passed",
+			"duration": 3474,
+			"evidence": []
+		},
+		{
+			"title": "album content anchors remain stable through fades at 1440px",
+			"file": "src/routes/templates/music-player/music-player.e2e.ts",
+			"status": "passed",
+			"duration": 3760,
+			"evidence": []
+		},
+		{
+			"title": "opens on the feed, publishes, likes, reposts, quotes and bookmarks",
+			"file": "src/routes/templates/social-network/social-network.e2e.ts",
+			"status": "passed",
+			"duration": 3591,
+			"evidence": []
+		},
+		{
+			"title": "thread and profile routes survive refresh; replies and account dropdown work",
+			"file": "src/routes/templates/social-network/social-network.e2e.ts",
+			"status": "passed",
+			"duration": 2128,
+			"evidence": []
+		},
+		{
+			"title": "search uses a query, notifications use a route, and note feedback works",
+			"file": "src/routes/templates/social-network/social-network.e2e.ts",
+			"status": "passed",
+			"duration": 3350,
+			"evidence": []
+		},
+		{
+			"title": "mobile controls have padding, no horizontal overflow, and working route history",
+			"file": "src/routes/templates/social-network/social-network.e2e.ts",
+			"status": "passed",
+			"duration": 3504,
+			"evidence": []
+		},
+		{
+			"title": "follow chips stay inside their rows and downloaded media loads",
+			"file": "src/routes/templates/social-network/social-network.e2e.ts",
+			"status": "passed",
+			"duration": 3136,
+			"evidence": []
+		},
+		{
+			"title": "template route transitions: no-preference",
+			"file": "src/routes/templates/template-navigation.e2e.ts",
+			"status": "passed",
+			"duration": 6322,
+			"evidence": []
+		},
+		{
+			"title": "template route transitions: reduce",
+			"file": "src/routes/templates/template-navigation.e2e.ts",
+			"status": "passed",
+			"duration": 3350,
+			"evidence": []
+		},
+		{
+			"title": "immersive previews and anchored gallery return: 390px",
+			"file": "src/routes/templates/template-navigation.e2e.ts",
+			"status": "passed",
+			"duration": 6304,
+			"evidence": []
+		},
+		{
+			"title": "immersive previews and anchored gallery return: 1440px",
+			"file": "src/routes/templates/template-navigation.e2e.ts",
+			"status": "passed",
+			"duration": 7229,
+			"evidence": []
+		},
+		{
+			"title": "music-player: actual page routes preserve one shared picker",
+			"file": "src/routes/templates/template-navigation.e2e.ts",
+			"status": "passed",
+			"duration": 1640,
+			"evidence": []
+		},
+		{
+			"title": "email-client: actual page routes preserve one shared picker",
+			"file": "src/routes/templates/template-navigation.e2e.ts",
+			"status": "passed",
+			"duration": 2103,
+			"evidence": []
+		},
+		{
+			"title": "video-library: actual page routes preserve one shared picker",
+			"file": "src/routes/templates/template-navigation.e2e.ts",
+			"status": "passed",
+			"duration": 1413,
+			"evidence": []
+		},
+		{
+			"title": "social-network: actual page routes preserve one shared picker",
+			"file": "src/routes/templates/template-navigation.e2e.ts",
+			"status": "passed",
+			"duration": 3923,
+			"evidence": []
+		},
+		{
+			"title": "video navigation commits even when outgoing paint is paused",
+			"file": "src/routes/templates/template-navigation.e2e.ts",
+			"status": "passed",
+			"duration": 635,
+			"evidence": []
+		},
+		{
+			"title": "email-client preserves template consistency at 390px in light",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1616,
+			"evidence": [
+				"email-client-preserves-template-consistency-at-390px-in-light-0.png",
+				"email-client-preserves-template-consistency-at-390px-in-light-1.png",
+				"email-client-preserves-template-consistency-at-390px-in-light-2.json"
+			]
+		},
+		{
+			"title": "music-player preserves template consistency at 390px in light",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1458,
+			"evidence": [
+				"music-player-preserves-template-consistency-at-390px-in-light-0.png",
+				"music-player-preserves-template-consistency-at-390px-in-light-1.json"
+			]
+		},
+		{
+			"title": "social-network preserves template consistency at 390px in light",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 3571,
+			"evidence": [
+				"social-network-preserves-template-consistency-at-390px-in-light-0.png",
+				"social-network-preserves-template-consistency-at-390px-in-light-1.json"
+			]
+		},
+		{
+			"title": "video-library preserves template consistency at 390px in light",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1417,
+			"evidence": [
+				"video-library-preserves-template-consistency-at-390px-in-light-0.png",
+				"video-library-preserves-template-consistency-at-390px-in-light-1.png",
+				"video-library-preserves-template-consistency-at-390px-in-light-2.json"
+			]
+		},
+		{
+			"title": "email-client preserves template consistency at 390px in dark",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1693,
+			"evidence": [
+				"email-client-preserves-template-consistency-at-390px-in-dark-0.png",
+				"email-client-preserves-template-consistency-at-390px-in-dark-1.png",
+				"email-client-preserves-template-consistency-at-390px-in-dark-2.json"
+			]
+		},
+		{
+			"title": "music-player preserves template consistency at 390px in dark",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1433,
+			"evidence": [
+				"music-player-preserves-template-consistency-at-390px-in-dark-0.png",
+				"music-player-preserves-template-consistency-at-390px-in-dark-1.json"
+			]
+		},
+		{
+			"title": "social-network preserves template consistency at 390px in dark",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 3522,
+			"evidence": [
+				"social-network-preserves-template-consistency-at-390px-in-dark-0.png",
+				"social-network-preserves-template-consistency-at-390px-in-dark-1.json"
+			]
+		},
+		{
+			"title": "video-library preserves template consistency at 390px in dark",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1430,
+			"evidence": [
+				"video-library-preserves-template-consistency-at-390px-in-dark-0.png",
+				"video-library-preserves-template-consistency-at-390px-in-dark-1.png",
+				"video-library-preserves-template-consistency-at-390px-in-dark-2.json"
+			]
+		},
+		{
+			"title": "email-client preserves template consistency at 1440px in light",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1897,
+			"evidence": [
+				"email-client-preserves-template-consistency-at-1440px-in-light-0.png",
+				"email-client-preserves-template-consistency-at-1440px-in-light-1.png",
+				"email-client-preserves-template-consistency-at-1440px-in-light-2.json"
+			]
+		},
+		{
+			"title": "music-player preserves template consistency at 1440px in light",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1566,
+			"evidence": [
+				"music-player-preserves-template-consistency-at-1440px-in-light-0.png",
+				"music-player-preserves-template-consistency-at-1440px-in-light-1.json"
+			]
+		},
+		{
+			"title": "social-network preserves template consistency at 1440px in light",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 3775,
+			"evidence": [
+				"social-network-preserves-template-consistency-at-1440px-in-light-0.png",
+				"social-network-preserves-template-consistency-at-1440px-in-light-1.json"
+			]
+		},
+		{
+			"title": "video-library preserves template consistency at 1440px in light",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 2247,
+			"evidence": [
+				"video-library-preserves-template-consistency-at-1440px-in-light-0.png",
+				"video-library-preserves-template-consistency-at-1440px-in-light-1.png",
+				"video-library-preserves-template-consistency-at-1440px-in-light-2.json"
+			]
+		},
+		{
+			"title": "email-client preserves template consistency at 1440px in dark",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1751,
+			"evidence": [
+				"email-client-preserves-template-consistency-at-1440px-in-dark-0.png",
+				"email-client-preserves-template-consistency-at-1440px-in-dark-1.png",
+				"email-client-preserves-template-consistency-at-1440px-in-dark-2.json"
+			]
+		},
+		{
+			"title": "music-player preserves template consistency at 1440px in dark",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 1577,
+			"evidence": [
+				"music-player-preserves-template-consistency-at-1440px-in-dark-0.png",
+				"music-player-preserves-template-consistency-at-1440px-in-dark-1.json"
+			]
+		},
+		{
+			"title": "social-network preserves template consistency at 1440px in dark",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 3538,
+			"evidence": [
+				"social-network-preserves-template-consistency-at-1440px-in-dark-0.png",
+				"social-network-preserves-template-consistency-at-1440px-in-dark-1.json"
+			]
+		},
+		{
+			"title": "video-library preserves template consistency at 1440px in dark",
+			"file": "src/routes/templates/ui-consistency.e2e.ts",
+			"status": "passed",
+			"duration": 2333,
+			"evidence": [
+				"video-library-preserves-template-consistency-at-1440px-in-dark-0.png",
+				"video-library-preserves-template-consistency-at-1440px-in-dark-1.png",
+				"video-library-preserves-template-consistency-at-1440px-in-dark-2.json"
+			]
+		},
+		{
+			"title": "saved films persist across routes and reload",
+			"file": "src/routes/templates/video-library/video-library.e2e.ts",
+			"status": "passed",
+			"duration": 1038,
+			"evidence": []
+		},
+		{
+			"title": "genre routes, real search filters, account menu and mobile sizing",
+			"file": "src/routes/templates/video-library/video-library.e2e.ts",
+			"status": "passed",
+			"duration": 1321,
+			"evidence": []
+		},
+		{
+			"title": "video route fades preserve the frame (no-preference)",
+			"file": "src/routes/templates/video-library/video-library.e2e.ts",
+			"status": "passed",
+			"duration": 4727,
+			"evidence": []
+		},
+		{
+			"title": "video route fades preserve the frame (reduce)",
+			"file": "src/routes/templates/video-library/video-library.e2e.ts",
+			"status": "passed",
+			"duration": 1412,
+			"evidence": []
+		},
+		{
+			"title": "a second video navigation cannot leave content faded or stale",
+			"file": "src/routes/templates/video-library/video-library.e2e.ts",
+			"status": "passed",
+			"duration": 1359,
+			"evidence": []
+		},
+		{
+			"title": "floating navigation menus dismiss, restore focus, and expose navigable items",
+			"file": "src/routes/templates/video-library/video-library.e2e.ts",
+			"status": "passed",
+			"duration": 1593,
+			"evidence": []
+		},
+		{
+			"title": "progress mounts its lazy preview and example in both layouts",
+			"file": "src/lib/site/component-previews.e2e.ts",
+			"status": "passed",
+			"duration": 1035,
+			"evidence": []
+		}
+	]
+}

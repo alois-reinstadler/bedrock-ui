@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { ButtonGroup } from '#lib/bedrock/ui/button-group';
 	let status = $state('Awaiting review');
@@ -12,7 +13,7 @@
 			widget.
 		</p>
 	</header>
-	<div class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-4 p-5">
 		<div>
 			<p class="font-medium">Access request from Ari Lane</p>
 			<p class="text-sm text-muted-foreground">
@@ -27,5 +28,5 @@
 			></ButtonGroup
 		>
 		<p role="status" class="text-sm">{status}</p>
-	</div>
+	</Card.Root>
 </section>

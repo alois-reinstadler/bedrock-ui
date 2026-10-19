@@ -6,7 +6,7 @@
 	import TableHeader from '#lib/shadcn/ui/table/table-header.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof TableHeader> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof TableHeader> = $props();
 </script>
 
-<TableHeader {...props} />
+<TableHeader bind:ref {...props} />

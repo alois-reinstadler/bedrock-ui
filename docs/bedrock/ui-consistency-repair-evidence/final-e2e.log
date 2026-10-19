@@ -1,0 +1,620 @@
+
+Running 64 tests using 1 worker
+
+(node:91323) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/64] src/lib/site/surface-consistency.e2e.ts:4:2 › hero honors live OS reduction and keeps mobile focus stationary: light
+[2/64] src/lib/site/surface-consistency.e2e.ts:48:2 › gallery and documentation table frames inherit live corner tokens: light
+[3/64] src/lib/site/surface-consistency.e2e.ts:4:2 › hero honors live OS reduction and keeps mobile focus stationary: dark
+[4/64] src/lib/site/surface-consistency.e2e.ts:48:2 › gallery and documentation table frames inherit live corner tokens: dark
+[5/64] src/lib/site/surface-consistency.e2e.ts:79:2 › Card migration preserves the blockquote article
+[6/64] src/lib/site/surface-consistency.e2e.ts:79:2 › Card migration preserves the citation article
+[7/64] src/lib/site/surface-consistency.e2e.ts:79:2 › Card migration preserves the text article
+[8/64] src/lib/site/surface-consistency.e2e.ts:79:2 › Card migration preserves the separator article
+[9/64] src/lib/site/surface-consistency.e2e.ts:88:1 › template cards retain article semantics
+[10/64] src/lib/site/surface-consistency.e2e.ts:95:1 › Navigation Menu popup escapes the example card and its last link remains usable
+[11/64] src/lib/site/surface-consistency.e2e.ts:110:1 › Tokenizer can create a topic from its popup below the example card
+[12/64] src/routes/demo/ui-consistency.e2e.ts:48:2 › /demo/erp keeps content reachable on narrow screens
+[13/64] src/routes/demo/ui-consistency.e2e.ts:48:2 › /demo/motion/continuity keeps content reachable on narrow screens
+[14/64] src/routes/demo/ui-consistency.e2e.ts:48:2 › /demo/motion-test keeps content reachable on narrow screens
+[15/64] src/routes/docs/runtime-contracts.e2e.ts:5:1 › prototype delayed links disable speculative loading with valid values
+[16/64] src/routes/docs/runtime-contracts.e2e.ts:18:1 › block reference tabs retain valid full navigation and history
+  1) src/routes/docs/runtime-contracts.e2e.ts:18:1 › block reference tabs retain valid full navigation and history
+
+    Test timeout of 90000ms exceeded.
+
+    Error: page.goBack: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for navigation until "load"
+        - navigated to "http://127.0.0.1:4759/docs/blocks/authentication-panel"
+
+
+      25 | 		await navigation.getByRole('link', { name: 'Properties', exact: true }).click();
+      26 | 		await expect(page.locator('[data-doc-tab="properties"]')).toBeVisible();
+    > 27 | 		await page.goBack();
+         | 		           ^
+      28 | 		await expect(page.locator('[data-doc-tab="overview"]')).toBeVisible();
+      29 | 	}
+      30 | 	expect(errors).toEqual([]);
+        at /home/node/repos/bedrock-ui/src/routes/docs/runtime-contracts.e2e.ts:27:14
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-docs-runtime-co-555ec-full-navigation-and-history/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-docs-runtime-co-555ec-full-navigation-and-history/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-docs-runtime-co-555ec-full-navigation-and-history/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:92560) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[17/64] src/routes/docs/runtime-contracts.e2e.ts:34:2 › tooltip exposes its description through focus, Escape and hover (light)
+[18/64] src/routes/docs/runtime-contracts.e2e.ts:34:2 › tooltip exposes its description through focus, Escape and hover (dark)
+[19/64] src/routes/docs/runtime-contracts.e2e.ts:59:1 › lazy Form mounts before and after docs tab navigation without removed-store errors
+[20/64] src/routes/docs/runtime-contracts.e2e.ts:101:2 › 404 recovery preserves status and accessible navigation at /docs/components/audit-missing
+[21/64] src/routes/docs/runtime-contracts.e2e.ts:101:2 › 404 recovery preserves status and accessible navigation at /templates/video-library/title/audit-missing
+[22/64] src/routes/docs/runtime-contracts.e2e.ts:101:2 › 404 recovery preserves status and accessible navigation at /audit-missing
+[23/64] src/routes/templates/music-player/music-player.e2e.ts:66:1 › music search and genre filters are query parameters and likes persist
+[24/64] src/routes/templates/music-player/music-player.e2e.ts:126:1 › compact player exposes queue and volume without overflow and honors reduced motion
+[25/64] src/routes/templates/music-player/music-player.e2e.ts:180:1 › album changes animate outgoing and incoming cover, title words and song rows
+[26/64] src/routes/templates/music-player/music-player.e2e.ts:240:2 › album content anchors remain stable through fades at 390px
+[27/64] src/routes/templates/music-player/music-player.e2e.ts:240:2 › album content anchors remain stable through fades at 768px
+[28/64] src/routes/templates/music-player/music-player.e2e.ts:240:2 › album content anchors remain stable through fades at 1440px
+[29/64] src/routes/templates/social-network/social-network.e2e.ts:5:1 › opens on the feed, publishes, likes, reposts, quotes and bookmarks
+[30/64] src/routes/templates/social-network/social-network.e2e.ts:51:1 › thread and profile routes survive refresh; replies and account dropdown work
+[31/64] src/routes/templates/social-network/social-network.e2e.ts:84:1 › search uses a query, notifications use a route, and note feedback works
+[32/64] src/routes/templates/social-network/social-network.e2e.ts:108:1 › mobile controls have padding, no horizontal overflow, and working route history
+[33/64] src/routes/templates/social-network/social-network.e2e.ts:132:1 › follow chips stay inside their rows and downloaded media loads
+[34/64] src/routes/templates/template-navigation.e2e.ts:4:2 › template route transitions: no-preference
+[35/64] src/routes/templates/template-navigation.e2e.ts:4:2 › template route transitions: reduce
+[36/64] src/routes/templates/template-navigation.e2e.ts:46:2 › immersive previews and anchored gallery return: 390px
+[37/64] src/routes/templates/template-navigation.e2e.ts:46:2 › immersive previews and anchored gallery return: 1440px
+[38/64] src/routes/templates/template-navigation.e2e.ts:77:2 › music-player: actual page routes preserve one shared picker
+[39/64] src/routes/templates/template-navigation.e2e.ts:77:2 › email-client: actual page routes preserve one shared picker
+[40/64] src/routes/templates/template-navigation.e2e.ts:77:2 › video-library: actual page routes preserve one shared picker
+[41/64] src/routes/templates/template-navigation.e2e.ts:77:2 › social-network: actual page routes preserve one shared picker
+[42/64] src/routes/templates/template-navigation.e2e.ts:118:1 › video navigation commits even when outgoing paint is paused
+[43/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 390px in light
+  2) src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 390px in light
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(0.570013)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-c492f-nsistency-at-390px-in-light/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-c492f-nsistency-at-390px-in-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-c492f-nsistency-at-390px-in-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94284) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[44/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 390px in light
+  3) src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 390px in light
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(2.03246)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-28d03-nsistency-at-390px-in-light/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-28d03-nsistency-at-390px-in-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-28d03-nsistency-at-390px-in-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94340) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[45/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 390px in light
+  4) src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 390px in light
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(0.572274)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-82248-nsistency-at-390px-in-light/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-82248-nsistency-at-390px-in-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-82248-nsistency-at-390px-in-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94398) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[46/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 390px in light
+  5) src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 390px in light
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(2.03212)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-fbdf3-nsistency-at-390px-in-light/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-fbdf3-nsistency-at-390px-in-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-fbdf3-nsistency-at-390px-in-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94457) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[47/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 390px in dark
+  6) src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 390px in dark
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(0.292525)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-9c88b-onsistency-at-390px-in-dark/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-9c88b-onsistency-at-390px-in-dark/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-9c88b-onsistency-at-390px-in-dark/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94527) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[48/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 390px in dark
+  7) src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 390px in dark
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(1.1162)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-1da92-onsistency-at-390px-in-dark/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-1da92-onsistency-at-390px-in-dark/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-1da92-onsistency-at-390px-in-dark/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94583) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[49/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 390px in dark
+  8) src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 390px in dark
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(1.1162)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-c99da-onsistency-at-390px-in-dark/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-c99da-onsistency-at-390px-in-dark/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-c99da-onsistency-at-390px-in-dark/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94658) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[50/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 390px in dark
+  9) src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 390px in dark
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(1.1162)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-df706-onsistency-at-390px-in-dark/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-df706-onsistency-at-390px-in-dark/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-df706-onsistency-at-390px-in-dark/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94722) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[51/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 1440px in light
+  10) src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 1440px in light
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(1.11321)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-3f0d8-sistency-at-1440px-in-light/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-3f0d8-sistency-at-1440px-in-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-3f0d8-sistency-at-1440px-in-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94774) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[52/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 1440px in light
+  11) src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 1440px in light
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(0.571504)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-c4cfc-sistency-at-1440px-in-light/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-c4cfc-sistency-at-1440px-in-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-c4cfc-sistency-at-1440px-in-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94842) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[53/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 1440px in light
+  12) src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 1440px in light
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(0.292911)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-cfa26-sistency-at-1440px-in-light/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-cfa26-sistency-at-1440px-in-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-cfa26-sistency-at-1440px-in-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94901) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[54/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 1440px in light
+  13) src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 1440px in light
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(1.11847)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-374a0-sistency-at-1440px-in-light/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-374a0-sistency-at-1440px-in-light/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-374a0-sistency-at-1440px-in-light/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:94954) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[55/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 1440px in dark
+  14) src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 1440px in dark
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(2.03066)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-d3913-nsistency-at-1440px-in-dark/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-d3913-nsistency-at-1440px-in-dark/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-d3913-nsistency-at-1440px-in-dark/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:95006) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[56/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 1440px in dark
+  15) src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 1440px in dark
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(0.570781)"
+
+      109 | 					const changed = await geometry(controls);
+      110 | 					const themedCorner = (await geometry(toggle)).corner;
+    > 111 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					expect(changed.corner).toBe(themedCorner);
+      113 | 					expect(parseFloat(changed.radius)).toBeCloseTo(33.6, 1);
+      114 | 					evidence.overriddenControls = changed;
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-b704b-nsistency-at-1440px-in-dark/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-b704b-nsistency-at-1440px-in-dark/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-b704b-nsistency-at-1440px-in-dark/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:95061) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[57/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 1440px in dark
+  16) src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 1440px in dark
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(1.11602)"
+
+      109 | 					// Button's transition-all interpolates corner-shape; sample the settled state.
+      110 | 					await expect(toggle).toHaveCSS('corner-shape', /^(bevel|superellipse\(0\))$/);
+    > 111 | 					await expect(controls).toHaveCSS('corner-shape', /^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					const changed = await geometry(controls);
+      113 | 					const themedCorner = (await geometry(toggle)).corner;
+      114 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-a9861-nsistency-at-1440px-in-dark/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-a9861-nsistency-at-1440px-in-dark/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-a9861-nsistency-at-1440px-in-dark/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:95139) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[58/64] src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 1440px in dark
+  17) src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 1440px in dark
+
+    Error: expect(received).toMatch(expected)
+
+    Expected pattern: /^(bevel|superellipse\(0\))$/
+    Received string:  "superellipse(1.11774)"
+
+      109 | 					// Button's transition-all interpolates corner-shape; sample the settled state.
+      110 | 					await expect(toggle).toHaveCSS('corner-shape', /^(bevel|superellipse\(0\))$/);
+    > 111 | 					await expect(controls).toHaveCSS('corner-shape', /^(bevel|superellipse\(0\))$/);
+          | 					                     ^
+      112 | 					const changed = await geometry(controls);
+      113 | 					const themedCorner = (await geometry(toggle)).corner;
+      114 | 					expect(themedCorner).toMatch(/^(bevel|superellipse\(0\))$/);
+        at /home/node/repos/bedrock-ui/src/routes/templates/ui-consistency.e2e.ts:111:27
+
+    Error Context: ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-14930-nsistency-at-1440px-in-dark/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-14930-nsistency-at-1440px-in-dark/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/bedrock-final-test-results/src-routes-templates-ui-co-14930-nsistency-at-1440px-in-dark/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:95192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[59/64] src/routes/templates/video-library/video-library.e2e.ts:50:1 › saved films persist across routes and reload
+[60/64] src/routes/templates/video-library/video-library.e2e.ts:75:1 › genre routes, real search filters, account menu and mobile sizing
+[61/64] src/routes/templates/video-library/video-library.e2e.ts:124:2 › video route fades preserve the frame (no-preference)
+[62/64] src/routes/templates/video-library/video-library.e2e.ts:124:2 › video route fades preserve the frame (reduce)
+[63/64] src/routes/templates/video-library/video-library.e2e.ts:221:1 › a second video navigation cannot leave content faded or stale
+[64/64] src/routes/templates/video-library/video-library.e2e.ts:241:1 › floating navigation menus dismiss, restore focus, and expose navigable items
+  17 failed
+    src/routes/docs/runtime-contracts.e2e.ts:18:1 › block reference tabs retain valid full navigation and history
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 390px in light
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 390px in light
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 390px in light
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 390px in light
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 390px in dark
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 390px in dark
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 390px in dark
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 390px in dark
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 1440px in light
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 1440px in light
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 1440px in light
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 1440px in light
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 1440px in dark
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 1440px in dark
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 1440px in dark
+    src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 1440px in dark
+  47 passed (4.1m)

@@ -1,0 +1,92 @@
+[
+	{
+		"url": "/docs/components/form",
+		"errors": [],
+		"console": [],
+		"status": 200,
+		"title": "Form — Bedrock",
+		"renderedUrl": "http://127.0.0.1:4850/docs/components/form",
+		"text": " an element inside an array-like field path, with the same snippet state.\nForm.Control (`Form.FormControl` alias)\nRequired\nRequired bridge around the actual input in a field, providing constraints and generated ARIA/id props to its child composition.\nForm.Label (`Form.FormLabel` alias)\nContext-aware label linked to the active control and styled for an errored field.\nForm.Description (`Form.FormDescription` alias)\nContext-aware helper copy associated with the active control.\nForm.FieldErrors (`Form.FormFieldErrors` alias)\nError output that renders each current message or delegates rendering through a snippet.\nForm.Fieldset (`Form.FormFieldset` alias)\nFormsnap fieldset context for a grouped field path.\nForm.Legend (`Form.FormLegend` alias)\nContext-aware fieldset legend with error styling.\nForm.Button (`Form.FormButton` alias)\nBedrock Button preset to `type=\"submit\"`; all other Button behavior remains available.\nBehavior\n1.Field and ElementField are generic over the Superforms record and path, so snippet values and names remain type-connected.\n2.Control, Label, Description, FieldErrors, and Legend require the surrounding Formsnap context to generate their relationships.\n3.The consumer owns the actual `<form>`, enhancement, submission state, schema, and control binding; spread the Control child props and returned constraints onto the real input.\nExamples\nIn practice\n\nUse the component in a realistic product workflow, with supporting UI and meaningful state.\n\nPreview\nCode\nCopy code\nAccount recovery email\n\nKeep field-level guidance next to the control, then confirm the submitted value without leaving the settings page.\n\nEmail address\nUsed for account alerts and recovery.\nSave recovery email\n\nOn this page\n\nCommon variants\nInstallation\nUsage\nWhat it is\nAnatomy\nBehavior\nExamples",
+		"disabledTabs": 0
+	},
+	{
+		"url": "/docs/components/form?tab=properties",
+		"errors": [],
+		"console": [],
+		"status": 200,
+		"title": "Form properties — Bedrock",
+		"renderedUrl": "http://127.0.0.1:4850/docs/components/form?tab=properties",
+		"text": "nstrained by the source TypeScript contract.\n\nInstalled type declaration\n\nclass\nprop\n\timport(\"svelte/elements\").ClassValue | null | undefined\t—\t\n\nAccepted by Legend; constrained by the source TypeScript contract.\n\nInstalled type declaration\n\nref\nbindable\n\tHTMLElement | null | undefined\tnull\t\n\nAccepted by Legend; constrained by the source TypeScript contract.\n\nNative attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above.\n\nSvelte native element typing\nElementField\n\nAliases: FormElementField\n\nSource: src/lib/bedrock/ui/form/form-element-field.svelte\n\nNAME\tTYPE\tDEFAULT\tDESCRIPTION\n\nclass\nprop\n\timport(\"svelte/elements\").ClassValue | null | undefined\t—\t\n\nAccepted by ElementField; constrained by the source TypeScript contract.\n\nInstalled type declaration\n\nref\nbindable\n\tHTMLElement | null | undefined\tnull\t\n\nAccepted by ElementField; constrained by the source TypeScript contract.\n\n\n\nform\nprop\nRequired\n\timport(\"formsnap\").FsSuperForm<T, any>\t—\t\n\nThe form object returned from calling `superForm` in your component.\n\nInstalled type declaration\n\nname\nprop\nRequired\n\tU\t—\t\n\nThe path to the field in the form object.\n\nInstalled type declaration\n\nchildren\nsnippet\n\timport(\"svelte\").Snippet<[{ value: T; errors: string[]; tainted: boolean; constraints: Record<string, unknown>; }]> | undefined\t—\t\n\nThe children of the field.\n\nInstalled type declaration\n\nNative attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above.\n\nSvelte native element typing\n\nOn this page\n\nPublic API\nProperties and bindings\nComposition\nComponent parts",
+		"disabledTabs": 0
+	},
+	{
+		"url": "/docs/components/form?tab=accessibility",
+		"errors": [],
+		"console": [],
+		"status": 200,
+		"title": "Form accessibility — Bedrock",
+		"renderedUrl": "http://127.0.0.1:4850/docs/components/form?tab=accessibility",
+		"text": "urviving control.\nLabels and instructions\nEvery interactive element needs a programmatic name; visible text is preferred over aria-label.\nAssociate instructions and errors with the control they describe instead of relying on proximity.\nAnnouncements\nThe component does not announce ordinary visual changes unless its public anatomy documents a status or live region.\nApplications remain responsible for announcing asynchronous outcomes that happen outside the component.\nReduced motion\nBedrock motion tokens reduce or remove non-essential movement when reduced motion is requested.\nDo not add consumer transitions that make state changes depend on animation.\nTestable requirements\n\nComponents must meet WCAG 2.2 Level AA across variants, states, and themes. Measure foreground and background colors as they appear together on screen.\n\nREQUIREMENT\tAPPLIES TO\tGUIDANCE\nSemantic contract\tform\t\n\nUse a real form and correctly associated labels; invalid fields expose aria-invalid and describedby errors.\n\nWCAG 4.1.2: Name, Role, Value\n(opens in a new tab)\n\nKeyboard operation\tInteractive descendants\t\n\nNative interactive descendants remain in the expected tab order; do not add positive tabindex values.\n\nWCAG 2.1.1: Keyboard\n(opens in a new tab)\n\nUnobscured focus\tKeyboard focus\t\n\nKeep the Bedrock focus-visible treatment unobscured and move focus only in response to a user action.\n\nWCAG 2.4.11: Focus Not Obscured (Minimum)\n(opens in a new tab)\nKnown gaps\nNone documented\n\nNo component-specific upstream gap is documented. This is not a substitute for testing the composed experience with keyboard, screen reader, zoom, and forced colors.\n\nOn this page\n\nAccessibility contract\nSemantics\nKeyboard interaction\nFocus management\nLabels and instructions\nAnnouncements\nReduced motion\nRequirements\nKnown gaps",
+		"disabledTabs": 0
+	},
+	{
+		"url": "/docs/forms",
+		"errors": [],
+		"console": [],
+		"status": 200,
+		"title": "Forms — Bedrock",
+		"renderedUrl": "http://127.0.0.1:4850/docs/forms",
+		"text": "set aria-invalid, and connect error text through aria-describedby. A summary complements field errors.\nPending: keep inputs visible, disable duplicate actions, announce the operation, and preserve the current layout. Do not mark a request successful until the server confirms.\nSuccess: explain what changed and the next action. Keep focus stable for inline confirmation; focus the new heading when changing views.\nError and retry: preserve values, distinguish field errors from network or form-level failures, and provide an explicit retry. Do not automatically repeat irreversible writes.\nOptimistic behavior: reserve it for reversible, low-risk operations such as a draft preference. Roll back on failure and announce recovery. Never optimistically claim a payment, account creation, or upload is complete.\nPersistence: bind:value controls the active step. Optional persistence.read/write hooks can store only a step ID in a query parameter. They do not store field values; use an application-owned draft store and never put personal data in URLs.\nAccessible completion\n\nGive every control a visible label. Keep Status mounted so its polite live region announces step changes and errors. Test Tab, Shift+Tab, Enter, Back and Retry. On failure focus the first invalid control; on navigation focus the new step title. Keep logical DOM order on mobile and desktop. Reduced-motion users receive the same change without directional animation.\n\nTest empty, slow, rejected, successful and repeated submissions. Test dynamic steps and two forms on one page. Hidden sections must be absent from the accessibility tree, preserved fields must reach submission, and removal of the active section must reveal a valid remaining section. Persisting a step is not evidence that its values passed server validation.",
+		"disabledTabs": 0
+	},
+	{
+		"url": "/docs/components/button",
+		"errors": [],
+		"console": [],
+		"status": 200,
+		"title": "Button — Bedrock",
+		"renderedUrl": "http://127.0.0.1:4850/docs/components/button",
+		"text": "t it is\n\nButton is the standard control for a user-initiated action and can render as a native button or a styled anchor. Its variants express action hierarchy while preserving one focus, disabled, icon, and sizing treatment.\n\nWhen to use it\nSubmitting a form, opening an interface, or committing an immediate command.\nNavigation must look like a prominent action and still retain anchor semantics through `href`.\nAn icon and short label need the standard control sizing and spacing.\nWhen not to use it\nUse Link for ordinary inline or standalone navigation.\nUse IconButton when the visible label is intentionally omitted.\nUse Toggle when the control represents a persistent pressed state.\nAnatomy\n\nThe public pieces of the component family and the role each one plays.\n\nButton.Root (`Button.Button` alias)\nRequired\nRequired action surface. It renders `<button type=\"button\">` by default and switches to `<a>` when `href` is present.\nBehavior\n1.Native button behavior is preserved, including explicit submit behavior only when `type=\"submit\"` is supplied.\n2.A disabled anchor drops its destination, receives `aria-disabled`, and leaves the tab order; a disabled button uses the native attribute.\n3.Variants communicate hierarchy, not state: default, outline, secondary, ghost, destructive, and link. Sizes include text and icon-only forms.\nExamples\nIn practice\n\nUse the component in a realistic product workflow, with supporting UI and meaningful state.\n\nPreview\nCode\nCopy code\nPublish a project update\n\nUse one primary action, a quieter draft action, and a disabled action with an explanation.\n\nTeam update\nPublish update\nSave draft\nClear\n\nWrite an update before publishing. This demo does not send notifications.\n\nOn this page\n\nCommon variants\nInstallation\nUsage\nWhat it is\nAnatomy\nBehavior\nExamples",
+		"disabledTabs": 0
+	},
+	{
+		"url": "/templates/music-player",
+		"errors": [],
+		"console": [],
+		"status": 200,
+		"title": "Listen now — Drift",
+		"renderedUrl": "http://127.0.0.1:4850/templates/music-player",
+		"text": "drift.\nListen now\nDiscover\nYour library\nLiked songs\nRecently played\nYOUR COLLECTIONS\n4\nBass Anthems\nTrap & dubstep\nMelodic Rush\nMelodic bass\nVocal Classics\nElectronic & DnB\nHouse Classics\nHouse\nMusic & credits ↗\nJD\nJamie Davis\nPersonal library\nA soundtrack for your every day.\n\nYOUR DAILY SOUNDTRACK\n\nListen now\nNCS classics, on repeat.\n\nTHE NCS ESSENTIALS\n\nTurn it\nup.\n\nBig drops. Familiar hooks.\nThe tracks you know by heart.\n\nStart listening\nExplore collection ↗\n01 / 04\nFind your frequency\nBrowse all ↗\n↗\nBass Anthems\nTrap & dubstep · NCS\n↗\nMelodic Rush\nMelodic bass · NCS\n↗\nVocal Classics\nElectronic & DnB · NCS\n↗\nHouse Classics\nHouse · NCS\nIn the rotation\nHandpicked, always\n#\nTITLE\nGENRE\nTIME\nOn & On\nCartoon, Jéja feat. Daniel Levi\nElectronic\n3:28\n02\nMortals\nWarriyo feat. Laura Brehm\nTrap\n3:48\n03\nInvincible\nDEAF KEV\nMelodic Dubstep\n4:33\n04\nBlank\nDisfigure\nMelodic Dubstep\n3:29\nOn & On\nCartoon, Jéja feat. Daniel Levi\n0:00\n3:28\nMusic Player\nFeedback",
+		"disabledTabs": 0
+	},
+	{
+		"url": "/templates/social-network",
+		"errors": [],
+		"console": [],
+		"status": 200,
+		"title": "Mosaic — Social",
+		"renderedUrl": "http://127.0.0.1:4850/templates/social-network",
+		"text": "mosaic\nHome\nExplore\n2\nNotifications\nBookmarks\nProfile\nPost\nMina Okafor\n@mina\nHome\nYour daily scroll\nFor you\nFollowing\nEveryone can reply\n0/500\nPost\nLeo Martin\n@leo\n·\n18m\nTook the long way home. No signal, no itinerary. Just this.\n\nA reminder to leave a little room for getting lost.\n25\n86\n1.3K\nNora Chen reposted\nAya Williams\n@aya\n·\n42m\nThe best interface improvement we shipped this week? Removing a step.\n\nSometimes the feature is the thing you don’t have to do.\n18\n63\n462\nSam Rivera\n@sam\n·\n1h\nA little reminder of what an independent animation crew can make. Open films are such a gift to the next generation of filmmakers.\nBig Buck Bunny · Blender Foundation · CC BY 3.0\n36\n114\n892\nNora Chen\n@nora\n·\n2h\nGood buildings should make you stop and look up. Better ones make you want to stay.\n9\n22\n318\nMina Okafor\n@mina\n·\n3h\nThis. Every extra decision is something we ask of the person on the other side of the screen.\nAya Williams\n@aya\nThe best interface improvement we shipped this week? Removing a step.\n\nSometimes the feature is the thing you don’t have to do.\n4\n8\n92\nLeo Martin\n@leo\n·\n4h\nBlue hour is undefeated. One from the archive.\nReaders added context\n\nBlue hour is a twilight period, not necessarily a full hour. Its duration varies with latitude, season, and weather.\n\nRead source ↗\nHelpful?\n41\n208\n2.5K\n\nYou’re all caught up. A good time for a little fresh air.\n\nTrending now\nPHOTOGRAPHY\nThe world after dark\nSee what’s being shared\nDesign · Trending\nLess, but better\n8,240 posts\nFilm · Trending\nIndependent film\n2,186 posts\nArchitecture · Trending\nHuman-scale cities\n5,409 posts\nWho to follow\nNora Chen\n@nora\nFollow\nSam Rivera\n@sam\nFollow\nAya Williams\n@aya\nFollowing\nShow more\nMedia credits\nFictional demo · © 2026 Mosaic\n\nSocial Network\nFeedback",
+		"disabledTabs": 0
+	},
+	{
+		"url": "/templates/email-client/calendar",
+		"errors": [],
+		"console": [],
+		"status": 200,
+		"title": "Lumen Calendar",
+		"renderedUrl": "http://127.0.0.1:4850/templates/email-client/calendar",
+		"text": "Lumen\nMail\n3\nCalendar\nTasks\nCompose\n\nMAILBOXES\n\nInbox\n5\nStarred\n2\nDrafts\nSent\n1\nArchive\n1\n\nLABELS\n\nLaunch\nResearch\nReading\nAll changes saved in this session\n/\nMon, Sep 14\nAL\nAlex Lane\nCalendar\n\nSeptember 2026 · Europe/Vienna\n\nNew event\nSeptember 2026\nToday\nMon\nTue\nWed\nThu\nFri\nSat\nSun\n31\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n11:30Launch readiness\n14:00Prototype review\n+1 more\n15\n10:00Research synthesis\n16\n17\n09:30Weekly planning\n18\n09:00Writing time\n19\n20\n21\n22\n13:00Design handoff\n23\n24\n25\n26\n27\n28\n29\n30\n1\n2\n3\n4\nTeam\nFocus\nPersonal\nYOUR SCHEDULE\nMonday 14 September\n\n3 events · 2h scheduled · 1h focus\n\n11:30\n12:00\nLaunch readiness\nStudio · Room 2\nReview banner copy and support handoff with Marin and Ellis.\n14:00\n15:00\nPrototype review\nDesign studio\nA quiet hour for the next iteration. Bring the onboarding notes.\n16:30\n17:00\nAfternoon walk\nRiverside path\nLeave room to reset before the end of the day.\nComing up\n09-15 · 10:00\nResearch synthesis\n09-17 · 09:30\nWeekly planning\n09-18 · 09:00\nWriting time\n\nEmail Client\nFeedback",
+		"disabledTabs": 0
+	},
+	{
+		"url": "/templates/video-library",
+		"errors": [],
+		"console": [],
+		"status": 200,
+		"title": "Frame — Films worth your time",
+		"renderedUrl": "http://127.0.0.1:4850/templates/video-library",
+		"text": "Skip to content\nFRAME\n●\nHome\nGenres\n⌄\nMy list\nSearch films\n⌕\n↵\nJD\n⌄\n\nTONIGHT’S FEATURE\n\nTEARS\nOF STEEL\n\nThe past is our last hope.\n\n2012\n·\n12:14\n·\nScience fiction\n\nIn a future Amsterdam, a small team of scientists and soldiers tries to recreate a memory. The fate of the world depends on getting one moment right.\n\nPlay film\nMore info\n01 / 04\n\nBLENDER OPEN CINEMA\n\nYour next great short\n‹\n›\nSHORT FILM\nTears of Steel\n\n2012 · 12:14 · Science fiction\n\n+\nSHORT FILM\nCaminandes: Gran Dillama\n\n2013 · 2:26 · Animation\n\n+\nSHORT FILM\nBig Buck Bunny\n\n2008 · 9:56 · Animation\n\n+\nTRAILER\nSintel\n\n2010 · 0:52 · Fantasy\n\n+\nA little escape\nView all →\n‹\n›\nSHORT FILM\nCaminandes: Gran Dillama\n\n2013 · 2:26 · Animation\n\n+\nSHORT FILM\nBig Buck Bunny\n\n2008 · 9:56 · Animation\n\n+\nTRAILER\nSintel\n\n2010 · 0:52 · Fantasy\n\n+\n\nTHE OPEN CINEMA COLLECTION\n\nSmall films.\nEntire worlds.\n\nFrom the streets of a future Amsterdam to the wilds of Patagonia. Four stories made to be shared.\n\nExplore science fiction →\nFRAME\n●\n\nGood stories deserve a screen.\n\nFilms & creative credits ↗\nFilms by Blender Foundation and independent creators.\n\nVideo Library\nFeedback",
+		"disabledTabs": 0
+	}
+]

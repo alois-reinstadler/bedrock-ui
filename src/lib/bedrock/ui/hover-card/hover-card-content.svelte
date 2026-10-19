@@ -3,11 +3,30 @@
 </script>
 
 <script lang="ts">
+	import { surfaceInteraction, surfacePresence } from '#lib/bedrock/motion/surface-interaction.js';
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
 	import HoverCardContent from '#lib/shadcn/ui/hover-card/hover-card-content.svelte';
 	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let { class: className, ...restProps }: ComponentProps<typeof HoverCardContent> = $props();
+	const policy = useMotionPolicy();
+
+	let {
+		ref = $bindable(null),
+		class: className,
+		motion = 'default',
+		...restProps
+	}: ComponentProps<typeof HoverCardContent> & {
+		/** Optional expressive entry; labels never stagger. */ motion?: 'default' | 'soft';
+	} = $props();
 </script>
 
-<HoverCardContent class={cn('motion-popover', className)} {...restProps} />
+<HoverCardContent
+	bind:ref
+	{@attach policy.attach}
+	{@attach surfacePresence}
+	{@attach surfaceInteraction}
+	data-motion-style={motion}
+	class={cn('motion-popover', className)}
+	{...restProps}
+/>

@@ -1,5 +1,9 @@
 /** Requirements describe the rendered role and the consumer's verification obligation. */
 export const semantics: Record<string, string> = {
+	shapes:
+		'Each shape component renders a decorative SVG hidden from assistive technology by default. Supply label to expose an image role with an accessible name. The SVG is not keyboard-focusable; label the containing native button when a shape is interactive.',
+	emoji:
+		'A single Emoji exposes an image role named by label or its Unicode value. Mixed text keeps ordinary reading order unless label is supplied. Decorative content is hidden from assistive technology. Label the containing button for interactive reactions.',
 	attachment:
 		'The file container is presentational. Give its stretched Trigger and each Action distinct names, and include progress or errors as text. No upload state is announced automatically.',
 	bubble:
@@ -47,6 +51,7 @@ export const semantics: Record<string, string> = {
 		'A citation identifies its source with meaningful text; the destination must remain discoverable without hover.',
 	'clickable-card':
 		'The card action has one primary link or button role; do not nest competing interactive descendants inside it.',
+	diff: 'A named keyboard-scrollable region contains a comparison table with column headers. Additions and removals have visible signs and screen-reader labels. View buttons expose aria-pressed, and a status region announces copy results.',
 	'code-block':
 		'Code remains selectable text; the copy control names its action and confirms copy success without changing focus.',
 	collapsible: 'The disclosure trigger exposes aria-expanded and identifies the region it opens.',
@@ -88,6 +93,8 @@ export const semantics: Record<string, string> = {
 	icon: 'Decorative SVGs stay out of the accessibility tree; meaningful standalone icons require an equivalent text name.',
 	'icon-button':
 		'Every icon-only button has an action-specific accessible name; tooltip text alone is not sufficient.',
+	image:
+		'The native image exposes its required alt text. Failed or absent sources retain that name on the fallback; an empty alt marks decorative media. The loading skeleton is hidden from assistive technology.',
 	indicator:
 		'The indicator must have an adjacent text equivalent whenever its shape or color communicates state.',
 	input: 'Associate a visible label with the native input; placeholders are examples, not labels.',
@@ -126,8 +133,6 @@ export const semantics: Record<string, string> = {
 		'Provide a download/open alternative; a canvas-rendered PDF alone is not an accessible document representation.',
 	popover:
 		'The trigger exposes expanded state; the non-modal surface has a name and a predictable dismissal path.',
-	'power-search':
-		'Name the search input, expose active results, and announce useful result counts and empty states.',
 	progress:
 		'Expose progressbar minimum, maximum and current value; indeterminate progress omits a false percentage.',
 	'progressive-blur':

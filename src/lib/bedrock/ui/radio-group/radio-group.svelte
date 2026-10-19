@@ -6,7 +6,11 @@
 	import RadioGroup from '#lib/shadcn/ui/radio-group/radio-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof RadioGroup> = $props();
+	let {
+		ref = $bindable(null),
+		value = $bindable(''),
+		...props
+	}: ComponentProps<typeof RadioGroup> = $props();
 </script>
 
-<RadioGroup {...props} />
+<RadioGroup bind:ref bind:value {...props} />

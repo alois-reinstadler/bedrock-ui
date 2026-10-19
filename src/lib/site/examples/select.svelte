@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Select from '#lib/bedrock/ui/select';
 	import { Label } from '#lib/bedrock/ui/label';
 	let value = $state('weekly');
@@ -10,7 +11,7 @@
 	const label = $derived(options.find((option) => option.value === value)?.label);
 </script>
 
-<section class="max-w-md space-y-4 rounded-xl border p-5">
+<Card.Root class="block max-w-md gap-0 space-y-4 p-5">
 	<h3 class="font-medium">Workspace digest</h3>
 	<p class="text-sm text-muted-foreground">
 		Bundle project updates into one email. Urgent security alerts are sent separately.
@@ -30,4 +31,4 @@
 				? 'Your digest arrives each morning at 09:00.'
 				: 'Your digest arrives on Monday at 09:00.'}
 	</p>
-</section>
+</Card.Root>

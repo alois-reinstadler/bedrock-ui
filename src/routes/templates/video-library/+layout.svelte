@@ -1,5 +1,13 @@
 <script lang="ts">
+	import * as DropdownMenu from '#lib/bedrock/ui/dropdown-menu';
+	import { Input } from '#lib/bedrock/ui/input';
+	import { Button } from '#lib/bedrock/ui/button';
 	import { onMount } from 'svelte';
+	import { motionPresets } from '#lib/bedrock/motion/tokens.js';
+	import {
+		elementPrefersReducedMotion,
+		observeMotionReduction
+	} from '#lib/bedrock/motion/policy.js';
 	import { onNavigate } from '$app/navigation';
 	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
@@ -15,7 +23,11 @@
 
 	function attachRouteContent(element: HTMLElement) {
 		routeContent = element;
+		const stopPolicy = observeMotionReduction(element, (reduced) => {
+			if (reduced) routeAnimation?.cancel();
+		});
 		return () => {
+			stopPolicy();
 			navigationVersion += 1;
 			routeAnimation?.cancel();
 			routeContent = undefined;
@@ -24,15 +36,9 @@
 
 	onMount(() => {
 		library.load();
-		const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-		const stopMotion = () => {
-			if (motion.matches) routeAnimation?.cancel();
-		};
-		motion.addEventListener('change', stopMotion);
-		return () => motion.removeEventListener('change', stopMotion);
 	});
 
-	onNavigate(async (navigation) => {
+	onNavigate((navigation) => {
 		const version = ++navigationVersion;
 		const opacity = routeContent ? getComputedStyle(routeContent).opacity : '1';
 		routeAnimation?.cancel();
@@ -44,27 +50,27 @@
 			!isVideoRoute(navigation.to?.url.pathname) ||
 			(navigation.from?.url.pathname === navigation.to?.url.pathname &&
 				navigation.from?.url.search === navigation.to?.url.search) ||
-			window.matchMedia('(prefers-reduced-motion: reduce)').matches
+			elementPrefersReducedMotion(routeContent)
 		)
 			return;
 
 		// Fade only the routed content. The header, account menu and template picker stay put.
 		routeAnimation = routeContent.animate([{ opacity }, { opacity: 0.45 }], {
-			duration: 100,
-			easing: 'ease-out',
+			duration: motionPresets.exit.duration,
+			easing: `cubic-bezier(${motionPresets.exit.easing.join(',')})`,
 			fill: 'forwards'
 		});
 		void navigation.complete.catch(() => {
 			if (version === navigationVersion) routeAnimation?.cancel();
 		});
-		await routeAnimation.finished.catch(() => undefined);
+		// Routing commits independently of paint, even if an animation is paused.
 		return () => {
 			if (version !== navigationVersion || !routeContent) return;
 			routeAnimation?.cancel();
-			if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+			if (elementPrefersReducedMotion(routeContent)) return;
 			routeAnimation = routeContent.animate([{ opacity: 0.45 }, { opacity: 1 }], {
-				duration: 180,
-				easing: 'ease-out'
+				duration: motionPresets.enter.duration,
+				easing: `cubic-bezier(${motionPresets.enter.easing.join(',')})`
 			});
 		};
 	});
@@ -78,15 +84,20 @@
 			<a class="frame-brand" href={base} aria-label="Frame home">FRAME<span>●</span></a>
 			<nav aria-label="Frame navigation">
 				<a href={base} aria-current={page.url.pathname === base ? 'page' : undefined}>Home</a>
-				<details class="genre-menu">
-					<summary>Genres <span>⌄</span></summary>
-					<div>
-						{#each genres as genre (genre)}<a
-								onclick={(event) => event.currentTarget.closest('details')?.removeAttribute('open')}
-								href={`${base}/genres/${genreSlug(genre)}`}>{genre}</a
-							>{/each}
-					</div>
-				</details>
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger class="genre-menu-trigger"
+						>Genres <span aria-hidden="true">⌄</span></DropdownMenu.Trigger
+					>
+					<DropdownMenu.Content class="frame-menu" preventScroll={false} sideOffset={12}>
+						{#each genres as genre (genre)}
+							<DropdownMenu.Item>
+								{#snippet child({ props })}<a {...props} href={`${base}/genres/${genreSlug(genre)}`}
+										>{genre}</a
+									>{/snippet}
+							</DropdownMenu.Item>
+						{/each}
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
 				<a
 					href={`${base}/my-list`}
 					aria-current={page.url.pathname.endsWith('/my-list') ? 'page' : undefined}
@@ -97,25 +108,51 @@
 			<form action={`${base}/search`} class="frame-search">
 				<label for="frame-query" class="sr-only">Search films</label><span aria-hidden="true"
 					>⌕</span
-				><input
+				><Input
+					class={['control-templates-video-library-layout']}
 					id="frame-query"
 					type="search"
 					name="q"
 					placeholder="Titles, genres, people"
-				/><button aria-label="Search films" type="submit">↵</button>
-			</form>
-			<details class="account-menu">
-				<summary aria-label="Your account"
-					><span>JD</span><span class="account-chevron">⌄</span></summary
+				/><Button
+					variant="ghost"
+					class={['control-templates-video-library-layout h-auto whitespace-normal']}
+					aria-label="Search films"
+					type="submit">↵</Button
 				>
-				<div>
-					<strong>Jamie Davis</strong><small>Your personal cinema</small><a href={`${base}/my-list`}
-						>My list <span>{library.saved.length}</span></a
-					><a href={`${base}/#continue-watching`}>Continue watching</a><a
-						href={`${base}/#film-credits`}>Film credits</a
+			</form>
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger class="account-menu-trigger" aria-label="Your account">
+					<span class="account-initials">JD</span><span class="account-chevron" aria-hidden="true"
+						>⌄</span
 					>
-				</div>
-			</details>
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content
+					class="frame-menu frame-account-menu"
+					preventScroll={false}
+					align="end"
+					sideOffset={12}
+				>
+					<DropdownMenu.Label
+						><strong>Jamie Davis</strong><small>Your personal cinema</small></DropdownMenu.Label
+					>
+					<DropdownMenu.Separator />
+					<DropdownMenu.Item
+						>{#snippet child({ props })}<a {...props} href={`${base}/my-list`}
+								>My list <span>{library.saved.length}</span></a
+							>{/snippet}</DropdownMenu.Item
+					>
+					<DropdownMenu.Item
+						>{#snippet child({ props })}<a {...props} href={`${base}/#continue-watching`}
+								>Continue watching</a
+							>{/snippet}</DropdownMenu.Item
+					>
+					<DropdownMenu.Item
+						>{#snippet child({ props })}<a {...props} href={`${base}/#film-credits`}>Film credits</a
+							>{/snippet}</DropdownMenu.Item
+					>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
 		</header>
 	{/if}
 	<main id="frame-content" tabindex="-1" {@attach attachRouteContent}>{@render children()}</main>

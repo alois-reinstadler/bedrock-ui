@@ -6,7 +6,7 @@
 	import Separator from '#lib/shadcn/ui/separator/separator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Separator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof Separator> = $props();
 </script>
 
-<Separator {...props} />
+<Separator bind:ref {...props} />

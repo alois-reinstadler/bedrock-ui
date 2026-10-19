@@ -117,3 +117,15 @@ export type {
 	ChatChange,
 	ChatSelectionAction
 } from './agent-types';
+
+// One activity row powers both mixed timelines and the compact tool-call list.
+export { default as ActivityItem, default as ChatActivityItem } from './chat-activity-item.svelte';
+export type { ChatActivityStatus, ChatActivityStatusLabels } from './activity-types';
+// The same attachment queue item used by Composer, available to custom composers.
+export { default as ComposerFile, default as ChatComposerFile } from './chat-composer-file.svelte';
+
+export {
+	default as Waveform,
+	default as ChatWaveform,
+	type ChatWaveformProps
+} from './chat-waveform.svelte';

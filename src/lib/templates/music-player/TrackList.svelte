@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
+	import { IconButton } from '#lib/bedrock/ui/icon-button';
 	import { formatTime, type Track } from './data.js';
 	import { usePlayer } from './player.svelte.js';
 	import { albumMotion } from './motion.js';
@@ -25,10 +27,15 @@
 						class="track"
 						class:current={player.current.id === track.id}
 						in:albumMotion|global={{ delay: 60 + index * 40 }}
-						out:albumMotion|global={{ delay: index * 20, duration: 160 }}
+						out:albumMotion|global={{ delay: index * 20 }}
 					>
-						<button
-							class="track-play"
+						<Button
+							variant="ghost"
+							type="button"
+							class={[
+								'control-templates-music-player-tracklist h-auto whitespace-normal',
+								'track-play p-0'
+							]}
 							aria-label={player.current.id === track.id && player.playing
 								? `Pause ${track.title}`
 								: `Play ${track.title}`}
@@ -39,22 +46,36 @@
 							><span>{String(index + 1).padStart(2, '0')}</span
 							>{#if player.current.id === track.id && player.playing}<Pause size={15} />{:else}<Play
 									size={15}
-								/>{/if}</button
-						><button class="track-title" onclick={() => player.play(track, items)}
+								/>{/if}</Button
+						><Button
+							variant="ghost"
+							type="button"
+							class={[
+								'control-templates-music-player-tracklist h-auto whitespace-normal',
+								'track-title justify-start p-0'
+							]}
+							onclick={() => player.play(track, items)}
 							><img src={track.artwork} alt="" /><span
 								><strong>{track.title}</strong><small>{track.artist}</small></span
-							></button
-						><span class="genre">{track.genre}</span><button
-							class="icon-button"
-							class:selected={player.liked.includes(track.id)}
+							></Button
+						><span class="genre">{track.genre}</span><IconButton
+							type="button"
+							icon={Heart}
+							label={`${player.liked.includes(track.id) ? 'Unlike' : 'Like'} ${track.title}`}
+							class={[
+								'control-templates-music-player-tracklist',
+								'icon-button',
+								{ selected: player.liked.includes(track.id) }
+							]}
 							aria-pressed={player.liked.includes(track.id)}
-							aria-label={`${player.liked.includes(track.id) ? 'Unlike' : 'Like'} ${track.title}`}
-							onclick={() => player.like(track.id)}><Heart size={16} /></button
-						><time>{formatTime(track.duration)}</time><button
-							class="icon-button"
-							aria-label={`Add ${track.title} to queue`}
-							onclick={() => player.enqueue(track.id)}><Plus size={16} /></button
-						>
+							onclick={() => player.like(track.id)}
+						/><time>{formatTime(track.duration)}</time><IconButton
+							type="button"
+							icon={Plus}
+							label={`Add ${track.title} to queue`}
+							class={['control-templates-music-player-tracklist', 'icon-button']}
+							onclick={() => player.enqueue(track.id)}
+						/>
 					</div>{:else}<p class="empty">{empty}</p>{/each}
 			</div>{/key}
 	</div>
@@ -96,7 +117,7 @@
 	.track:hover {
 		background: var(--muted);
 	}
-	.track-play {
+	:global(.control-templates-music-player-tracklist.track-play) {
 		width: 25px;
 		height: 32px;
 		display: grid;
@@ -104,54 +125,54 @@
 		font-size: 10px;
 		color: var(--music-muted);
 	}
-	.track-play :global(svg) {
+	:global(.control-templates-music-player-tracklist.track-play) :global(svg) {
 		display: none;
 	}
-	.track:hover .track-play span,
-	.track.current .track-play span {
+	.track:hover :global(.control-templates-music-player-tracklist.track-play span),
+	.track.current :global(.control-templates-music-player-tracklist.track-play span) {
 		display: none;
 	}
-	.track:hover .track-play :global(svg),
-	.track.current .track-play :global(svg) {
+	.track:hover :global(.control-templates-music-player-tracklist.track-play) :global(svg),
+	.track.current :global(.control-templates-music-player-tracklist.track-play) :global(svg) {
 		display: block;
 	}
-	.track.current .track-title strong,
-	.track.current .track-play {
+	.track.current :global(.control-templates-music-player-tracklist.track-title strong),
+	.track.current :global(.control-templates-music-player-tracklist.track-play) {
 		color: #c46b78;
 	}
-	.track-title {
+	:global(.control-templates-music-player-tracklist.track-title) {
 		display: flex;
 		align-items: center;
 		gap: 13px;
 		min-width: 0;
 		text-align: left;
 	}
-	.track-title img {
+	:global(.control-templates-music-player-tracklist.track-title) img {
 		width: 40px;
 		height: 40px;
 		flex-shrink: 0;
 		object-fit: cover;
 		border-radius: 5px;
 	}
-	.track-title span {
+	:global(.control-templates-music-player-tracklist.track-title) span {
 		display: grid;
 		gap: 4px;
 		min-width: 0;
 	}
-	.track-title strong {
+	:global(.control-templates-music-player-tracklist.track-title) strong {
 		font-size: 12px;
 		font-weight: 600;
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;
 	}
-	.track-title small,
+	:global(.control-templates-music-player-tracklist.track-title) small,
 	.genre {
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
-	.track-title small,
+	:global(.control-templates-music-player-tracklist.track-title) small,
 	.genre,
 	time {
 		font-size: 10px;
@@ -184,17 +205,17 @@
 		.table-heading span:last-child {
 			grid-column: 4;
 		}
-		.track-title {
+		:global(.control-templates-music-player-tracklist.track-title) {
 			gap: 9px;
 		}
-		.track-title img {
+		:global(.control-templates-music-player-tracklist.track-title) img {
 			width: 34px;
 			height: 34px;
 		}
-		.track-title strong {
+		:global(.control-templates-music-player-tracklist.track-title) strong {
 			font-size: 11px;
 		}
-		.track-title small {
+		:global(.control-templates-music-player-tracklist.track-title) small {
 			font-size: 9px;
 		}
 	}

@@ -15,20 +15,26 @@ pnpm dev
 
 ## Motion
 
-Native CSS transitions and animations are the default for ordinary component visuals.
-Measurement and exit retention do not by themselves require an animation engine.
-See the [100-component motion audit and recommended policy](docs/bedrock/motion-architecture-review.md)
-and [evaluated JS/WAAPI route prototype](docs/bedrock/motion-architecture-evaluation.md).
-The audit and prototype are implemented; production component migrations remain proposals.
+Bedrock owns motion policy and component behavior. CSS handles ordinary feedback;
+Astra Motion supplies coordinated presence, layout, gestures and animated values.
 
-Astra Motion is installed from the checked-in `vendor/astra-motion-0.0.1.tgz` archive. No sibling checkout is needed to install or build Bedrock.
+- `MotionProvider.svelte` and `policy.svelte.js` in `#lib/bedrock/motion`: engine-free
+  application/system reduction, including context-aware portal attachments.
+- `#lib/bedrock/motion/AstraPolicy.svelte`: policy bridge for engine compositions.
+- `astra-motion`: direct authoring APIs for custom compositions. Astra durations use seconds.
+- `#lib/bedrock/motion/index.js`: compatible native helpers and millisecond tokens.
 
-- `#lib/bedrock/motion/index.js`: existing native Bedrock APIs, with millisecond durations.
-- `#lib/bedrock/motion/css.js`: finite CSS motion and the `CssButton` / `CssPanel` wrappers, with second-based Astra transitions.
-- `#lib/bedrock/motion/engine.js`: Astra physics, gestures, and projection.
-- `#lib/bedrock/motion/config.js`: shared Astra `MotionConfig` policy without the engine entry.
+The exact Astra archive is checked into `vendor`; installation needs no sibling
+checkout. The former `astra-motion/css`, `CssButton` and `CssPanel` integration has
+been retired. Normal Button/CSS usage excludes the engine; components that coordinate
+motion can include it. Astra's optional Kit navigation adapters remain unqualified
+for this site's Kit 3 version.
 
-The normal component imports remain stable. Read the [motion integration contract](docs/bedrock/motion.md), browse `/docs/motion`, and exercise the examples at `/motion`. Astra's optional route adapter is not qualified for this site's SvelteKit 3 version.
+Read the [motion integration contract](docs/bedrock/motion.md), browse `/docs/motion`,
+and try the coordinated project cards at `/motion`. The
+[integration plan](docs/bedrock/astra-integration/plan.md) records the rollout gates;
+the [implementation report](docs/bedrock/astra-integration/implementation.md) records
+verified results and remaining compatibility boundaries.
 
 ## Verification
 
@@ -49,7 +55,36 @@ Music and film templates stream from remote URLs and require an internet connect
 Artwork, subtitles and attribution remain in the repository. Audio/video downloads
 are ignored; `pnpm assets:verify` also rejects staged template media and static
 files over 2 MiB. The existing `static/demo/clip.mp4` is the small fixture used by
-the VideoPlayer documentation. Playback E2E tests require access to the remote hosts.
+the VideoPlayer documentation. Playback E2E tests require access to the remote hosts and run separately with
+`pnpm test:e2e:media`. The default `pnpm test:e2e` excludes `@remote-media` tests.
 
 Animated icons are deferred on the local `parked/animated-icons` branch. The main
 site uses static icons.
+
+## Architecture and browser tests
+
+Theme tokens and shared utilities live in `src/lib/bedrock/styles.css`; the site
+imports that stylesheet through its route entry point. ESLint enforces the public
+Bedrock import boundary for the site and templates, and keeps Bedrock independent
+of site, server and routing modules.
+
+Playwright specs under `src` import `test` from `scripts/shared-browser-test.ts`. Local runs
+attach the shared Chrome and create isolated test contexts; they require
+`DEV_LOCAL_URL` from the preview manager. Browser test files run serially because
+animation assertions share browser timing. GitHub-hosted verification owns its
+Chromium and production preview, and runs lint, type checks, unit tests, the
+production build, reference freshness and non-remote E2E tests.
+
+Documentation preview and code panels have a 10rem minimum and a maximum of
+40rem or 75% of the small viewport height (whichever is smaller, with the minimum
+preserved). Intermediate content uses its natural height; oversized content
+scrolls within its panel.
+
+The agent-driven example checks live in `tests/e2e`. Run `e2e-run` in the shared
+container; its model credentials stay outside the repository. The runner uses
+one shared-Chrome worker and exact assertions after each agent goal. For other
+environments, supply the variables documented in `e2e.config.ts` and run
+`pnpm test:e2e:agent`.
+
+The [October 5 main baseline](docs/bedrock/main-baseline-2026-10-05.md) records the
+consolidated work, component polish, verification results, and remaining limits.

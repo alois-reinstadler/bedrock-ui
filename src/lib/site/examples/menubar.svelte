@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Menubar from '#lib/bedrock/ui/menubar';
 
 	let documentName = $state('Launch announcement');
@@ -6,7 +7,7 @@
 	let totals = $state(true);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Draft editor commands</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -38,7 +39,7 @@
 			</Menubar.Content>
 		</Menubar.Menu>
 	</Menubar.Root>
-	<article class="rounded-lg border" class:p-3={compact} class:p-6={!compact}>
+	<article class="rounded-lg border corner-theme" class:p-3={compact} class:p-6={!compact}>
 		<h4 class="font-medium">{documentName}</h4>
 		<p class="mt-3 text-sm leading-relaxed">
 			We are opening the new workspace to our first pilot teams. Your feedback will help us make
@@ -46,4 +47,4 @@
 		</p>
 		{#if totals}<p class="mt-4 text-xs text-muted-foreground">23 words</p>{/if}
 	</article>
-</section>
+</Card.Root>

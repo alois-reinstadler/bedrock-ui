@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as AlertDialog from '#lib/bedrock/ui/alert-dialog';
 	import { Button } from '#lib/bedrock/ui/button';
 	let removed = $state(false);
@@ -11,7 +12,7 @@
 			Name the affected person and consequences, and keep the safe cancellation action explicit.
 		</p>
 	</header>
-	<div class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-4 p-5">
 		<p class="font-medium">Workspace access</p>
 		<div class="flex flex-wrap items-center justify-between gap-3">
 			<div>
@@ -45,5 +46,5 @@
 		{#if removed}<Button variant="outline" size="sm" onclick={() => (removed = false)}
 				>Reset example</Button
 			>{/if}
-	</div>
+	</Card.Root>
 </section>

@@ -1,45 +1,51 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../../scripts/shared-browser-test';
 import { filmSources } from '../../../lib/templates/media.js';
 const base = '/templates/video-library';
 
-test('browse, film details and playback are separate real routes', async ({ page }) => {
-	await page.goto(base);
-	await expect(page.locator('[data-template="video-library"]')).toHaveAttribute(
-		'data-ready',
-		'true'
-	);
-	await page.getByRole('link', { name: 'More info' }).click();
-	await expect(page).toHaveURL(`${base}/title/tears-of-steel`);
-	await expect(page.getByRole('heading', { name: 'Tears of Steel', exact: true })).toBeVisible();
-	await expect(page.getByRole('dialog')).toHaveCount(0);
-	await page.getByRole('link', { name: 'Play film', exact: true }).click();
-	await expect(page).toHaveURL(`${base}/watch/tears-of-steel`);
-	const video = page.locator('video');
-	await expect
-		.poll(() => video.evaluate((element: HTMLVideoElement) => element.readyState))
-		.toBeGreaterThan(0);
-	await expect
-		.poll(() => video.evaluate((element: HTMLVideoElement) => element.duration))
-		.toBeGreaterThan(700);
-	await video.evaluate((element: HTMLVideoElement) => {
-		element.pause();
-		element.currentTime = 45;
-	});
-	await expect
-		.poll(() =>
-			page.evaluate(
-				() =>
-					JSON.parse(localStorage.getItem('bedrock-frame-v2') ?? '{}').progress?.['tears-of-steel']
+test(
+	'browse, film details and playback are separate real routes',
+	{ tag: '@remote-media' },
+	async ({ page }) => {
+		await page.goto(base);
+		await expect(page.locator('[data-template="video-library"]')).toHaveAttribute(
+			'data-ready',
+			'true'
+		);
+		await page.getByRole('link', { name: 'More info' }).click();
+		await expect(page).toHaveURL(`${base}/title/tears-of-steel`);
+		await expect(page.getByRole('heading', { name: 'Tears of Steel', exact: true })).toBeVisible();
+		await expect(page.getByRole('dialog')).toHaveCount(0);
+		await page.getByRole('link', { name: 'Play film', exact: true }).click();
+		await expect(page).toHaveURL(`${base}/watch/tears-of-steel`);
+		const video = page.locator('video');
+		await expect
+			.poll(() => video.evaluate((element: HTMLVideoElement) => element.readyState))
+			.toBeGreaterThan(0);
+		await expect
+			.poll(() => video.evaluate((element: HTMLVideoElement) => element.duration))
+			.toBeGreaterThan(700);
+		await video.evaluate((element: HTMLVideoElement) => {
+			element.pause();
+			element.currentTime = 45;
+		});
+		await expect
+			.poll(() =>
+				page.evaluate(
+					() =>
+						JSON.parse(localStorage.getItem('bedrock-frame-v2') ?? '{}').progress?.[
+							'tears-of-steel'
+						]
+				)
 			)
-		)
-		.toBeGreaterThan(40);
-	await page.getByRole('link', { name: 'Back to Tears of Steel' }).click();
-	await expect(page).toHaveURL(`${base}/title/tears-of-steel`);
-	await page.getByRole('link', { name: 'Browse films' }).click();
-	await expect(page.getByRole('heading', { name: 'Pick up where you left off' })).toBeVisible();
-	await page.goBack();
-	await expect(page).toHaveURL(`${base}/title/tears-of-steel`);
-});
+			.toBeGreaterThan(40);
+		await page.getByRole('link', { name: 'Back to Tears of Steel' }).click();
+		await expect(page).toHaveURL(`${base}/title/tears-of-steel`);
+		await page.getByRole('link', { name: 'Browse films' }).click();
+		await expect(page.getByRole('heading', { name: 'Pick up where you left off' })).toBeVisible();
+		await page.goBack();
+		await expect(page).toHaveURL(`${base}/title/tears-of-steel`);
+	}
+);
 
 test('saved films persist across routes and reload', async ({ page }) => {
 	await page.goto(`${base}/title/caminandes`);
@@ -84,31 +90,35 @@ test('genre routes, real search filters, account menu and mobile sizing', async 
 	await expect(page.getByRole('link', { name: 'Play film', exact: true })).toBeVisible();
 });
 
-test('every title loads its own remote film and measured runtime', async ({ page }) => {
-	const sources = new Set<string>();
-	for (const [slug, minimum, maximum] of [
-		['tears-of-steel', 730, 740],
-		['caminandes', 145, 148],
-		['big-buck-bunny', 595, 598],
-		['sintel', 50, 54]
-	] as const) {
-		await page.goto(`${base}/watch/${slug}`);
-		const video = page.locator('video');
-		await expect
-			.poll(() => video.evaluate((element: HTMLVideoElement) => element.readyState))
-			.toBeGreaterThan(0);
-		const duration = await video.evaluate((element: HTMLVideoElement) => {
-			element.pause();
-			return element.duration;
-		});
-		expect(duration).toBeGreaterThanOrEqual(minimum);
-		expect(duration).toBeLessThanOrEqual(maximum);
-		const source = await video.evaluate((element: HTMLVideoElement) => element.currentSrc);
-		expect(source).toBe(filmSources[slug]);
-		sources.add(source);
+test(
+	'every title loads its own remote film and measured runtime',
+	{ tag: '@remote-media' },
+	async ({ page }) => {
+		const sources = new Set<string>();
+		for (const [slug, minimum, maximum] of [
+			['tears-of-steel', 730, 740],
+			['caminandes', 145, 148],
+			['big-buck-bunny', 595, 598],
+			['sintel', 50, 54]
+		] as const) {
+			await page.goto(`${base}/watch/${slug}`);
+			const video = page.locator('video');
+			await expect
+				.poll(() => video.evaluate((element: HTMLVideoElement) => element.readyState))
+				.toBeGreaterThan(0);
+			const duration = await video.evaluate((element: HTMLVideoElement) => {
+				element.pause();
+				return element.duration;
+			});
+			expect(duration).toBeGreaterThanOrEqual(minimum);
+			expect(duration).toBeLessThanOrEqual(maximum);
+			const source = await video.evaluate((element: HTMLVideoElement) => element.currentSrc);
+			expect(source).toBe(filmSources[slug]);
+			sources.add(source);
+		}
+		expect(sources.size).toBe(4);
 	}
-	expect(sources.size).toBe(4);
-});
+);
 
 for (const reducedMotion of ['no-preference', 'reduce'] as const) {
 	test(`video route fades preserve the frame (${reducedMotion})`, async ({ page }) => {
@@ -186,8 +196,8 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
 			.getByRole('link', { name: /My list/ })
 			.click();
 		await expectSettledRoute('/my-list', '.catalog-page h1:has-text("My list")');
-		await page.locator('.genre-menu > summary').click();
-		await page.locator('.genre-menu').getByRole('link', { name: 'Animation', exact: true }).click();
+		await page.getByRole('button', { name: 'Genres' }).click();
+		await page.getByRole('menuitem', { name: 'Animation', exact: true }).click();
 		await expectSettledRoute('/genres/animation', '.catalog-page h1:text-is("Animation")');
 		await page.getByRole('searchbox', { name: 'Search films' }).fill('Sintel');
 		await page.getByRole('searchbox', { name: 'Search films' }).press('Enter');
@@ -226,4 +236,34 @@ test('a second video navigation cannot leave content faded or stale', async ({ p
 	await page.goBack();
 	await expect(page.locator('#frame-content')).toHaveCSS('opacity', '1');
 	await expect(page.locator('.preview-controls')).toHaveCount(1);
+});
+
+test('floating navigation menus dismiss, restore focus, and expose navigable items', async ({
+	page
+}) => {
+	await page.goto(base);
+	await expect(page.locator('[data-template="video-library"]')).toHaveAttribute(
+		'data-ready',
+		'true'
+	);
+	const genres = page.getByRole('button', { name: 'Genres' });
+	await genres.focus();
+	await page.keyboard.press('ArrowDown');
+	await expect(page.getByRole('menu')).toBeVisible();
+	await expect(page.getByRole('menuitem').first()).toBeFocused();
+	await page.keyboard.press('ArrowDown');
+	await expect(page.getByRole('menuitem').nth(1)).toBeFocused();
+	await page.keyboard.press('Escape');
+	await expect(page.getByRole('menu')).toHaveCount(0);
+	await expect(genres).toBeFocused();
+	const account = page.getByRole('button', { name: 'Your account' });
+	await account.click();
+	await expect(page.getByRole('menu')).toHaveCount(1);
+	await expect(page.getByText('Jamie Davis', { exact: true })).toBeVisible();
+	await page.getByRole('heading', { name: 'TEARS OF STEEL' }).click();
+	await expect(page.getByRole('menu')).toHaveCount(0);
+	await genres.click();
+	await page.getByRole('menuitem', { name: 'Animation', exact: true }).click();
+	await expect(page).toHaveURL(`${base}/genres/animation`);
+	await expect(page.getByRole('menu')).toHaveCount(0);
 });

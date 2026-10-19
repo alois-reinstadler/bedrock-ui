@@ -193,7 +193,7 @@
 		translate: none !important;
 		scale: none !important;
 	}
-	.motion-lab[data-motion-preference='reduced'] :global(.lab-loop) {
+	.motion-lab[data-motion-preference='reduced'] :global(.lab-loop:not([data-slot='skeleton'])) {
 		animation: none !important;
 	}
 	.motion-lab[data-motion-preference='reduced'] :global(.lab-animated) {

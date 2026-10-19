@@ -51,13 +51,14 @@
 	// instantly: any delta other than +1 clears the flag.
 	let lastActiveStep: number | null = null;
 	let animatedStep = $state<number | null>(null);
-	$effect.pre(() => {
+	function trackActiveStep() {
 		const current = activeStep;
 		if (current !== lastActiveStep) {
 			animatedStep = lastActiveStep !== null && current === lastActiveStep + 1 ? current : null;
 			lastActiveStep = current;
 		}
-	});
+	}
+	$effect.pre(trackActiveStep);
 
 	const registeredSteps = new SvelteSet<number>();
 
@@ -77,13 +78,18 @@
 </script>
 
 <ol
-	bind:this={ref}
+	{@attach (node) => {
+		ref = node;
+		return () => {
+			if (ref === node) ref = null;
+		};
+	}}
 	data-slot="stepper"
 	data-orientation={orientation}
 	aria-label={label}
 	class={cn(
 		'list-none text-sm',
-		orientation === 'horizontal' ? 'flex w-full items-center' : 'flex flex-col',
+		orientation === 'horizontal' ? 'flex w-full items-start' : 'flex flex-col',
 		className
 	)}
 	{...restProps}

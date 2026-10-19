@@ -1,0 +1,395 @@
+
+Running 140 tests using 1 worker
+
+(node:80656) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/140] src/lib/site/component-previews.e2e.ts:5:2 › accordion mounts its lazy preview and example in both layouts
+[2/140] src/lib/site/component-previews.e2e.ts:5:2 › alert mounts its lazy preview and example in both layouts
+[3/140] src/lib/site/component-previews.e2e.ts:5:2 › alert-dialog mounts its lazy preview and example in both layouts
+[4/140] src/lib/site/component-previews.e2e.ts:5:2 › animated-gradient mounts its lazy preview and example in both layouts
+[5/140] src/lib/site/component-previews.e2e.ts:5:2 › animated-signature mounts its lazy preview and example in both layouts
+[6/140] src/lib/site/component-previews.e2e.ts:5:2 › aspect-ratio mounts its lazy preview and example in both layouts
+[7/140] src/lib/site/component-previews.e2e.ts:5:2 › async-button mounts its lazy preview and example in both layouts
+[8/140] src/lib/site/component-previews.e2e.ts:5:2 › attachment mounts its lazy preview and example in both layouts
+[9/140] src/lib/site/component-previews.e2e.ts:5:2 › avatar mounts its lazy preview and example in both layouts
+[10/140] src/lib/site/component-previews.e2e.ts:5:2 › badge mounts its lazy preview and example in both layouts
+[11/140] src/lib/site/component-previews.e2e.ts:5:2 › banner mounts its lazy preview and example in both layouts
+[12/140] src/lib/site/component-previews.e2e.ts:5:2 › blockquote mounts its lazy preview and example in both layouts
+[13/140] src/lib/site/component-previews.e2e.ts:5:2 › breadcrumb mounts its lazy preview and example in both layouts
+[14/140] src/lib/site/component-previews.e2e.ts:5:2 › bubble mounts its lazy preview and example in both layouts
+[15/140] src/lib/site/component-previews.e2e.ts:5:2 › button mounts its lazy preview and example in both layouts
+[16/140] src/lib/site/component-previews.e2e.ts:5:2 › button-group mounts its lazy preview and example in both layouts
+[17/140] src/lib/site/component-previews.e2e.ts:5:2 › calendar mounts its lazy preview and example in both layouts
+[18/140] src/lib/site/component-previews.e2e.ts:5:2 › card mounts its lazy preview and example in both layouts
+[19/140] src/lib/site/component-previews.e2e.ts:5:2 › carousel mounts its lazy preview and example in both layouts
+[20/140] src/lib/site/component-previews.e2e.ts:5:2 › chart mounts its lazy preview and example in both layouts
+[21/140] src/lib/site/component-previews.e2e.ts:5:2 › chat mounts its lazy preview and example in both layouts
+[22/140] src/lib/site/component-previews.e2e.ts:5:2 › checkbox mounts its lazy preview and example in both layouts
+[23/140] src/lib/site/component-previews.e2e.ts:5:2 › indicator mounts its lazy preview and example in both layouts
+[24/140] src/lib/site/component-previews.e2e.ts:5:2 › checkbox-list mounts its lazy preview and example in both layouts
+[25/140] src/lib/site/component-previews.e2e.ts:5:2 › citation mounts its lazy preview and example in both layouts
+[26/140] src/lib/site/component-previews.e2e.ts:5:2 › clickable-card mounts its lazy preview and example in both layouts
+[27/140] src/lib/site/component-previews.e2e.ts:5:2 › code-block mounts its lazy preview and example in both layouts
+[28/140] src/lib/site/component-previews.e2e.ts:5:2 › collapsible mounts its lazy preview and example in both layouts
+[29/140] src/lib/site/component-previews.e2e.ts:5:2 › color-area mounts its lazy preview and example in both layouts
+[30/140] src/lib/site/component-previews.e2e.ts:5:2 › color-field mounts its lazy preview and example in both layouts
+[31/140] src/lib/site/component-previews.e2e.ts:5:2 › color-picker mounts its lazy preview and example in both layouts
+[32/140] src/lib/site/component-previews.e2e.ts:5:2 › color-slider mounts its lazy preview and example in both layouts
+[33/140] src/lib/site/component-previews.e2e.ts:5:2 › color-swatch mounts its lazy preview and example in both layouts
+[34/140] src/lib/site/component-previews.e2e.ts:5:2 › color-swatch-picker mounts its lazy preview and example in both layouts
+[35/140] src/lib/site/component-previews.e2e.ts:5:2 › combobox mounts its lazy preview and example in both layouts
+[36/140] src/lib/site/component-previews.e2e.ts:5:2 › command mounts its lazy preview and example in both layouts
+[37/140] src/lib/site/component-previews.e2e.ts:5:2 › context-menu mounts its lazy preview and example in both layouts
+[38/140] src/lib/site/component-previews.e2e.ts:5:2 › data-table mounts its lazy preview and example in both layouts
+[39/140] src/lib/site/component-previews.e2e.ts:5:2 › date-input mounts its lazy preview and example in both layouts
+[40/140] src/lib/site/component-previews.e2e.ts:5:2 › date-range-input mounts its lazy preview and example in both layouts
+[41/140] src/lib/site/component-previews.e2e.ts:5:2 › date-time-input mounts its lazy preview and example in both layouts
+[42/140] src/lib/site/component-previews.e2e.ts:5:2 › dialog mounts its lazy preview and example in both layouts
+[43/140] src/lib/site/component-previews.e2e.ts:5:2 › diff mounts its lazy preview and example in both layouts
+[44/140] src/lib/site/component-previews.e2e.ts:5:2 › dot-pattern mounts its lazy preview and example in both layouts
+[45/140] src/lib/site/component-previews.e2e.ts:5:2 › drawer mounts its lazy preview and example in both layouts
+[46/140] src/lib/site/component-previews.e2e.ts:5:2 › dropdown-menu mounts its lazy preview and example in both layouts
+[47/140] src/lib/site/component-previews.e2e.ts:5:2 › emoji mounts its lazy preview and example in both layouts
+[48/140] src/lib/site/component-previews.e2e.ts:5:2 › empty mounts its lazy preview and example in both layouts
+[49/140] src/lib/site/component-previews.e2e.ts:5:2 › feedback mounts its lazy preview and example in both layouts
+[50/140] src/lib/site/component-previews.e2e.ts:5:2 › field mounts its lazy preview and example in both layouts
+[51/140] src/lib/site/component-previews.e2e.ts:5:2 › field-status mounts its lazy preview and example in both layouts
+[52/140] src/lib/site/component-previews.e2e.ts:5:2 › file-input mounts its lazy preview and example in both layouts
+[53/140] src/lib/site/component-previews.e2e.ts:5:2 › form mounts its lazy preview and example in both layouts
+[54/140] src/lib/site/component-previews.e2e.ts:5:2 › grid-pattern mounts its lazy preview and example in both layouts
+[55/140] src/lib/site/component-previews.e2e.ts:5:2 › heading mounts its lazy preview and example in both layouts
+[56/140] src/lib/site/component-previews.e2e.ts:5:2 › hover-card mounts its lazy preview and example in both layouts
+[57/140] src/lib/site/component-previews.e2e.ts:5:2 › icon mounts its lazy preview and example in both layouts
+[58/140] src/lib/site/component-previews.e2e.ts:5:2 › icon-button mounts its lazy preview and example in both layouts
+  1) src/lib/site/component-previews.e2e.ts:5:2 › icon-button mounts its lazy preview and example in both layouts
+
+    Error: expect(locator).not.toBeEmpty() failed
+
+    Locator:  locator('#preview .example-panel').first()
+    Expected: not empty
+    Received: empty
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "not toBeEmpty" with timeout 5000ms
+      - waiting for locator('#preview .example-panel').first()
+        14 × locator resolved to <div tabindex="0" id="bits-s10" role="tabpanel" data-state="active" data-value="preview" data-tabs-content="" data-slot="tabs-content" aria-labelledby="bits-s8" data-orientation="horizontal" class="text-sm outline-none example-panel flex-none overflow-auto p-4 sm:p-6">…</div>
+           - unexpected value "empty"
+
+
+      16 | 		await expect(page.locator('[aria-label="Loading example"]')).toHaveCount(0);
+      17 | 		await expect(page.getByText(/Variants could not load|Example could not load/)).toHaveCount(0);
+    > 18 | 		await expect(page.locator('#preview .example-panel').first()).not.toBeEmpty();
+         | 		                                                                  ^
+      19 | 		await expect(page.locator('#examples')).toBeVisible();
+      20 | 		await page.setViewportSize({ width: 390, height: 900 });
+      21 | 		await page.evaluate(() => document.documentElement.classList.add('dark'));
+        at /home/node/repos/bedrock-ui/src/lib/site/component-previews.e2e.ts:18:69
+
+    Error Context: test-results/src-lib-site-component-pre-2d44a-and-example-in-both-layouts/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/src-lib-site-component-pre-2d44a-and-example-in-both-layouts/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/src-lib-site-component-pre-2d44a-and-example-in-both-layouts/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:83708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[59/140] src/lib/site/component-previews.e2e.ts:5:2 › image mounts its lazy preview and example in both layouts
+[60/140] src/lib/site/component-previews.e2e.ts:5:2 › input mounts its lazy preview and example in both layouts
+[61/140] src/lib/site/component-previews.e2e.ts:5:2 › input-group mounts its lazy preview and example in both layouts
+[62/140] src/lib/site/component-previews.e2e.ts:5:2 › input-otp mounts its lazy preview and example in both layouts
+  2) src/lib/site/component-previews.e2e.ts:5:2 › input-otp mounts its lazy preview and example in both layouts
+
+    Error: expect(locator).not.toBeEmpty() failed
+
+    Locator:  locator('#preview .example-panel').first()
+    Expected: not empty
+    Received: empty
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "not toBeEmpty" with timeout 5000ms
+      - waiting for locator('#preview .example-panel').first()
+        14 × locator resolved to <div tabindex="0" id="bits-s10" role="tabpanel" data-state="active" data-value="preview" data-tabs-content="" data-slot="tabs-content" aria-labelledby="bits-s8" data-orientation="horizontal" class="text-sm outline-none example-panel flex-none overflow-auto p-4 sm:p-6">…</div>
+           - unexpected value "empty"
+
+
+      16 | 		await expect(page.locator('[aria-label="Loading example"]')).toHaveCount(0);
+      17 | 		await expect(page.getByText(/Variants could not load|Example could not load/)).toHaveCount(0);
+    > 18 | 		await expect(page.locator('#preview .example-panel').first()).not.toBeEmpty();
+         | 		                                                                  ^
+      19 | 		await expect(page.locator('#examples')).toBeVisible();
+      20 | 		await page.setViewportSize({ width: 390, height: 900 });
+      21 | 		await page.evaluate(() => document.documentElement.classList.add('dark'));
+        at /home/node/repos/bedrock-ui/src/lib/site/component-previews.e2e.ts:18:69
+
+    Error Context: test-results/src-lib-site-component-pre-f7fe6-and-example-in-both-layouts/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/src-lib-site-component-pre-f7fe6-and-example-in-both-layouts/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/src-lib-site-component-pre-f7fe6-and-example-in-both-layouts/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:84138) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[63/140] src/lib/site/component-previews.e2e.ts:5:2 › item mounts its lazy preview and example in both layouts
+[64/140] src/lib/site/component-previews.e2e.ts:5:2 › kbd mounts its lazy preview and example in both layouts
+[65/140] src/lib/site/component-previews.e2e.ts:5:2 › label mounts its lazy preview and example in both layouts
+[66/140] src/lib/site/component-previews.e2e.ts:5:2 › light-rays mounts its lazy preview and example in both layouts
+[67/140] src/lib/site/component-previews.e2e.ts:5:2 › lightbox mounts its lazy preview and example in both layouts
+[68/140] src/lib/site/component-previews.e2e.ts:5:2 › link mounts its lazy preview and example in both layouts
+[69/140] src/lib/site/component-previews.e2e.ts:5:2 › list mounts its lazy preview and example in both layouts
+[70/140] src/lib/site/component-previews.e2e.ts:5:2 › map mounts its lazy preview and example in both layouts
+[71/140] src/lib/site/component-previews.e2e.ts:5:2 › markdown mounts its lazy preview and example in both layouts
+[72/140] src/lib/site/component-previews.e2e.ts:5:2 › marker mounts its lazy preview and example in both layouts
+[73/140] src/lib/site/component-previews.e2e.ts:5:2 › marquee mounts its lazy preview and example in both layouts
+[74/140] src/lib/site/component-previews.e2e.ts:5:2 › menubar mounts its lazy preview and example in both layouts
+[75/140] src/lib/site/component-previews.e2e.ts:5:2 › message mounts its lazy preview and example in both layouts
+[76/140] src/lib/site/component-previews.e2e.ts:5:2 › metadata-list mounts its lazy preview and example in both layouts
+[77/140] src/lib/site/component-previews.e2e.ts:5:2 › multi-selector mounts its lazy preview and example in both layouts
+[78/140] src/lib/site/component-previews.e2e.ts:5:2 › native-select mounts its lazy preview and example in both layouts
+[79/140] src/lib/site/component-previews.e2e.ts:5:2 › navigation-menu mounts its lazy preview and example in both layouts
+[80/140] src/lib/site/component-previews.e2e.ts:5:2 › noise-overlay mounts its lazy preview and example in both layouts
+[81/140] src/lib/site/component-previews.e2e.ts:5:2 › number-input mounts its lazy preview and example in both layouts
+[82/140] src/lib/site/component-previews.e2e.ts:5:2 › outline mounts its lazy preview and example in both layouts
+[83/140] src/lib/site/component-previews.e2e.ts:5:2 › overflow-list mounts its lazy preview and example in both layouts
+[84/140] src/lib/site/component-previews.e2e.ts:5:2 › pagination mounts its lazy preview and example in both layouts
+[85/140] src/lib/site/component-previews.e2e.ts:5:2 › pdf-viewer mounts its lazy preview and example in both layouts
+  3) src/lib/site/component-previews.e2e.ts:5:2 › pdf-viewer mounts its lazy preview and example in both layouts
+
+    Error: expect(locator).not.toBeEmpty() failed
+
+    Locator:  locator('#preview .example-panel').first()
+    Expected: not empty
+    Received: empty
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "not toBeEmpty" with timeout 5000ms
+      - waiting for locator('#preview .example-panel').first()
+        14 × locator resolved to <div tabindex="0" id="bits-s10" role="tabpanel" data-state="active" data-value="preview" data-tabs-content="" data-slot="tabs-content" aria-labelledby="bits-s8" data-orientation="horizontal" class="text-sm outline-none example-panel flex-none overflow-auto p-4 sm:p-6">…</div>
+           - unexpected value "empty"
+
+
+      16 | 		await expect(page.locator('[aria-label="Loading example"]')).toHaveCount(0);
+      17 | 		await expect(page.getByText(/Variants could not load|Example could not load/)).toHaveCount(0);
+    > 18 | 		await expect(page.locator('#preview .example-panel').first()).not.toBeEmpty();
+         | 		                                                                  ^
+      19 | 		await expect(page.locator('#examples')).toBeVisible();
+      20 | 		await page.setViewportSize({ width: 390, height: 900 });
+      21 | 		await page.evaluate(() => document.documentElement.classList.add('dark'));
+        at /home/node/repos/bedrock-ui/src/lib/site/component-previews.e2e.ts:18:69
+
+    Error Context: test-results/src-lib-site-component-pre-5d1bc-and-example-in-both-layouts/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/src-lib-site-component-pre-5d1bc-and-example-in-both-layouts/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/src-lib-site-component-pre-5d1bc-and-example-in-both-layouts/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:85341) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[86/140] src/lib/site/component-previews.e2e.ts:5:2 › phone-input mounts its lazy preview and example in both layouts
+[87/140] src/lib/site/component-previews.e2e.ts:5:2 › popover mounts its lazy preview and example in both layouts
+[88/140] src/lib/site/component-previews.e2e.ts:5:2 › progress mounts its lazy preview and example in both layouts
+  4) src/lib/site/component-previews.e2e.ts:5:2 › progress mounts its lazy preview and example in both layouts
+
+    Error: expect(locator).not.toBeEmpty() failed
+
+    Locator:  locator('#preview .example-panel').first()
+    Expected: not empty
+    Received: empty
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "not toBeEmpty" with timeout 5000ms
+      - waiting for locator('#preview .example-panel').first()
+        14 × locator resolved to <div tabindex="0" id="bits-s10" role="tabpanel" data-state="active" data-value="preview" data-tabs-content="" data-slot="tabs-content" aria-labelledby="bits-s8" data-orientation="horizontal" class="text-sm outline-none example-panel flex-none overflow-auto p-4 sm:p-6">…</div>
+           - unexpected value "empty"
+
+
+      16 | 		await expect(page.locator('[aria-label="Loading example"]')).toHaveCount(0);
+      17 | 		await expect(page.getByText(/Variants could not load|Example could not load/)).toHaveCount(0);
+    > 18 | 		await expect(page.locator('#preview .example-panel').first()).not.toBeEmpty();
+         | 		                                                                  ^
+      19 | 		await expect(page.locator('#examples')).toBeVisible();
+      20 | 		await page.setViewportSize({ width: 390, height: 900 });
+      21 | 		await page.evaluate(() => document.documentElement.classList.add('dark'));
+        at /home/node/repos/bedrock-ui/src/lib/site/component-previews.e2e.ts:18:69
+
+    Error Context: test-results/src-lib-site-component-pre-bd3ea-and-example-in-both-layouts/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/src-lib-site-component-pre-bd3ea-and-example-in-both-layouts/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/src-lib-site-component-pre-bd3ea-and-example-in-both-layouts/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:85482) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[89/140] src/lib/site/component-previews.e2e.ts:5:2 › progressive-blur mounts its lazy preview and example in both layouts
+[90/140] src/lib/site/component-previews.e2e.ts:5:2 › qr-code mounts its lazy preview and example in both layouts
+[91/140] src/lib/site/component-previews.e2e.ts:5:2 › radio-group mounts its lazy preview and example in both layouts
+[92/140] src/lib/site/component-previews.e2e.ts:5:2 › range-calendar mounts its lazy preview and example in both layouts
+[93/140] src/lib/site/component-previews.e2e.ts:5:2 › resizable mounts its lazy preview and example in both layouts
+[94/140] src/lib/site/component-previews.e2e.ts:5:2 › scroll-area mounts its lazy preview and example in both layouts
+[95/140] src/lib/site/component-previews.e2e.ts:5:2 › select mounts its lazy preview and example in both layouts
+[96/140] src/lib/site/component-previews.e2e.ts:5:2 › selectable-card mounts its lazy preview and example in both layouts
+[97/140] src/lib/site/component-previews.e2e.ts:5:2 › selector mounts its lazy preview and example in both layouts
+[98/140] src/lib/site/component-previews.e2e.ts:5:2 › separator mounts its lazy preview and example in both layouts
+[99/140] src/lib/site/component-previews.e2e.ts:5:2 › shapes mounts its lazy preview and example in both layouts
+  5) src/lib/site/component-previews.e2e.ts:5:2 › shapes mounts its lazy preview and example in both layouts
+
+    Error: expect(locator).not.toBeEmpty() failed
+
+    Locator:  locator('#preview .example-panel').first()
+    Expected: not empty
+    Received: empty
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "not toBeEmpty" with timeout 5000ms
+      - waiting for locator('#preview .example-panel').first()
+        14 × locator resolved to <div tabindex="0" id="bits-s10" role="tabpanel" data-state="active" data-value="preview" data-tabs-content="" data-slot="tabs-content" aria-labelledby="bits-s8" data-orientation="horizontal" class="text-sm outline-none example-panel flex-none overflow-auto p-4 sm:p-6">…</div>
+           - unexpected value "empty"
+
+
+      16 | 		await expect(page.locator('[aria-label="Loading example"]')).toHaveCount(0);
+      17 | 		await expect(page.getByText(/Variants could not load|Example could not load/)).toHaveCount(0);
+    > 18 | 		await expect
+         | 		            ^
+      19 | 			.poll(() => page.locator('#preview .example-panel').first().evaluate((node) => node.childElementCount))
+      20 | 			.toBeGreaterThan(0);
+      21 | 		await expect(page.locator('#examples')).toBeVisible();
+        at /home/node/repos/bedrock-ui/src/lib/site/component-previews.e2e.ts:18:69
+
+    Error Context: test-results/src-lib-site-component-pre-62f8b-and-example-in-both-layouts/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/src-lib-site-component-pre-62f8b-and-example-in-both-layouts/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/src-lib-site-component-pre-62f8b-and-example-in-both-layouts/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:86150) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[100/140] src/lib/site/component-previews.e2e.ts:5:2 › sheet mounts its lazy preview and example in both layouts
+[101/140] src/lib/site/component-previews.e2e.ts:5:2 › sidebar mounts its lazy preview and example in both layouts
+[102/140] src/lib/site/component-previews.e2e.ts:5:2 › skeleton mounts its lazy preview and example in both layouts
+[103/140] src/lib/site/component-previews.e2e.ts:5:2 › slider mounts its lazy preview and example in both layouts
+[104/140] src/lib/site/component-previews.e2e.ts:5:2 › sonner mounts its lazy preview and example in both layouts
+[105/140] src/lib/site/component-previews.e2e.ts:5:2 › spinner mounts its lazy preview and example in both layouts
+[106/140] src/lib/site/component-previews.e2e.ts:5:2 › spotlight mounts its lazy preview and example in both layouts
+[107/140] src/lib/site/component-previews.e2e.ts:5:2 › status-dot mounts its lazy preview and example in both layouts
+[108/140] src/lib/site/component-previews.e2e.ts:5:2 › stepped-form mounts its lazy preview and example in both layouts
+[109/140] src/lib/site/component-previews.e2e.ts:5:2 › stepper mounts its lazy preview and example in both layouts
+[110/140] src/lib/site/component-previews.e2e.ts:5:2 › switch mounts its lazy preview and example in both layouts
+[111/140] src/lib/site/component-previews.e2e.ts:5:2 › table mounts its lazy preview and example in both layouts
+[112/140] src/lib/site/component-previews.e2e.ts:5:2 › tabs mounts its lazy preview and example in both layouts
+[113/140] src/lib/site/component-previews.e2e.ts:5:2 › text mounts its lazy preview and example in both layouts
+[114/140] src/lib/site/component-previews.e2e.ts:5:2 › text-highlight mounts its lazy preview and example in both layouts
+[115/140] src/lib/site/component-previews.e2e.ts:5:2 › text-shimmer mounts its lazy preview and example in both layouts
+[116/140] src/lib/site/component-previews.e2e.ts:5:2 › textarea mounts its lazy preview and example in both layouts
+[117/140] src/lib/site/component-previews.e2e.ts:5:2 › thumbnail mounts its lazy preview and example in both layouts
+  6) src/lib/site/component-previews.e2e.ts:5:2 › thumbnail mounts its lazy preview and example in both layouts
+
+    Error: expect(locator).not.toBeEmpty() failed
+
+    Locator:  locator('#preview .example-panel').first()
+    Expected: not empty
+    Received: empty
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "not toBeEmpty" with timeout 5000ms
+      - waiting for locator('#preview .example-panel').first()
+        14 × locator resolved to <div tabindex="0" id="bits-s10" role="tabpanel" data-state="active" data-value="preview" data-tabs-content="" data-slot="tabs-content" aria-labelledby="bits-s8" data-orientation="horizontal" class="text-sm outline-none example-panel flex-none overflow-auto p-4 sm:p-6">…</div>
+           - unexpected value "empty"
+
+
+      16 | 		await expect(page.locator('[aria-label="Loading example"]')).toHaveCount(0);
+      17 | 		await expect(page.getByText(/Variants could not load|Example could not load/)).toHaveCount(0);
+    > 18 | 		await expect
+         | 		            ^
+      19 | 			.poll(() => page.locator('#preview .example-panel').first().evaluate((node) => node.childElementCount))
+      20 | 			.toBeGreaterThan(0);
+      21 | 		await expect(page.locator('#examples')).toBeVisible();
+        at /home/node/repos/bedrock-ui/src/lib/site/component-previews.e2e.ts:18:69
+
+    Error Context: test-results/src-lib-site-component-pre-46fe7-and-example-in-both-layouts/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/src-lib-site-component-pre-46fe7-and-example-in-both-layouts/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results/src-lib-site-component-pre-46fe7-and-example-in-both-layouts/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+(node:86985) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[118/140] src/lib/site/component-previews.e2e.ts:5:2 › tilt-card mounts its lazy preview and example in both layouts
+[119/140] src/lib/site/component-previews.e2e.ts:5:2 › time-input mounts its lazy preview and example in both layouts
+[120/140] src/lib/site/component-previews.e2e.ts:5:2 › timestamp mounts its lazy preview and example in both layouts
+[121/140] src/lib/site/component-previews.e2e.ts:5:2 › toggle mounts its lazy preview and example in both layouts
+[122/140] src/lib/site/component-previews.e2e.ts:5:2 › toggle-group mounts its lazy preview and example in both layouts
+[123/140] src/lib/site/component-previews.e2e.ts:5:2 › token mounts its lazy preview and example in both layouts
+[124/140] src/lib/site/component-previews.e2e.ts:5:2 › tokenizer mounts its lazy preview and example in both layouts
+[125/140] src/lib/site/component-previews.e2e.ts:5:2 › tooltip mounts its lazy preview and example in both layouts
+[126/140] src/lib/site/component-previews.e2e.ts:5:2 › video-player mounts its lazy preview and example in both layouts
+[127/140] src/lib/site/component-previews.e2e.ts:5:2 › visually-hidden mounts its lazy preview and example in both layouts
+[128/140] src/lib/site/surface-consistency.e2e.ts:4:2 › hero honors live OS reduction and keeps mobile focus stationary: light
+[129/140] src/lib/site/surface-consistency.e2e.ts:48:2 › gallery and documentation table frames inherit live corner tokens: light
+[130/140] src/lib/site/surface-consistency.e2e.ts:4:2 › hero honors live OS reduction and keeps mobile focus stationary: dark
+[131/140] src/lib/site/surface-consistency.e2e.ts:48:2 › gallery and documentation table frames inherit live corner tokens: dark
+[132/140] src/routes/demo/ui-consistency.e2e.ts:48:2 › /demo/erp keeps content reachable on narrow screens
+[133/140] src/routes/demo/ui-consistency.e2e.ts:48:2 › /demo/motion/continuity keeps content reachable on narrow screens
+[134/140] src/routes/demo/ui-consistency.e2e.ts:48:2 › /demo/motion-test keeps content reachable on narrow screens
+[135/140] src/routes/docs/runtime-contracts.e2e.ts:6:2 › tooltip exposes its description through focus, Escape and hover (light)
+[136/140] src/routes/docs/runtime-contracts.e2e.ts:6:2 › tooltip exposes its description through focus, Escape and hover (dark)
+[137/140] src/routes/docs/runtime-contracts.e2e.ts:31:1 › lazy Form mounts before and after docs tab navigation without removed-store errors
+[138/140] src/routes/docs/runtime-contracts.e2e.ts:73:2 › 404 recovery preserves status and accessible navigation at /docs/components/audit-missing
+[139/140] src/routes/docs/runtime-contracts.e2e.ts:73:2 › 404 recovery preserves status and accessible navigation at /templates/video-library/title/audit-missing
+[140/140] src/routes/docs/runtime-contracts.e2e.ts:73:2 › 404 recovery preserves status and accessible navigation at /audit-missing
+  6 failed
+    src/lib/site/component-previews.e2e.ts:5:2 › icon-button mounts its lazy preview and example in both layouts
+    src/lib/site/component-previews.e2e.ts:5:2 › input-otp mounts its lazy preview and example in both layouts
+    src/lib/site/component-previews.e2e.ts:5:2 › pdf-viewer mounts its lazy preview and example in both layouts
+    src/lib/site/component-previews.e2e.ts:5:2 › progress mounts its lazy preview and example in both layouts
+    src/lib/site/component-previews.e2e.ts:5:2 › shapes mounts its lazy preview and example in both layouts
+    src/lib/site/component-previews.e2e.ts:5:2 › thumbnail mounts its lazy preview and example in both layouts
+  134 passed (3.6m)

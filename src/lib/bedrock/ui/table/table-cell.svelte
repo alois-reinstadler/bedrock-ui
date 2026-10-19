@@ -6,7 +6,7 @@
 	import TableCell from '#lib/shadcn/ui/table/table-cell.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof TableCell> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof TableCell> = $props();
 </script>
 
-<TableCell {...props} />
+<TableCell bind:ref {...props} />

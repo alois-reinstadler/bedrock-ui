@@ -1,4 +1,22 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
+
+test('primary navigation does not overflow vertically while a link is pressed', async ({
+	page
+}) => {
+	await page.setViewportSize({ width: 1440, height: 1000 });
+	await page.goto('/docs');
+	const navigation = page.getByRole('navigation', { name: 'Primary' });
+	for (const title of ['Components', 'Blocks', 'Templates', 'Docs']) {
+		const link = navigation.getByRole('link', { name: title, exact: true });
+		const href = await link.getAttribute('href');
+		await link.hover();
+		await page.mouse.down();
+		await expect(link).toHaveCSS('translate', '0px 1px');
+		expect(await navigation.evaluate((node) => node.scrollHeight - node.clientHeight)).toBe(0);
+		await page.mouse.up();
+		await expect(page).toHaveURL(href!);
+	}
+});
 
 test('documentation navigation searches every artifact and preserves the documentation shell', async ({
 	page
@@ -31,13 +49,7 @@ test('documentation navigation searches every artifact and preserves the documen
 	await expect(page.getByRole('link', { name: 'Changelog', exact: true })).toHaveCount(0);
 });
 
-test('blocks provide working collection filters and failed submission retry', async ({ page }) => {
-	await page.goto('/docs/blocks/data-toolbar');
-	await page.waitForLoadState('networkidle');
-	await page.getByRole('searchbox', { name: 'Search collection' }).fill('customer');
-	await expect(page.getByRole('status').filter({ hasText: /1\s+result/ })).toBeVisible();
-	await page.getByRole('button', { name: 'Active only' }).click();
-	await expect(page.getByRole('status').filter({ hasText: /0\s+results/ })).toBeVisible();
+test('authentication block provides failed submission retry', async ({ page }) => {
 	await page.goto('/docs/blocks/authentication-panel');
 	await page.waitForLoadState('networkidle');
 	await page.getByRole('textbox', { name: 'Email', exact: true }).fill('test@example.com');

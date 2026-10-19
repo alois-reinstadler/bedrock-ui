@@ -6,7 +6,7 @@
 	import CardHeader from '#lib/shadcn/ui/card/card-header.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CardHeader> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CardHeader> = $props();
 </script>
 
-<CardHeader {...props} />
+<CardHeader bind:ref {...props} />

@@ -9,20 +9,20 @@ describe('ChatReasoning', () => {
 		const view = await render(Fixture);
 		const idle = view.container.querySelector('#idle');
 		const trigger = idle?.querySelector<HTMLButtonElement>('[data-slot="chat-reasoning-trigger"]');
-		// bits-ui keeps closed content mounted but hidden.
-		const content = idle?.querySelector('[data-slot="collapsible-content"]');
+		// Bedrock retains only a closing transition, then unmounts the disclosure.
+		const content = () => idle?.querySelector<HTMLElement>('[data-slot="collapsible-content"]');
 
 		expect(trigger?.textContent).toContain('Reasoning');
 		expect(trigger?.getAttribute('aria-expanded')).toBe('false');
-		expect(content?.hasAttribute('hidden')).toBe(true);
+		expect(content()).toBeNull();
 
 		trigger?.click();
-		await expect.poll(() => content?.hasAttribute('hidden')).toBe(false);
-		expect(content?.textContent).toContain('Chain of thought');
+		await expect.poll(() => content()?.inert).toBe(false);
+		expect(content()?.textContent).toContain('Chain of thought');
 		expect(trigger?.getAttribute('aria-expanded')).toBe('true');
 
 		trigger?.click();
-		await expect.poll(() => content?.hasAttribute('hidden')).toBe(true);
+		await expect.poll(() => content()).toBeNull();
 	});
 
 	it('marks the surface aria-busy while working and shows a spinner', async () => {

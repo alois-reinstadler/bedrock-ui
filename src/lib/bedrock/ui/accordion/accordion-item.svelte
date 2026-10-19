@@ -6,7 +6,7 @@
 	import AccordionItem from '#lib/shadcn/ui/accordion/accordion-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AccordionItem> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AccordionItem> = $props();
 </script>
 
-<AccordionItem {...props} />
+<AccordionItem bind:ref {...props} />

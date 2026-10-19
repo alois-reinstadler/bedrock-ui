@@ -1,5 +1,9 @@
 # Bedrock motion contract
 
+> Compatibility reference. New component and composition work follows the
+> [current motion guide](motion.md) and [2026-09-29 integration record](astra-integration/implementation.md).
+> This document retains the legacy API contract for its remaining consumers.
+
 > **Maturity:** compatibility facade / stabilization candidate  
 > **Scope:** public behavior expected before any hardened Bedrock component depends on motion  
 > **Implementation record:** [`2026-08-29-layout-animations.md`](../superpowers/plans/2026-08-29-layout-animations.md)
@@ -14,7 +18,8 @@ single measured indicators or the custom presence helpers for every disclosure.
 
 The local shared-ID exclusion of navigation remains accurate. Route continuity has a separate
 [evaluated JS/WAAPI prototype](motion-architecture-evaluation.md); it does not extend this group's
-480ms snapshot contract. Component migrations and unified CSS/JS policy generation are not shipped.
+480ms snapshot contract. Current component migrations and unified CSS/JS reduction policy are documented in
+the [motion guide](motion.md); this section describes the older layout API.
 
 ## Purpose
 

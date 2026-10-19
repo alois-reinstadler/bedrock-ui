@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
 
 const templates = ['music-player', 'email-client', 'video-library', 'social-network'];
 

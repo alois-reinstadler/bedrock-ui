@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Alert from '#lib/bedrock/ui/alert';
 	import { Button } from '#lib/bedrock/ui/button';
 	let recovered = $state(false);
@@ -12,7 +13,7 @@
 			surrounding page.
 		</p>
 	</header>
-	<div class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-4 p-5">
 		<div>
 			<p class="font-medium">September activity report</p>
 			<p class="text-sm text-muted-foreground">128 entries · CSV export</p>
@@ -27,5 +28,5 @@
 		><Button variant="outline" onclick={() => (recovered = !recovered)}
 			>{recovered ? 'Simulate another failure' : 'Retry export'}</Button
 		>
-	</div>
+	</Card.Root>
 </section>

@@ -6,7 +6,7 @@
 	import DrawerHeader from '#lib/shadcn/ui/drawer/drawer-header.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DrawerHeader> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DrawerHeader> = $props();
 </script>
 
-<DrawerHeader {...props} />
+<DrawerHeader bind:ref {...props} />

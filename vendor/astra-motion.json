@@ -1,11 +1,22 @@
 {
 	"name": "astra-motion",
 	"version": "0.1.0-rc.3",
-	"archive": "astra-motion-0.1.0-rc.3.tgz",
+	"archive": "astra-motion-0.1.0-rc.3-eb65795058f3.tgz",
 	"sha256": "eb65795058f3d92c51c6ece44fdd100b6aa5bf965a3053c3893db5d5d87ea571",
 	"upstream": "https://github.com/alois-reinstadler/astra-motion",
 	"baseCommit": "2acb6b2267e7f587a3a1a17001d04313699c1711",
 	"sourceState": "Packed from clean upstream checkout using pnpm pack (including prepack).",
+	"snapshotManifestSha256": "bcb02175114193c1899b705041528e29992a146375ed4a71816bcf06d0b3fbb3",
+	"snapshotManifest": "vendor/astra-motion-source-manifest.json",
 	"license": "MIT",
-	"verification": "Upstream prepack runs generated-element validation, svelte-package, engine packaging and strict publint. Bedrock motion:verify checks archive and installed content and public entry bundles."
+	"bundledNotices": [
+		"dist/motion/vendor/framer-motion/LICENSE",
+		"dist/motion/vendor/motion-dom/LICENSE",
+		"dist/motion/vendor/motion-utils/LICENSE"
+	],
+	"buildCommand": "pnpm pack",
+	"nodeVersion": "v24.22.0",
+	"packageManager": "pnpm@11.24.0",
+	"bundledProvenance": "dist/motion/vendor/provenance.json",
+	"qualificationScope": "Local main integration; see docs/bedrock/astra-integration/rc3-upgrade.md."
 }

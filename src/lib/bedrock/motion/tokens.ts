@@ -72,3 +72,34 @@ export const motionEasings = {
 	move,
 	drawer
 } as const;
+
+/** Named behaviors shared by CSS, retained helpers and Astra compositions. Milliseconds. */
+export const motionRecipes = {
+	feedback: motionPresets.press,
+	disclosure: { duration: motionPresets.reveal.duration, easing: motionPresets.enter.easing },
+	relocation: motionPresets.layout,
+	contentReplacement: motionPresets.swap,
+	/** Readable label tween; separate from the physics-based replacement recipe. */
+	labelReplacement: { duration: motionPresets.swap.duration, easing: motionPresets.enter.easing },
+	gestureSettlement: motionPresets.layout
+} as const;
+
+/** Canonical CSS representation; checked against tokens.css by the token suite. */
+export const motionCssTokens = {
+	'--motion-press': `${motionPresets.press.duration}ms`,
+	'--motion-state': `${motionPresets.state.duration}ms`,
+	'--motion-enter': `${motionPresets.enter.duration}ms`,
+	'--motion-exit': `${motionPresets.exit.duration}ms`,
+	'--motion-reveal': `${motionPresets.reveal.duration}ms`,
+	'--motion-overlay': `${motionPresets.overlay.duration}ms`,
+	'--motion-popover-enter': `${motionPresets.popover.enter}ms`,
+	'--motion-popover-exit': `${motionPresets.popover.exit}ms`,
+	'--motion-hint-enter': `${motionPresets.hint.enter}ms`,
+	'--motion-hint-exit': `${motionPresets.hint.exit}ms`,
+	'--motion-layout': `${motionPresets.layout.duration}ms`,
+	'--motion-swap': `${motionPresets.swap.duration}ms`,
+	'--motion-ease-enter': `cubic-bezier(${motionPresets.enter.easing.join(', ')})`,
+	'--motion-ease-exit': `cubic-bezier(${motionPresets.exit.easing.join(', ')})`,
+	'--motion-ease-move': `cubic-bezier(${motionPresets.move.easing.join(', ')})`,
+	'--motion-ease-drawer': `cubic-bezier(${motionPresets.drawer.easing.join(', ')})`
+} as const;

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as InputOTP from '#lib/bedrock/ui/input-otp';
 
 	let value = $state('');
@@ -8,7 +9,7 @@
 	let resent = $state(false);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Confirm a new device</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -53,4 +54,4 @@
 				? 'A new sample code is ready: 123456.'
 				: ''}
 	</p>
-</section>
+</Card.Root>

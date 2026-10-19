@@ -29,6 +29,8 @@
 </script>
 
 <script lang="ts">
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
+	import { pauseDecorative } from '#lib/bedrock/motion/decorative-visibility.js';
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
 
@@ -47,13 +49,22 @@
 		/** Screen-reader text describing the state, e.g. "Aktiv". */
 		label?: string;
 	} = $props();
+	const policy = useMotionPolicy();
+	function attachRef(node: HTMLSpanElement) {
+		ref = node;
+		return () => {
+			if (ref === node) ref = null;
+		};
+	}
 </script>
 
 <span
-	bind:this={ref}
+	{@attach attachRef}
 	data-slot="status-dot"
+	{@attach pauseDecorative}
 	data-status={status}
-	class={cn(statusDotVariants({ status, size, pulse }), className)}
+	style:animation-play-state="var(--bedrock-decorative-play-state, paused)"
+	class={cn(statusDotVariants({ status, size, pulse: pulse && !policy.reduced }), className)}
 	aria-hidden={label ? undefined : 'true'}
 	role={label ? 'img' : undefined}
 	aria-label={label}

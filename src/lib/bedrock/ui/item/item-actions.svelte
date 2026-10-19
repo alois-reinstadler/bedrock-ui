@@ -6,7 +6,7 @@
 	import ItemActions from '#lib/shadcn/ui/item/item-actions.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ItemActions> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ItemActions> = $props();
 </script>
 
-<ItemActions {...props} />
+<ItemActions bind:ref {...props} />

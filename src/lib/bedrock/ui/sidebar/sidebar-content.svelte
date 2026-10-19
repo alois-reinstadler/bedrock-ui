@@ -6,7 +6,7 @@
 	import SidebarContent from '#lib/shadcn/ui/sidebar/sidebar-content.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SidebarContent> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SidebarContent> = $props();
 </script>
 
-<SidebarContent {...props} />
+<SidebarContent bind:ref {...props} />

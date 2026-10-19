@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Combobox } from '#lib/bedrock/ui/combobox';
 	import { Button } from '#lib/bedrock/ui/button';
 	const items = [
@@ -18,7 +19,7 @@
 			Search a growing team list, then confirm the assignment in a separate action.
 		</p>
 	</header>
-	<div class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-4 p-5">
 		<p class="font-medium">Review: onboarding prototype</p>
 		<p class="text-sm text-muted-foreground">Choose one teammate who will coordinate feedback.</p>
 		<Combobox {items} bind:value placeholder="Find a reviewer…" /><Button
@@ -29,5 +30,5 @@
 		<p role="status" class="text-sm">
 			{assigned ? `Review assigned to ${assigned}.` : 'No reviewer assigned yet.'}
 		</p>
-	</div>
+	</Card.Root>
 </section>

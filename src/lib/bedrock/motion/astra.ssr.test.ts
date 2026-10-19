@@ -12,26 +12,22 @@ describe('Astra opt-in SSR contract', () => {
 		expect(body).toContain('--consumer-token: 7');
 		expect(body).toContain('padding: 13px');
 		expect(body).toMatch(/opacity:\s*0\.4/);
-		expect(body).toMatch(/transform:[^";]*translateY\(12px\)/);
+		expect(body).toMatch(/transform:[^;"]*translateY\(12px\)/);
 	});
 
-	it('preserves native link semantics on the CSS button', () => {
+	it('preserves native link semantics on the adapted button', () => {
 		const { body } = render(Fixture, { props: { href: '#destination' } });
 		expect(body).toContain('<a');
 		expect(body).toContain('href="#destination"');
 		expect(body).not.toContain('<button');
 	});
 
-	it('keeps CSS, engine and existing Bedrock APIs independently importable on the server', async () => {
-		const [css, engine, legacy] = await Promise.all([
-			import('./css.js'),
-			import('./engine.js'),
-			import('./index.js')
-		]);
-		for (const name of ['CssButton', 'CssPanel', 'createMotion'] as const)
-			expect(css[name]).toBeTypeOf('function');
-		for (const name of ['Motion', 'MotionConfig', 'createMotion', 'Presence'] as const)
+	it('keeps engine and existing Bedrock APIs independently importable on the server', async () => {
+		const [engine, legacy] = await Promise.all([import('./engine.js'), import('./index.js')]);
+		for (const name of ['MotionConfig', 'AnimatePresence'] as const)
 			expect(engine[name]).toBeTypeOf('function');
+		expect(engine.motion.bind).toBeTypeOf('function');
+		expect('createMotion' in engine).toBe(false);
 		for (const name of ['layout', 'reveal', 'appear', 'vanish', 'drawer'] as const)
 			expect(legacy[name]).toBeTypeOf('function');
 	});

@@ -6,7 +6,7 @@
 	import SidebarInset from '#lib/shadcn/ui/sidebar/sidebar-inset.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SidebarInset> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SidebarInset> = $props();
 </script>
 
-<SidebarInset {...props} />
+<SidebarInset bind:ref {...props} />

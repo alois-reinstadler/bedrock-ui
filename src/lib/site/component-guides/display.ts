@@ -1,6 +1,98 @@
 import type { ComponentGuides } from './types';
 
 export const displayGuides = {
+	emoji: {
+		purpose:
+			'Emoji renders one symbol or a whole string with Apple emoji artwork. The original Unicode remains selectable and copies as ordinary text.',
+		useWhen: [
+			'Keep reactions and inline emoji visually consistent across devices.',
+			'Display text that users can select, copy, and paste with complete emoji sequences.'
+		],
+		avoidWhen: [
+			'The public Apple artwork is not licensed for commercial usage; review its licensing before shipping.',
+			'This component renders only its value. It is not a picker or a global DOM replacement.'
+		],
+		anatomy: [
+			{
+				name: 'Emoji',
+				description:
+					'Pass one emoji or plain text to value. Optional size changes the font size; label names the content and decorative hides redundant content from assistive technology.',
+				required: true
+			}
+		],
+		behavior: [
+			'Use <Emoji value="😊" /> or <Emoji value="Ready to ship 🚀" />. Both use the same component and Apple artwork by default.',
+			'The original Unicode stays in text nodes. Artwork is painted with CSS pseudo-elements, with no image nodes in the selectable content. Native dragging is cancelled to prevent selection ghosts. Normal browser selection and copying preserve text, including skin tones, flags, keycaps, and joined sequences. There is no clipboard override.',
+			'Plain text remains escaped. CSS controls whitespace display; use class="whitespace-pre-wrap" to retain visible newlines and repeated spaces.',
+			'Unknown sequences and failed image requests remain readable as native Unicode. Changing a failed emoji starts a new image request.',
+			'size accepts CSS lengths or numeric pixels and sizes all content. It inherits the surrounding font size when omitted. class, style, native attributes, and bind:ref target the inline span.',
+			'A single emoji has an image role named by its Unicode or label. Sentences preserve ordinary text semantics unless label is supplied. decorative hides the entire value; use it when surrounding text or a parent control already names the content.',
+			'Images are fetched on demand from the pinned emoji-datasource-apple@16.0.0 set on cdn.jsdelivr.net. Allow that origin in img-src. Newer unsupported emoji remain native; without Intl.Segmenter the component renders plain text.',
+			'Apple artwork remains © Apple Inc. The metadata MIT license does not grant commercial usage rights to the artwork. Source and licensing: https://github.com/iamcal/emoji-data#image-sources.'
+		],
+		examplePlan: [
+			{
+				title: 'Inline text and reactions',
+				demonstrates:
+					'One component for a message, labelled reaction buttons, and individual symbols.',
+				priority: 'primary'
+			},
+			{
+				title: 'Select, copy, paste',
+				demonstrates:
+					'Select part or all of a message, including complex emoji, and paste the original Unicode into a text field.',
+				priority: 'secondary'
+			},
+			{
+				title: 'Sizes and fallback',
+				demonstrates:
+					'16–64px symbols, inherited inline sizing, and native Unicode when an image fails.',
+				priority: 'edge-case'
+			}
+		]
+	},
+	image: {
+		purpose:
+			'Image reserves a stable media frame, shows a Skeleton while the browser loads and decodes the source, and fades in the finished image. Missing or failed sources show a fallback while retaining the image’s accessible name.',
+		useWhen: [
+			'Show editorial, product, or gallery media without shifting nearby content during loading.',
+			'Provide a consistent loading and failure treatment for local or remote images.'
+		],
+		avoidWhen: [
+			'Use Avatar for people and identity fallbacks, or Thumbnail for compact file previews.',
+			'Use a native img when no reserved frame, loading treatment, or JavaScript is needed.'
+		],
+		anatomy: [
+			{
+				name: 'Image',
+				description:
+					'Single component, also exported as Root, with a required alt and optional fallback snippet. ImageProps describes its native image attributes and frame options.',
+				required: true
+			}
+		],
+		behavior: [
+			'Provide width and height to reserve the source ratio, or aspectRatio for a cropped frame. The default is 16 / 9; the frame fills its container and uses object-cover.',
+			'class and style target the frame. imageClass targets the native img; use object-contain when the full image must remain visible. Native attributes, handlers, attachments, and bind:ref target img.',
+			'The skeleton remains until loading and decoding finish. Cached images are checked on attachment, and replaced sources cannot be settled by stale requests.',
+			'minimumLoadingDuration optionally holds the skeleton for a minimum time per source, measured from attachment. It defaults to 0; these demos use 1200 milliseconds to make the loading treatment visible.',
+			'Changing src, srcset, sizes, crossorigin, or referrerpolicy creates a fresh image and loading cycle. bind:ref follows that native element. Native loading defaults to eager; opt into loading="lazy" for offscreen content.',
+			'An absent or failed source shows the non-interactive fallback snippet or “Image unavailable.” The frame exposes data-state="loading", "loaded", or "error" and aria-busy while pending.',
+			'Use meaningful alt text or alt="" for decorative media. The skeleton is decorative and keeps pulsing under reduced motion; only the image fade is disabled. Loading state requires JavaScript.'
+		],
+		examplePlan: [
+			{
+				title: 'Stable image loading',
+				demonstrates:
+					'A local landscape with intrinsic dimensions, lazy loading, a caption, and a replayable 1.2-second loading simulation.',
+				priority: 'primary'
+			},
+			{
+				title: 'Missing image fallback',
+				demonstrates: 'A custom placeholder that preserves the image’s alternative text.',
+				priority: 'edge-case'
+			}
+		]
+	},
 	alert: {
 		purpose:
 			'Alert presents important feedback inside the page section where it matters and exposes it as an assertive alert. It pairs a short heading with supporting detail and can reserve space for a related action.',
@@ -406,7 +498,7 @@ export const displayGuides = {
 			{
 				name: 'Chat.MessageActions',
 				description:
-					'Optional copy, retry, edit, and positive/negative feedback controls. Bind feedback to persist selection; clicking the selected thumb clears it. onFeedbackChange includes null for undo; legacy onFeedback fires only for a selected rating. Copy failures show feedback. Also exported as ChatMessageActions.'
+					'Optional copy, retry, edit, and positive/negative feedback controls. Bind feedback to persist selection; clicking the selected thumb clears it. onFeedbackChange includes null for undo; legacy onFeedback fires only for a selected rating. Copy, retry, and feedback callbacks support promises, lock duplicate requests, and expose recoverable errors. A rating changes only after callbacks succeed. Also exported as ChatMessageActions.'
 			},
 			{
 				name: 'Chat.MessageStatus',
@@ -448,9 +540,49 @@ export const displayGuides = {
 					'Image, PDF, or file chip with optional size, preview, and removal; also exported as ChatAttachment. ChatAttachmentType types its kind.'
 			},
 			{
+				name: 'Chat.ComposerFile',
+				description:
+					'The same app-owned File/upload item used inside Composer, exported for custom composer layouts. Reuses the generic Attachment family and owns only preview URL cleanup and presentation.'
+			},
+			{
+				name: 'Chat.ActivityItem',
+				description:
+					'Canonical individual tool, task, or reasoning activity row with bindable open state, details or a custom child snippet, progress, and an error. Activity and ToolCalls reuse this implementation. ChatActivityStatus and ChatActivityStatusLabels provide one lifecycle and localization contract.'
+			},
+			{
+				name: 'Chat.Activity',
+				description:
+					'Mixed task/tool/reasoning timeline or chip layout using ActivityItem. Supply stable step ids; empty rows are text rather than empty disclosure controls.'
+			},
+			{
+				name: 'Chat.Citation / Chat.SourceCard / Chat.Sources',
+				description:
+					'One ChatSource record feeds an inline source-preview popover, a standalone source card, or a collapsible source collection. Citation and Sources reuse SourceCard. Source URLs are validated; use the generic Citation for a direct numbered link instead of a preview.'
+			},
+			{
+				name: 'Chat.Approval / Chat.Questions / Chat.Recommendation / Chat.ChangeReview',
+				description:
+					'Optional decision primitives with controlled choices and async callbacks. These remain chat primitives; the application supplies questions, recommendations, changes, and persistence.'
+			},
+			{
+				name: 'Chat.SelectionActions',
+				description:
+					'Optional actions for selected message text; callbacks belong to the application.'
+			},
+			{
+				name: 'Chat.Waveform',
+				description:
+					'Smooth, layered audio-level curves with visual gain for quiet speech. Supply a raw RMS level (0–1) or an app-owned AnalyserNode. sensitivity defaults to 2.2 and noiseFloor to 0.003; neither changes recorded audio. The meter reports the original input level. Also exported as ChatWaveform.'
+			},
+			{
+				name: 'Chat.Voice',
+				description:
+					'Standalone voice controls with Waveform while recording, also available through Composer. Pass level or analyser and optional sensitivity through the voice options. The app owns microphone permissions, audio capture, transcription, and transport.'
+			},
+			{
 				name: 'Chat.ToolCalls',
 				description:
-					'Inline single-call or collapsible multi-call activity with bindable expanded state; also exported as ChatToolCalls. ChatToolCall, ChatToolCallStatus, and ChatToolCallsLabels define its data.'
+					'Compact ActivityItem rows for a single tool call or a collapsible tool-call list with bindable expanded state; also exported as ChatToolCalls. ChatToolCall, ChatToolCallStatus, and ChatToolCallsLabels define its data.'
 			},
 			{
 				name: 'Chat.Reasoning',
@@ -469,11 +601,15 @@ export const displayGuides = {
 			}
 		],
 		behavior: [
+			'Use Root, MessageList, Message, MessageBubble, and Composer for a ready-to-go chat. For custom messenger layouts, use Message plus Bubble inside the same MessageList; Chat.Message already delegates to Message. Add status, actions, sources, activity, and decisions independently.',
+			'Chat.MessageBubble is a compact role-aware surface with grouped tails; generic Bubble offers explicit alignment, seven variants, and reactions. Choose one surface per message. Chat.Attachment is a ready-made sent-file preview; ComposerFile handles local File/upload state; generic Attachment is the custom layout foundation.',
+			'ActivityItem is the shared lifecycle/disclosure primitive. Activity arranges mixed steps, ToolCalls groups compact tool rows, and Reasoning accepts rich explanatory prose. Use one presentation for each event rather than rendering the same event in both lists.',
 			'MessageList pins growth only within 32px of the bottom; after the reader scrolls up it preserves position and offers a scroll-down/new-messages button. Set hasMore and onLoadMore to enable history pagination: prepend keyed messages before resolving the callback. The visible message stays anchored and failures leave existing history intact.',
 			'Composer submits trimmed text and selected files with Enter, inserts a newline with Shift+Enter, ignores composing Enter events, clears after a successful send, retains drafts on rejection, and swaps Send for Stop while busy.',
 			'Enable attachments for a file picker and removable queue, with multiple selection by default. Picker, paste, and drop share file type, size, and count limits. Legacy onFiles intake is also supported. The app uploads files through onSend.',
 			'Composer accepts app-owned uploads keyed by File identity, with queued, uploading, processing, complete, error, or cancelled status and optional 0–100 progress. onCancelUpload and onRetryUpload delegate transport control to the app. Uploading, processing, failed, or cancelled queued files prevent sending until completed, retried, or removed. Plain attachments require no upload state.',
 			'Image and PDF attachments with src open Lightbox; ordinary files remain non-interactive, and removal appears only with onRemove.',
+			'Waveform is an expressive level visualization, not a literal audio trace. AnalyserNode input takes precedence over level. It is silent below noiseFloor, stops rendering while inactive or hidden, and removes travelling motion for reduced-motion preferences. The app closes AudioContext and stops microphone tracks on cancel, finish, and unmount. The Audio waveform example records locally with MediaRecorder and provides playback and download.',
 			'MessageActions renders nothing without handlers and gives copy temporary Copied feedback. Tool and reasoning disclosures are keyboard-operable Collapsibles.',
 			'streamText reveals the full target during SSR, reduced motion, or instant mode and reports done after catching a growing target.'
 		],
@@ -915,23 +1051,33 @@ export const displayGuides = {
 				name: 'Skeleton.Root',
 				description:
 					'Single non-content block sized and shaped through class/native div attributes; also Skeleton.'
+			},
+			{
+				name: 'Skeleton.Group',
+				description:
+					'Optional layout wrapper, also SkeletonGroup. Shares one shimmer timeline and coordinate system across its descendant placeholders.'
 			}
 		],
 		behavior: [
 			'Skeleton has no status or label; mark its owning region busy and supply concise status text when needed.',
-			'It renders no children and pulses continuously using the current animation utility.',
+			'Root renders no children. variant selects pulse, shimmer, or static. A standalone Skeleton defaults to pulse; inside a SkeletonGroup it inherits the group variant, which defaults to shimmer. The former wave treatment is now shimmer.',
+			'SkeletonGroup moves one diagonal sheen through the layout. Each skeleton reveals the matching portion of that shared gradient, clipped to its own shape; gaps and ordinary content remain clear.',
+			'Group duration sets the shimmer cycle in milliseconds (default 2000); direction="ltr" or "rtl" controls its physical travel. These settings apply to the shared shimmer only. Individual pulse placeholders retain their two-second cadence.',
+			'Animation stays active under reduced motion. Use variant="static" on a group or individual placeholder for no animation; explicit child variants override the group. Nested groups own their own settings and sweep.',
+			'Group alignment updates on resizing, descendant layout mutations, and scrolling. It requires JavaScript and renders stationary placeholders before hydration. Continuously animated child positions and individual rotation or scaling are outside this layout contract.',
 			'Match final dimensions closely enough to avoid a second reflow.'
 		],
 		examplePlan: [
 			{
 				title: 'Loading record row',
 				demonstrates:
-					'A busy labelled region whose avatar and text skeletons match the Item row replacing them.',
+					'A busy region whose avatar and text placeholders share one shimmer, with live variant, speed, and direction controls.',
 				priority: 'primary'
 			},
 			{
-				title: 'Common content shapes',
-				demonstrates: 'Avatar, title, paragraph, and media aspect-ratio placeholders.',
+				title: 'Animation variants',
+				demonstrates:
+					'Pulse, standalone shimmer, and static, followed by a shared shimmer crossing differently sized media, avatar, and text placeholders.',
 				priority: 'secondary'
 			},
 			{

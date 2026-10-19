@@ -6,7 +6,7 @@
 	import DialogHeader from '#lib/shadcn/ui/dialog/dialog-header.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DialogHeader> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DialogHeader> = $props();
 </script>
 
-<DialogHeader {...props} />
+<DialogHeader bind:ref {...props} />

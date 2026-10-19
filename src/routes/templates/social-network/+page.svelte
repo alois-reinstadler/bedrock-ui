@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import Composer from '#lib/templates/social-network/Composer.svelte';
 	import Post from '#lib/templates/social-network/Post.svelte';
 	import { useSocial } from '#lib/templates/social-network/state.svelte.js';
@@ -19,10 +20,15 @@
 		<span><i class="live-dot"></i>Your daily scroll</span>
 	</div>
 	<div class="feed-tabs" aria-label="Timeline filter">
-		{#each ['For you', 'Following'] as item (item)}<button
-				class:active={tab === item}
+		{#each ['For you', 'Following'] as item (item)}<Button
+				variant="ghost"
+				type="button"
+				class={[
+					'control-templates-social-network-page h-auto whitespace-normal',
+					{ active: tab === item }
+				]}
 				aria-pressed={tab === item}
-				onclick={() => (tab = item)}>{item}</button
+				onclick={() => (tab = item)}>{item}</Button
 			>{/each}
 	</div>
 </header>

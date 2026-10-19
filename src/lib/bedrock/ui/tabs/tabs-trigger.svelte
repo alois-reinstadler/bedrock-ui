@@ -6,7 +6,7 @@
 	import TabsTrigger from '#lib/shadcn/ui/tabs/tabs-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof TabsTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof TabsTrigger> = $props();
 </script>
 
-<TabsTrigger {...props} />
+<TabsTrigger bind:ref {...props} />

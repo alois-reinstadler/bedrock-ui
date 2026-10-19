@@ -6,7 +6,7 @@
 	import FormFieldErrors from '#lib/shadcn/ui/form/form-field-errors.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FormFieldErrors> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FormFieldErrors> = $props();
 </script>
 
-<FormFieldErrors {...props} />
+<FormFieldErrors bind:ref {...props} />

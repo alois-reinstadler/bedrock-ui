@@ -1,8 +1,9 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { List, ListItem } from '#lib/bedrock/ui/list';
 </script>
 
-<section class="w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full max-w-2xl gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Workspace setup guide</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -27,4 +28,4 @@
 			>
 		</div>
 	</div>
-</section>
+</Card.Root>

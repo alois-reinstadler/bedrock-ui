@@ -1,0 +1,9 @@
+$ NODE_ENV=test vitest --run --project server src/lib/bedrock/motion/policy.test.ts
+
+ RUN  v4.1.11 /home/node/repos/bedrock-ui
+
+
+ Test Files  1 passed (1)
+      Tests  15 passed (15)
+   Start at  00:19:18
+   Duration  659ms (transform 406ms, setup 0ms, import 115ms, tests 400ms, environment 0ms)

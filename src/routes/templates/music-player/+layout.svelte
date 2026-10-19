@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { Slider } from '#lib/bedrock/ui/slider';
+	import { IconButton } from '#lib/bedrock/ui/icon-button';
+	import { Button } from '#lib/bedrock/ui/button';
 	import { page } from '$app/state';
 	import { browser } from '$app/env';
 	import { onMount } from 'svelte';
@@ -19,16 +22,31 @@
 	import Shuffle from '@lucide/svelte/icons/shuffle';
 	import Repeat from '@lucide/svelte/icons/repeat-2';
 	import Volume from '@lucide/svelte/icons/volume-2';
+	import VolumeLow from '@lucide/svelte/icons/volume-1';
+	import VolumeMuted from '@lucide/svelte/icons/volume-x';
 	import X from '@lucide/svelte/icons/x';
+	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
+	import Mic from '@lucide/svelte/icons/mic-2';
+	import Visualizer from '@lucide/svelte/icons/orbit';
 	import type { Snippet } from 'svelte';
 	let { children }: { children: Snippet } = $props();
 	const player = providePlayer();
+	const VolumeIcon = $derived(
+		player.volume === 0 ? VolumeMuted : player.volume < 0.5 ? VolumeLow : Volume
+	);
 	let queueOpen = $state(false);
+	let seekPreview = $state<number | null>(null);
 	let ready = $state(false);
 	onMount(() => {
 		ready = true;
 	});
 	const base = '/templates/music-player';
+	const listeningScreen = $derived(
+		page.url.pathname === `${base}/lyrics` || page.url.pathname === `${base}/visualizer`
+	);
+	const headerCollection = $derived(
+		collections.find((collection) => page.url.pathname === `${base}/album/${collection.id}`)
+	);
 	const navigation = [
 		{ path: '', label: 'Listen now', icon: Icon },
 		{ path: '/discover', label: 'Discover', icon: Compass },
@@ -79,122 +97,222 @@
 		</div>
 	</aside>
 	<div class="workspace">
-		<header class="topbar">
-			<form action={`${base}/discover`}>
-				<Search size={18} /><Input
-					name="q"
-					aria-label="Search music"
-					placeholder="Search songs, artists, genres"
-					value={browser ? (page.url.searchParams.get('q') ?? '') : ''}
+		<header class="topbar" class:album-topbar={!!headerCollection} data-album-topbar>
+			{#if listeningScreen}
+				<IconButton
+					icon={ArrowLeft}
+					label="Back to collection"
+					href={`${base}/album/${player.current.collection}`}
 				/>
-			</form>
-			<span class="top-note">A soundtrack for your every day.</span>
+				<strong class="listening-title"
+					>{page.url.pathname.endsWith('/lyrics') ? 'Lyrics' : 'Visualizer'}</strong
+				>
+				<IconButton icon={Search} label="Search music" href={`${base}/discover`} />
+			{:else if headerCollection}
+				<IconButton icon={ArrowLeft} label="Back to music" href={base} />
+				<div class="album-topbar-content">
+					<div class="compact-album" data-album-compact inert aria-hidden="true">
+						<Button
+							size="icon"
+							class="compact-play rounded-full"
+							aria-label="Play collection from header"
+							onclick={() => {
+								const items = tracks.filter((track) =>
+									headerCollection?.trackIds.includes(track.id)
+								);
+								if (items.length) player.play(items[0], items);
+							}}><Play size={16} fill="currentColor" /></Button
+						>
+						<img src={headerCollection.artwork} alt="" />
+						<strong>{headerCollection.title}</strong>
+					</div>
+				</div>
+				<IconButton icon={Search} label="Search music" href={`${base}/discover`} />
+			{:else}
+				<form action={`${base}/discover`}>
+					<Search size={18} /><Input
+						name="q"
+						aria-label="Search music"
+						placeholder="Search songs, artists, genres"
+						value={browser ? (page.url.searchParams.get('q') ?? '') : ''}
+					/>
+				</form>
+				<span class="top-note">A soundtrack for your every day.</span>
+			{/if}
 		</header>
-		<main id="music-main">{@render children()}</main>
+		<main id="music-main" class:listening-screen={listeningScreen}>{@render children()}</main>
 	</div>
 	{#if queueOpen}<aside class="queue-panel" aria-label="Play queue">
 			<div class="section-heading">
 				<h2>Up next</h2>
-				<button class="icon-button" onclick={() => (queueOpen = false)} aria-label="Close queue"
-					><X size={20} /></button
-				>
+				<IconButton
+					type="button"
+					icon={X}
+					label="Close queue"
+					class={['control-templates-music-player-layout', 'icon-button']}
+					onclick={() => (queueOpen = false)}
+				/>
 			</div>
-			<label class="queue-volume"
-				>Volume<input
-					type="range"
-					min="0"
-					max="1"
-					step="0.01"
+			<div class="queue-volume">
+				Volume<Slider
+					type="single"
+					min={0}
+					max={1}
+					step={0.01}
 					value={player.volume}
-					oninput={(e) => player.setVolume(Number(e.currentTarget.value))}
+					onValueChange={(value) => player.setVolume(value)}
 					aria-label="Queue volume"
 					aria-valuetext={`${Math.round(player.volume * 100)}%`}
-				/></label
-			>
+				/>
+			</div>
 			<p class="eyebrow">PLAYING FROM YOUR QUEUE</p>
 			{#each player.queue as id, index (`${id}-${index}`)}{@const track = tracks.find(
 					(t) => t.id === id
-				)!}<button
-					class="queue-track"
-					class:current={player.current.id === id}
+				)!}<Button
+					variant="ghost"
+					type="button"
+					class={[
+						'control-templates-music-player-layout h-auto whitespace-normal',
+						'queue-track min-w-0 justify-start whitespace-normal',
+						{ current: player.current.id === id }
+					]}
 					onclick={() => player.play(track)}
 					><img src={track.artwork} alt="" /><span
 						><strong>{track.title}</strong><small>{track.artist}</small></span
-					>{#if player.current.id === id}<Icon size={18} />{/if}</button
+					>{#if player.current.id === id}<Icon size={18} />{/if}</Button
 				>{/each}
 		</aside>{/if}
 	<footer class="player" data-music-player>
 		<div class="playing">
-			<a href={`${base}/album/${player.current.collection}`}
+			<a
+				href={`${base}/album/${player.current.collection}`}
+				aria-label={`Open ${collections.find((collection) => collection.id === player.current.collection)?.title ?? player.current.collection} collection`}
 				><img src={player.current.artwork} alt="" /></a
 			><span><strong>{player.current.title}</strong><small>{player.current.artist}</small></span
-			><button
-				class="icon-button"
-				class:selected={player.liked.includes(player.current.id)}
-				aria-label="Like current track"
+			><IconButton
+				type="button"
+				icon={Heart}
+				label="Like current track"
+				class={[
+					'control-templates-music-player-layout',
+					'icon-button',
+					{ selected: player.liked.includes(player.current.id) }
+				]}
 				aria-pressed={player.liked.includes(player.current.id)}
-				onclick={() => player.like(player.current.id)}><Heart size={18} /></button
-			>
+				onclick={() => player.like(player.current.id)}
+			/>
 		</div>
 		<div class="transport">
-			<button
-				class="mobile-queue icon-button"
-				aria-label="Open queue"
-				onclick={() => (queueOpen = !queueOpen)}><Queue size={18} /></button
-			>
+			<IconButton
+				type="button"
+				icon={Queue}
+				label="Open queue"
+				class={['control-templates-music-player-layout', 'mobile-queue icon-button']}
+				onclick={() => (queueOpen = !queueOpen)}
+			/>
 			<div class="transport-buttons">
-				<button
-					class="icon-button secondary-control"
-					class:selected={player.shuffle}
-					aria-label="Shuffle"
+				<IconButton
+					type="button"
+					icon={Shuffle}
+					label="Shuffle"
+					class={[
+						'control-templates-music-player-layout',
+						'icon-button secondary-control',
+						{ selected: player.shuffle }
+					]}
 					aria-pressed={player.shuffle}
-					onclick={() => (player.shuffle = !player.shuffle)}><Shuffle size={17} /></button
-				><button class="icon-button" aria-label="Previous track" onclick={() => player.next(-1)}
-					><Previous size={19} /></button
-				><button
-					class="play-button"
+					onclick={() => (player.shuffle = !player.shuffle)}
+				/><IconButton
+					type="button"
+					icon={Previous}
+					label="Previous track"
+					class={['control-templates-music-player-layout', 'icon-button']}
+					onclick={() => player.next(-1)}
+				/><Button
+					variant="ghost"
+					type="button"
+					class={['control-templates-music-player-layout h-auto whitespace-normal', 'play-button']}
 					aria-label={player.playing ? 'Pause playback' : 'Play current track'}
 					onclick={() => player.toggle()}
 					>{#if player.playing}<Pause size={19} fill="currentColor" />{:else}<Play
 							size={19}
 							fill="currentColor"
-						/>{/if}</button
-				><button class="icon-button" aria-label="Next track" onclick={() => player.next()}
-					><Next size={19} /></button
-				><button
-					class="icon-button secondary-control"
-					class:selected={player.repeat}
-					aria-label="Repeat track"
+						/>{/if}</Button
+				><IconButton
+					type="button"
+					icon={Next}
+					label="Next track"
+					class={['control-templates-music-player-layout', 'icon-button']}
+					onclick={() => player.next()}
+				/><IconButton
+					type="button"
+					icon={Repeat}
+					label="Repeat track"
+					class={[
+						'control-templates-music-player-layout',
+						'icon-button secondary-control',
+						{ selected: player.repeat }
+					]}
 					aria-pressed={player.repeat}
-					onclick={() => (player.repeat = !player.repeat)}><Repeat size={17} /></button
-				>
+					onclick={() => (player.repeat = !player.repeat)}
+				/>
 			</div>
 			<div class="timeline">
-				<time>{formatTime(player.elapsed)}</time><input
-					type="range"
-					min="0"
+				<time>{formatTime(player.elapsed)}</time><Slider
+					type="single"
+					min={0}
 					max={player.duration || player.current.duration}
-					step="0.1"
-					value={player.elapsed}
-					oninput={(e) => player.seek(Number(e.currentTarget.value))}
+					step={0.1}
+					value={seekPreview ?? Math.round(player.elapsed * 10) / 10}
+					onpointerdowncapture={() => (seekPreview = Math.round(player.elapsed * 10) / 10)}
+					onpointercancel={() => (seekPreview = null)}
+					onValueChange={(value) => {
+						if (seekPreview !== null) seekPreview = value;
+					}}
+					onValueCommit={(value) => {
+						// Slider also normalizes playback updates; only a user commit may seek audio.
+						player.seek(value);
+						seekPreview = null;
+					}}
 					aria-label="Seek"
 				/><time>{formatTime(player.duration || player.current.duration)}</time>
 			</div>
 		</div>
 		<div class="player-tools">
-			<button
-				class="icon-button"
-				class:selected={queueOpen}
+			<IconButton
+				icon={Mic}
+				label="Lyrics"
+				tooltip="Lyrics"
+				href={`${base}/lyrics`}
+				aria-current={page.url.pathname === `${base}/lyrics` ? 'page' : undefined}
+				class={['view-control', { selected: page.url.pathname === `${base}/lyrics` }]}
+			/>
+			<IconButton
+				icon={Visualizer}
+				label="Visualizer"
+				tooltip="Visualizer"
+				href={`${base}/visualizer`}
+				aria-current={page.url.pathname === `${base}/visualizer` ? 'page' : undefined}
+				class={['view-control', { selected: page.url.pathname === `${base}/visualizer` }]}
+			/>
+			<IconButton
+				type="button"
+				icon={Queue}
+				label="Toggle queue"
+				class={[
+					'control-templates-music-player-layout',
+					'icon-button desktop-queue',
+					{ selected: queueOpen }
+				]}
 				aria-expanded={queueOpen}
-				aria-label="Toggle queue"
-				onclick={() => (queueOpen = !queueOpen)}><Queue size={20} /></button
-			><Volume size={18} /><input
-				type="range"
-				min="0"
-				max="1"
-				step="0.01"
+				onclick={() => (queueOpen = !queueOpen)}
+			/><VolumeIcon size={18} aria-hidden="true" /><Slider
+				type="single"
+				min={0}
+				max={1}
+				step={0.01}
 				value={player.volume}
-				oninput={(e) => player.setVolume(Number(e.currentTarget.value))}
+				onValueChange={(value) => player.setVolume(value)}
 				aria-label="Volume"
 				aria-valuetext={`${Math.round(player.volume * 100)}%`}
 			/>
@@ -204,7 +322,19 @@
 </div>
 
 <style>
-	.mobile-queue {
+	main.listening-screen {
+		padding: 0;
+		overflow: hidden;
+	}
+	.listening-title {
+		flex: 1;
+		font-size: 15px;
+	}
+	:global(.view-control.selected) {
+		color: #c46b78;
+		background: var(--muted);
+	}
+	:global(.control-templates-music-player-layout.mobile-queue) {
 		display: none !important;
 	}
 	.queue-volume {
@@ -214,9 +344,8 @@
 		font-size: 11px;
 		margin: 10px 0 20px;
 	}
-	.queue-volume input {
+	.queue-volume :global([data-slot='slider']) {
 		width: 100%;
-		accent-color: var(--foreground);
 	}
 	.drift {
 		--music-muted: var(--muted-foreground);
@@ -261,7 +390,7 @@
 		align-items: center;
 		gap: 13px;
 		padding: 12px;
-		border-radius: 8px;
+		border-radius: var(--radius-lg);
 		font-size: 13px;
 		color: var(--music-muted);
 	}
@@ -345,6 +474,66 @@
 		padding: 16px 36px;
 		border-bottom: 1px solid var(--border);
 	}
+	.album-topbar {
+		position: relative;
+		z-index: 4;
+		gap: 16px;
+		background: var(--background);
+	}
+	.album-topbar-content {
+		position: relative;
+		flex: 1;
+		min-width: 0;
+		height: 40px;
+	}
+	.compact-album {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		height: 40px;
+		min-width: 0;
+		opacity: var(--album-reveal, 0);
+		transform: translate3d(0, calc((1 - var(--album-reveal, 0)) * 14px), 0)
+			scale(calc(0.96 + var(--album-reveal, 0) * 0.04));
+		transform-origin: left center;
+		will-change: transform, opacity;
+	}
+	.compact-album img {
+		width: 34px;
+		height: 34px;
+		border-radius: 4px;
+		object-fit: cover;
+	}
+	.compact-album strong {
+		font-size: 18px;
+		letter-spacing: -0.4px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	@media (max-width: 680px) {
+		.album-topbar {
+			gap: 10px;
+		}
+		.compact-album {
+			gap: 9px;
+		}
+		.compact-album img {
+			display: none;
+		}
+		.compact-album strong {
+			font-size: 15px;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.compact-album {
+			transform: none;
+		}
+	}
+	:global([data-bedrock-motion='reduced']) .compact-album {
+		transform: none;
+	}
+
 	.topbar form {
 		display: flex;
 		align-items: center;
@@ -367,8 +556,11 @@
 		white-space: nowrap;
 	}
 	main {
+		--music-gutter: 38px;
+		--music-top-padding: 34px;
 		overflow: auto;
-		padding: 34px 38px 64px;
+		padding: var(--music-top-padding) var(--music-gutter) 64px;
+		scroll-padding-top: 88px;
 		flex: 1;
 		min-height: 0;
 	}
@@ -427,25 +619,21 @@
 		color: var(--music-muted);
 		width: 27px;
 	}
-	.timeline input {
+	.timeline :global([data-slot='slider']) {
 		width: 100%;
-		height: 3px;
-		accent-color: var(--foreground);
 	}
 	.player-tools {
 		display: flex;
 		justify-content: end;
 		align-items: center;
-		gap: 14px;
+		gap: 6px;
 		color: var(--music-muted);
 	}
-	.player-tools input {
+	.player-tools :global([data-slot='slider']) {
 		max-width: 85px;
 		width: 100%;
-		height: 3px;
-		accent-color: var(--foreground);
 	}
-	.play-button {
+	:global(.control-templates-music-player-layout.play-button) {
 		border-radius: 50%;
 		background: var(--foreground);
 		color: var(--background);
@@ -467,7 +655,7 @@
 		box-shadow: -12px 0 40px #0002;
 		border-left: 1px solid var(--border);
 	}
-	.queue-track {
+	:global(.control-templates-music-player-layout.queue-track) {
 		display: flex;
 		width: 100%;
 		align-items: center;
@@ -476,23 +664,23 @@
 		padding: 12px 0;
 		border-bottom: 1px solid var(--border);
 	}
-	.queue-track img {
+	:global(.control-templates-music-player-layout.queue-track) img {
 		width: 42px;
 		border-radius: 5px;
 	}
-	.queue-track span {
+	:global(.control-templates-music-player-layout.queue-track) span {
 		display: grid;
 		gap: 4px;
 		flex: 1;
 	}
-	.queue-track strong {
+	:global(.control-templates-music-player-layout.queue-track) strong {
 		font-size: 12px;
 	}
-	.queue-track small {
+	:global(.control-templates-music-player-layout.queue-track) small {
 		font-size: 10px;
 		color: var(--music-muted);
 	}
-	.queue-track.current {
+	:global(.control-templates-music-player-layout.queue-track.current) {
 		color: #c46b78;
 	}
 	.status {
@@ -575,7 +763,7 @@
 		justify-content: center;
 		gap: 9px;
 		padding: 11px 21px;
-		border-radius: 24px;
+		border-radius: 9999px;
 		background: var(--foreground);
 		color: var(--background);
 		font-size: 12px;
@@ -587,7 +775,7 @@
 		gap: 8px;
 		padding: 10px 18px;
 		border: 1px solid var(--border);
-		border-radius: 24px;
+		border-radius: 9999px;
 		font-size: 12px;
 	}
 	:global(.drift .page-heading) {
@@ -614,14 +802,16 @@
 			display: none;
 		}
 		main {
-			padding: 26px 24px 50px;
+			--music-gutter: 24px;
+			--music-top-padding: 26px;
+			padding: var(--music-top-padding) var(--music-gutter) 50px;
 		}
 		.player {
 			grid-template-columns: 1fr 1.2fr auto;
 			gap: 15px;
 			padding-inline: 15px;
 		}
-		.player-tools > input,
+		.player-tools > :global([data-slot='slider']),
 		.player-tools > :global(svg) {
 			display: none;
 		}
@@ -629,7 +819,7 @@
 	@media (max-width: 680px) {
 		.drift {
 			grid-template-columns: minmax(0, 1fr);
-			grid-template-rows: 1fr 83px 58px;
+			grid-template-rows: 1fr 123px 58px;
 			min-height: 400px;
 		}
 		.sidebar {
@@ -667,7 +857,9 @@
 			padding: 12px 20px;
 		}
 		main {
-			padding: 24px 18px 40px;
+			--music-gutter: 18px;
+			--music-top-padding: 24px;
+			padding: var(--music-top-padding) var(--music-gutter) 40px;
 		}
 		.player {
 			grid-row: 2;
@@ -679,7 +871,7 @@
 			width: 40px;
 			height: 40px;
 		}
-		.playing .icon-button {
+		.playing :global(.control-templates-music-player-layout.icon-button) {
 			display: none;
 		}
 		.transport {
@@ -687,7 +879,7 @@
 			position: relative;
 			padding-right: 26px;
 		}
-		.mobile-queue {
+		:global(.control-templates-music-player-layout.mobile-queue) {
 			display: grid !important;
 			position: absolute;
 			right: -5px;
@@ -696,9 +888,15 @@
 		.transport-buttons {
 			gap: 6px;
 		}
-		.secondary-control,
-		.player-tools {
+		:global(.control-templates-music-player-layout.secondary-control),
+		.player-tools :global(.desktop-queue) {
 			display: none;
+		}
+		.player-tools {
+			display: flex;
+			grid-column: 1 / -1;
+			justify-content: center;
+			gap: 20px;
 		}
 		.timeline {
 			margin-top: 6px;
@@ -707,11 +905,11 @@
 			display: none;
 		}
 		.queue-panel {
-			bottom: 141px;
+			bottom: 181px;
 			top: 60px;
 		}
 		.status {
-			bottom: 150px;
+			bottom: 190px;
 		}
 	}
 </style>

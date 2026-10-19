@@ -149,24 +149,34 @@
 	<div class="tasks-body">
 		<div class="tasks-filterbar">
 			<div role="group" aria-label="Task filters">
-				{#each ['All', 'Today', 'Upcoming', 'Important', 'Completed'] as item (item)}<button
-						class:active={workspace.taskFilter === item}
+				{#each ['All', 'Today', 'Upcoming', 'Important', 'Completed'] as item (item)}<Button
+						variant="ghost"
+						type="button"
+						class={[
+							'control-templates-email-client-tasks-screen h-auto whitespace-normal',
+							{ active: workspace.taskFilter === item }
+						]}
 						aria-pressed={workspace.taskFilter === item}
 						onclick={() => (workspace.taskFilter = item as typeof workspace.taskFilter)}
-						>{item}</button
+						>{item}</Button
 					>{/each}
 			</div>
 			<span>{completed}/{workspace.tasks.length} completed</span>
 		</div>
 		<nav class="project-filter" aria-label="Task projects">
-			{#each ['All projects', ...projects] as item (item)}<button
-					class:active={workspace.selectedProject === item}
+			{#each ['All projects', ...projects] as item (item)}<Button
+					variant="ghost"
+					type="button"
+					class={[
+						'control-templates-email-client-tasks-screen h-auto whitespace-normal',
+						{ active: workspace.selectedProject === item }
+					]}
 					aria-pressed={workspace.selectedProject === item}
 					onclick={() => {
 						workspace.selectedProject = item;
 						workspace.taskFilter = 'All';
 						workspace.query = '';
-					}}>{item}</button
+					}}>{item}</Button
 				>{/each}
 		</nav>
 		<div class="task-list">
@@ -211,8 +221,13 @@
 							checked={task.completed}
 							onCheckedChange={() => toggle(task.id)}
 							aria-label={`${task.completed ? 'Reopen' : 'Complete'} ${task.title}`}
-						/><button
-							class="min-w-0 flex-1 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+						/><Button
+							variant="ghost"
+							type="button"
+							class={[
+								'control-templates-email-client-tasks-screen h-auto whitespace-normal',
+								'min-w-0 flex-1 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring'
+							]}
 							onclick={() => edit(task)}
 							aria-label={`Edit ${task.title}`}
 							id={`task-${task.id}`}
@@ -228,7 +243,7 @@
 										? ' · Overdue'
 										: ''}</span
 								></span
-							></button
+							></Button
 						>
 						<Button
 							variant="ghost"
@@ -338,14 +353,14 @@
 		gap: 22px;
 		overflow: auto;
 	}
-	.tasks-filterbar button {
+	.tasks-filterbar :global(button.control-templates-email-client-tasks-screen) {
 		padding: 20px 0 15px;
 		font-size: 12px;
 		color: var(--muted-foreground);
 		border-bottom: 2px solid transparent;
 		white-space: nowrap;
 	}
-	.tasks-filterbar button.active {
+	.tasks-filterbar :global(button.control-templates-email-client-tasks-screen.active) {
 		border-color: #5967c7;
 		color: var(--foreground);
 		font-weight: 600;
@@ -361,21 +376,21 @@
 		flex-wrap: wrap;
 		padding: 20px 0;
 	}
-	.project-filter button {
+	.project-filter :global(button.control-templates-email-client-tasks-screen) {
 		font-size: 11px;
 		padding: 5px 10px;
-		border-radius: 5px;
+		border-radius: var(--radius-lg);
 		color: var(--muted-foreground);
 		border: 1px solid transparent;
 	}
-	.project-filter button.active {
+	.project-filter :global(button.control-templates-email-client-tasks-screen.active) {
 		background: var(--muted);
 		border-color: var(--border);
 		color: var(--foreground);
 	}
 	.task-list {
 		border: 1px solid var(--border);
-		border-radius: 8px;
+		border-radius: var(--radius-lg);
 		overflow: hidden;
 	}
 	.task-row {

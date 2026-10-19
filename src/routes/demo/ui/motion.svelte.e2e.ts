@@ -1,4 +1,4 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test, type Page } from '../../../../scripts/shared-browser-test';
 
 const sceneTitles = [
 	'Shared pill',

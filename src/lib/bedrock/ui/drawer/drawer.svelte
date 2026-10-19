@@ -6,7 +6,11 @@
 	import Drawer from '#lib/shadcn/ui/drawer/drawer.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Drawer> = $props();
+	let {
+		open = $bindable(false),
+		activeSnapPoint = $bindable(null),
+		...props
+	}: ComponentProps<typeof Drawer> = $props();
 </script>
 
-<Drawer {...props} />
+<Drawer bind:open bind:activeSnapPoint {...props} />

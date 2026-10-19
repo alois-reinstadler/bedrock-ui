@@ -6,7 +6,7 @@
 	import DialogDescription from '#lib/shadcn/ui/dialog/dialog-description.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DialogDescription> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DialogDescription> = $props();
 </script>
 
-<DialogDescription {...props} />
+<DialogDescription bind:ref {...props} />

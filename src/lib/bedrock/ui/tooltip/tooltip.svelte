@@ -6,7 +6,7 @@
 	import Tooltip from '#lib/shadcn/ui/tooltip/tooltip.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Tooltip> = $props();
+	let { open = $bindable(false), ...props }: ComponentProps<typeof Tooltip> = $props();
 </script>
 
-<Tooltip {...props} />
+<Tooltip bind:open {...props} />

@@ -6,7 +6,7 @@
 	import CommandLinkItem from '#lib/shadcn/ui/command/command-link-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CommandLinkItem> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CommandLinkItem> = $props();
 </script>
 
-<CommandLinkItem {...props} />
+<CommandLinkItem bind:ref {...props} />

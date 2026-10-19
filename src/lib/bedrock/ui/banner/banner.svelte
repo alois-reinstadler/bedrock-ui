@@ -21,21 +21,33 @@
 <script lang="ts">
 	import { cn, type WithElementRef } from '#lib/utils.js';
 	import type { HTMLAttributes } from 'svelte/elements';
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
 
 	let {
 		ref = $bindable(null),
 		class: className,
 		variant = 'info',
+		motion = 'none',
 		children,
 		...restProps
 	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		/** Opt in only for a newly inserted item, never initial/history content. */
+		motion?: 'none' | 'enter';
 		variant?: BannerVariant;
 	} = $props();
+	const policy = useMotionPolicy();
 </script>
 
 <div
-	bind:this={ref}
+	{@attach (node) => {
+		ref = node;
+		return () => {
+			if (ref === node) ref = null;
+		};
+	}}
 	data-slot="banner"
+	data-entry={motion === 'enter' && variant !== 'warning' && variant !== 'destructive'}
+	{@attach policy.attach}
 	role={variant === 'destructive' || variant === 'warning' ? 'alert' : 'status'}
 	class={cn(bannerVariants({ variant }), className)}
 	{...restProps}
@@ -44,14 +56,14 @@
 </div>
 
 <style>
-	.bedrock-banner {
+	.bedrock-banner[data-entry='true'] {
 		transition:
 			translate var(--motion-enter) var(--motion-ease-enter),
 			opacity var(--motion-enter) var(--motion-ease-enter);
 	}
 
 	@starting-style {
-		.bedrock-banner {
+		.bedrock-banner[data-entry='true'] {
 			translate: 0 -0.5rem;
 			opacity: 0;
 		}

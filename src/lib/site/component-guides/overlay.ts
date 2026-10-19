@@ -998,7 +998,7 @@ export const overlayGuides = {
 			'Toaster forwards svelte-sonner configuration such as position, duration, visible count, rich colors, and close-button behavior.',
 			'The host follows the current light or dark mode and maps its normal surface, text, and border to Bedrock color tokens.',
 			'Toasts are transient and rendered outside the initiating component, so important errors and state changes still need durable inline semantics where users continue the task.',
-			'The loading icon currently spins; consumers must verify reduced-motion behavior before relying on that animated state.'
+			'Sonner supplies its own loading icon rather than Bedrock Spinner. Keep a readable pending label and verify reduced-motion behavior for the Toaster placement and any custom loading icon.'
 		],
 		examplePlan: [
 			{

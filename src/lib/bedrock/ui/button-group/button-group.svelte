@@ -6,7 +6,7 @@
 	import ButtonGroup from '#lib/shadcn/ui/button-group/button-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ButtonGroup> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ButtonGroup> = $props();
 </script>
 
-<ButtonGroup {...props} />
+<ButtonGroup bind:ref {...props} />

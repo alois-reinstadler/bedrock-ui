@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../../scripts/shared-browser-test';
 
 test('mail search, selection, archive, compose, and calendar work locally', async ({ page }) => {
 	await page.goto('/templates/email-client');
@@ -387,6 +387,10 @@ test('calendar scroll stays within the workspace on desktop and mobile', async (
 	for (const width of [1440, 390]) {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/templates/email-client/calendar');
+		await expect(page.getByRole('region', { name: 'Template preview controls' })).toHaveAttribute(
+			'data-ready',
+			'true'
+		);
 		await expect(page.getByRole('heading', { name: 'Calendar', exact: true })).toBeVisible();
 		await expect
 			.poll(() => page.evaluate(() => document.documentElement.scrollHeight <= innerHeight))

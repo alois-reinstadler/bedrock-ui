@@ -14,7 +14,7 @@
 		</p>
 	</div>
 
-	<ol class="max-w-md space-y-4 rounded-xl border p-5">
+	<ol class="max-w-md space-y-4 rounded-xl border p-5 corner-theme">
 		<li>
 			<p class="text-sm font-medium">Mara approved the final draft</p>
 			<Timestamp date={twoHoursAgo} mode="relative" />

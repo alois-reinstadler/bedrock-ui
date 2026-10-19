@@ -1,0 +1,102 @@
+<script lang="ts">
+	import {
+		Map,
+		MapRoute,
+		MarkerContent,
+		MarkerLabel,
+		RouteMarker,
+		RouteProgress
+	} from '#lib/bedrock/ui/map';
+	import Car from '@lucide/svelte/icons/car';
+	import { Slider } from '#lib/bedrock/ui/slider';
+
+	const route: [number, number][] = [
+		[-122.394, 37.7953],
+		[-122.3952, 37.7967],
+		[-122.397, 37.7986],
+		[-122.3975, 37.7992],
+		[-122.3976, 37.7993],
+		[-122.3981, 37.799],
+		[-122.3984, 37.7989],
+		[-122.4066, 37.7979],
+		[-122.4071, 37.7981],
+		[-122.4072, 37.7982],
+		[-122.4072, 37.7984],
+		[-122.4082, 37.8034],
+		[-122.4064, 37.8037],
+		[-122.4063, 37.8036],
+		[-122.4063, 37.8034],
+		[-122.4067, 37.8032],
+		[-122.4067, 37.803],
+		[-122.4067, 37.8028],
+		[-122.4064, 37.8025],
+		[-122.4062, 37.802],
+		[-122.406, 37.8019],
+		[-122.4058, 37.8018],
+		[-122.4056, 37.8018],
+		[-122.4055, 37.8019],
+		[-122.4054, 37.8021],
+		[-122.4056, 37.8025]
+	];
+	let progress = $state(0.45);
+</script>
+
+<div class="relative h-[420px] w-full">
+	<Map center={[-122.4008, 37.7996]} zoom={14.2}>
+		<MapRoute
+			coordinates={route}
+			{progress}
+			color="#94a3b8"
+			width={5}
+			opacity={0.8}
+			dashArray={[0.5, 1.5]}
+		>
+			<RouteProgress color="#3b82f6" width={5} opacity={1} />
+			<RouteMarker at="start">
+				<MarkerContent
+					><div
+						class="size-3.5 rounded-full border-2 border-foreground bg-background shadow-md"
+					></div></MarkerContent
+				>
+			</RouteMarker>
+			<RouteMarker at="progress">
+				<MarkerContent>
+					<div
+						class="grid size-6 place-items-center rounded-full bg-blue-500 shadow-md ring-2 ring-background"
+					>
+						<Car class="size-3 text-white" />
+					</div>
+					<MarkerLabel
+						position="top"
+						class="rounded-md border border-border/50 bg-background/90 px-1.5 py-0.5 tabular-nums shadow-sm"
+						>{Math.round(progress * 100)}%</MarkerLabel
+					>
+				</MarkerContent>
+			</RouteMarker>
+			<RouteMarker at="end">
+				<MarkerContent
+					><div
+						class="size-3.5 rounded-full bg-foreground shadow-md ring-2 ring-background"
+					></div></MarkerContent
+				>
+			</RouteMarker>
+		</MapRoute>
+	</Map>
+	<div
+		class="absolute bottom-3 left-3 w-56 rounded-lg border border-border/50 bg-background/95 p-3 shadow-lg backdrop-blur-md"
+	>
+		<div class="mb-2 flex items-center justify-between text-xs">
+			<span class="font-medium">Progress</span><span class="text-muted-foreground tabular-nums"
+				>{Math.round(progress * 100)}%</span
+			>
+		</div>
+		<Slider
+			type="single"
+			bind:value={progress}
+			min={0}
+			max={1}
+			step={0.01}
+			aria-label="Route progress"
+		/>
+	</div>
+</div>

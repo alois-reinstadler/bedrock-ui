@@ -6,7 +6,7 @@
 	import MenubarRadioItem from '#lib/shadcn/ui/menubar/menubar-radio-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof MenubarRadioItem> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof MenubarRadioItem> = $props();
 </script>
 
-<MenubarRadioItem {...props} />
+<MenubarRadioItem bind:ref {...props} />

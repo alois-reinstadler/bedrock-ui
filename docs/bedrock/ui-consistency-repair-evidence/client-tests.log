@@ -1,0 +1,16 @@
+$ NODE_ENV=test vitest --run --project client src/lib/site/HeroPlayground.svelte.test.ts src/lib/bedrock/ui/tooltip/tooltip.svelte.test.ts src/routes/error.svelte.test.ts
+
+ RUN  v4.1.11 /home/node/repos/bedrock-ui
+
+The following plugins may not work correctly because they use the `transformIndexHtml` hook which is not supported:
+
+  - vitest:browser:transform-tester-html
+12:33:38 AM [vite] (ssr) Re-optimizing dependencies because vite config has changed
+12:33:38 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+12:33:40 AM [vite] (client) [optimizer] scanning dependencies...
+12:33:44 AM [vite] (client) [optimizer] bundling dependencies...
+
+ Test Files  3 passed (3)
+      Tests  4 passed (4)
+   Start at  00:33:38
+   Duration  23.35s (transform 0ms, setup 0ms, import 2.66s, tests 967ms, environment 0ms)

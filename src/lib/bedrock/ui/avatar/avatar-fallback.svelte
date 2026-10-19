@@ -5,8 +5,13 @@
 <script lang="ts">
 	import AvatarFallback from '#lib/shadcn/ui/avatar/avatar-fallback.svelte';
 	import type { ComponentProps } from 'svelte';
+	import { cn } from '#lib/utils.js';
 
-	let props: ComponentProps<typeof AvatarFallback> = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		...props
+	}: ComponentProps<typeof AvatarFallback> = $props();
 </script>
 
-<AvatarFallback {...props} />
+<AvatarFallback bind:ref class={cn('text-foreground', className)} {...props} />

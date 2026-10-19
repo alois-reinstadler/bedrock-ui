@@ -6,7 +6,12 @@
 	import DropdownMenuCheckboxItem from '#lib/shadcn/ui/dropdown-menu/dropdown-menu-checkbox-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DropdownMenuCheckboxItem> = $props();
+	let {
+		ref = $bindable(null),
+		checked = $bindable(false),
+		indeterminate = $bindable(false),
+		...props
+	}: ComponentProps<typeof DropdownMenuCheckboxItem> = $props();
 </script>
 
-<DropdownMenuCheckboxItem {...props} />
+<DropdownMenuCheckboxItem bind:ref bind:checked bind:indeterminate {...props} />

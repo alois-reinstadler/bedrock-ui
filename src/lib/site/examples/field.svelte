@@ -1,11 +1,12 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Field from '#lib/bedrock/ui/field';
 	import { Input } from '#lib/bedrock/ui/input';
 	import { Button } from '#lib/bedrock/ui/button';
 	let saved = $state(false);
 </script>
 
-<section class="w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full max-w-2xl gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Delivery instructions</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -43,4 +44,4 @@
 			{saved ? 'Delivery details saved in this demonstration.' : ''}
 		</p>
 	</form>
-</section>
+</Card.Root>

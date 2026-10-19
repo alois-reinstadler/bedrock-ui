@@ -1,0 +1,8 @@
+{
+	"description": "Consumer fixture regression ceilings, rounded above the 2026-10-03 measurements. Standalone includes dependencies; engineWarm uses the shared build's fixed engine reference. Review import graphs before raising ceilings.",
+	"consumers": {
+		"button": { "standaloneGzip": 47000, "engineWarmGzip": 25000 },
+		"async-button": { "standaloneGzip": 114000, "engineWarmGzip": 39000 },
+		"avatar-stack": { "standaloneGzip": 95000, "engineWarmGzip": 21000 }
+	}
+}

@@ -3,6 +3,7 @@
 	import LayoutDashboardIcon from '@lucide/svelte/icons/layout-dashboard';
 	import SettingsIcon from '@lucide/svelte/icons/settings';
 	import * as Sidebar from '#lib/bedrock/ui/sidebar';
+	let section = $state('Overview');
 </script>
 
 <div class="h-72 w-full max-w-sm overflow-hidden rounded-xl border">
@@ -17,20 +18,29 @@
 					<Sidebar.GroupContent>
 						<Sidebar.Menu>
 							<Sidebar.MenuItem>
-								<Sidebar.MenuButton isActive>
+								<Sidebar.MenuButton
+									isActive={section === 'Overview'}
+									onclick={() => (section = 'Overview')}
+								>
 									<LayoutDashboardIcon />
 									<span>Overview</span>
 								</Sidebar.MenuButton>
 							</Sidebar.MenuItem>
 							<Sidebar.MenuItem>
-								<Sidebar.MenuButton>
+								<Sidebar.MenuButton
+									isActive={section === 'Projects'}
+									onclick={() => (section = 'Projects')}
+								>
 									<FolderIcon />
 									<span>Projects</span>
 								</Sidebar.MenuButton>
 								<Sidebar.MenuBadge>12</Sidebar.MenuBadge>
 							</Sidebar.MenuItem>
 							<Sidebar.MenuItem>
-								<Sidebar.MenuButton>
+								<Sidebar.MenuButton
+									isActive={section === 'Settings'}
+									onclick={() => (section = 'Settings')}
+								>
 									<SettingsIcon />
 									<span>Settings</span>
 								</Sidebar.MenuButton>

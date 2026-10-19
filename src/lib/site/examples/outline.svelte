@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Heading } from '#lib/bedrock/ui/heading';
 	import { Outline } from '#lib/bedrock/ui/outline';
 	import { Text } from '#lib/bedrock/ui/text';
@@ -10,7 +11,7 @@
 	];
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Project proposal navigation</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -36,4 +37,4 @@
 			>
 		</div>
 	</div>
-</section>
+</Card.Root>

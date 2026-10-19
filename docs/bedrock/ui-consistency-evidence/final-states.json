@@ -1,0 +1,110 @@
+[
+	{
+		"name": "stepped-form-manual-result",
+		"data": {
+			"url": "http://127.0.0.1:4850/docs/forms",
+			"text": "ed\n3\nReview\nConfirm details\nCurrent step\nReady to go\n\nReview your setup before creating the workspace.\n\nName\nAudit Tester\nWorkspace\nAudit workspace\nBack\nCreate workspace\nForm submitted successfully.\n\nWorkspace created for Audit Tester.\n\nStepped Form validates the current section before advancing and all enabled sections before submission. Inactive panels remain mounted, hidden and inert. Root uses novalidate so the browser cannot trap focus on a hidden invalid field; Bedrock reveals the failing section first. Preserve ordinary control names so FormData includes previous sections.\n\nView stepped form source\n\nA command is appropriate here because Stepped Form requires JavaScript and coordinates submission itself. Do not spread a remote form enhancer onto Root: two submit controllers would compete. Supply a native single-page form alternative if no-JavaScript completion is a requirement. Network failures reject onSubmit and appear in Status with Retry; real writes should use server-side idempotency keys to avoid duplicates after uncertain responses.\n\nStepped Form anatomy and reference\nFeedback and recovery\nValidation: validate on a useful boundary, name the problem and its correction, set aria-invalid, and connect error text through aria-describedby. A summary complements field errors.\nPending: keep inputs visible, disable duplicate actions, announce the operation, and preserve the current layout. Do not mark a request successful until the server confirms.\nSuccess: explain what changed and the next action. Keep focus stable for inline confirmation; focus the new heading when changing views.\nError and retry: preserve values, distinguish field errors from network or form-level failures, and provide an explicit retry. Do not automatically repeat irreversible writes.\nOptimistic behavior: reserve it for reversible, low-risk operations such as a draft preference. Roll back on failure and announce recovery. Never optimistically claim a payment, account creation, or upload is complete.\nPersistence: bind:value controls the active step. Optional persistence.read/write hooks can store only a step ID in a query parameter. They do not store field values; use an application-owned draft store and never put personal data in URLs.\nAccessible completion\n\nGive every control a visible label. Keep Status mounted so its polite live region announces step changes and errors. Test Tab, Shift+Tab, Enter, Back and Retry. On failure focus the first invalid control; on navigation focus the new step title. Keep logical DOM order on mobile and desktop. Reduced-motion users receive the same change without directional animation.\n\nTest empty, slow, rejected, successful and repeated submissions. Test dynamic steps and two forms on one page. Hidden sections must be absent from the accessibility tree, preserved fields must reach submission, and removal of the active section must reveal a valid remaining section. Persisting a step is not evidence that its values passed server validation."
+		}
+	},
+	{
+		"name": "catalogue-empty",
+		"data": [
+			{
+				"url": "/docs/components",
+				"inputs": [
+					{
+						"id": "",
+						"label": "Search documentation",
+						"placeholder": "Search documentation"
+					},
+					{
+						"id": "component-search",
+						"label": null,
+						"placeholder": "Search names, behavior, or categories…"
+					}
+				],
+				"text": "Toggle Sidebar\nDocs\nComponents\n\nTHE BUILDING BLOCKS\n\nComponents\n\nFocused primitives and component families, owned as source. Find the right interaction, understand its contract, and make it yours.\n\nFind a component\nAll components\nContent\nForm\nData\nLayout\nOverlay\nDisplay\nNavigation\n\n0 of 127 components\n\nNo components match “audit-no-match”. Try a broader term or choose another category."
+			},
+			{
+				"url": "/docs/templates",
+				"inputs": [
+					{
+						"id": "",
+						"label": "Search documentation",
+						"placeholder": "Search documentation"
+					},
+					{
+						"id": "template-search",
+						"label": null,
+						"placeholder": "Music, messages, community…"
+					}
+				],
+				"text": "Toggle Sidebar\nDocs\nTemplates\n\nFROM PRIMITIVES TO PRODUCTS\n\nTemplates\n\nComplete product surfaces you can explore, adapt, and own. Each template brings Bedrock components together with realistic local data and working interactions.\n\nA component focuses on one interaction. A block packages a reusable product pattern. A template supplies the complete page and application shell.\n\nFind a template\n\nTry Feedback on a real interface\n\nOpen a customer review or annotate as a developer. Select something on the page, leave a note, and export your changes. Drafts stay in this browser.\n\nAbout Feedback\n\n0 templates\n\nNo templates match “audit-no-match”. Try “music”, “video”, “email”, or “social”."
+			}
+		]
+	},
+	{
+		"name": "tasks-complete-empty",
+		"data": {
+			"completedPresent": true,
+			"text": "Tasks\n\n4 open tasks · Monday, September 14\n\nNew task\nAll\nToday\nUpcoming\nImportant\nCompleted\nAll projects\nLaunch\nOperations\nPersonal\nResearch\nAdd task\nCompleted\n0 tasks\nNo matching tasks\n\nTry another title or project name.\n\nClear task search\n\nFinal audit task marked complete."
+		}
+	},
+	{
+		"name": "email-inline-compose",
+		"data": {
+			"fields": [
+				{
+					"name": "Back",
+					"type": "button",
+					"disabled": false
+				},
+				{
+					"name": "",
+					"type": "email",
+					"disabled": false
+				},
+				{
+					"name": "",
+					"type": "text",
+					"disabled": false
+				},
+				{
+					"name": "",
+					"type": "textarea",
+					"disabled": false
+				},
+				{
+					"name": "Cancel",
+					"type": "button",
+					"disabled": false
+				},
+				{
+					"name": "Save draft",
+					"type": "button",
+					"disabled": false
+				},
+				{
+					"name": "Send message",
+					"type": "submit",
+					"disabled": false
+				}
+			],
+			"closed": true
+		}
+	},
+	{
+		"name": "music-queue-like",
+		"data": {
+			"opened": true,
+			"before": "false",
+			"after": "true"
+		}
+	},
+	{
+		"name": "video-review-hydrated",
+		"data": {
+			"expanded": "true"
+		}
+	}
+]

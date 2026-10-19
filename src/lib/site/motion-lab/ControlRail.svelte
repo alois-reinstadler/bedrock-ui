@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import { useMotionLabState } from './context.svelte.js';
 
 	const state = useMotionLabState();
@@ -20,11 +21,13 @@
 		<legend>Zeitlupe</legend>
 		<div class="options compact">
 			{#each speeds as speed (speed)}
-				<button
+				<Button
+					variant="ghost"
+					class={['control-site-motion-lab-controlrail h-auto whitespace-normal']}
 					type="button"
 					aria-pressed={state.timeScale === speed}
 					aria-label={speed === 1 ? 'Echtzeit' : `${speed}-fache Zeitlupe`}
-					onclick={() => (state.timeScale = speed)}>{speed}×</button
+					onclick={() => (state.timeScale = speed)}>{speed}×</Button
 				>
 			{/each}
 		</div>
@@ -33,15 +36,19 @@
 	<fieldset>
 		<legend>Bewegungspräferenz</legend>
 		<div class="options">
-			<button
+			<Button
+				variant="ghost"
+				class={['control-site-motion-lab-controlrail h-auto whitespace-normal']}
 				type="button"
 				aria-pressed={state.preference === 'normal'}
-				onclick={() => (state.preference = 'normal')}>Normal</button
+				onclick={() => (state.preference = 'normal')}>Normal</Button
 			>
-			<button
+			<Button
+				variant="ghost"
+				class={['control-site-motion-lab-controlrail h-auto whitespace-normal']}
 				type="button"
 				aria-pressed={state.preference === 'reduced'}
-				onclick={() => (state.preference = 'reduced')}>Reduziert</button
+				onclick={() => (state.preference = 'reduced')}>Reduziert</Button
 			>
 		</div>
 	</fieldset>
@@ -50,11 +57,13 @@
 		<legend>Eingabe</legend>
 		<div class="options compact">
 			{#each [['pointer', 'Pointer'], ['keyboard', 'Tastatur'], ['touch', 'Touch']] as option (option[0])}
-				<button
+				<Button
+					variant="ghost"
+					class={['control-site-motion-lab-controlrail h-auto whitespace-normal']}
 					type="button"
 					aria-pressed={state.inputMode === option[0]}
 					onclick={() => (state.inputMode = option[0] as typeof state.inputMode)}
-					>{option[1]}</button
+					>{option[1]}</Button
 				>
 			{/each}
 		</div>
@@ -64,22 +73,39 @@
 		<legend>Last</legend>
 		<div class="options compact">
 			{#each [['normal', 'Normal'], ['rapid', 'Schnell'], ['many', 'Viele']] as option (option[0])}
-				<button
+				<Button
+					variant="ghost"
+					class={['control-site-motion-lab-controlrail h-auto whitespace-normal']}
 					type="button"
 					aria-pressed={state.stressMode === option[0]}
 					onclick={() => (state.stressMode = option[0] as typeof state.stressMode)}
-					>{option[1]}</button
+					>{option[1]}</Button
 				>
 			{/each}
 		</div>
 	</fieldset>
 
 	<div class="actions">
-		<button type="button" onclick={() => (state.paused = !state.paused)}>
+		<Button
+			variant="ghost"
+			class={['control-site-motion-lab-controlrail h-auto whitespace-normal']}
+			type="button"
+			onclick={() => (state.paused = !state.paused)}
+		>
 			{state.paused ? 'Fortsetzen' : 'Pause'}
-		</button>
-		<button type="button" onclick={() => state.replay()}>Wiederholen</button>
-		<button type="button" onclick={() => state.reset()}>Zurücksetzen</button>
+		</Button>
+		<Button
+			variant="ghost"
+			class={['control-site-motion-lab-controlrail h-auto whitespace-normal']}
+			type="button"
+			onclick={() => state.replay()}>Wiederholen</Button
+		>
+		<Button
+			variant="ghost"
+			class={['control-site-motion-lab-controlrail h-auto whitespace-normal']}
+			type="button"
+			onclick={() => state.reset()}>Zurücksetzen</Button
+		>
 	</div>
 </aside>
 
@@ -142,7 +168,7 @@
 	.options.compact {
 		grid-template-columns: repeat(auto-fit, minmax(3.2rem, 1fr));
 	}
-	button {
+	:global(button.control-site-motion-lab-controlrail) {
 		min-height: 2rem;
 		border-radius: 0.6rem;
 		background: var(--muted);
@@ -151,14 +177,14 @@
 		font-size: 0.75rem;
 		font-weight: 580;
 	}
-	button:hover {
+	:global(button.control-site-motion-lab-controlrail:hover) {
 		color: var(--foreground);
 	}
-	button:focus-visible {
+	:global(button.control-site-motion-lab-controlrail:focus-visible) {
 		outline: 2px solid var(--ring);
 		outline-offset: 2px;
 	}
-	button[aria-pressed='true'] {
+	:global(button.control-site-motion-lab-controlrail[aria-pressed='true']) {
 		background: var(--foreground);
 		color: var(--background);
 	}
@@ -169,7 +195,7 @@
 		border-top: 1px solid var(--border);
 		padding-top: 0.8rem;
 	}
-	.actions button {
+	.actions :global(button.control-site-motion-lab-controlrail) {
 		background: transparent;
 		padding-inline: 0.3rem;
 	}

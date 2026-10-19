@@ -6,7 +6,7 @@
 	import CommandList from '#lib/shadcn/ui/command/command-list.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CommandList> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CommandList> = $props();
 </script>
 
-<CommandList {...props} />
+<CommandList bind:ref {...props} />

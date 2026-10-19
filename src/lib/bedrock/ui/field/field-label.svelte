@@ -6,7 +6,7 @@
 	import FieldLabel from '#lib/shadcn/ui/field/field-label.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FieldLabel> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FieldLabel> = $props();
 </script>
 
-<FieldLabel {...props} />
+<FieldLabel bind:ref {...props} />

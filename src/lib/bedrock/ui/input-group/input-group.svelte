@@ -6,7 +6,7 @@
 	import InputGroup from '#lib/shadcn/ui/input-group/input-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof InputGroup> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof InputGroup> = $props();
 </script>
 
-<InputGroup {...props} />
+<InputGroup bind:ref {...props} />

@@ -1,5 +1,9 @@
 # Bedrock motion architecture review
 
+> Historical audit. The 2026-09-29 [Astra integration](astra-integration/implementation.md)
+> supersedes its component ownership recommendations. See the [current motion guide](motion.md)
+> and [consumer ledger](astra-integration/consumer-ledger.md); the route prototype remains historical.
+
 Initial audit: 2026-09-21. Updated after expanded prototype evaluation: 2026-09-22. Status: architecture recommendation with tested route prototype; production components are not migrated.
 
 The subsequent [prototype evaluation](motion-architecture-evaluation.md) records the expanded browser evaluation, supported contract and explicit visual tradeoffs. Production components have not been migrated.
@@ -220,7 +224,7 @@ The prototype contract is one selected, scoped entity with surface/image/title p
 
 ## Source references
 
-- Local evidence: [Bedrock motion contract](motion-contract.md), [layout implementation](../../src/lib/bedrock/motion/layout.svelte.ts), [presence helpers](../../src/lib/bedrock/motion/presence.ts), [autoSize](../../src/lib/bedrock/motion/auto-size.ts), [Swap](../../src/lib/bedrock/motion/swap.svelte), [tokens](../../src/lib/bedrock/motion/tokens.ts), [global utilities](../../src/routes/layout.css), [Astra archive provenance](../../vendor/astra-motion.json). Vendored `node_modules/astra-motion/dist/motion/routes.js` was inspected directly; upstream HEAD is not treated as archive evidence.
+- Local evidence: [Bedrock motion contract](motion-contract.md), [layout implementation](../../src/lib/bedrock/motion/layout.svelte.ts), [presence helpers](../../src/lib/bedrock/motion/presence.ts), [autoSize](../../src/lib/bedrock/motion/auto-size.ts), [Swap](../../src/lib/bedrock/motion/swap.svelte), [tokens](../../src/lib/bedrock/motion/tokens.ts), [global utilities](../../src/lib/bedrock/styles.css), [Astra archive provenance](../../vendor/astra-motion.json). Vendored `node_modules/astra-motion/dist/motion/routes.js` was inspected directly; upstream HEAD is not treated as archive evidence.
 - [Bits UI styling](https://bits-ui.com/docs/styling) and [Accordion](https://www.bits-ui.com/docs/components/accordion): state attributes, measured size variables and lifecycle support permit CSS-first recipes. Installed 2.19.x presence/animation completion code was also inspected; migration still needs behavior tests.
 - [Svelte transitions](https://svelte.dev/docs/svelte/transition) and [in/out directives](https://svelte.dev/docs/svelte/in-and-out): bidirectional transitions can reverse; separate in/out behavior differs; generated visual keyframes use WAAPI and require JS reduced-motion handling.
 - [SvelteKit navigation](https://svelte.dev/docs/kit/$app-navigation): route lifecycle and scroll ownership are separate from animation completion.

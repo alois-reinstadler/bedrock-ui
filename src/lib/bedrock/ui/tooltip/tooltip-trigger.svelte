@@ -6,7 +6,7 @@
 	import TooltipTrigger from '#lib/shadcn/ui/tooltip/tooltip-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof TooltipTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof TooltipTrigger> = $props();
 </script>
 
-<TooltipTrigger {...props} />
+<TooltipTrigger bind:ref {...props} />

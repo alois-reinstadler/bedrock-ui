@@ -6,7 +6,7 @@
 	import CalendarNextButton from '#lib/shadcn/ui/calendar/calendar-next-button.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CalendarNextButton> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CalendarNextButton> = $props();
 </script>
 
-<CalendarNextButton {...props} />
+<CalendarNextButton bind:ref {...props} />

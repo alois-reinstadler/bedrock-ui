@@ -7,7 +7,15 @@
 	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let { class: className, ...props }: ComponentProps<typeof SidebarMenuButton> = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		...props
+	}: ComponentProps<typeof SidebarMenuButton> = $props();
 </script>
 
-<SidebarMenuButton {...props} class={cn('data-[active=false]:hover:bg-sidebar-hover', className)} />
+<SidebarMenuButton
+	bind:ref
+	{...props}
+	class={cn('data-[active=false]:hover:bg-sidebar-hover', className)}
+/>

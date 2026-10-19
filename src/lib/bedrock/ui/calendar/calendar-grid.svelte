@@ -6,7 +6,7 @@
 	import CalendarGrid from '#lib/shadcn/ui/calendar/calendar-grid.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CalendarGrid> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CalendarGrid> = $props();
 </script>
 
-<CalendarGrid {...props} />
+<CalendarGrid bind:ref {...props} />

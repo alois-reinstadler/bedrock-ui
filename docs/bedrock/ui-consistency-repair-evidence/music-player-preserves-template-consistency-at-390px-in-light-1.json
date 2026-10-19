@@ -1,0 +1,60 @@
+{
+	"slug": "music-player",
+	"width": 390,
+	"colorScheme": "light",
+	"initialControls": {
+		"radius": "22.4px",
+		"corner": "superellipse(3)"
+	},
+	"overriddenControls": {
+		"radius": "33.6px",
+		"corner": "superellipse(0)"
+	},
+	"navigation": [
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		},
+		{
+			"radius": "24px",
+			"corner": "superellipse(0)"
+		}
+	],
+	"artworkName": "Open Vocal Classics collection",
+	"pageErrors": [],
+	"consoleErrors": [],
+	"failedRequests": [
+		{
+			"url": "https://ncsmusic.s3.eu-west-1.amazonaws.com/tracks/000/000/152/1654766391_N6n9kRBaAr_Cartoon---On--On-feat.-Daniel-Levi-_NCS-Release_.mp3",
+			"error": "net::ERR_ABORTED"
+		}
+	]
+}

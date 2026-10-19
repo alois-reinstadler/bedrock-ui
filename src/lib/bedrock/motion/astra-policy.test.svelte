@@ -1,16 +1,23 @@
 <script lang="ts">
-	import { MotionConfig } from './config.js';
-	import { CssButton, CssPanel } from './css.js';
+	import { MotionConfig, motion } from 'astra-motion';
+	import { Button } from '#lib/bedrock/ui/button';
 	let reduced = $state(false);
+	let x = $state(32);
 </script>
 
-<button onclick={() => (reduced = !reduced)}>Change policy</button>
-<MotionConfig reducedMotion={reduced ? 'always' : 'never'}>
-	<CssButton data-testid="policy-button">Default feedback</CssButton>
-	<CssPanel data-testid="default-panel">Essential content</CssPanel>
-	<CssPanel
+<Button
+	onclick={() => {
+		reduced = !reduced;
+		x = reduced ? 64 : 32;
+	}}>Change policy</Button
+>
+<MotionConfig reducedMotion={reduced ? 'always' : 'user'}>
+	<Button data-testid="policy-button">Default feedback</Button>
+	<motion.div data-testid="default-panel" initial={false}>Essential content</motion.div>
+	<motion.div
 		data-testid="policy-panel"
-		motion={{ initial: false, animate: { x: 32 }, transition: { duration: 0.05 } }}
-		>Provider-controlled movement</CssPanel
+		initial={false}
+		animate={{ x }}
+		transition={{ duration: 0.05 }}>Provider-controlled movement</motion.div
 	>
 </MotionConfig>

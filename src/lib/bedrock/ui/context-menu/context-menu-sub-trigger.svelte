@@ -6,7 +6,7 @@
 	import ContextMenuSubTrigger from '#lib/shadcn/ui/context-menu/context-menu-sub-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof ContextMenuSubTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof ContextMenuSubTrigger> = $props();
 </script>
 
-<ContextMenuSubTrigger {...props} />
+<ContextMenuSubTrigger bind:ref {...props} />

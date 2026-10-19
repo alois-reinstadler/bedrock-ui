@@ -1,11 +1,12 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Label } from '#lib/bedrock/ui/label';
 	import { Input } from '#lib/bedrock/ui/input';
 	import { Button } from '#lib/bedrock/ui/button';
 	let saved = $state(false);
 </script>
 
-<section class="w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full max-w-2xl gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Billing contact form</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -35,4 +36,4 @@
 		<Button type="submit">Save billing contact</Button>
 		<p role="status">{saved ? 'Sample billing contact saved.' : ''}</p>
 	</form>
-</section>
+</Card.Root>

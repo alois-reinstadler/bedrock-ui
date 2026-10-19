@@ -1,4 +1,4 @@
-import { expect, test } from './shared-browser';
+import { expect, test } from '../../../scripts/shared-browser-test';
 import AxeBuilder from '@axe-core/playwright';
 
 test('mentions and commands select with keyboard and retain structured context after failed sends', async ({

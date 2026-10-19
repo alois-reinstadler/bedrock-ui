@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { IconButton } from '#lib/bedrock/ui/icon-button';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Textarea } from '#lib/bedrock/ui/textarea';
 	import Image from '@lucide/svelte/icons/image';
@@ -39,22 +40,25 @@
 				<img
 					src="/templates/social-network/coast.jpg"
 					alt="Misty green mountain landscape"
-				/><button
+				/><IconButton
+					icon={X}
+					label="Remove image"
 					type="button"
-					class="icon-button"
-					aria-label="Remove image"
-					onclick={() => (attached = false)}><X size={16} /></button
-				>
+					class={['control-templates-social-network-composer', 'icon-button']}
+					onclick={() => (attached = false)}
+				/>
 			</div>{/if}
 		<div class="composer-tools">
 			<div>
-				{#if !replyTo}<button
-						class="icon-button accent"
+				{#if !replyTo}<IconButton
+						icon={Image}
+						label="Attach sample landscape photo"
+						class={['control-templates-social-network-composer', 'icon-button accent']}
 						type="button"
-						aria-label="Attach sample landscape photo"
 						aria-pressed={attached}
-						onclick={() => (attached = !attached)}><Image size={20} /></button
-					>{/if}<span class="audience">{replyTo ? 'Replying publicly' : 'Everyone can reply'}</span>
+						onclick={() => (attached = !attached)}
+					/>{/if}<span class="audience">{replyTo ? 'Replying publicly' : 'Everyone can reply'}</span
+				>
 			</div>
 			<div>
 				<span class="character-count">{value.length}/500</span><Button

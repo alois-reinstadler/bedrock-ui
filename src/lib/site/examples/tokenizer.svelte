@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import type { SelectorOption } from '#lib/bedrock/ui/selector';
 	import { Tokenizer } from '#lib/bedrock/ui/tokenizer';
 
@@ -23,7 +24,7 @@
 		</p>
 	</div>
 
-	<div class="flex w-full max-w-md flex-col gap-4 rounded-xl border p-5">
+	<Card.Root class="flex w-full max-w-md flex-col gap-4 overflow-visible p-5">
 		<p class="text-sm font-medium" id="reviewers-label">Reviewers</p>
 		<Tokenizer
 			aria-labelledby="reviewers-label"
@@ -39,7 +40,7 @@
 			create
 			placeholder="Add tags…"
 		/>
-	</div>
+	</Card.Root>
 
 	<p role="status" class="text-sm">
 		{reviewers.length} reviewers selected · {tags.length} topics added

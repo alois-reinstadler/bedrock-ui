@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import PlayIcon from '@lucide/svelte/icons/play';
 	import InfoIcon from '@lucide/svelte/icons/info';
 	import { base, films, poster, runtime } from '#lib/templates/video-library/catalog.js';
@@ -32,11 +33,11 @@
 		</p>
 		<p class="hero-description">{featured.description}</p>
 		<div class="film-actions">
-			<a class="frame-button primary" href={`${base}/watch/${featured.slug}`}
+			<Button class="frame-button primary" href={`${base}/watch/${featured.slug}`}
 				><PlayIcon size={17} fill="currentColor" aria-hidden="true" />
-				{library.progress[featured.slug] ? 'Resume film' : 'Play film'}</a
-			><a class="frame-button secondary" href={`${base}/title/${featured.slug}`}
-				><InfoIcon size={17} aria-hidden="true" /> More info</a
+				{library.progress[featured.slug] ? 'Resume film' : 'Play film'}</Button
+			><Button class="frame-button secondary" href={`${base}/title/${featured.slug}`}
+				><InfoIcon size={17} aria-hidden="true" /> More info</Button
 			>
 		</div>
 	</div>

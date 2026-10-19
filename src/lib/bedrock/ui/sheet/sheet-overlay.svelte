@@ -3,11 +3,23 @@
 </script>
 
 <script lang="ts">
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
 	import SheetOverlay from '#lib/shadcn/ui/sheet/sheet-overlay.svelte';
 	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let { class: className, ...restProps }: ComponentProps<typeof SheetOverlay> = $props();
+	const policy = useMotionPolicy();
+
+	let {
+		ref = $bindable(null),
+		class: className,
+		...restProps
+	}: ComponentProps<typeof SheetOverlay> = $props();
 </script>
 
-<SheetOverlay class={cn('motion-overlay', className)} {...restProps} />
+<SheetOverlay
+	bind:ref
+	{@attach policy.attach}
+	class={cn('motion-overlay', className)}
+	{...restProps}
+/>

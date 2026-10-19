@@ -6,7 +6,7 @@
 	import PopoverDescription from '#lib/shadcn/ui/popover/popover-description.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof PopoverDescription> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof PopoverDescription> = $props();
 </script>
 
-<PopoverDescription {...props} />
+<PopoverDescription bind:ref {...props} />

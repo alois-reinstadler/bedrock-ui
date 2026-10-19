@@ -6,7 +6,7 @@
 	import FormLabel from '#lib/shadcn/ui/form/form-label.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FormLabel> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FormLabel> = $props();
 </script>
 
-<FormLabel {...props} />
+<FormLabel bind:ref {...props} />

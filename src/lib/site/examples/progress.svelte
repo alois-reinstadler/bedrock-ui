@@ -1,11 +1,12 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Progress } from '#lib/bedrock/ui/progress';
 	import { Button } from '#lib/bedrock/ui/button';
 	let completed = $state(2);
 	const total = 5;
 </script>
 
-<section class="w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full max-w-2xl gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Workspace preparation</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -29,4 +30,4 @@
 			><Button variant="ghost" onclick={() => (completed = 0)}>Restart demonstration</Button>
 		</div>
 	</div>
-</section>
+</Card.Root>

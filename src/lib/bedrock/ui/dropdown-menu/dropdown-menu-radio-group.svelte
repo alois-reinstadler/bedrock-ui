@@ -6,7 +6,11 @@
 	import DropdownMenuRadioGroup from '#lib/shadcn/ui/dropdown-menu/dropdown-menu-radio-group.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DropdownMenuRadioGroup> = $props();
+	let {
+		ref = $bindable(null),
+		value = $bindable(),
+		...props
+	}: ComponentProps<typeof DropdownMenuRadioGroup> = $props();
 </script>
 
-<DropdownMenuRadioGroup {...props} />
+<DropdownMenuRadioGroup bind:ref bind:value {...props} />

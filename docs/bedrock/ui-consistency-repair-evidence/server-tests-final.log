@@ -1,0 +1,9 @@
+$ NODE_ENV=test vitest --run --project server
+
+ RUN  v4.1.11 /home/node/repos/bedrock-ui
+
+
+ Test Files  52 passed (52)
+      Tests  273 passed (273)
+   Start at  00:33:07
+   Duration  19.40s (transform 50.06s, setup 0ms, import 65.97s, tests 8.22s, environment 55ms)

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { MetadataList, MetadataListItem } from '#lib/bedrock/ui/metadata-list';
 	import { Timestamp } from '#lib/bedrock/ui/timestamp';
@@ -7,7 +8,7 @@
 	const updated = new Date(Date.now() - 2 * 60 * 60 * 1000);
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Support case details</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -34,4 +35,4 @@
 		<MetadataListItem label="Reference">CASE-2026-0142</MetadataListItem>
 		<MetadataListItem label="Escalation" />
 	</MetadataList>
-</section>
+</Card.Root>

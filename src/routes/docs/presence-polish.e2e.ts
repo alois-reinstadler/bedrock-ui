@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../scripts/shared-browser-test';
 
 test('async button preserves natural geometry through pending and failed result', async ({
 	page
@@ -19,11 +19,11 @@ test('async button preserves natural geometry through pending and failed result'
 		const start = performance.now();
 		do {
 			const rect = button.getBoundingClientRect();
-			const currentCopy = button.querySelector('[data-slot="swap"]')?.lastElementChild;
+			const shell = button.querySelector('[data-direction]')!;
 			samples.push({
 				width: rect.width,
 				height: rect.height,
-				transform: currentCopy ? getComputedStyle(currentCopy).transform : 'none'
+				transform: getComputedStyle(shell).transform
 			});
 			await new Promise<void>((resolve) => requestAnimationFrame(() => setTimeout(resolve, 0)));
 		} while (performance.now() - start < 650);
@@ -52,7 +52,7 @@ test('async button preserves natural geometry through pending and failed result'
 		.poll(() => button.evaluate((node) => node.getAnimations({ subtree: true }).length))
 		.toBe(0);
 	const settled = await button.evaluate((element) => {
-		const shell = element.querySelector('[data-slot="swap"]')!.parentElement!;
+		const shell = element.querySelector('[data-direction]')!;
 		const copy = shell.cloneNode(true) as HTMLElement;
 		copy.style.position = 'absolute';
 		copy.style.width = 'max-content';

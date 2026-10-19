@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { ColorPicker } from '#lib/bedrock/ui/color-picker';
 	import { Button } from '#lib/bedrock/ui/button';
 	let value = $state('#6e56cf');
@@ -13,7 +14,7 @@
 			independent.
 		</p>
 	</header>
-	<div class="grid gap-6 rounded-xl border bg-card p-5 sm:grid-cols-2">
+	<Card.Root class="grid gap-6 p-5 sm:grid-cols-2">
 		<div class="space-y-3">
 			<p class="text-sm font-medium">Project accent</p>
 			<ColorPicker variant="swatches" bind:value /><Button
@@ -22,12 +23,12 @@
 				onclick={() => (saved = `Project accent saved as ${value}.`)}>Save accent</Button
 			>
 		</div>
-		<div class="space-y-3 rounded-lg border p-4">
+		<div class="space-y-3 rounded-lg border p-4 corner-theme">
 			<div class="h-2 rounded-full" style:background-color={value}></div>
 			<p class="font-medium">Field journal</p>
 			<p class="text-sm text-muted-foreground">8 documents · Research workspace</p>
 			<p class="font-mono text-xs">{value}</p>
 		</div>
-	</div>
+	</Card.Root>
 	<p role="status" class="text-sm">{saved}</p>
 </section>

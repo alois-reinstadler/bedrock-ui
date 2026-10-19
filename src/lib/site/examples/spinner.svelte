@@ -1,11 +1,12 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Spinner } from '#lib/bedrock/ui/spinner';
 	import { Button } from '#lib/bedrock/ui/button';
 	let pending = $state(false);
 	let complete = $state(false);
 </script>
 
-<section class="max-w-md space-y-4 rounded-xl border p-5">
+<Card.Root class="block max-w-md gap-0 space-y-4 p-5">
 	<h3 class="font-medium">Export customer list</h3>
 	<p class="text-sm text-muted-foreground">
 		Keep the button label visible while work is pending and announce completion separately.
@@ -30,4 +31,4 @@
 				? 'Preparing the sample export.'
 				: 'Ready to export 24 sample contacts.'}
 	</p>
-</section>
+</Card.Root>

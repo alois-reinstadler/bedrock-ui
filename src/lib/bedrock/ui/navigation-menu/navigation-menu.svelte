@@ -1,12 +1,31 @@
-<script lang="ts" module>
-	export * from '#lib/shadcn/ui/navigation-menu/navigation-menu.svelte';
-</script>
-
 <script lang="ts">
-	import NavigationMenu from '#lib/shadcn/ui/navigation-menu/navigation-menu.svelte';
-	import type { ComponentProps } from 'svelte';
+	import { NavigationMenu as NavigationMenuPrimitive } from 'bits-ui';
+	import { cn } from '#lib/utils.js';
+	import NavigationMenuViewport from './navigation-menu-viewport.svelte';
 
-	let props: ComponentProps<typeof NavigationMenu> = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		viewport = true,
+		children,
+		...restProps
+	}: NavigationMenuPrimitive.RootProps & {
+		viewport?: boolean;
+	} = $props();
 </script>
 
-<NavigationMenu {...props} />
+<NavigationMenuPrimitive.Root
+	bind:ref
+	data-slot="navigation-menu"
+	data-viewport={viewport}
+	class={cn(
+		'group/navigation-menu relative flex max-w-max flex-1 items-center justify-center',
+		className
+	)}
+	{...restProps}
+>
+	{@render children?.()}
+	{#if viewport}
+		<NavigationMenuViewport />
+	{/if}
+</NavigationMenuPrimitive.Root>

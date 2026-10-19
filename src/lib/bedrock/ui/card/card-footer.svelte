@@ -6,7 +6,7 @@
 	import CardFooter from '#lib/shadcn/ui/card/card-footer.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CardFooter> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CardFooter> = $props();
 </script>
 
-<CardFooter {...props} />
+<CardFooter bind:ref {...props} />

@@ -196,7 +196,7 @@ an app-level `LayoutGroup`; its implementation remains explicitly deferred.
 
 ### 3.1 Typography tokens
 
-- `--font-code` added to `@theme inline` in `src/routes/layout.css` (decision 14) →
+- `--font-code` added to `@theme inline` in `src/lib/bedrock/styles.css` (decision 14) →
   Tailwind `font-code` utility. Consumers: Text `type="code"`, CodeBlock, Kbd,
   DataTable `id` column (`font-mono` → `font-code`).
 - Type scale = existing Tailwind text-* scale; no new raw font-size tokens.

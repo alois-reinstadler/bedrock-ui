@@ -6,7 +6,7 @@
 	import Dialog from '#lib/shadcn/ui/dialog/dialog.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof Dialog> = $props();
+	let { open = $bindable(false), ...props }: ComponentProps<typeof Dialog> = $props();
 </script>
 
-<Dialog {...props} />
+<Dialog bind:open {...props} />

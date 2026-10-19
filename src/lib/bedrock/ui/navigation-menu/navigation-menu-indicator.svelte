@@ -6,7 +6,8 @@
 	import NavigationMenuIndicator from '#lib/shadcn/ui/navigation-menu/navigation-menu-indicator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof NavigationMenuIndicator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof NavigationMenuIndicator> =
+		$props();
 </script>
 
-<NavigationMenuIndicator {...props} />
+<NavigationMenuIndicator bind:ref {...props} />

@@ -1,3 +1,5 @@
+import { expansionComponents } from './component-guides/expansion.js';
+
 export type DocsNavItem = {
 	title: string;
 	keywords?: string;
@@ -18,6 +20,8 @@ export type ComponentDoc = {
 	category: 'form' | 'layout' | 'overlay' | 'display' | 'navigation' | 'content' | 'data';
 	/** Named export when it intentionally differs from the display title. */
 	importName?: string;
+	/** Browser renderer needed for the full effect; documentation explains fallbacks. */
+	requirements?: 'webgl2'[];
 };
 
 export const gettingStarted: DocsNavItem[] = [
@@ -35,6 +39,27 @@ export const gettingStarted: DocsNavItem[] = [
 ];
 
 export const components: ComponentDoc[] = [
+	...expansionComponents,
+	{
+		slug: 'feedback',
+		title: 'Feedback',
+		description: 'Native page annotations for developer feedback and customer website reviews.',
+		category: 'overlay'
+	},
+	{
+		slug: 'emoji',
+		title: 'Emoji',
+		description: 'Apple emoji images with consistent rendering, inline text, and native fallbacks.',
+		category: 'display'
+	},
+	{
+		slug: 'map',
+		requirements: ['webgl2'],
+		title: 'Map',
+		description:
+			'Interactive maps with controls, markers, popups, routes, arcs, GeoJSON and clusters.',
+		category: 'data'
+	},
 	{
 		slug: 'attachment',
 		title: 'Attachment',
@@ -203,6 +228,12 @@ export const components: ComponentDoc[] = [
 		title: 'Hover Card',
 		description: 'Preview content on hover.',
 		category: 'overlay'
+	},
+	{
+		slug: 'image',
+		title: 'Image',
+		description: 'An image with a loading skeleton, stable dimensions, and a resilient fallback.',
+		category: 'display'
 	},
 	{
 		slug: 'input',
@@ -596,6 +627,13 @@ export const components: ComponentDoc[] = [
 		category: 'form'
 	},
 	{
+		slug: 'diff',
+		title: 'Diff',
+		description:
+			'Compare text with unified and side-by-side views, line numbers, and change markers.',
+		category: 'content'
+	},
+	{
 		slug: 'code-block',
 		title: 'Code Block',
 		description: 'Syntax-highlighted code with copy, titles, and line numbers.',
@@ -642,12 +680,6 @@ export const components: ComponentDoc[] = [
 		title: 'Checkbox List',
 		description: 'A labelled group of checkboxes bound to one value array.',
 		category: 'form'
-	},
-	{
-		slug: 'power-search',
-		title: 'Power Search',
-		description: 'Typed filter tokens: field, operator, and value editors.',
-		category: 'data'
 	},
 	{
 		slug: 'color-picker',

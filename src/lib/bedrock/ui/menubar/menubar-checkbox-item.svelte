@@ -6,7 +6,12 @@
 	import MenubarCheckboxItem from '#lib/shadcn/ui/menubar/menubar-checkbox-item.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof MenubarCheckboxItem> = $props();
+	let {
+		ref = $bindable(null),
+		checked = $bindable(false),
+		indeterminate = $bindable(false),
+		...props
+	}: ComponentProps<typeof MenubarCheckboxItem> = $props();
 </script>
 
-<MenubarCheckboxItem {...props} />
+<MenubarCheckboxItem bind:ref bind:checked bind:indeterminate {...props} />

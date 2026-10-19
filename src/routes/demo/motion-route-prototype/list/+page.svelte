@@ -46,9 +46,9 @@
 	</p>
 	<a
 		href="/demo/motion-route-prototype/detail/a?delay=650&ready=650"
-		data-sveltekit-preload-data="off">Open A with delayed data and media readiness</a
+		data-sveltekit-preload-data="false">Open A with delayed data and media readiness</a
 	>
-	<a href="/demo/motion-route-prototype/detail/a?ready=1400" data-sveltekit-preload-data="off"
+	<a href="/demo/motion-route-prototype/detail/a?ready=1400" data-sveltekit-preload-data="false"
 		>Open A beyond the readiness budget</a
 	>
 	<p>

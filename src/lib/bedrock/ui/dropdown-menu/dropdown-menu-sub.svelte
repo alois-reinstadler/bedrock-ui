@@ -6,7 +6,7 @@
 	import DropdownMenuSub from '#lib/shadcn/ui/dropdown-menu/dropdown-menu-sub.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DropdownMenuSub> = $props();
+	let { open = $bindable(false), ...props }: ComponentProps<typeof DropdownMenuSub> = $props();
 </script>
 
-<DropdownMenuSub {...props} />
+<DropdownMenuSub bind:open {...props} />

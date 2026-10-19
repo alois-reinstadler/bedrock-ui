@@ -6,7 +6,7 @@
 	import SidebarGroupLabel from '#lib/shadcn/ui/sidebar/sidebar-group-label.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SidebarGroupLabel> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SidebarGroupLabel> = $props();
 </script>
 
-<SidebarGroupLabel {...props} />
+<SidebarGroupLabel bind:ref {...props} />

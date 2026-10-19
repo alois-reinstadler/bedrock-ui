@@ -437,10 +437,11 @@ export const layoutGuides = {
 		],
 		behavior: [
 			'Root orientation defaults to vertical. Horizontal content must have an intrinsic or minimum width greater than the viewport, and both mode renders a corner where the bars meet.',
-			'edgeBlur accepts vertical, horizontal, both, or false. Each requested physical edge fades in only while overflow content remains beyond it; edgeBlurSize and edgeBlurStrength tune the treatment.',
-			'All edge treatments disappear while focus is inside the scroll area so a focus indicator or focused control is never obscured.',
+			'Set edgeBlur to true (or use the bare edgeBlur prop) to follow orientation. It defaults to false; vertical, horizontal, and both can override the blur axes. Each requested physical edge fades in only while overflow content remains beyond it; edgeBlurSize and edgeBlurStrength tune the treatment.',
+			'All edge treatments disappear while keyboard focus is inside the scroll area so a focus indicator or focused control is never obscured.',
 			'The underlying type defaults to hover and hides idle scrollbars after a 600 ms delay; type can request scroll, auto, or always behavior instead.',
 			'The internal viewport retains native wheel, touch, and trackpad scrolling. Keyboard scrolling depends on focus reaching suitable content because Root does not make the viewport a tab stop by default.',
+			'Set wheelToHorizontal to true to map vertical mouse-wheel input to the horizontal axis using browser-controlled smooth scrolling in horizontal or both orientation. It defaults to false, respects right-to-left direction and reduced-motion preferences, and releases scrolling to the page at either end. Native horizontal gestures, modified wheel gestures, and nested ScrollAreas keep their own behavior.',
 			'scrollbarXClasses and scrollbarYClasses target the generated bars independently. The component does not virtualize children or reduce their rendering cost.'
 		],
 		examplePlan: [
@@ -459,7 +460,7 @@ export const layoutGuides = {
 			{
 				title: 'Two-axis viewport with edge blur',
 				demonstrates:
-					'Use orientation="both" and edgeBlur="both", keep a bounded width and height, and show each logical blur disappearing when its corresponding scroll boundary is reached.',
+					'Use orientation="both" and edgeBlur, keep a bounded width and height, and show each logical blur disappearing when its corresponding scroll boundary is reached.',
 				priority: 'edge-case'
 			}
 		]

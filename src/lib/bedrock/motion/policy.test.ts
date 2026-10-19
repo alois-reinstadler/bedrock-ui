@@ -141,3 +141,131 @@ describe('presence policy integration', () => {
 		);
 	});
 });
+
+describe('scoped reduction for retained helpers', () => {
+	it('honors a reduced ancestor even when the closest nested scope requests full motion', async () => {
+		const { elementPrefersReducedMotion } = await import('./policy.js');
+		vi.stubGlobal(
+			'matchMedia',
+			vi.fn(() => ({ matches: false }))
+		);
+		const node = { closest: vi.fn(() => ({})) } as unknown as Element;
+		expect(elementPrefersReducedMotion(node)).toBe(true);
+		expect(node.closest).toHaveBeenCalledWith('[data-bedrock-motion="reduced"]');
+	});
+
+	it('resolves app-reduced presence and delay immediately without an OS preference', () => {
+		vi.stubGlobal('getComputedStyle', vi.fn(computedStyle));
+		const node = Object.assign(element(), { closest: () => ({}) });
+		for (const makeTransition of [appear, reveal, vanish, drawer]) {
+			const config = makeTransition(node, { duration: 400, delay: 90 });
+			expect(config.duration).toBe(0);
+			expect(config.delay).toBe(0);
+		}
+	});
+
+	it('observes scope changes and detaches all media/attribute listeners on cleanup', async () => {
+		const { observeMotionReduction } = await import('./policy.js');
+		let reduced = false;
+		let notify: (() => void) | undefined;
+		const media = { matches: false, addEventListener: vi.fn(), removeEventListener: vi.fn() };
+		vi.stubGlobal('matchMedia', () => media);
+		const observe = vi.fn();
+		const disconnect = vi.fn();
+		vi.stubGlobal(
+			'MutationObserver',
+			class {
+				constructor(callback: () => void) {
+					notify = callback;
+				}
+				observe = observe;
+				disconnect = disconnect;
+			}
+		);
+		const parent = { parentElement: null };
+		const node = {
+			parentElement: parent,
+			closest: () => (reduced ? parent : null)
+		} as unknown as Element;
+		const changed = vi.fn();
+		const cleanup = observeMotionReduction(node, changed);
+		expect(observe).toHaveBeenCalledTimes(2);
+		reduced = true;
+		notify!();
+		expect(changed).toHaveBeenLastCalledWith(true);
+		cleanup();
+		expect(disconnect).toHaveBeenCalledOnce();
+		expect(media.removeEventListener).toHaveBeenCalledWith(
+			'change',
+			media.addEventListener.mock.calls[0][1]
+		);
+	});
+});
+
+describe('live retained presence', () => {
+	it('finishes only owned motion on reduction and cleans its subscriptions', async () => {
+		vi.useFakeTimers();
+		try {
+			vi.stubGlobal('getComputedStyle', vi.fn(computedStyle));
+			let reduced = false;
+			const listeners = new Map<string, () => void>();
+			let policyChanged: (() => void) | undefined;
+			const removeMedia = vi.fn();
+			vi.stubGlobal('matchMedia', () => ({
+				matches: false,
+				addEventListener: (_: string, callback: () => void) => {
+					policyChanged = callback;
+				},
+				removeEventListener: removeMedia
+			}));
+			class Effect {
+				constructor(private owned: boolean) {}
+				getKeyframes() {
+					return this.owned ? [{ '--bedrock-presence': '1' }] : [{ opacity: 1 }];
+				}
+			}
+			vi.stubGlobal('KeyframeEffect', Effect);
+			const owned = { effect: new Effect(true), playState: 'running', finish: vi.fn() };
+			const unrelated = { effect: new Effect(false), playState: 'running', finish: vi.fn() };
+			const node = Object.assign(element(), {
+				closest: () => (reduced ? {} : null),
+				getAnimations: () => [owned, unrelated],
+				addEventListener: (type: string, callback: () => void) => listeners.set(type, callback),
+				removeEventListener: (type: string) => listeners.delete(type)
+			});
+			const config = appear(node);
+			expect(config.css!(0.5, 0.5)).toContain('--bedrock-presence: 1');
+			reduced = true;
+			policyChanged!();
+			expect(owned.finish).toHaveBeenCalledOnce();
+			expect(unrelated.finish).not.toHaveBeenCalled();
+			listeners.get('introend')!();
+			expect(removeMedia).toHaveBeenCalledOnce();
+			expect(listeners.size).toBe(0);
+			expect(vi.getTimerCount()).toBe(0);
+		} finally {
+			vi.useRealTimers();
+		}
+	});
+});
+
+describe('server-rendered context isolation', () => {
+	it('preserves reduced ancestors and isolates independently rendered requests', async () => {
+		const { render } = await import('svelte/server');
+		const { default: Scope } = await import('./policy-fixtures/Scope.svelte');
+		const reduced = await render(Scope, { props: { reduced: true, nestedReduced: false } });
+		const normal = await render(Scope, { props: { reduced: false, nestedReduced: false } });
+		expect(reduced.body).toContain('data-policy="reduced"');
+		expect(normal.body).toContain('data-policy="full"');
+		expect(reduced.body).toContain('Essential content');
+		expect(normal.body).toContain('Essential content');
+	});
+
+	it('renders essential provider-free content without browser globals', async () => {
+		const { render } = await import('svelte/server');
+		const { default: Reader } = await import('./policy-fixtures/Reader.svelte');
+		const output = await render(Reader);
+		expect(output.body).toContain('data-policy="full"');
+		expect(output.body).toContain('Essential content');
+	});
+});

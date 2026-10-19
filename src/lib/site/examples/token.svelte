@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Token } from '#lib/bedrock/ui/token';
 
 	let filters = $state(['Ready', 'Needs review']);
@@ -13,7 +14,7 @@
 		</p>
 	</div>
 
-	<div class="max-w-md space-y-4 rounded-xl border p-5">
+	<Card.Root class="block max-w-md gap-0 space-y-4 p-5">
 		<div class="flex flex-wrap gap-2">
 			{#each filters as filter (filter)}<Token
 					label={filter}
@@ -30,5 +31,5 @@
 					<span>{sample.name}</span><span class="text-muted-foreground">{sample.status}</span>
 				</li>{/each}
 		</ul>
-	</div>
+	</Card.Root>
 </section>

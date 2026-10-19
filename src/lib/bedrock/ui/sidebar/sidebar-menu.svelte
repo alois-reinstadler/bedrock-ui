@@ -7,7 +7,11 @@
 	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let { class: className, ...props }: ComponentProps<typeof SidebarMenu> = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		...props
+	}: ComponentProps<typeof SidebarMenu> = $props();
 </script>
 
-<SidebarMenu {...props} class={cn('gap-1', className)} />
+<SidebarMenu bind:ref {...props} class={cn('gap-1', className)} />

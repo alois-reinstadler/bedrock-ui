@@ -1,0 +1,461 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn-svelte/tailwind.css';
+@import '@fontsource-variable/instrument-sans';
+@import './motion/tokens.css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.145 0 0);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.145 0 0);
+	--primary: oklch(0.205 0 0);
+	--primary-foreground: oklch(0.985 0 0);
+	--secondary: oklch(0.97 0 0);
+	--secondary-foreground: oklch(0.205 0 0);
+	--muted: oklch(0.97 0 0);
+	--muted-foreground: oklch(0.556 0 0);
+	--accent: oklch(0.97 0 0);
+	--accent-foreground: oklch(0.205 0 0);
+	--destructive: oklch(0.577 0.245 27.325);
+	--destructive-ink: oklch(0.48 0.2 27.325);
+	--border: oklch(0.922 0 0);
+	--input: oklch(0.922 0 0);
+	--ring: oklch(0.708 0 0);
+	--chart-1: oklch(0.87 0 0);
+	--chart-2: oklch(0.556 0 0);
+	--chart-3: oklch(0.439 0 0);
+	--chart-4: oklch(0.371 0 0);
+	--chart-5: oklch(0.269 0 0);
+	--radius: 1rem;
+	--corner-shape: superellipse(3);
+	--sidebar: var(--background);
+	--sidebar-foreground: oklch(0.145 0 0);
+	--sidebar-primary: oklch(0.205 0 0);
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.97 0 0);
+	--sidebar-hover: oklch(0 0 0 / 4%);
+	--sidebar-accent-foreground: oklch(0.205 0 0);
+	--sidebar-border: oklch(0.922 0 0);
+	--sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+	--background: oklch(0.145 0 0);
+	--foreground: oklch(0.985 0 0);
+	--card: oklch(0.205 0 0);
+	--card-foreground: oklch(0.985 0 0);
+	--popover: oklch(0.205 0 0);
+	--popover-foreground: oklch(0.985 0 0);
+	--primary: oklch(0.922 0 0);
+	--primary-foreground: oklch(0.205 0 0);
+	--secondary: oklch(0.269 0 0);
+	--secondary-foreground: oklch(0.985 0 0);
+	--muted: oklch(0.269 0 0);
+	--muted-foreground: oklch(0.708 0 0);
+	--accent: oklch(0.269 0 0);
+	--accent-foreground: oklch(0.985 0 0);
+	--destructive: oklch(0.704 0.191 22.216);
+	--destructive-ink: oklch(0.76 0.16 22.216);
+	--border: oklch(1 0 0 / 10%);
+	--input: oklch(1 0 0 / 15%);
+	--ring: oklch(0.556 0 0);
+	--chart-1: oklch(0.87 0 0);
+	--chart-2: oklch(0.556 0 0);
+	--chart-3: oklch(0.439 0 0);
+	--chart-4: oklch(0.371 0 0);
+	--chart-5: oklch(0.269 0 0);
+	--sidebar: var(--background);
+	--sidebar-foreground: oklch(0.985 0 0);
+	--sidebar-primary: oklch(0.488 0.243 264.376);
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.269 0 0);
+	--sidebar-hover: oklch(1 0 0 / 8%);
+	--sidebar-accent-foreground: oklch(0.985 0 0);
+	--sidebar-border: oklch(1 0 0 / 10%);
+	--sidebar-ring: oklch(0.556 0 0);
+}
+
+@theme inline {
+	--font-sans: 'Instrument Sans Variable', sans-serif;
+	--font-heading: 'Instrument Sans Variable', sans-serif;
+	--font-code:
+		ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+	--color-sidebar-ring: var(--sidebar-ring);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-hover: var(--sidebar-hover);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar: var(--sidebar);
+	--color-chart-5: var(--chart-5);
+	--color-chart-4: var(--chart-4);
+	--color-chart-3: var(--chart-3);
+	--color-chart-2: var(--chart-2);
+	--color-chart-1: var(--chart-1);
+	--color-ring: var(--ring);
+	--color-input: var(--input);
+	--color-border: var(--border);
+	--color-destructive: var(--destructive);
+	--color-destructive-ink: var(--destructive-ink);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-accent: var(--accent);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-muted: var(--muted);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-secondary: var(--secondary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-primary: var(--primary);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-popover: var(--popover);
+	--color-card-foreground: var(--card-foreground);
+	--color-card: var(--card);
+	--color-foreground: var(--foreground);
+	--color-background: var(--background);
+	--radius-sm: calc(var(--radius) * 0.6);
+	--radius-md: calc(var(--radius) * 0.8);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) * 1.4);
+	--radius-2xl: calc(var(--radius) * 1.8);
+	--radius-3xl: calc(var(--radius) * 2.2);
+	--radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+	/* Shared component surfaces follow one theme token. Unsupported browsers
+	   keep their existing border-radius. Decorative artwork stays independent. */
+	:where([data-slot]) {
+		corner-shape: var(--corner-shape, round);
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+	html {
+		@apply font-sans;
+	}
+}
+
+/* Use the same theme for custom surfaces outside the component library. */
+@utility corner-theme {
+	corner-shape: var(--corner-shape, round);
+}
+
+@utility corner-round {
+	corner-shape: round;
+}
+
+/* Circles, pills, avatars and switch thumbs retain their intended geometry. */
+@utility rounded-full {
+	corner-shape: round;
+}
+
+/* Expands the hit area of a small control to at least 44x44px (WCAG 2.5.5)
+ * without changing its visual size. The pseudo-element receives pointer
+ * events on behalf of the element it belongs to. */
+@utility tap-target {
+	position: relative;
+
+	&::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: max(100%, 2.75rem);
+		height: max(100%, 2.75rem);
+		translate: -50% -50%;
+	}
+}
+
+@utility motion-press {
+	transition-property: transform, opacity;
+	transition-duration: var(--motion-press);
+	transition-timing-function: var(--motion-ease-enter);
+}
+
+@utility motion-state {
+	transition-property: color, background-color, border-color, opacity, box-shadow;
+	transition-duration: var(--motion-state);
+	transition-timing-function: var(--motion-ease-enter);
+}
+
+@utility motion-reveal {
+	interpolate-size: allow-keywords;
+	transition-property: height, block-size, opacity;
+	transition-duration: var(--motion-reveal);
+	transition-timing-function: var(--motion-ease-enter);
+}
+
+/* Bits owns retention via this clock; CSS transitions own visual properties.
+   Keeping the clock separate allows an interrupted close/open to reverse from
+   its current paint value rather than jumping to a keyframe endpoint. */
+@keyframes bedrock-surface-enter {
+	from {
+		--bedrock-presence-clock: 0;
+	}
+	to {
+		--bedrock-presence-clock: 1;
+	}
+}
+@keyframes bedrock-surface-exit {
+	from {
+		--bedrock-presence-clock: 1;
+	}
+	to {
+		--bedrock-presence-clock: 0;
+	}
+}
+
+/* Astryx surface recipes. Visual interpolation and primitive retention are
+   separate clocks: readable dialog content settles before its backdrop. */
+.motion-popover,
+.motion-hint,
+.motion-overlay,
+.motion-drawer,
+.motion-navigation {
+	--bedrock-surface-x: 0px;
+	--bedrock-surface-y: 0px;
+	--bedrock-surface-enter: var(--motion-popover-enter);
+	--bedrock-surface-exit: var(--motion-popover-exit);
+	--bedrock-surface-enter-clock: var(--bedrock-surface-enter);
+	--bedrock-surface-exit-clock: var(--bedrock-surface-exit);
+	--bedrock-surface-ease-enter: var(--motion-ease-enter);
+	--bedrock-surface-ease-exit: var(--motion-ease-exit);
+	opacity: 1;
+	transform: translate(0, 0);
+	filter: blur(0);
+	animation-name: bedrock-surface-enter;
+	animation-fill-mode: none;
+	transition-property: opacity, transform, filter;
+	transition-behavior: allow-discrete;
+	transition-duration: var(--bedrock-surface-enter);
+	transition-timing-function: var(--bedrock-surface-ease-enter);
+	animation-duration: var(--bedrock-surface-enter-clock);
+	animation-timing-function: linear;
+}
+
+.motion-popover {
+	transform-origin: var(
+		--bits-dropdown-menu-content-transform-origin,
+		var(
+			--bits-context-menu-content-transform-origin,
+			var(
+				--bits-select-content-transform-origin,
+				var(
+					--bits-popover-content-transform-origin,
+					var(
+						--bits-hover-card-content-transform-origin,
+						var(--bits-combobox-content-transform-origin, center)
+					)
+				)
+			)
+		)
+	);
+	&[data-side='top'] {
+		--bedrock-surface-y: 4px;
+	}
+	&[data-side='bottom'] {
+		--bedrock-surface-y: -4px;
+	}
+	&[data-side='left'],
+	&[data-side='inline-start'] {
+		--bedrock-surface-x: 4px;
+	}
+	&[data-side='right'],
+	&[data-side='inline-end'] {
+		--bedrock-surface-x: -4px;
+	}
+}
+
+.motion-hint {
+	transform-origin: var(--bits-tooltip-content-transform-origin, center);
+	transition-property: opacity, filter;
+	--bedrock-surface-enter: var(--motion-hint-enter);
+	/* Immediate dismissal avoids a stale hint over the next action. This is a
+	   component policy exception, not a change to Astryx's hint-exit seed. */
+	--bedrock-surface-exit: 0.01ms;
+}
+
+.motion-overlay {
+	--bedrock-surface-enter: var(--motion-overlay);
+	--bedrock-surface-enter-clock: var(--motion-overlay);
+	--bedrock-surface-exit: var(--motion-exit);
+	&[data-slot$='content'] {
+		--bedrock-surface-enter: var(--motion-hint-enter);
+	}
+}
+
+.motion-drawer {
+	--bedrock-surface-enter: var(--motion-overlay);
+	--bedrock-surface-exit: var(--motion-exit);
+	--bedrock-surface-ease-enter: var(--motion-ease-drawer);
+	&[data-side='top'] {
+		--bedrock-surface-y: -100%;
+	}
+	&[data-side='bottom'] {
+		--bedrock-surface-y: 100%;
+	}
+	&[data-side='left'] {
+		--bedrock-surface-x: -100%;
+	}
+	&[data-side='right'] {
+		--bedrock-surface-x: 100%;
+	}
+}
+
+.motion-navigation {
+	--bedrock-surface-enter: var(--motion-enter);
+	--bedrock-surface-exit: var(--motion-exit);
+	&[data-motion='from-start'],
+	&[data-motion='to-start'] {
+		--bedrock-surface-x: -6px;
+	}
+	&[data-motion='from-end'],
+	&[data-motion='to-end'] {
+		--bedrock-surface-x: 6px;
+	}
+}
+
+:is(.motion-popover, .motion-hint, .motion-overlay, .motion-drawer, .motion-navigation):is(
+	[data-state='closed'],
+	[data-closed]
+),
+.motion-navigation[data-motion^='to-'] {
+	opacity: 0;
+	transform: translate(var(--bedrock-surface-x), var(--bedrock-surface-y));
+	pointer-events: none;
+	animation-name: bedrock-surface-exit;
+	transition-duration: var(--bedrock-surface-exit);
+	transition-timing-function: var(--bedrock-surface-ease-exit);
+	animation-duration: var(--bedrock-surface-exit-clock);
+}
+
+/* Opt-in sharpening finishes early, while the surface continues settling. */
+:is(
+	.motion-popover,
+	.motion-hint,
+	.motion-overlay[data-slot='dialog-content']
+)[data-motion-style='soft'] {
+	transition-duration:
+		var(--motion-popover-enter), var(--motion-popover-enter), var(--motion-hint-enter);
+}
+:is(
+	.motion-popover,
+	.motion-hint,
+	.motion-overlay[data-slot='dialog-content']
+)[data-motion-settled] {
+	filter: none;
+	transition-property: opacity, transform;
+}
+
+@starting-style {
+	:is(.motion-popover, .motion-hint, .motion-overlay, .motion-drawer, .motion-navigation):not(
+			[data-state='closed']
+		):not([data-closed]) {
+		opacity: 0;
+		transform: translate(var(--bedrock-surface-x), var(--bedrock-surface-y));
+	}
+	:is(
+			.motion-popover,
+			.motion-hint,
+			.motion-overlay[data-slot='dialog-content']
+		)[data-motion-style='soft']:not([data-motion-settled]) {
+		filter: blur(2px);
+	}
+}
+
+/* Only decorative SVGs move, never menu labels or hit targets. First row and
+   nested submenus are excluded by the top-level content attachment. */
+@keyframes bedrock-menu-icon {
+	from {
+		translate: -2px 0;
+	}
+	to {
+		translate: 0 0;
+	}
+}
+[data-motion-style='stagger']:not([data-motion-settled]):not([data-state='closed'])
+	[data-menu-motion-icon] {
+	animation: bedrock-menu-icon var(--motion-hint-enter) var(--motion-ease-enter) both;
+	&[data-menu-motion-icon='2'] {
+		animation-delay: 20ms;
+	}
+	&[data-menu-motion-icon='3'] {
+		animation-delay: 40ms;
+	}
+	&[data-menu-motion-icon='4'] {
+		animation-delay: 60ms;
+	}
+}
+
+/* Vaul retains gesture/settlement ownership; only its supported CSS timing is
+   aligned, with no competing transform, transition property or keyframes. */
+.motion-vaul:is([data-vaul-drawer], [data-vaul-overlay]) {
+	/* Enter animations release transform/opacity so Vaul can own dragging. */
+	animation-fill-mode: backwards;
+	animation-duration: var(--motion-overlay);
+	transition-duration: var(--motion-overlay);
+	&[data-state='closed'] {
+		/* Keep the final exit frame until Bits unmounts the retained surface. */
+		animation-fill-mode: forwards;
+		animation-duration: var(--motion-exit);
+		transition-duration: var(--motion-exit);
+	}
+}
+
+/* Focus is immediate even when a primitive ships transition-all. Restrict this
+   to controls so focused surface movement retains its own lifecycle. */
+:is(
+	button,
+	input,
+	textarea,
+	select,
+	a,
+	[role='checkbox'],
+	[role='radio'],
+	[role='switch'],
+	[role='tab']
+):focus-visible,
+[data-slot='input-group']:focus-within,
+[data-slot='input-otp-slot'][data-active='true'] {
+	transition-duration: 0s;
+}
+
+/* The viewport is the navigation family's sole measured shell. */
+.motion-popover[data-slot='navigation-menu-viewport'] {
+	transition-property: opacity, transform, height, width;
+	transition-duration:
+		var(--motion-popover-enter), var(--motion-popover-enter), var(--motion-reveal),
+		var(--motion-reveal);
+}
+
+/* With the shared viewport, only its shell fades on first open/final close.
+   Content owns opacity solely during directional handoff between panels. */
+[data-slot='navigation-menu-viewport'] > .motion-navigation:not([data-motion]) {
+	opacity: 1;
+	transform: none;
+	animation-name: none;
+	transition-property: none;
+}
+@starting-style {
+	[data-slot='navigation-menu-viewport'] > .motion-navigation:not([data-motion]) {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* Decorative surfaces must follow their host's corner geometry, including
+   theme squircles. Filters also clip their own output at these corners. */
+[data-slot='spotlight'] > .glow,
+[data-slot='progressive-blur'],
+[data-slot='progressive-blur'] > span {
+	corner-shape: inherit;
+}

@@ -3,11 +3,25 @@
 </script>
 
 <script lang="ts">
+	import { surfacePresence } from '#lib/bedrock/motion/surface-interaction.js';
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
 	import DropdownMenuSubContent from '#lib/shadcn/ui/dropdown-menu/dropdown-menu-sub-content.svelte';
 	import { cn } from '#lib/utils.js';
 	import type { ComponentProps } from 'svelte';
 
-	let { class: className, ...restProps }: ComponentProps<typeof DropdownMenuSubContent> = $props();
+	const policy = useMotionPolicy();
+
+	let {
+		ref = $bindable(null),
+		class: className,
+		...restProps
+	}: ComponentProps<typeof DropdownMenuSubContent> = $props();
 </script>
 
-<DropdownMenuSubContent class={cn('motion-popover', className)} {...restProps} />
+<DropdownMenuSubContent
+	bind:ref
+	{@attach policy.attach}
+	{@attach surfacePresence}
+	class={cn('motion-popover', className)}
+	{...restProps}
+/>

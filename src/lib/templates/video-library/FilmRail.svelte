@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Button } from '#lib/bedrock/ui/button';
 	import FilmCard from './FilmCard.svelte';
 	import type { Film } from './catalog.js';
 	let {
@@ -14,7 +15,10 @@
 	<div class="rail-heading">
 		<h2>{title}</h2>
 		<div>
-			{#if href}<a {href}>View all →</a>{/if}<button
+			{#if href}<a {href}>View all →</a>{/if}<Button
+				variant="ghost"
+				type="button"
+				class={['control-templates-video-library-filmrail h-auto whitespace-normal']}
 				aria-label={`Scroll ${title} left`}
 				onclick={() =>
 					rail.scrollBy({
@@ -22,8 +26,11 @@
 						behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
 							? 'instant'
 							: 'smooth'
-					})}>‹</button
-			><button
+					})}>‹</Button
+			><Button
+				variant="ghost"
+				type="button"
+				class={['control-templates-video-library-filmrail h-auto whitespace-normal']}
 				aria-label={`Scroll ${title} right`}
 				onclick={() =>
 					rail.scrollBy({
@@ -31,7 +38,7 @@
 						behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
 							? 'instant'
 							: 'smooth'
-					})}>›</button
+					})}>›</Button
 			>
 		</div>
 	</div>

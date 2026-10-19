@@ -1,17 +1,21 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
 	import AsyncButton from './async-button.svelte';
+	import MotionProvider from '#lib/bedrock/motion/MotionProvider.svelte';
 
 	let {
 		action,
 		resetAfter = 40,
 		interruptible = false,
 		disabled = false,
-		onError
+		onError,
+		reduced = false
 	}: Pick<
 		ComponentProps<typeof AsyncButton>,
 		'action' | 'resetAfter' | 'interruptible' | 'disabled' | 'onError'
-	> = $props();
+	> & { reduced?: boolean } = $props();
 </script>
 
-<AsyncButton {action} {resetAfter} {interruptible} {disabled} {onError}>Upload</AsyncButton>
+<MotionProvider {reduced}>
+	<AsyncButton {action} {resetAfter} {interruptible} {disabled} {onError}>Upload</AsyncButton>
+</MotionProvider>

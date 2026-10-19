@@ -37,3 +37,23 @@ describe('cubicBezier', () => {
 		expect(easing(0.5)).toBeGreaterThan(0.85);
 	});
 });
+
+describe('CSS token parity', () => {
+	it('checks every CSS value and prevents extra untracked root tokens', async () => {
+		const { readFile } = await import('node:fs/promises');
+		const { motionCssTokens } = await import('./tokens.js');
+		const css = await readFile(new URL('./tokens.css', import.meta.url), 'utf8');
+		const root = css.match(/:root\s*\{([^}]+)\}/)![1];
+		const declarations = Object.fromEntries(
+			[...root.matchAll(/(--motion-[\w-]+):\s*([^;]+);/g)].map((match) => [match[1], match[2]])
+		);
+		expect(declarations).toEqual(motionCssTokens);
+	});
+
+	it('converts milliseconds at the Astra boundary only', async () => {
+		const { astraPresets } = await import('./astra-presets.js');
+		expect(astraPresets.feedback.duration).toBe(0.13);
+		expect(astraPresets.disclosure.duration).toBe(0.31);
+		expect(astraPresets.relocation).toEqual({ type: 'spring', ...motionPresets.layout.spring });
+	});
+});

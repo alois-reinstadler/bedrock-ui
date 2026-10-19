@@ -6,7 +6,11 @@
 	import CommandInput from '#lib/shadcn/ui/command/command-input.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CommandInput> = $props();
+	let {
+		ref = $bindable(null),
+		value = $bindable(''),
+		...props
+	}: ComponentProps<typeof CommandInput> = $props();
 </script>
 
-<CommandInput {...props} />
+<CommandInput bind:ref bind:value {...props} />

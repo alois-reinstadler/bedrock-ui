@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Input } from '#lib/bedrock/ui/input';
 	import { Label } from '#lib/bedrock/ui/label';
 	import { Button } from '#lib/bedrock/ui/button';
@@ -6,7 +7,7 @@
 	let subscribed = $state(false);
 </script>
 
-<section class="w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full max-w-2xl gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Monthly product digest</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -43,4 +44,4 @@
 			{subscribed ? `Sample subscription saved for ${email}.` : ''}
 		</p>
 	</form>
-</section>
+</Card.Root>

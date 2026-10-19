@@ -1,0 +1,3760 @@
+[
+	{
+		"file": "src/routes/+layout.svelte",
+		"lines": 44,
+		"bedrock": [
+			"#lib/bedrock/motion/MotionProvider.svelte",
+			"#lib/bedrock/ui/sonner",
+			"#lib/bedrock/ui/tooltip"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/+page.svelte",
+		"lines": 128,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/button", "#lib/bedrock/ui/card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/+layout.svelte",
+		"lines": 107,
+		"bedrock": [
+			"#lib/bedrock/shaders/catalog.js",
+			"#lib/bedrock/ui/breadcrumb",
+			"#lib/bedrock/ui/separator",
+			"#lib/bedrock/ui/sidebar"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/+page.svelte",
+		"lines": 97,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/button", "#lib/bedrock/ui/card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/+page.svelte",
+		"lines": 11,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/+layout.svelte",
+		"lines": 202,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/popover"],
+		"native_controls": [],
+		"local_radius": [[159, "border-radius: 0.875rem;"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/motion/+page.svelte",
+		"lines": 62,
+		"bedrock": ["#lib/bedrock/motion/MotionProvider.svelte", "#lib/bedrock/ui/checkbox"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/+layout.svelte",
+		"lines": 913,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/icon-button",
+			"#lib/bedrock/ui/input",
+			"#lib/bedrock/ui/slider"
+		],
+		"native_controls": [],
+		"local_radius": [
+			[391, "border-radius: 8px;"],
+			[416, "border-radius: 5px;"],
+			[453, "border-radius: 50%;"],
+			[502, "border-radius: 4px;"],
+			[585, "border-radius: 6px;"],
+			[635, "border-radius: 50%;"],
+			[667, "border-radius: 5px;"],
+			[691, "border-radius: 8px;"],
+			[720, "border-radius: 50%;"],
+			[764, "border-radius: 24px;"],
+			[776, "border-radius: 24px;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/+page.svelte",
+		"lines": 187,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [[76, "border-radius: 12px;"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/social-network/+layout.svelte",
+		"lines": 181,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/dropdown-menu", "#lib/bedrock/ui/input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/social-network/+page.svelte",
+		"lines": 39,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/video-library/+layout.svelte",
+		"lines": 141,
+		"bedrock": [
+			"#lib/bedrock/motion/policy.js",
+			"#lib/bedrock/motion/tokens.js",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/input"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/video-library/+page.svelte",
+		"lines": 67,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/email-client/+layout.svelte",
+		"lines": 8,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/email-client/+page.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/email-client/tasks/+page.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/email-client/calendar/+page.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/email-client/mail/[folder]/[[message]]/+page.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/video-library/my-list/+page.svelte",
+		"lines": 22,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/video-library/search/+page.svelte",
+		"lines": 34,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/video-library/title/[slug]/+page.svelte",
+		"lines": 76,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/video-library/watch/[slug]/+page.svelte",
+		"lines": 89,
+		"bedrock": ["#lib/bedrock/ui/video-player"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/video-library/genres/[genre]/+page.svelte",
+		"lines": 21,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/social-network/notifications/+page.svelte",
+		"lines": 84,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/social-network/bookmarks/+page.svelte",
+		"lines": 19,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/social-network/explore/+page.svelte",
+		"lines": 73,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/social-network/post/[id]/+page.svelte",
+		"lines": 36,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/social-network/profile/[handle]/+page.svelte",
+		"lines": 127,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/input", "#lib/bedrock/ui/textarea"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/library/+page.svelte",
+		"lines": 72,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [
+			[43, "border-radius: 10px;"],
+			[53, "border-radius: 9px;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/visualizer/+page.svelte",
+		"lines": 155,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [
+			[131, "border-radius: 99px;"],
+			[135, "border-radius: 99px;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/liked/+page.svelte",
+		"lines": 17,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/recent/+page.svelte",
+		"lines": 19,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/lyrics/+page.svelte",
+		"lines": 227,
+		"bedrock": [
+			"#lib/bedrock/motion/policy.js",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/scroll-area"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/credits/+page.svelte",
+		"lines": 82,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/discover/+page.svelte",
+		"lines": 103,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/native-select"],
+		"native_controls": [],
+		"local_radius": [[86, "border-radius: 25px;"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/templates/music-player/album/[slug]/+page.svelte",
+		"lines": 262,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [[120, "border-radius: 9px;"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion-test/+page.svelte",
+		"lines": 23,
+		"bedrock": ["#lib/bedrock/motion/motion-stress-fixture.svelte"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion-route-prototype/+layout.svelte",
+		"lines": 180,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [
+			[37, "<label><input type=\"checkbox\" bind:checked={slow} /> Slow inspection</label>"],
+			[
+				39,
+				"><input type=\"checkbox\" bind:checked={reduced} onchange={() => coordinator.settle()} /> Reduce motion</label"
+			]
+		],
+		"local_radius": [
+			[115, "border-radius: 16px;"],
+			[134, "border-radius: 22px;"],
+			[139, "border-radius: 16px;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/chat/+page.svelte",
+		"lines": 202,
+		"bedrock": [
+			"#lib/bedrock/ui/chat",
+			"#lib/bedrock/ui/citation",
+			"#lib/bedrock/ui/markdown",
+			"#lib/bedrock/ui/timestamp"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/contrast/+page.svelte",
+		"lines": 38,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/playwright/+page.svelte",
+		"lines": 1,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion/+layout.svelte",
+		"lines": 214,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [[159, "border-radius: 0.65rem;"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion/+page.svelte",
+		"lines": 234,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [
+			[99, "border-radius: 1.35rem;"],
+			[133, "border-radius: 0.9rem;"],
+			[171, "border-radius: 0.9rem;"],
+			[194, "border-radius: 0.9rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/ui/scene.svelte",
+		"lines": 26,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"lines": 923,
+		"bedrock": ["#lib/bedrock/motion/index.js"],
+		"native_controls": [],
+		"local_radius": [
+			[279, "<div class=\"rounded-[1.75rem] bg-muted/60 p-1.5\">"],
+			[280, "<LayoutGroup class=\"rounded-[calc(1.75rem-0.375rem)] bg-background p-1\">"],
+			[340, "class=\"rounded-2xl bg-muted/80 px-4 py-5\""],
+			[383, "'flex min-h-28 rounded-[1.75rem] bg-muted/50 p-3',"],
+			[
+				392,
+				"class=\"rounded-2xl bg-background px-5 py-3 text-sm font-medium shadow-[0_18px_40px_-24px_rgba(24,24,27,0.45)]\""
+			],
+			[411, "'overflow-hidden rounded-[1.6rem] text-left',"],
+			[436, "<article class=\"overflow-hidden rounded-2xl bg-muted/80\">"],
+			[493, "class=\"flex items-start justify-between gap-3 rounded-2xl bg-muted/80 px-4 py-3\""],
+			[576, "<LayoutGroup class=\"flex flex-col overflow-hidden rounded-[1.6rem] bg-muted/50\">"],
+			[609, "class=\"relative min-h-28 rounded-[1.6rem] p-4 text-left\""],
+			[614, "class=\"absolute inset-0 rounded-[1.6rem] bg-muted\""],
+			[630, "<div class=\"min-h-28 rounded-[1.6rem] bg-muted/40\" aria-hidden=\"true\"></div>"],
+			[
+				638,
+				"class=\"absolute inset-0 z-10 flex min-h-56 w-full flex-col justify-between overflow-hidden rounded-[1.6rem] p-4 text-left text-background\""
+			],
+			[644, "class=\"absolute inset-0 rounded-[1.6rem] bg-foreground\""],
+			[694, "<article {@attach densityCard} class=\"rounded-2xl bg-muted/80 px-3 py-4\">"],
+			[727, "class=\"box-border max-w-sm overflow-hidden rounded-[1.6rem] bg-muted/50 p-3\""],
+			[762, "<LayoutGroup class=\"flex min-h-48 overflow-hidden rounded-[1.6rem]\">"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/ui-page-transitions/magazine.svelte",
+		"lines": 420,
+		"bedrock": [],
+		"native_controls": [
+			[64, "<button type=\"button\" class=\"back-button\" onclick={closeIssue}>"],
+			[93, "<button type=\"button\" class=\"read-button\">"],
+			[111, "<button class=\"issue-card\" type=\"button\" onclick={() => openIssue(issue)}>"]
+		],
+		"local_radius": [
+			[204, "border-radius: 0.18rem;"],
+			[266, "border-radius: 50%;"],
+			[382, "border-radius: 999px;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/ui-page-transitions/checkout.svelte",
+		"lines": 363,
+		"bedrock": [],
+		"native_controls": [
+			[
+				33,
+				"<button type=\"button\" onclick={reset}><RotateCcwIcon class=\"size-4\" /> Noch einmal</button>"
+			],
+			[59, "<button type=\"button\" class=\"confirm-button\" onclick={confirm}>"]
+		],
+		"local_radius": [
+			[127, "border-radius: 50% 50% 1rem 1rem;"],
+			[158, "border-radius: 50% 50% 42% 42% / 18% 18% 12% 12%;"],
+			[174, "border-radius: 50%;"],
+			[220, "border-radius: 999px;"],
+			[256, "border-radius: 50%;"],
+			[266, "border-radius: 50%;"],
+			[289, "border-radius: 50%;"],
+			[333, "border-radius: 999px;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/ui-page-transitions/journey.svelte",
+		"lines": 351,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [
+			[161, "border-radius: 999px;"],
+			[229, "border-radius: 50%;"],
+			[242, "border-radius: 1.5rem;"],
+			[264, "border-radius: 50%;"],
+			[289, "border-radius: 50%;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/ui-page-transitions/+page.svelte",
+		"lines": 697,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [
+			[336, "border-radius: 0.8rem;"],
+			[355, "border-radius: 1.15rem;"],
+			[380, "border-radius: 50%;"],
+			[433, "border-radius: 999px;"],
+			[477, "border-radius: 0.18rem;"],
+			[648, "border-radius: 0.75rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/ui-page-transitions/workspace.svelte",
+		"lines": 597,
+		"bedrock": [],
+		"native_controls": [
+			[82, "<button class=\"active\" type=\"button\" aria-label=\"Posteingang\""],
+			[
+				85,
+				"<button type=\"button\" aria-label=\"Dokumente\"><FileTextIcon class=\"size-4\" /></button>"
+			],
+			[
+				86,
+				"<button type=\"button\" aria-label=\"Benachrichtigungen\"><BellIcon class=\"size-4\" /></button>"
+			],
+			[
+				88,
+				"<button type=\"button\" aria-label=\"Einstellungen\"><SettingsIcon class=\"size-4\" /></button>"
+			],
+			[95, "<button type=\"button\" class=\"workspace-back\" onclick={closeBrief}>"],
+			[106, "<button type=\"button\">Freigeben <ArrowUpRightIcon class=\"size-4\" /></button>"],
+			[
+				138,
+				"<button type=\"button\" aria-label=\"Suchen\"><SearchIcon class=\"size-4\" /></button>"
+			]
+		],
+		"local_radius": [
+			[194, "border-radius: 50%;"],
+			[220, "border-radius: 0.7rem;"],
+			[292, "border-radius: 0.9rem;"],
+			[323, "border-radius: 1rem;"],
+			[368, "border-radius: 50%;"],
+			[409, "border-radius: 999px;"],
+			[427, "border-radius: 1rem;"],
+			[520, "border-radius: 99px;"],
+			[527, "border-radius: inherit;"],
+			[544, "border-radius: 50%;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/erp/+page.svelte",
+		"lines": 456,
+		"bedrock": [
+			"#lib/bedrock/ui/alert-dialog",
+			"#lib/bedrock/ui/avatar",
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/banner",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/chat",
+			"#lib/bedrock/ui/combobox",
+			"#lib/bedrock/ui/data-table",
+			"#lib/bedrock/ui/lightbox",
+			"#lib/bedrock/ui/overflow-list",
+			"#lib/bedrock/ui/status-dot",
+			"#lib/bedrock/ui/thumbnail",
+			"#lib/bedrock/ui/timestamp",
+			"#lib/bedrock/ui/tooltip"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/component-motion/+page.svelte",
+		"lines": 12,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion/components/+page.svelte",
+		"lines": 501,
+		"bedrock": [
+			"#lib/bedrock/ui/alert-dialog",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/checkbox",
+			"#lib/bedrock/ui/dialog",
+			"#lib/bedrock/ui/drawer",
+			"#lib/bedrock/ui/dropdown-menu",
+			"#lib/bedrock/ui/popover",
+			"#lib/bedrock/ui/radio-group",
+			"#lib/bedrock/ui/select",
+			"#lib/bedrock/ui/sheet",
+			"#lib/bedrock/ui/slider",
+			"#lib/bedrock/ui/switch",
+			"#lib/bedrock/ui/toggle-group",
+			"#lib/bedrock/ui/tooltip"
+		],
+		"native_controls": [],
+		"local_radius": [
+			[424, "border-radius: 0.85rem;"],
+			[464, "border-radius: 0.65rem;"],
+			[491, "border-radius: 0.85rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion/continuity/+page.svelte",
+		"lines": 673,
+		"bedrock": [
+			"#lib/bedrock/motion/index.js",
+			"#lib/bedrock/ui/accordion",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/resizable",
+			"#lib/bedrock/ui/slider",
+			"#lib/bedrock/ui/tabs"
+		],
+		"native_controls": [],
+		"local_radius": [
+			[457, "border-radius: 0.8rem;"],
+			[465, "border-radius: 0.6rem;"],
+			[484, "border-radius: 0.6rem;"],
+			[500, "border-radius: 0.9rem;"],
+			[504, "border-radius: 0.9rem;"],
+			[536, "border-radius: 0.75rem;"],
+			[550, "border-radius: 0.8rem;"],
+			[578, "border-radius: 0.8rem;"],
+			[600, "border-radius: 999px;"],
+			[621, "border-radius: 50%;"],
+			[641, "border-radius: 0.7rem;"],
+			[649, "border-radius: 0.45rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion/concurrency/+page.svelte",
+		"lines": 663,
+		"bedrock": [
+			"#lib/bedrock/motion/index.js",
+			"#lib/bedrock/ui/accordion",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/checkbox",
+			"#lib/bedrock/ui/dialog",
+			"#lib/bedrock/ui/switch"
+		],
+		"native_controls": [
+			[362, "<label>Autocomplete<input bind:value={search} /></label>"],
+			[
+				364,
+				"{#each searchResults as result (result)}<button type=\"button\">{result}</button>{/each}"
+			]
+		],
+		"local_radius": [
+			[442, "border-radius: 0.8rem;"],
+			[462, "border-radius: 0.45rem;"],
+			[477, "border-radius: 0.8rem;"],
+			[492, "border-radius: 0.6rem;"],
+			[521, "border-radius: 0.7rem;"],
+			[536, "border-radius: 0.8rem;"],
+			[546, "border-radius: 0.6rem;"],
+			[573, "border-radius: 0.7rem;"],
+			[590, "border-radius: 0.8rem;"],
+			[615, "border-radius: 0.4rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion/foundations/+page.svelte",
+		"lines": 444,
+		"bedrock": ["#lib/bedrock/motion/index.js"],
+		"native_controls": [
+			[
+				74,
+				"{#snippet actions()}<button type=\"button\" onclick={() => (run += 1)}>Abspielen</button"
+			],
+			[
+				106,
+				"{#snippet actions()}<button type=\"button\" onclick={() => (run += 1)}>Abspielen</button"
+			],
+			[214, "<button type=\"button\" onclick={() => (showGroup = !showGroup)}"]
+		],
+		"local_radius": [
+			[303, "border-radius: 999px;"],
+			[322, "border-radius: 50%;"],
+			[338, "border-radius: 0.9rem;"],
+			[353, "border-radius: 0.7rem;"],
+			[370, "border-radius: 999px;"],
+			[389, "border-radius: 0.55rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion/accessibility/+page.svelte",
+		"lines": 646,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/checkbox",
+			"#lib/bedrock/ui/progress",
+			"#lib/bedrock/ui/skeleton",
+			"#lib/bedrock/ui/slider",
+			"#lib/bedrock/ui/spinner"
+		],
+		"native_controls": [[254, "<button type=\"button\" onclick={() => toggleRow(row.id)}"]],
+		"local_radius": [
+			[379, "border-radius: 0.75rem;"],
+			[388, "border-radius: 0.45rem;"],
+			[437, "border-radius: 0.65rem;"],
+			[479, "border-radius: 0.6rem;"],
+			[516, "border-radius: 0.45rem;"],
+			[529, "border-radius: 0.7rem;"],
+			[557, "border-radius: 0.3rem;"],
+			[579, "border-radius: 0.8rem;"],
+			[591, "border-radius: 0.65rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion-route-prototype/list/+page.svelte",
+		"lines": 143,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [[64, "border-radius: 28px;"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/demo/motion-route-prototype/detail/[id]/+page.svelte",
+		"lines": 122,
+		"bedrock": [],
+		"native_controls": [
+			[10, "<button onclick={() => (expanded = !expanded)}>Toggle late content</button><button"],
+			[51, "<button type=\"button\" onclick={() => history.back()}>Back to previous route</button>"]
+		],
+		"local_radius": [[61, "border-radius: 32px;"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/shaders/+page.svelte",
+		"lines": 116,
+		"bedrock": [
+			"#lib/bedrock/shaders/catalog.js",
+			"#lib/bedrock/shaders/index.js",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/input"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/forms/+page.svelte",
+		"lines": 295,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/input",
+			"#lib/bedrock/ui/label",
+			"#lib/bedrock/ui/stepped-form"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/theming/+page.svelte",
+		"lines": 112,
+		"bedrock": ["#lib/bedrock/ui/card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/blocks/+page.svelte",
+		"lines": 77,
+		"bedrock": [
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/card",
+			"#lib/bedrock/ui/input",
+			"#lib/bedrock/ui/native-select"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/templates/+page.svelte",
+		"lines": 136,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/button", "#lib/bedrock/ui/input"],
+		"native_controls": [],
+		"local_radius": [
+			[
+				72,
+				"class=\"template-card scroll-mt-20 overflow-hidden rounded-2xl border bg-card outline-none target:ring-2 target:ring-ring target:ring-offset-4 target:ring-offset-background\""
+			]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/skills/+page.svelte",
+		"lines": 76,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/button", "#lib/bedrock/ui/card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/components/+page.svelte",
+		"lines": 141,
+		"bedrock": [
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/icon",
+			"#lib/bedrock/ui/input"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/installation/+page.svelte",
+		"lines": 53,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/motion/+page.svelte",
+		"lines": 193,
+		"bedrock": [
+			"#lib/bedrock/motion/AstraPolicy.svelte",
+			"#lib/bedrock/motion/MotionProvider.svelte",
+			"#lib/bedrock/motion/auto-size.js",
+			"#lib/bedrock/motion/policy.svelte.js",
+			"#lib/bedrock/motion/presence.js",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/code-block"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/changelog/+page.svelte",
+		"lines": 42,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/empty"],
+		"native_controls": [],
+		"local_radius": [[19, "<Empty.Root class=\"mt-12 rounded-2xl border py-16\">"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/components/[slug]/+page.svelte",
+		"lines": 332,
+		"bedrock": [
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/card",
+			"#lib/bedrock/ui/empty",
+			"#lib/bedrock/ui/heading",
+			"#lib/bedrock/ui/outline",
+			"#lib/bedrock/ui/text"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/blocks/[slug]/+page.svelte",
+		"lines": 129,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/routes/docs/shaders/[slug]/+page.svelte",
+		"lines": 12,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/SiteHeader.svelte",
+		"lines": 73,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/HeroPlayground.svelte",
+		"lines": 351,
+		"bedrock": [
+			"#lib/bedrock/ui/async-button",
+			"#lib/bedrock/ui/avatar",
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/card",
+			"#lib/bedrock/ui/input",
+			"#lib/bedrock/ui/kbd",
+			"#lib/bedrock/ui/progress",
+			"#lib/bedrock/ui/status-dot",
+			"#lib/bedrock/ui/switch",
+			"#lib/bedrock/ui/token"
+		],
+		"native_controls": [],
+		"local_radius": [
+			[201, "border-radius: 999px;"],
+			[214, "border-radius: 2rem;"],
+			[258, "border-radius: 0.9rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/ExampleCard.svelte",
+		"lines": 178,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/code-block",
+			"#lib/bedrock/ui/icon",
+			"#lib/bedrock/ui/tabs"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/DocsPageHeader.svelte",
+		"lines": 16,
+		"bedrock": ["#lib/bedrock/ui/heading", "#lib/bedrock/ui/text"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/Logo.svelte",
+		"lines": 12,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/CodeBlock.svelte",
+		"lines": 27,
+		"bedrock": ["#lib/bedrock/ui/code-block"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/TemplateFeedback.svelte",
+		"lines": 158,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/feedback", "#lib/bedrock/ui/popover"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/ShaderPlayground.svelte",
+		"lines": 227,
+		"bedrock": [
+			"#lib/bedrock/shaders/catalog.js",
+			"#lib/bedrock/shaders/index.js",
+			"#lib/bedrock/shaders/presets.json",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/input"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/HighlightedCode.svelte",
+		"lines": 78,
+		"bedrock": ["#lib/bedrock/ui/icon-button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/ThemeToggle.svelte",
+		"lines": 11,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/DocsSidebar.svelte",
+		"lines": 391,
+		"bedrock": [
+			"#lib/bedrock/motion/policy.js",
+			"#lib/bedrock/motion/shared-indicator.js",
+			"#lib/bedrock/motion/tokens.js",
+			"#lib/bedrock/shaders/catalog.js",
+			"#lib/bedrock/ui/scroll-area",
+			"#lib/bedrock/ui/sidebar"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/DevFeedback.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/feedback"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/BlockPreview.svelte",
+		"lines": 32,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/component-docs/AccessibilityTab.svelte",
+		"lines": 137,
+		"bedrock": [
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/card",
+			"#lib/bedrock/ui/heading",
+			"#lib/bedrock/ui/text"
+		],
+		"native_controls": [
+			[83, "<table class=\"w-full min-w-[56rem] border-collapse text-left text-sm\">"]
+		],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/component-docs/MapGuide.svelte",
+		"lines": 117,
+		"bedrock": ["#lib/bedrock/ui/code-block", "#lib/bedrock/ui/heading"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/component-docs/ApiTable.svelte",
+		"lines": 44,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/text"],
+		"native_controls": [
+			[10, "<table class=\"w-full min-w-[46rem] border-collapse text-left text-sm\">"]
+		],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/component-docs/ButtonPropertiesDemo.svelte",
+		"lines": 60,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/label",
+			"#lib/bedrock/ui/native-select",
+			"#lib/bedrock/ui/switch"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/component-docs/PropertiesTab.svelte",
+		"lines": 96,
+		"bedrock": ["#lib/bedrock/ui/heading", "#lib/bedrock/ui/text"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/component-docs/ComponentTabs.svelte",
+		"lines": 101,
+		"bedrock": ["#lib/bedrock/motion/shared-indicator.js"],
+		"native_controls": [],
+		"local_radius": [[90, "border-radius: 999px;"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/motion-route-prototype/route-image.svelte",
+		"lines": 22,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/indicator.svelte",
+		"lines": 34,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/indicator"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/card.svelte",
+		"lines": 36,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/qr-code.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/qr-code"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/color-picker.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/color-picker"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/time-input.svelte",
+		"lines": 28,
+		"bedrock": ["#lib/bedrock/ui/time-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/diff.svelte",
+		"lines": 44,
+		"bedrock": ["#lib/bedrock/ui/diff"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/accordion.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/accordion"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/animated-signature.svelte",
+		"lines": 32,
+		"bedrock": ["#lib/bedrock/ui/animated-signature", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/carousel.svelte",
+		"lines": 54,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/carousel"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/timestamp.svelte",
+		"lines": 27,
+		"bedrock": ["#lib/bedrock/ui/timestamp"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/color-area.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/color-area"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/table.svelte",
+		"lines": 46,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/table"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/dialog.svelte",
+		"lines": 68,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/dialog", "#lib/bedrock/ui/input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/tilt-card.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/tilt-card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/marquee.svelte",
+		"lines": 12,
+		"bedrock": ["#lib/bedrock/ui/marquee"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/clickable-card.svelte",
+		"lines": 35,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/card", "#lib/bedrock/ui/clickable-card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/label.svelte",
+		"lines": 38,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/input", "#lib/bedrock/ui/label"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/text.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/text"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/citation.svelte",
+		"lines": 32,
+		"bedrock": ["#lib/bedrock/ui/citation"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/avatar.svelte",
+		"lines": 36,
+		"bedrock": ["#lib/bedrock/ui/avatar", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/pagination.svelte",
+		"lines": 47,
+		"bedrock": ["#lib/bedrock/ui/pagination"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/text-highlight.svelte",
+		"lines": 14,
+		"bedrock": ["#lib/bedrock/ui/text-highlight"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/input.svelte",
+		"lines": 46,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/input", "#lib/bedrock/ui/label"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/outline.svelte",
+		"lines": 39,
+		"bedrock": ["#lib/bedrock/ui/heading", "#lib/bedrock/ui/outline", "#lib/bedrock/ui/text"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/banner.svelte",
+		"lines": 31,
+		"bedrock": ["#lib/bedrock/ui/banner", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/overflow-list.svelte",
+		"lines": 51,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/button", "#lib/bedrock/ui/overflow-list"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/radio-group.svelte",
+		"lines": 23,
+		"bedrock": ["#lib/bedrock/ui/label", "#lib/bedrock/ui/radio-group"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/dot-pattern.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/dot-pattern"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/emoji.svelte",
+		"lines": 67,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/emoji", "#lib/bedrock/ui/textarea"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/code-block.svelte",
+		"lines": 50,
+		"bedrock": ["#lib/bedrock/ui/code-block"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/multi-selector.svelte",
+		"lines": 39,
+		"bedrock": ["#lib/bedrock/ui/multi-selector", "#lib/bedrock/ui/selector"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/noise-overlay.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/noise-overlay"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/date-time-input.svelte",
+		"lines": 38,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/date-time-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/menubar.svelte",
+		"lines": 49,
+		"bedrock": ["#lib/bedrock/ui/menubar"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/shapes.svelte",
+		"lines": 115,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/input", "#lib/bedrock/ui/slider"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/checkbox-list.svelte",
+		"lines": 38,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/checkbox-list"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/aspect-ratio.svelte",
+		"lines": 31,
+		"bedrock": ["#lib/bedrock/ui/aspect-ratio", "#lib/bedrock/ui/card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/scroll-area.svelte",
+		"lines": 152,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/label",
+			"#lib/bedrock/ui/scroll-area",
+			"#lib/bedrock/ui/switch"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/button-group.svelte",
+		"lines": 31,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/button-group"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/context-menu.svelte",
+		"lines": 42,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/context-menu"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/animated-gradient.svelte",
+		"lines": 26,
+		"bedrock": ["#lib/bedrock/ui/animated-gradient", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/visually-hidden.svelte",
+		"lines": 23,
+		"bedrock": ["#lib/bedrock/ui/icon", "#lib/bedrock/ui/visually-hidden"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/color-swatch-picker.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/color-swatch-picker"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/color-swatch.svelte",
+		"lines": 16,
+		"bedrock": ["#lib/bedrock/ui/color-swatch"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/light-rays.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/light-rays"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/blockquote.svelte",
+		"lines": 29,
+		"bedrock": ["#lib/bedrock/ui/blockquote"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/checkbox.svelte",
+		"lines": 35,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/checkbox"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/field.svelte",
+		"lines": 46,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/field", "#lib/bedrock/ui/input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/grid-pattern.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/grid-pattern"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/item.svelte",
+		"lines": 48,
+		"bedrock": [
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/icon",
+			"#lib/bedrock/ui/item"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/progress.svelte",
+		"lines": 32,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/progress"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/separator.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/separator"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/input-group.svelte",
+		"lines": 40,
+		"bedrock": ["#lib/bedrock/ui/icon", "#lib/bedrock/ui/input-group"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/color-field.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/color-field"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/form.svelte",
+		"lines": 70,
+		"bedrock": ["#lib/bedrock/ui/form", "#lib/bedrock/ui/input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/selectable-card.svelte",
+		"lines": 43,
+		"bedrock": ["#lib/bedrock/ui/card", "#lib/bedrock/ui/selectable-card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/textarea.svelte",
+		"lines": 40,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/label", "#lib/bedrock/ui/textarea"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/sidebar.svelte",
+		"lines": 74,
+		"bedrock": ["#lib/bedrock/ui/sidebar"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/bubble.svelte",
+		"lines": 36,
+		"bedrock": ["#lib/bedrock/ui/bubble", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/file-input.svelte",
+		"lines": 36,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/file-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/selector.svelte",
+		"lines": 68,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/selector", "#lib/bedrock/ui/slider"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/toggle-group.svelte",
+		"lines": 28,
+		"bedrock": ["#lib/bedrock/ui/toggle-group"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/chart.svelte",
+		"lines": 52,
+		"bedrock": ["#lib/bedrock/ui/chart"],
+		"native_controls": [[42, "<table class=\"mt-3 w-full text-left text-sm\">"]],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/empty.svelte",
+		"lines": 30,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/empty"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/token.svelte",
+		"lines": 34,
+		"bedrock": ["#lib/bedrock/ui/token"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/thumbnail.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/thumbnail"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/color-slider.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/color-slider"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/tabs.svelte",
+		"lines": 32,
+		"bedrock": ["#lib/bedrock/ui/tabs"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/calendar.svelte",
+		"lines": 40,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/calendar"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/link.svelte",
+		"lines": 29,
+		"bedrock": ["#lib/bedrock/ui/link"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/sheet.svelte",
+		"lines": 44,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/label",
+			"#lib/bedrock/ui/sheet",
+			"#lib/bedrock/ui/textarea"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/native-select.svelte",
+		"lines": 34,
+		"bedrock": ["#lib/bedrock/ui/native-select"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/heading.svelte",
+		"lines": 31,
+		"bedrock": ["#lib/bedrock/ui/heading"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/markdown.svelte",
+		"lines": 37,
+		"bedrock": ["#lib/bedrock/ui/markdown"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/popover.svelte",
+		"lines": 45,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/number-input",
+			"#lib/bedrock/ui/popover"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/attachment.svelte",
+		"lines": 91,
+		"bedrock": ["#lib/bedrock/ui/attachment", "#lib/bedrock/ui/button", "#lib/bedrock/ui/dialog"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/number-input.svelte",
+		"lines": 35,
+		"bedrock": ["#lib/bedrock/ui/number-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/range-calendar.svelte",
+		"lines": 25,
+		"bedrock": ["#lib/bedrock/ui/range-calendar"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/marker.svelte",
+		"lines": 30,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/marker"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/select.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/label", "#lib/bedrock/ui/select"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/data-table.svelte",
+		"lines": 51,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/data-table"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/chat.svelte",
+		"lines": 117,
+		"bedrock": ["#lib/bedrock/ui/chat"],
+		"native_controls": [],
+		"local_radius": [
+			[
+				54,
+				"<Chat.Root class=\"h-[30rem] min-w-0 overflow-hidden rounded-2xl border bg-background shadow-sm\">"
+			]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/video-player.svelte",
+		"lines": 34,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/video-player"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/feedback.svelte",
+		"lines": 95,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/feedback",
+			"#lib/bedrock/ui/native-select"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/stepped-form.svelte",
+		"lines": 111,
+		"bedrock": ["#lib/bedrock/ui/input", "#lib/bedrock/ui/label", "#lib/bedrock/ui/stepped-form"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/breadcrumb.svelte",
+		"lines": 40,
+		"bedrock": ["#lib/bedrock/ui/breadcrumb", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/pdf-viewer.svelte",
+		"lines": 32,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/pdf-viewer"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/date-input.svelte",
+		"lines": 36,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/date-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/toggle.svelte",
+		"lines": 25,
+		"bedrock": ["#lib/bedrock/ui/toggle"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/map.svelte",
+		"lines": 63,
+		"bedrock": ["#lib/bedrock/ui/native-select"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/tooltip.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/icon", "#lib/bedrock/ui/tooltip"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/button.svelte",
+		"lines": 48,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/textarea"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/list.svelte",
+		"lines": 30,
+		"bedrock": ["#lib/bedrock/ui/list"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/slider.svelte",
+		"lines": 29,
+		"bedrock": ["#lib/bedrock/ui/slider"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/image.svelte",
+		"lines": 31,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/image"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/date-range-input.svelte",
+		"lines": 43,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/date-range-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/switch.svelte",
+		"lines": 23,
+		"bedrock": ["#lib/bedrock/ui/label", "#lib/bedrock/ui/switch"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/field-status.svelte",
+		"lines": 36,
+		"bedrock": ["#lib/bedrock/ui/field-status", "#lib/bedrock/ui/input", "#lib/bedrock/ui/label"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/combobox.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/combobox"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/collapsible.svelte",
+		"lines": 38,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/collapsible"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/alert-dialog.svelte",
+		"lines": 49,
+		"bedrock": ["#lib/bedrock/ui/alert-dialog", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/spinner.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/spinner"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/async-button.svelte",
+		"lines": 43,
+		"bedrock": ["#lib/bedrock/ui/async-button", "#lib/bedrock/ui/checkbox"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/dropdown-menu.svelte",
+		"lines": 42,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/dropdown-menu"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/input-otp.svelte",
+		"lines": 56,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/input-otp"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/metadata-list.svelte",
+		"lines": 37,
+		"bedrock": [
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/metadata-list",
+			"#lib/bedrock/ui/timestamp"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/icon.svelte",
+		"lines": 35,
+		"bedrock": ["#lib/bedrock/ui/icon"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/kbd.svelte",
+		"lines": 49,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/kbd"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/icon-button.svelte",
+		"lines": 44,
+		"bedrock": ["#lib/bedrock/ui/icon-button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/alert.svelte",
+		"lines": 31,
+		"bedrock": ["#lib/bedrock/ui/alert", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/message.svelte",
+		"lines": 42,
+		"bedrock": [
+			"#lib/bedrock/ui/avatar",
+			"#lib/bedrock/ui/bubble",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/message"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/progressive-blur.svelte",
+		"lines": 99,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/progressive-blur",
+			"#lib/bedrock/ui/scroll-area"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/skeleton.svelte",
+		"lines": 97,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/label",
+			"#lib/bedrock/ui/native-select",
+			"#lib/bedrock/ui/skeleton"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/badge.svelte",
+		"lines": 40,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/tokenizer.svelte",
+		"lines": 47,
+		"bedrock": ["#lib/bedrock/ui/selector", "#lib/bedrock/ui/tokenizer"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/status-dot.svelte",
+		"lines": 28,
+		"bedrock": ["#lib/bedrock/ui/status-dot"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/navigation-menu.svelte",
+		"lines": 38,
+		"bedrock": ["#lib/bedrock/ui/navigation-menu"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/sonner.svelte",
+		"lines": 31,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/stepper.svelte",
+		"lines": 55,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/stepper"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/resizable.svelte",
+		"lines": 32,
+		"bedrock": ["#lib/bedrock/ui/resizable"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/lightbox.svelte",
+		"lines": 38,
+		"bedrock": ["#lib/bedrock/ui/lightbox", "#lib/bedrock/ui/thumbnail"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/drawer.svelte",
+		"lines": 64,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/checkbox", "#lib/bedrock/ui/drawer"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/text-shimmer.svelte",
+		"lines": 21,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/text-shimmer"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/phone-input.svelte",
+		"lines": 40,
+		"bedrock": ["#lib/bedrock/ui/phone-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/spotlight.svelte",
+		"lines": 12,
+		"bedrock": ["#lib/bedrock/ui/spotlight"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/command.svelte",
+		"lines": 36,
+		"bedrock": ["#lib/bedrock/ui/command"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/examples/hover-card.svelte",
+		"lines": 34,
+		"bedrock": ["#lib/bedrock/ui/hover-card", "#lib/bedrock/ui/link"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/GeoJSONExample.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/ArcExample.svelte",
+		"lines": 66,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/StandalonePopupExample.svelte",
+		"lines": 37,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/CustomLayerExample.svelte",
+		"lines": 143,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/DraggableMarkerExample.svelte",
+		"lines": 39,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/InteractiveArcExample.svelte",
+		"lines": 185,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/PopupExample.svelte",
+		"lines": 114,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/LazyMapExample.svelte",
+		"lines": 27,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/map/lazy"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/BlankMapExample.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/AdvancedUsageExample.svelte",
+		"lines": 59,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/ControlledMapExample.svelte",
+		"lines": 42,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/CustomStyleExample.svelte",
+		"lines": 46,
+		"bedrock": ["#lib/bedrock/ui/map", "#lib/bedrock/ui/native-select"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/RouteProgressExample.svelte",
+		"lines": 102,
+		"bedrock": ["#lib/bedrock/ui/map", "#lib/bedrock/ui/slider"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/MapOverlayExample.svelte",
+		"lines": 36,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/BasicMapExample.svelte",
+		"lines": 7,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/MapControlsExample.svelte",
+		"lines": 9,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/OsrmRouteExample.svelte",
+		"lines": 136,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/map", "#lib/bedrock/utils.js"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/ClusterExample.svelte",
+		"lines": 61,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/RouteExample.svelte",
+		"lines": 39,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/LayerMarkersExample.svelte",
+		"lines": 111,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/MarkersExample.svelte",
+		"lines": 51,
+		"bedrock": ["#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/map-examples/LocationsExample.svelte",
+		"lines": 81,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/indicator.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/indicator", "#lib/bedrock/ui/spinner"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/card.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/qr-code.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/color-picker.svelte",
+		"lines": 18,
+		"bedrock": ["#lib/bedrock/ui/color-picker", "#lib/bedrock/ui/text"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/time-input.svelte",
+		"lines": 16,
+		"bedrock": ["#lib/bedrock/ui/time-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/diff.svelte",
+		"lines": 43,
+		"bedrock": ["#lib/bedrock/ui/diff"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/accordion.svelte",
+		"lines": 28,
+		"bedrock": ["#lib/bedrock/ui/accordion"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/animated-signature.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/carousel.svelte",
+		"lines": 19,
+		"bedrock": ["#lib/bedrock/ui/carousel"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/timestamp.svelte",
+		"lines": 15,
+		"bedrock": ["#lib/bedrock/ui/timestamp"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/color-area.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/color-area"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/table.svelte",
+		"lines": 23,
+		"bedrock": ["#lib/bedrock/ui/table"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/dialog.svelte",
+		"lines": 28,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/dialog"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/tilt-card.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/marquee.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/clickable-card.svelte",
+		"lines": 25,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/card", "#lib/bedrock/ui/clickable-card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/label.svelte",
+		"lines": 9,
+		"bedrock": ["#lib/bedrock/ui/input", "#lib/bedrock/ui/label"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/text.svelte",
+		"lines": 18,
+		"bedrock": ["#lib/bedrock/ui/text"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/citation.svelte",
+		"lines": 12,
+		"bedrock": ["#lib/bedrock/ui/citation"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/avatar.svelte",
+		"lines": 13,
+		"bedrock": ["#lib/bedrock/ui/avatar"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/pagination.svelte",
+		"lines": 23,
+		"bedrock": ["#lib/bedrock/ui/pagination"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/text-highlight.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/input.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/input", "#lib/bedrock/ui/label"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/outline.svelte",
+		"lines": 23,
+		"bedrock": ["#lib/bedrock/ui/heading", "#lib/bedrock/ui/outline", "#lib/bedrock/ui/text"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/banner.svelte",
+		"lines": 15,
+		"bedrock": ["#lib/bedrock/ui/banner"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/overflow-list.svelte",
+		"lines": 29,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/overflow-list"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/radio-group.svelte",
+		"lines": 22,
+		"bedrock": ["#lib/bedrock/ui/label", "#lib/bedrock/ui/radio-group"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/dot-pattern.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/dot-pattern"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/emoji.svelte",
+		"lines": 9,
+		"bedrock": ["#lib/bedrock/ui/emoji"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/code-block.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/code-block"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/multi-selector.svelte",
+		"lines": 28,
+		"bedrock": ["#lib/bedrock/ui/multi-selector", "#lib/bedrock/ui/selector"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/noise-overlay.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/noise-overlay"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/date-time-input.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/date-time-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/menubar.svelte",
+		"lines": 22,
+		"bedrock": ["#lib/bedrock/ui/menubar"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/shapes.svelte",
+		"lines": 28,
+		"bedrock": ["#lib/bedrock/ui/shapes"],
+		"native_controls": [],
+		"local_radius": [[21, "border-radius: var(--radius);"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/checkbox-list.svelte",
+		"lines": 22,
+		"bedrock": ["#lib/bedrock/ui/badge", "#lib/bedrock/ui/checkbox-list"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/aspect-ratio.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/aspect-ratio"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/scroll-area.svelte",
+		"lines": 57,
+		"bedrock": ["#lib/bedrock/ui/label", "#lib/bedrock/ui/scroll-area", "#lib/bedrock/ui/switch"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/button-group.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/button-group"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/context-menu.svelte",
+		"lines": 17,
+		"bedrock": ["#lib/bedrock/ui/context-menu"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/animated-gradient.svelte",
+		"lines": 26,
+		"bedrock": ["#lib/bedrock/ui/animated-gradient", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/visually-hidden.svelte",
+		"lines": 14,
+		"bedrock": ["#lib/bedrock/ui/icon", "#lib/bedrock/ui/visually-hidden"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/color-swatch-picker.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/color-swatch-picker"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/color-swatch.svelte",
+		"lines": 16,
+		"bedrock": ["#lib/bedrock/ui/color-swatch"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/light-rays.svelte",
+		"lines": 23,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/light-rays"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/blockquote.svelte",
+		"lines": 7,
+		"bedrock": ["#lib/bedrock/ui/blockquote"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/checkbox.svelte",
+		"lines": 12,
+		"bedrock": ["#lib/bedrock/ui/checkbox"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/field.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/field", "#lib/bedrock/ui/input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/grid-pattern.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/grid-pattern"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/item.svelte",
+		"lines": 26,
+		"bedrock": [
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/icon",
+			"#lib/bedrock/ui/item"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/progress.svelte",
+		"lines": 8,
+		"bedrock": ["#lib/bedrock/ui/progress"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/separator.svelte",
+		"lines": 11,
+		"bedrock": ["#lib/bedrock/ui/separator"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/input-group.svelte",
+		"lines": 15,
+		"bedrock": ["#lib/bedrock/ui/icon", "#lib/bedrock/ui/input-group"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/color-field.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/color-field"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/form.svelte",
+		"lines": 52,
+		"bedrock": ["#lib/bedrock/ui/form", "#lib/bedrock/ui/input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/selectable-card.svelte",
+		"lines": 30,
+		"bedrock": ["#lib/bedrock/ui/card", "#lib/bedrock/ui/selectable-card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/textarea.svelte",
+		"lines": 17,
+		"bedrock": ["#lib/bedrock/ui/label", "#lib/bedrock/ui/textarea"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/sidebar.svelte",
+		"lines": 57,
+		"bedrock": ["#lib/bedrock/ui/sidebar"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/bubble.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/bubble"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/file-input.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/file-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/selector.svelte",
+		"lines": 52,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/selector", "#lib/bedrock/ui/slider"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/toggle-group.svelte",
+		"lines": 11,
+		"bedrock": ["#lib/bedrock/ui/toggle-group"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/chart.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/chart"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/empty.svelte",
+		"lines": 18,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/empty"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/token.svelte",
+		"lines": 12,
+		"bedrock": ["#lib/bedrock/ui/token"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/thumbnail.svelte",
+		"lines": 13,
+		"bedrock": ["#lib/bedrock/ui/thumbnail"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/color-slider.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/color-slider"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/tabs.svelte",
+		"lines": 34,
+		"bedrock": ["#lib/bedrock/ui/tabs"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/calendar.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/calendar"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/link.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/link"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/sheet.svelte",
+		"lines": 18,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/sheet"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/native-select.svelte",
+		"lines": 17,
+		"bedrock": ["#lib/bedrock/ui/native-select"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/heading.svelte",
+		"lines": 14,
+		"bedrock": ["#lib/bedrock/ui/heading"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/markdown.svelte",
+		"lines": 33,
+		"bedrock": ["#lib/bedrock/ui/markdown"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/popover.svelte",
+		"lines": 18,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/popover"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/attachment.svelte",
+		"lines": 38,
+		"bedrock": ["#lib/bedrock/ui/attachment"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/number-input.svelte",
+		"lines": 18,
+		"bedrock": ["#lib/bedrock/ui/number-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/range-calendar.svelte",
+		"lines": 11,
+		"bedrock": ["#lib/bedrock/ui/range-calendar"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/marker.svelte",
+		"lines": 13,
+		"bedrock": ["#lib/bedrock/ui/marker"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/select.svelte",
+		"lines": 23,
+		"bedrock": ["#lib/bedrock/ui/select"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/data-table.svelte",
+		"lines": 25,
+		"bedrock": ["#lib/bedrock/ui/data-table"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/chat.svelte",
+		"lines": 97,
+		"bedrock": [
+			"#lib/bedrock/ui/chat",
+			"#lib/bedrock/ui/icon",
+			"#lib/bedrock/ui/status-dot",
+			"#lib/bedrock/ui/timestamp"
+		],
+		"native_controls": [],
+		"local_radius": [
+			[
+				31,
+				"class=\"mx-auto h-[24rem] w-full max-w-xl overflow-hidden rounded-2xl border bg-background shadow-sm\""
+			]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/video-player.svelte",
+		"lines": 14,
+		"bedrock": ["#lib/bedrock/ui/video-player"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/feedback.svelte",
+		"lines": 21,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/stepped-form.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/stepped-form"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/breadcrumb.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/breadcrumb"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/pdf-viewer.svelte",
+		"lines": 5,
+		"bedrock": ["#lib/bedrock/ui/pdf-viewer"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/date-input.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/date-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/toggle.svelte",
+		"lines": 16,
+		"bedrock": ["#lib/bedrock/ui/icon", "#lib/bedrock/ui/toggle"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/map.svelte",
+		"lines": 27,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/map"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/tooltip.svelte",
+		"lines": 13,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/tooltip"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/button.svelte",
+		"lines": 15,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/list.svelte",
+		"lines": 15,
+		"bedrock": ["#lib/bedrock/ui/list"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/slider.svelte",
+		"lines": 30,
+		"bedrock": ["#lib/bedrock/ui/label", "#lib/bedrock/ui/slider"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/image.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/image"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/date-range-input.svelte",
+		"lines": 16,
+		"bedrock": ["#lib/bedrock/ui/date-range-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/switch.svelte",
+		"lines": 17,
+		"bedrock": ["#lib/bedrock/ui/label", "#lib/bedrock/ui/switch"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/field-status.svelte",
+		"lines": 10,
+		"bedrock": ["#lib/bedrock/ui/field-status"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/combobox.svelte",
+		"lines": 16,
+		"bedrock": ["#lib/bedrock/ui/combobox"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/collapsible.svelte",
+		"lines": 21,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/collapsible", "#lib/bedrock/ui/icon"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/alert-dialog.svelte",
+		"lines": 29,
+		"bedrock": ["#lib/bedrock/ui/alert-dialog", "#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/spinner.svelte",
+		"lines": 12,
+		"bedrock": ["#lib/bedrock/ui/spinner"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/async-button.svelte",
+		"lines": 18,
+		"bedrock": ["#lib/bedrock/ui/async-button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/dropdown-menu.svelte",
+		"lines": 19,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/dropdown-menu"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/input-otp.svelte",
+		"lines": 17,
+		"bedrock": ["#lib/bedrock/ui/input-otp"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/metadata-list.svelte",
+		"lines": 23,
+		"bedrock": [
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/metadata-list",
+			"#lib/bedrock/ui/timestamp"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/icon.svelte",
+		"lines": 29,
+		"bedrock": ["#lib/bedrock/ui/icon"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/kbd.svelte",
+		"lines": 12,
+		"bedrock": ["#lib/bedrock/ui/kbd"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/icon-button.svelte",
+		"lines": 9,
+		"bedrock": ["#lib/bedrock/ui/icon-button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/alert.svelte",
+		"lines": 17,
+		"bedrock": ["#lib/bedrock/ui/alert"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/message.svelte",
+		"lines": 24,
+		"bedrock": ["#lib/bedrock/ui/avatar", "#lib/bedrock/ui/bubble", "#lib/bedrock/ui/message"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/progressive-blur.svelte",
+		"lines": 59,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/progressive-blur"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/skeleton.svelte",
+		"lines": 48,
+		"bedrock": ["#lib/bedrock/ui/skeleton"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/badge.svelte",
+		"lines": 11,
+		"bedrock": ["#lib/bedrock/ui/badge"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/tokenizer.svelte",
+		"lines": 31,
+		"bedrock": ["#lib/bedrock/ui/selector", "#lib/bedrock/ui/tokenizer"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/status-dot.svelte",
+		"lines": 18,
+		"bedrock": ["#lib/bedrock/ui/status-dot"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/navigation-menu.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/navigation-menu"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/sonner.svelte",
+		"lines": 11,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/stepper.svelte",
+		"lines": 26,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/stepper"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/resizable.svelte",
+		"lines": 13,
+		"bedrock": ["#lib/bedrock/ui/resizable"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/lightbox.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/ui/lightbox", "#lib/bedrock/ui/thumbnail"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/drawer.svelte",
+		"lines": 25,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/drawer"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/text-shimmer.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/phone-input.svelte",
+		"lines": 8,
+		"bedrock": ["#lib/bedrock/ui/phone-input"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/spotlight.svelte",
+		"lines": 5,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/command.svelte",
+		"lines": 18,
+		"bedrock": ["#lib/bedrock/ui/command"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/previews/hover-card.svelte",
+		"lines": 21,
+		"bedrock": ["#lib/bedrock/ui/hover-card", "#lib/bedrock/ui/link"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/block-examples/authentication-panel.svelte",
+		"lines": 20,
+		"bedrock": ["#lib/bedrock/blocks/authentication-panel/index.js", "#lib/bedrock/ui/switch"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/block-examples/settings-section.svelte",
+		"lines": 32,
+		"bedrock": ["#lib/bedrock/blocks/settings-section/index.js", "#lib/bedrock/ui/switch"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/motion-families.svelte",
+		"lines": 157,
+		"bedrock": [
+			"#lib/bedrock/motion/MotionProvider.svelte",
+			"#lib/bedrock/ui/accordion",
+			"#lib/bedrock/ui/banner",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/chat",
+			"#lib/bedrock/ui/checkbox",
+			"#lib/bedrock/ui/dialog",
+			"#lib/bedrock/ui/dropdown-menu",
+			"#lib/bedrock/ui/input",
+			"#lib/bedrock/ui/marquee",
+			"#lib/bedrock/ui/popover",
+			"#lib/bedrock/ui/select",
+			"#lib/bedrock/ui/tabs",
+			"#lib/bedrock/ui/tooltip"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-uploads.svelte",
+		"lines": 78,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/chat"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-decisions.svelte",
+		"lines": 97,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/chat"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/motion-engine.svelte",
+		"lines": 41,
+		"bedrock": [
+			"#lib/bedrock/motion/AstraPolicy.svelte",
+			"#lib/bedrock/motion/policy.svelte.js",
+			"#lib/bedrock/motion/settle-motion.svelte.js",
+			"#lib/bedrock/ui/button"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-voice.svelte",
+		"lines": 178,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/card",
+			"#lib/bedrock/ui/chat",
+			"#lib/bedrock/ui/collapsible",
+			"#lib/bedrock/ui/field-status",
+			"#lib/bedrock/ui/icon"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-context.svelte",
+		"lines": 49,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/chat"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-sources.svelte",
+		"lines": 36,
+		"bedrock": ["#lib/bedrock/ui/chat"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/motion-disclosure.svelte",
+		"lines": 41,
+		"bedrock": [
+			"#lib/bedrock/motion/AstraPolicy.svelte",
+			"#lib/bedrock/motion/policy.svelte.js",
+			"#lib/bedrock/motion/settle-motion.svelte.js",
+			"#lib/bedrock/ui/button"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-history.svelte",
+		"lines": 86,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/chat"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/motion-text.svelte",
+		"lines": 61,
+		"bedrock": [
+			"#lib/bedrock/motion/AstraPolicy.svelte",
+			"#lib/bedrock/motion/MotionProvider.svelte",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/input"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/motion-composition.svelte",
+		"lines": 106,
+		"bedrock": [
+			"#lib/bedrock/motion/AstraPolicy.svelte",
+			"#lib/bedrock/motion/policy.svelte.js",
+			"#lib/bedrock/motion/settle-motion.svelte.js",
+			"#lib/bedrock/ui/button"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/motion-native.svelte",
+		"lines": 54,
+		"bedrock": [
+			"#lib/bedrock/motion/policy.svelte.js",
+			"#lib/bedrock/motion/presence.js",
+			"#lib/bedrock/ui/button"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-recovery.svelte",
+		"lines": 84,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/chat"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-workflow.svelte",
+		"lines": 121,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/chat"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-waveform.svelte",
+		"lines": 272,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/chat", "#lib/bedrock/ui/icon"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/motion-lab/Benchmark.svelte",
+		"lines": 248,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [
+			[113, "border-radius: 1.35rem;"],
+			[130, "border-radius: 999px;"],
+			[233, "border-radius: 0.65rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/motion-lab/EvaluationPanel.svelte",
+		"lines": 133,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [
+			[45, "border-radius: 1.35rem;"],
+			[79, "border-radius: 0.9rem;"],
+			[113, "border-radius: 0.45rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/site/motion-lab/ControlRail.svelte",
+		"lines": 224,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [
+			[120, "border-radius: 1.25rem;"],
+			[147, "border-radius: 999px;"],
+			[173, "border-radius: 0.6rem;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/music-player/ListeningHeader.svelte",
+		"lines": 75,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [[29, "border-radius: 8px;"]],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/music-player/CollectionGrid.svelte",
+		"lines": 91,
+		"bedrock": [],
+		"native_controls": [],
+		"local_radius": [
+			[35, "border-radius: 9px;"],
+			[68, "border-radius: 50%;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/music-player/TrackList.svelte",
+		"lines": 222,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/icon-button"],
+		"native_controls": [],
+		"local_radius": [
+			[114, "border-radius: 5px;"],
+			[155, "border-radius: 5px;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/social-network/Composer.svelte",
+		"lines": 72,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/icon-button",
+			"#lib/bedrock/ui/textarea"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/social-network/Post.svelte",
+		"lines": 157,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/icon-button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/video-library/FilmRail.svelte",
+		"lines": 53,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/video-library/FilmCard.svelte",
+		"lines": 41,
+		"bedrock": ["#lib/bedrock/ui/button"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/email-client/productivity-workspace.svelte",
+		"lines": 559,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/dropdown-menu",
+			"#lib/bedrock/ui/icon-button",
+			"#lib/bedrock/ui/input"
+		],
+		"native_controls": [],
+		"local_radius": [
+			[243, "border-radius: 10px;"],
+			[258, "border-radius: 7px;"],
+			[293, "border-radius: 7px;"],
+			[325, "border-radius: 50%;"],
+			[345, "border-radius: 50%;"],
+			[381, "border-radius: 4px;"],
+			[407, "border-radius: 50%;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/email-client/tasks-screen.svelte",
+		"lines": 420,
+		"bedrock": [
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/checkbox",
+			"#lib/bedrock/ui/date-input",
+			"#lib/bedrock/ui/dialog",
+			"#lib/bedrock/ui/input",
+			"#lib/bedrock/ui/label",
+			"#lib/bedrock/ui/textarea"
+		],
+		"native_controls": [],
+		"local_radius": [
+			[382, "border-radius: 5px;"],
+			[393, "border-radius: 8px;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/email-client/calendar-screen.svelte",
+		"lines": 720,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/date-input",
+			"#lib/bedrock/ui/dialog",
+			"#lib/bedrock/ui/input",
+			"#lib/bedrock/ui/label",
+			"#lib/bedrock/ui/textarea"
+		],
+		"native_controls": [],
+		"local_radius": [
+			[428, "border-radius: 8px;"],
+			[474, "border-radius: 50%;"],
+			[491, "border-radius: 3px;"],
+			[528, "border-radius: 50%;"],
+			[692, "border-radius: 50%;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/templates/email-client/email-client.svelte",
+		"lines": 1189,
+		"bedrock": [
+			"#lib/bedrock/ui/avatar",
+			"#lib/bedrock/ui/badge",
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/checkbox",
+			"#lib/bedrock/ui/dialog",
+			"#lib/bedrock/ui/dropdown-menu",
+			"#lib/bedrock/ui/icon",
+			"#lib/bedrock/ui/icon-button",
+			"#lib/bedrock/ui/input",
+			"#lib/bedrock/ui/label",
+			"#lib/bedrock/ui/scroll-area",
+			"#lib/bedrock/ui/textarea"
+		],
+		"native_controls": [],
+		"local_radius": [
+			[898, "border-radius: var(--radius-md);"],
+			[929, "border-radius: 999px;"],
+			[1005, "border-radius: var(--radius-lg);"],
+			[1014, "border-radius: var(--radius-lg);"],
+			[1036, "border-radius: 4px;"]
+		],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/bedrock/blocks/authentication-panel/authentication-panel.svelte",
+		"lines": 81,
+		"bedrock": [
+			"#lib/bedrock/ui/button",
+			"#lib/bedrock/ui/card",
+			"#lib/bedrock/ui/field",
+			"#lib/bedrock/ui/input"
+		],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	},
+	{
+		"file": "src/lib/bedrock/blocks/settings-section/settings-section.svelte",
+		"lines": 57,
+		"bedrock": ["#lib/bedrock/ui/button", "#lib/bedrock/ui/card"],
+		"native_controls": [],
+		"local_radius": [],
+		"custom_roles": []
+	}
+]

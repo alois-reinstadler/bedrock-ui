@@ -1,9 +1,10 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as HoverCard from '#lib/bedrock/ui/hover-card';
 	import { Link } from '#lib/bedrock/ui/link';
 </script>
 
-<section class="w-full space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Decision ownership</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -31,4 +32,4 @@
 	<p class="text-sm text-muted-foreground">
 		Next decision: agree on the mobile navigation labels by Thursday.
 	</p>
-</section>
+</Card.Root>

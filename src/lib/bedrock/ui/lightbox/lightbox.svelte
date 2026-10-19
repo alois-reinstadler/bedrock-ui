@@ -28,7 +28,7 @@
 	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
 	import XIcon from '@lucide/svelte/icons/x';
 	import { Dialog as DialogPrimitive } from 'bits-ui';
-	import { Swap } from '#lib/bedrock/motion/index.js';
+	import { useMotionPolicy } from '#lib/bedrock/motion/policy.svelte.js';
 	import { PdfViewer } from '#lib/bedrock/ui/pdf-viewer';
 	import { cn } from '#lib/utils.js';
 	import type { Snippet } from 'svelte';
@@ -50,6 +50,8 @@
 		/** Trigger content; rendered inside a `Dialog.Trigger`. */
 		children?: Snippet;
 	} = $props();
+
+	const motionPolicy = useMotionPolicy();
 
 	const l = $derived({ ...defaultLabels, ...labelOverrides });
 
@@ -117,20 +119,22 @@
 	{/if}
 	<DialogPrimitive.Portal>
 		<DialogPrimitive.Overlay
+			{@attach motionPolicy.attach}
 			data-slot="lightbox-overlay"
-			class="fixed inset-0 isolate z-50 bg-black/80 motion-overlay supports-backdrop-filter:backdrop-blur-sm data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0"
+			class="motion-overlay fixed inset-0 isolate z-50 bg-black/80 supports-backdrop-filter:backdrop-blur-sm data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0"
 		/>
 		<DialogPrimitive.Content
+			{@attach motionPolicy.attach}
 			data-slot="lightbox-content"
 			{onkeydown}
 			onclick={onContentClick}
-			class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-3 p-4 motion-overlay outline-none md:p-10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95"
+			class="motion-overlay fixed inset-0 z-50 flex flex-col items-center justify-center gap-3 p-4 outline-none md:p-10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95"
 		>
 			<DialogPrimitive.Title class="sr-only">
 				{current?.alt ?? l.imageView}
 			</DialogPrimitive.Title>
 			{#if current}
-				<Swap key={current.src} effect="fade">
+				{#key current.src}
 					<div
 						data-slot="lightbox-stage"
 						class="flex h-[80dvh] w-[min(92vw,56rem)] items-center justify-center"
@@ -149,7 +153,7 @@
 							/>
 						{/if}
 					</div>
-				</Swap>
+				{/key}
 				<div class="flex items-center gap-3 text-sm text-white/90">
 					{#if current.caption}
 						<span data-slot="lightbox-caption">{current.caption}</span>

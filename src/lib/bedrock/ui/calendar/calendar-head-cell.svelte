@@ -6,7 +6,7 @@
 	import CalendarHeadCell from '#lib/shadcn/ui/calendar/calendar-head-cell.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CalendarHeadCell> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CalendarHeadCell> = $props();
 </script>
 
-<CalendarHeadCell {...props} />
+<CalendarHeadCell bind:ref {...props} />

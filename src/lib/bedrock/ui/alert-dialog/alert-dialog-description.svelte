@@ -6,7 +6,7 @@
 	import AlertDialogDescription from '#lib/shadcn/ui/alert-dialog/alert-dialog-description.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof AlertDialogDescription> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof AlertDialogDescription> = $props();
 </script>
 
-<AlertDialogDescription {...props} />
+<AlertDialogDescription bind:ref {...props} />

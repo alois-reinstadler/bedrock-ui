@@ -1,5 +1,5 @@
 import type { Attachment } from 'svelte/attachments';
-import { resolveMotionDuration } from './policy.js';
+import { elementPrefersReducedMotion, observeMotionReduction } from './policy.js';
 import { motionPresets } from './tokens.js';
 
 export type AutoSizeOptions = {
@@ -62,7 +62,7 @@ export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement>
 				animation = null;
 			}
 			const to = measure();
-			if (active && delta(to, committed) < 0.5) {
+			if (active && !elementPrefersReducedMotion(element) && delta(to, committed) < 0.5) {
 				animation = active;
 				active.currentTime = activeTime ?? null;
 				active.onfinish = finish;
@@ -71,7 +71,7 @@ export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement>
 				return;
 			}
 			committed = to;
-			const resolvedDuration = resolveMotionDuration(duration);
+			const resolvedDuration = elementPrefersReducedMotion(element) ? 0 : duration;
 			if (
 				resolvedDuration === 0 ||
 				delta(from, to) < 0.5 ||
@@ -113,14 +113,11 @@ export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement>
 		element.addEventListener('introend', schedule);
 		element.addEventListener('outroend', schedule);
 
-		const motionQuery =
-			typeof matchMedia === 'function' ? matchMedia('(prefers-reduced-motion: reduce)') : null;
-		const onMotionPreferenceChange = (event: MediaQueryListEvent) => {
-			if (!event.matches) return;
+		const stopObservingPolicy = observeMotionReduction(element, (reduced) => {
+			if (!reduced) return;
 			if (animation) finish();
 			committed = measure();
-		};
-		motionQuery?.addEventListener?.('change', onMotionPreferenceChange);
+		});
 
 		return () => {
 			disposed = true;
@@ -130,7 +127,7 @@ export function autoSize(options: AutoSizeOptions = {}): Attachment<HTMLElement>
 			element.removeEventListener('outrostart', schedule);
 			element.removeEventListener('introend', schedule);
 			element.removeEventListener('outroend', schedule);
-			motionQuery?.removeEventListener?.('change', onMotionPreferenceChange);
+			stopObservingPolicy();
 			if (animation) finish();
 		};
 	};

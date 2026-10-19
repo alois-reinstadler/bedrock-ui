@@ -6,7 +6,7 @@
 	import SelectGroupHeading from '#lib/shadcn/ui/select/select-group-heading.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SelectGroupHeading> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SelectGroupHeading> = $props();
 </script>
 
-<SelectGroupHeading {...props} />
+<SelectGroupHeading bind:ref {...props} />

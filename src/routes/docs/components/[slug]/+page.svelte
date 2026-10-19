@@ -17,6 +17,7 @@
 	import AccessibilityTab from '#lib/site/component-docs/AccessibilityTab.svelte';
 	import ComponentTabs from '#lib/site/component-docs/ComponentTabs.svelte';
 	import PropertiesTab from '#lib/site/component-docs/PropertiesTab.svelte';
+	import MapGuide from '#lib/site/component-docs/MapGuide.svelte';
 	import type { ComponentDocTab } from '#lib/site/component-guides/index.js';
 	import { getExample, getPreview } from '#lib/site/examples';
 
@@ -40,10 +41,6 @@
 	let previewPromise = $derived(
 		slug && activeTab === 'overview' ? getPreview(slug) : Promise.resolve(undefined)
 	);
-	let bestPractices = $derived([
-		...(guide?.behavior ?? []).slice(0, 3),
-		...(guide?.avoidWhen ?? []).slice(0, 2)
-	]);
 	let outlineItems = $derived.by<OutlineItem[]>(() => {
 		if (activeTab === 'properties') {
 			const items: OutlineItem[] = [
@@ -78,14 +75,25 @@
 			return items;
 		}
 		const items: OutlineItem[] = [
-			{ id: 'preview', label: 'Common variants', level: 2 },
+			{
+				id: 'preview',
+				label: slug === 'feedback' ? 'Interactive preview' : 'Common variants',
+				level: 2
+			},
 			{ id: 'installation', label: 'Installation', level: 2 },
 			{ id: 'usage', label: 'Usage', level: 2 },
 			{ id: 'what-it-is', label: 'What it is', level: 3 },
 			{ id: 'anatomy', label: 'Anatomy', level: 3 }
 		];
 		if (guide?.behavior?.length) items.push({ id: 'behavior', label: 'Behavior', level: 3 });
-		items.push({ id: 'best-practices', label: 'Best practices', level: 3 });
+		if (slug === 'map') {
+			items.push(
+				{ id: 'map-quickstart', label: 'Create a map', level: 2 },
+				{ id: 'map-state', label: 'State and custom layers', level: 2 },
+				{ id: 'map-lazy-loading', label: 'Lazy loading', level: 2 },
+				{ id: 'map-requirements', label: 'Rendering and data', level: 2 }
+			);
+		}
 		items.push({ id: 'examples', label: 'Examples', level: 2 });
 		return items;
 	});
@@ -110,6 +118,9 @@
 						{component.category}
 					</Text>
 					<Heading level={1} class="mt-2">{component.title}</Heading>
+					{#if component.requirements?.includes('webgl2')}
+						<Badge variant="secondary" class="mt-3">WebGL2 required</Badge>
+					{/if}
 					<Text type="large" color="muted" as="p" class="mt-3 max-w-[62ch] leading-relaxed">
 						{component.description}
 					</Text>
@@ -119,12 +130,14 @@
 
 				{#if activeTab === 'overview'}
 					<section id="preview" aria-labelledby="preview-heading" class="space-y-4">
-						<Heading id="preview-heading" level={2}>Common variants</Heading>
+						<Heading id="preview-heading" level={2}
+							>{slug === 'feedback' ? 'Interactive preview' : 'Common variants'}</Heading
+						>
 						<ExampleCard
 							label={`${component.title} variants`}
-							sourceUrl={`/docs/examples/previews/${slug}/source.json`}
+							sourceUrl={`/docs/examples/${slug === 'feedback' ? 'examples' : 'previews'}/${slug}/source.json`}
 						>
-							{#await previewPromise}<p
+							{#await slug === 'feedback' ? examplePromise : previewPromise}<p
 									role="status"
 									class="min-h-24 text-sm text-muted-foreground"
 								>
@@ -223,71 +236,70 @@
 									</ul>
 								</section>
 							{/if}
-
-							<section
-								id="best-practices"
-								aria-labelledby="best-practices-heading"
-								class="space-y-4"
-							>
-								<Heading id="best-practices-heading" level={3} visual={4}>Best practices</Heading>
-								<ul class="grid gap-3 text-sm leading-relaxed text-muted-foreground md:grid-cols-2">
-									{#each bestPractices as item (item)}
-										<li class="rounded-lg border bg-muted/20 p-4">{item}</li>
-									{/each}
-								</ul>
-							</section>
 						{/if}
 					</section>
+
+					{#if slug === 'map'}
+						<MapGuide />
+					{/if}
 
 					<section id="examples" aria-labelledby="examples-heading" class="space-y-6">
 						<Heading id="examples-heading" level={2}>Examples</Heading>
 
 						<section aria-labelledby="live-example-heading" class="space-y-4">
 							<div class="max-w-3xl space-y-2">
-								<Heading id="live-example-heading" level={3} visual={4}>In practice</Heading>
+								<Heading id="live-example-heading" level={3} visual={4}
+									>{slug === 'feedback' ? 'Review modes' : 'In practice'}</Heading
+								>
 								<Text color="muted" as="p" class="leading-relaxed">
-									Use the component in a realistic product workflow, with supporting UI and
-									meaningful state.
+									{slug === 'feedback'
+										? 'Choose customer review or developer annotations in the interactive preview above.'
+										: 'Use the component in a realistic product workflow, with supporting UI and meaningful state.'}
 								</Text>
 							</div>
 
-							<ExampleCard
-								label={`${component.title} example`}
-								sourceUrl={`/docs/examples/examples/${slug}/source.json`}
-							>
-								{#await examplePromise}
-									<div class="h-32 rounded-lg bg-muted" aria-label="Loading example"></div>
-								{:then example}
-									{#if example}
-										{@const Example = example.component}
-										<Example />
-									{:else}
+							{#if slug === 'map'}
+								{#await examplePromise then example}{#if example}{@const Example =
+											example.component}<Example />{/if}{/await}
+							{:else}
+								<ExampleCard
+									label={`${component.title} example`}
+									sourceUrl={`/docs/examples/${slug === 'feedback' ? 'previews' : 'examples'}/${slug}/source.json`}
+								>
+									{#await slug === 'feedback' ? previewPromise : examplePromise}
+										<div class="h-32 rounded-lg bg-muted" aria-label="Loading example"></div>
+									{:then example}
+										{#if example}
+											{@const Example = example.component}
+											<Example />
+										{:else}
+											<Empty.Root class="border-0 p-2">
+												<Empty.Header>
+													<Empty.Media variant="icon"><BoxIcon /></Empty.Media>
+													<Empty.Title>Example in review</Empty.Title>
+													<Empty.Description>
+														The API is available; its primary example is still being reviewed.
+													</Empty.Description>
+												</Empty.Header>
+											</Empty.Root>
+										{/if}
+									{:catch}
 										<Empty.Root class="border-0 p-2">
 											<Empty.Header>
 												<Empty.Media variant="icon"><BoxIcon /></Empty.Media>
-												<Empty.Title>Example in review</Empty.Title>
-												<Empty.Description>
-													The API is available; its primary example is still being reviewed.
-												</Empty.Description>
+												<Empty.Title>Example failed to load</Empty.Title>
+												<Empty.Description
+													>Reload the page to retry this example chunk.</Empty.Description
+												>
 											</Empty.Header>
 										</Empty.Root>
-									{/if}
-								{:catch}
-									<Empty.Root class="border-0 p-2">
-										<Empty.Header>
-											<Empty.Media variant="icon"><BoxIcon /></Empty.Media>
-											<Empty.Title>Example failed to load</Empty.Title>
-											<Empty.Description
-												>Reload the page to retry this example chunk.</Empty.Description
-											>
-										</Empty.Header>
-									</Empty.Root>
-								{/await}
-							</ExampleCard>
+									{/await}
+								</ExampleCard>
+							{/if}
 						</section>
 
 						{#if slug === 'chat'}
-							{#each [{ slug: 'chat-recovery', title: 'Message recovery and feedback', load: () => import('#lib/site/guide-examples/chat-recovery.svelte') }, { slug: 'chat-uploads', title: 'Upload progress and recovery', load: () => import('#lib/site/guide-examples/chat-uploads.svelte') }, { slug: 'chat-voice', title: 'Voice input', load: () => import('#lib/site/guide-examples/chat-voice.svelte') }, { slug: 'chat-context', title: 'Mentions and commands', load: () => import('#lib/site/guide-examples/chat-context.svelte') }, { slug: 'chat-sources', title: 'Citations and retrieved context', load: () => import('#lib/site/guide-examples/chat-sources.svelte') }, { slug: 'chat-decisions', title: 'Questions, approvals, and recommendations', load: () => import('#lib/site/guide-examples/chat-decisions.svelte') }, { slug: 'chat-workflow', title: 'Activity, change review, and selection actions', load: () => import('#lib/site/guide-examples/chat-workflow.svelte') }, { slug: 'chat-history', title: 'Empty states and conversation history', load: () => import('#lib/site/guide-examples/chat-history.svelte') }] as demo (demo.slug)}
+							{#each [{ slug: 'chat-recovery', title: 'Message recovery and feedback', load: () => import('#lib/site/guide-examples/chat-recovery.svelte') }, { slug: 'chat-uploads', title: 'Upload progress and recovery', load: () => import('#lib/site/guide-examples/chat-uploads.svelte') }, { slug: 'chat-voice', title: 'Voice input', load: () => import('#lib/site/guide-examples/chat-voice.svelte') }, { slug: 'chat-waveform', title: 'Audio waveform', load: () => import('#lib/site/guide-examples/chat-waveform.svelte') }, { slug: 'chat-context', title: 'Mentions and commands', load: () => import('#lib/site/guide-examples/chat-context.svelte') }, { slug: 'chat-sources', title: 'Citations and retrieved context', load: () => import('#lib/site/guide-examples/chat-sources.svelte') }, { slug: 'chat-decisions', title: 'Questions, approvals, and recommendations', load: () => import('#lib/site/guide-examples/chat-decisions.svelte') }, { slug: 'chat-workflow', title: 'Activity, change review, and selection actions', load: () => import('#lib/site/guide-examples/chat-workflow.svelte') }, { slug: 'chat-history', title: 'Empty states and conversation history', load: () => import('#lib/site/guide-examples/chat-history.svelte') }] as demo (demo.slug)}
 								<section id={demo.slug} class="space-y-4" aria-label={demo.title}>
 									<Heading level={3} visual={4}>{demo.title}</Heading>
 									<ExampleCard

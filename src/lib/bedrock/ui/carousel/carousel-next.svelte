@@ -6,7 +6,7 @@
 	import CarouselNext from '#lib/shadcn/ui/carousel/carousel-next.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof CarouselNext> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof CarouselNext> = $props();
 </script>
 
-<CarouselNext {...props} />
+<CarouselNext bind:ref {...props} />

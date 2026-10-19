@@ -37,7 +37,7 @@
 			<LineChart {data} x="month" y="requests" />
 		</Chart.Container>
 	</figure>
-	<details class="rounded-lg border p-3">
+	<details class="rounded-lg border p-3 corner-theme">
 		<summary class="cursor-pointer text-sm font-medium">View source values</summary>
 		<table class="mt-3 w-full text-left text-sm">
 			<caption class="sr-only">Monthly API request totals</caption><thead

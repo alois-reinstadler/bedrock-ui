@@ -1,11 +1,12 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { CheckboxIndicator } from '#lib/bedrock/ui/indicator';
 	import { Button } from '#lib/bedrock/ui/button';
 	let selected = $state<string[]>(['Design']);
 	const teams = ['Design', 'Engineering', 'Support'];
 </script>
 
-<section class="w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5">
+<Card.Root class="block w-full max-w-2xl gap-0 space-y-5 p-5">
 	<header>
 		<h3 class="text-lg font-semibold">Audience selection</h3>
 		<p class="mt-1 text-sm text-muted-foreground">
@@ -31,4 +32,4 @@
 	<p role="status" class="text-sm text-muted-foreground">
 		{selected.length} teams selected. The button owns interaction; the mark is decorative.
 	</p>
-</section>
+</Card.Root>

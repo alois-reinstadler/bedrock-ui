@@ -1,0 +1,27 @@
+{
+	"button": {
+		"files": 94,
+		"raw": 664886,
+		"gzip": 223532
+	},
+	"docs": {
+		"files": 69,
+		"raw": 536523,
+		"gzip": 183146
+	},
+	"motion": {
+		"files": 37,
+		"raw": 528096,
+		"gzip": 180638
+	},
+	"async-button": {
+		"files": 95,
+		"raw": 673237,
+		"gzip": 226877
+	},
+	"erp": {
+		"files": 114,
+		"raw": 920989,
+		"gzip": 307256
+	}
+}

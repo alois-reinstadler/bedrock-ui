@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { CheckboxList, CheckboxListItem } from '#lib/bedrock/ui/checkbox-list';
 	import { Button } from '#lib/bedrock/ui/button';
 	let value = $state(['prototype']);
@@ -12,7 +13,7 @@
 			Selection changes the export summary; unavailable material explains why it cannot be included.
 		</p>
 	</header>
-	<div class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-4 p-5">
 		<CheckboxList bind:value label="Include in the handover" dividers
 			><CheckboxListItem
 				value="prototype"
@@ -34,5 +35,5 @@
 			>Prepare handover ({value.length})</Button
 		>
 		<p role="status" class="text-sm">{summary}</p>
-	</div>
+	</Card.Root>
 </section>

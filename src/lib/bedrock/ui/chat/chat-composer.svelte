@@ -3,7 +3,7 @@
 	import PaperclipIcon from '@lucide/svelte/icons/paperclip';
 	import { onDestroy, tick, type Snippet } from 'svelte';
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { Swap } from '#lib/bedrock/motion/index.js';
+	import Swap from '#lib/bedrock/motion/swap.svelte';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { Token } from '#lib/bedrock/ui/token';
 	import { Icon } from '#lib/bedrock/ui/icon';

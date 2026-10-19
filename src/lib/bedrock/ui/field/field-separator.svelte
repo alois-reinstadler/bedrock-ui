@@ -6,7 +6,7 @@
 	import FieldSeparator from '#lib/shadcn/ui/field/field-separator.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FieldSeparator> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FieldSeparator> = $props();
 </script>
 
-<FieldSeparator {...props} />
+<FieldSeparator bind:ref {...props} />

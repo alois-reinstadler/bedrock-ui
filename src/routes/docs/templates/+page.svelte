@@ -1,6 +1,9 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import { Badge } from '#lib/bedrock/ui/badge';
 	import { Input } from '#lib/bedrock/ui/input';
+	import { Button } from '#lib/bedrock/ui/button';
+	import MessageSquarePlus from '@lucide/svelte/icons/message-square-plus';
 	import { templates } from '#lib/site/templates.js';
 	let query = $state('');
 	const visible = $derived(
@@ -41,20 +44,38 @@
 			placeholder="Music, messages, community…"
 		/>
 	</div>
+	<aside
+		class="mt-8 flex flex-col gap-4 rounded-xl border bg-muted/30 p-5 corner-theme sm:flex-row sm:items-center sm:justify-between"
+		aria-label="Feedback on live templates"
+	>
+		<div class="max-w-2xl">
+			<p class="flex items-center gap-2 font-medium">
+				<MessageSquarePlus class="size-4" />Try Feedback on a real interface
+			</p>
+			<p class="mt-2 text-sm leading-relaxed text-muted-foreground">
+				Open a customer review or annotate as a developer. Select something on the page, leave a
+				note, and export your changes. Drafts stay in this browser.
+			</p>
+		</div>
+		<Button href="/docs/components/feedback" variant="outline" class="shrink-0"
+			>About Feedback</Button
+		>
+	</aside>
 	<p role="status" class="mt-3 text-sm text-muted-foreground">
 		{visible.length}
 		{visible.length === 1 ? 'template' : 'templates'}
 	</p>
 	<div class="mt-6 grid gap-8 xl:grid-cols-2">
 		{#each visible as template (template.slug)}
-			<article
+			<Card.Root
+				role="article"
 				id={template.slug}
-				tabindex="-1"
-				class="template-card scroll-mt-20 overflow-hidden rounded-2xl border bg-card outline-none target:ring-2 target:ring-ring target:ring-offset-4 target:ring-offset-background"
+				tabindex={-1}
+				class="template-card block scroll-mt-20 gap-0 p-0 outline-none target:ring-2 target:ring-ring target:ring-offset-4 target:ring-offset-background"
 			>
 				<a
 					href={`/templates/${template.slug}`}
-					class="group block rounded-t-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+					class="group block rounded-t-xl corner-theme focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
 					aria-label={`Explore ${template.title}`}
 				>
 					<div class="aspect-[16/10] overflow-hidden border-b bg-muted">
@@ -81,9 +102,23 @@
 						{#each template.layouts as layout (layout)}<Badge variant="outline">{layout}</Badge
 							>{/each}
 					</div>
+					<div class="mt-5 flex flex-wrap gap-2">
+						<Button
+							href={`/templates/${template.slug}?feedback=review`}
+							variant="outline"
+							size="sm"
+							aria-label={`Review ${template.title}`}>Review template</Button
+						>
+						<Button
+							href={`/templates/${template.slug}?feedback=developer`}
+							variant="ghost"
+							size="sm"
+							aria-label={`Annotate ${template.title}`}>Annotate template</Button
+						>
+					</div>
 					<details class="mt-5 text-sm">
 						<summary
-							class="cursor-pointer rounded py-1 font-medium focus-visible:outline-2 focus-visible:outline-ring"
+							class="cursor-pointer rounded py-1 font-medium corner-theme focus-visible:outline-2 focus-visible:outline-ring"
 							>Built with Bedrock</summary
 						>
 						<p class="mt-2 leading-relaxed text-muted-foreground">
@@ -93,9 +128,9 @@
 						</p>
 					</details>
 				</div>
-			</article>
+			</Card.Root>
 		{:else}
-			<p class="rounded-xl border border-dashed p-8 text-muted-foreground">
+			<p class="rounded-xl border border-dashed p-8 text-muted-foreground corner-theme">
 				No templates match “{query}”. Try “music”, “video”, “email”, or “social”.
 			</p>
 		{/each}

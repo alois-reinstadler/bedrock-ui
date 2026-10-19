@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../../../../scripts/shared-browser-test';
 
 test.describe('component documentation navigation', () => {
 	test('keeps page content in sync across rapid docs navigation', async ({ page }) => {
@@ -63,7 +63,9 @@ test.describe('component documentation navigation', () => {
 		await expect(page.locator('[data-doc-tab="properties"]')).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Public API' })).toBeVisible();
 		await expect(page.getByRole('columnheader', { name: 'Type' }).first()).toBeVisible();
-		await expect(page.getByText('variant', { exact: true }).first()).toBeVisible();
+		await expect(
+			page.locator('#properties').getByText('variant', { exact: true }).first()
+		).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Property playground' })).toBeVisible();
 
 		await page.reload();

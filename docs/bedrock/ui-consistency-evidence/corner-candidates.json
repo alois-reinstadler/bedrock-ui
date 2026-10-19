@@ -1,0 +1,1322 @@
+[
+	{
+		"file": "src/routes/templates/+layout.svelte",
+		"line": 115,
+		"tag": "a",
+		"class": "class=\"flex items-start gap-3 rounded-lg p-3 hover:bg-muted focus-visible:outline-2 focus-visible:outline-ring aria-[current=page]:bg-muted\""
+	},
+	{
+		"file": "src/routes/motion/+page.svelte",
+		"line": 38,
+		"tag": "section",
+		"class": "class=\"rounded-xl border p-6\""
+	},
+	{
+		"file": "src/routes/motion/+page.svelte",
+		"line": 45,
+		"tag": "section",
+		"class": "class=\"rounded-xl border p-6\""
+	},
+	{
+		"file": "src/routes/motion/+page.svelte",
+		"line": 53,
+		"tag": "section",
+		"class": "class=\"mt-10 rounded-xl border p-6\""
+	},
+	{
+		"file": "src/routes/demo/contrast/+page.svelte",
+		"line": 20,
+		"tag": "section",
+		"class": "class={['mb-8 rounded-xl border p-6', surface === 'page' ? 'bg-background' : 'bg-card']}"
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 279,
+		"tag": "div",
+		"class": "class=\"rounded-[1.75rem] bg-muted/60 p-1.5\""
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 338,
+		"tag": "article",
+		"class": "class=\"rounded-2xl bg-muted/80 px-4 py-5\""
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 407,
+		"tag": "button",
+		"class": "class={[\n\t\t\t\t\t\t\t\t'overflow-hidden rounded-[1.6rem] text-left',\n\t\t\t\t\t\t\t\texpanded === station.id\n\t\t\t\t\t\t\t\t\t? 'col-span-2 min-h-48 bg-foreground text-background md:row-span-2'\n\t\t\t\t\t\t\t\t\t: 'min-h-28 bg-muted'\n\t\t\t\t\t\t\t]}"
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 436,
+		"tag": "article",
+		"class": "class=\"overflow-hidden rounded-2xl bg-muted/80\""
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 491,
+		"tag": "article",
+		"class": "class=\"flex items-start justify-between gap-3 rounded-2xl bg-muted/80 px-4 py-3\""
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 612,
+		"tag": "span",
+		"class": "class=\"absolute inset-0 rounded-[1.6rem] bg-muted\""
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 630,
+		"tag": "div",
+		"class": "class=\"min-h-28 rounded-[1.6rem] bg-muted/40\""
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 694,
+		"tag": "article",
+		"class": "class=\"rounded-2xl bg-muted/80 px-3 py-4\""
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 725,
+		"tag": "div",
+		"class": "class=\"box-border max-w-sm overflow-hidden rounded-[1.6rem] bg-muted/50 p-3\""
+	},
+	{
+		"file": "src/routes/demo/ui/+page.svelte",
+		"line": 846,
+		"tag": "input",
+		"class": "class={[\n\t\t\t\t\t\t\t'rounded-xl border bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',\n\t\t\t\t\t\t\tcallsignError ? 'border-red-500/60' : 'border-border focus:border-foreground/40'\n\t\t\t\t\t\t]}"
+	},
+	{
+		"file": "src/routes/demo/erp/+page.svelte",
+		"line": 397,
+		"tag": "div",
+		"class": "class=\"resize-x overflow-hidden rounded-lg border border-dashed border-border p-3\""
+	},
+	{
+		"file": "src/routes/docs/shaders/+page.svelte",
+		"line": 64,
+		"tag": "a",
+		"class": "class=\"group overflow-hidden rounded-xl border bg-card transition-shadow hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring\""
+	},
+	{
+		"file": "src/routes/docs/forms/+page.svelte",
+		"line": 130,
+		"tag": "details",
+		"class": "class=\"rounded-lg border p-4\""
+	},
+	{
+		"file": "src/routes/docs/forms/+page.svelte",
+		"line": 168,
+		"tag": "details",
+		"class": "class=\"rounded-lg border p-4\""
+	},
+	{
+		"file": "src/routes/docs/forms/+page.svelte",
+		"line": 177,
+		"tag": "details",
+		"class": "class=\"rounded-lg border p-4\""
+	},
+	{
+		"file": "src/routes/docs/forms/+page.svelte",
+		"line": 186,
+		"tag": "details",
+		"class": "class=\"rounded-lg border p-4\""
+	},
+	{
+		"file": "src/routes/docs/forms/+page.svelte",
+		"line": 227,
+		"tag": "details",
+		"class": "class=\"rounded-lg border p-4\""
+	},
+	{
+		"file": "src/routes/docs/templates/+page.svelte",
+		"line": 46,
+		"tag": "aside",
+		"class": "class=\"mt-8 flex flex-col gap-4 rounded-xl border bg-muted/30 p-5 sm:flex-row sm:items-center sm:justify-between\""
+	},
+	{
+		"file": "src/routes/docs/templates/+page.svelte",
+		"line": 69,
+		"tag": "article",
+		"class": "class=\"template-card scroll-mt-20 overflow-hidden rounded-2xl border bg-card outline-none target:ring-2 target:ring-ring target:ring-offset-4 target:ring-offset-background\""
+	},
+	{
+		"file": "src/routes/docs/templates/+page.svelte",
+		"line": 131,
+		"tag": "p",
+		"class": "class=\"rounded-xl border border-dashed p-8 text-muted-foreground\""
+	},
+	{
+		"file": "src/routes/docs/components/+page.svelte",
+		"line": 117,
+		"tag": "a",
+		"class": "class=\"group flex h-full gap-4 rounded-xl border bg-card p-5 transition-colors duration-150 hover:border-foreground/30 hover:bg-muted/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none\""
+	},
+	{
+		"file": "src/routes/docs/components/+page.svelte",
+		"line": 121,
+		"tag": "span",
+		"class": "class=\"grid size-11 shrink-0 place-items-center rounded-lg border bg-background text-muted-foreground group-hover:text-foreground\""
+	},
+	{
+		"file": "src/routes/docs/components/+page.svelte",
+		"line": 136,
+		"tag": "li",
+		"class": "class=\"col-span-full rounded-xl border border-dashed p-8 text-muted-foreground\""
+	},
+	{
+		"file": "src/routes/docs/changelog/+page.svelte",
+		"line": 29,
+		"tag": "article",
+		"class": "class=\"mt-10 rounded-xl border p-6\""
+	},
+	{
+		"file": "src/routes/docs/components/[slug]/+page.svelte",
+		"line": 205,
+		"tag": "dl",
+		"class": "class=\"divide-y overflow-hidden rounded-xl border bg-card\""
+	},
+	{
+		"file": "src/routes/docs/components/[slug]/+page.svelte",
+		"line": 231,
+		"tag": "li",
+		"class": "class=\"rounded-lg border bg-muted/20 p-4\""
+	},
+	{
+		"file": "src/routes/docs/components/[slug]/+page.svelte",
+		"line": 270,
+		"tag": "div",
+		"class": "class=\"h-32 rounded-lg bg-muted\""
+	},
+	{
+		"file": "src/routes/docs/blocks/[slug]/+page.svelte",
+		"line": 115,
+		"tag": "li",
+		"class": "class=\"rounded-xl border bg-card px-4 py-3 text-sm\""
+	},
+	{
+		"file": "src/lib/site/HeroPlayground.svelte",
+		"line": 88,
+		"tag": "a",
+		"class": "class=\"w-full rounded-md px-2 py-1.5 text-left text-xs motion-state hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\""
+	},
+	{
+		"file": "src/lib/site/ShaderPlayground.svelte",
+		"line": 86,
+		"tag": "div",
+		"class": "class=\"mt-8 grid overflow-hidden rounded-xl border lg:grid-cols-[minmax(0,1fr)_17rem]\""
+	},
+	{
+		"file": "src/lib/site/ShaderPlayground.svelte",
+		"line": 125,
+		"tag": "input",
+		"class": "class=\"block w-full text-xs file:mr-2 file:rounded-md file:border file:bg-secondary file:px-3 file:py-2 file:text-foreground\""
+	},
+	{
+		"file": "src/lib/site/component-docs/AccessibilityTab.svelte",
+		"line": 82,
+		"tag": "div",
+		"class": "class=\"overflow-x-auto rounded-xl border bg-card\""
+	},
+	{
+		"file": "src/lib/site/component-docs/MapGuide.svelte",
+		"line": 57,
+		"tag": "dl",
+		"class": "class=\"divide-y rounded-lg border text-sm\""
+	},
+	{
+		"file": "src/lib/site/component-docs/ApiTable.svelte",
+		"line": 9,
+		"tag": "div",
+		"class": "class=\"overflow-x-auto rounded-xl border bg-card\""
+	},
+	{
+		"file": "src/lib/site/component-docs/ButtonPropertiesDemo.svelte",
+		"line": 30,
+		"tag": "div",
+		"class": "class=\"flex min-h-32 items-center justify-center rounded-lg bg-muted/35 p-6\""
+	},
+	{
+		"file": "src/lib/site/component-docs/PropertiesTab.svelte",
+		"line": 70,
+		"tag": "dl",
+		"class": "class=\"divide-y overflow-hidden rounded-xl border bg-card\""
+	},
+	{
+		"file": "src/lib/site/examples/indicator.svelte",
+		"line": 8,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/color-picker.svelte",
+		"line": 16,
+		"tag": "div",
+		"class": "class=\"grid gap-6 rounded-xl border bg-card p-5 sm:grid-cols-2\""
+	},
+	{
+		"file": "src/lib/site/examples/color-picker.svelte",
+		"line": 25,
+		"tag": "div",
+		"class": "class=\"space-y-3 rounded-lg border p-4\""
+	},
+	{
+		"file": "src/lib/site/examples/time-input.svelte",
+		"line": 16,
+		"tag": "div",
+		"class": "class=\"max-w-md space-y-3 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/accordion.svelte",
+		"line": 12,
+		"tag": "div",
+		"class": "class=\"rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/animated-signature.svelte",
+		"line": 11,
+		"tag": "div",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/carousel.svelte",
+		"line": 35,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/timestamp.svelte",
+		"line": 17,
+		"tag": "ol",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/color-area.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/table.svelte",
+		"line": 7,
+		"tag": "section",
+		"class": "class=\"max-w-xl space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/dialog.svelte",
+		"line": 17,
+		"tag": "div",
+		"class": "class=\"flex flex-wrap items-center justify-between gap-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/marquee.svelte",
+		"line": 8,
+		"tag": "span",
+		"class": "class=\"shrink-0 rounded-lg border bg-card px-5 py-4 text-sm font-medium\""
+	},
+	{
+		"file": "src/lib/site/examples/label.svelte",
+		"line": 8,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/text.svelte",
+		"line": 5,
+		"tag": "article",
+		"class": "class=\"max-w-xl space-y-4 rounded-xl border p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/citation.svelte",
+		"line": 12,
+		"tag": "article",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/avatar.svelte",
+		"line": 19,
+		"tag": "div",
+		"class": "class=\"divide-y rounded-xl border bg-card\""
+	},
+	{
+		"file": "src/lib/site/examples/pagination.svelte",
+		"line": 13,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/pagination.svelte",
+		"line": 25,
+		"tag": "li",
+		"class": "class=\"rounded-md border px-3 py-2\""
+	},
+	{
+		"file": "src/lib/site/examples/input.svelte",
+		"line": 9,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/outline.svelte",
+		"line": 13,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/banner.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"overflow-hidden rounded-xl border bg-card\""
+	},
+	{
+		"file": "src/lib/site/examples/overflow-list.svelte",
+		"line": 20,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/overflow-list.svelte",
+		"line": 36,
+		"tag": "div",
+		"class": "class=\"resize-x overflow-hidden rounded-lg border border-dashed p-3\""
+	},
+	{
+		"file": "src/lib/site/examples/radio-group.svelte",
+		"line": 7,
+		"tag": "fieldset",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/radio-group.svelte",
+		"line": 11,
+		"tag": "div",
+		"class": "class=\"flex items-center gap-3 rounded-lg border p-3\""
+	},
+	{
+		"file": "src/lib/site/examples/dot-pattern.svelte",
+		"line": 6,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/dot-pattern.svelte",
+		"line": 10,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/examples/dot-pattern.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-primary/5 p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/dot-pattern.svelte",
+		"line": 19,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/examples/emoji.svelte",
+		"line": 23,
+		"tag": "div",
+		"class": "class=\"space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/emoji.svelte",
+		"line": 50,
+		"tag": "div",
+		"class": "class=\"space-y-3 rounded-xl border p-4\""
+	},
+	{
+		"file": "src/lib/site/examples/multi-selector.svelte",
+		"line": 16,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/noise-overlay.svelte",
+		"line": 6,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/noise-overlay.svelte",
+		"line": 10,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/examples/noise-overlay.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-primary/5 p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/noise-overlay.svelte",
+		"line": 19,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/examples/date-time-input.svelte",
+		"line": 17,
+		"tag": "form",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/menubar.svelte",
+		"line": 9,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/menubar.svelte",
+		"line": 41,
+		"tag": "article",
+		"class": "class=\"rounded-lg border\""
+	},
+	{
+		"file": "src/lib/site/examples/shapes.svelte",
+		"line": 45,
+		"tag": "div",
+		"class": "class=\"grid max-h-[30rem] grid-cols-3 gap-2 overflow-y-auto rounded-xl border p-3 sm:grid-cols-4\""
+	},
+	{
+		"file": "src/lib/site/examples/shapes.svelte",
+		"line": 70,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-4\""
+	},
+	{
+		"file": "src/lib/site/examples/shapes.svelte",
+		"line": 71,
+		"tag": "div",
+		"class": "class=\"flex aspect-square items-center justify-center rounded-lg bg-muted/40\""
+	},
+	{
+		"file": "src/lib/site/examples/checkbox-list.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/scroll-area.svelte",
+		"line": 32,
+		"tag": "div",
+		"class": "class=\"flex items-center justify-between gap-4 rounded-lg border p-3\""
+	},
+	{
+		"file": "src/lib/site/examples/scroll-area.svelte",
+		"line": 53,
+		"tag": "div",
+		"class": "class=\"grid grid-cols-[3rem_1fr] gap-3 rounded-lg px-2 py-2 text-sm hover:bg-muted\""
+	},
+	{
+		"file": "src/lib/site/examples/scroll-area.svelte",
+		"line": 83,
+		"tag": "div",
+		"class": "class=\"w-44 shrink-0 rounded-lg border bg-card p-4 shadow-sm\""
+	},
+	{
+		"file": "src/lib/site/examples/scroll-area.svelte",
+		"line": 110,
+		"tag": "div",
+		"class": "class=\"rounded-md border bg-background px-3 py-3\""
+	},
+	{
+		"file": "src/lib/site/examples/button-group.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/color-swatch-picker.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/color-swatch.svelte",
+		"line": 5,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/blockquote.svelte",
+		"line": 13,
+		"tag": "article",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/checkbox.svelte",
+		"line": 15,
+		"tag": "form",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/field.svelte",
+		"line": 8,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/grid-pattern.svelte",
+		"line": 6,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/grid-pattern.svelte",
+		"line": 10,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/examples/grid-pattern.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-primary/5 p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/grid-pattern.svelte",
+		"line": 19,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/examples/item.svelte",
+		"line": 10,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/item.svelte",
+		"line": 41,
+		"tag": "div",
+		"class": "class=\"rounded-lg bg-muted p-4 text-sm\""
+	},
+	{
+		"file": "src/lib/site/examples/progress.svelte",
+		"line": 8,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/separator.svelte",
+		"line": 5,
+		"tag": "article",
+		"class": "class=\"max-w-sm rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/input-group.svelte",
+		"line": 12,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/color-field.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/form.svelte",
+		"line": 27,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/form.svelte",
+		"line": 68,
+		"tag": "div",
+		"class": "class=\"h-32 w-full max-w-sm rounded-lg bg-muted\""
+	},
+	{
+		"file": "src/lib/site/examples/textarea.svelte",
+		"line": 9,
+		"tag": "form",
+		"class": "class=\"max-w-md space-y-3 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/sidebar.svelte",
+		"line": 17,
+		"tag": "div",
+		"class": "class=\"h-72 w-full max-w-sm overflow-hidden rounded-xl border\""
+	},
+	{
+		"file": "src/lib/site/examples/file-input.svelte",
+		"line": 10,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/toggle-group.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/toggle-group.svelte",
+		"line": 21,
+		"tag": "div",
+		"class": "class={value === 'board' ? 'rounded-lg bg-muted p-4' : 'flex justify-between gap-4 py-3'}"
+	},
+	{
+		"file": "src/lib/site/examples/chart.svelte",
+		"line": 40,
+		"tag": "details",
+		"class": "class=\"rounded-lg border p-3\""
+	},
+	{
+		"file": "src/lib/site/examples/empty.svelte",
+		"line": 7,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/empty.svelte",
+		"line": 14,
+		"tag": "div",
+		"class": "class=\"rounded-lg border p-4\""
+	},
+	{
+		"file": "src/lib/site/examples/token.svelte",
+		"line": 16,
+		"tag": "div",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/thumbnail.svelte",
+		"line": 17,
+		"tag": "ul",
+		"class": "class=\"max-w-md divide-y rounded-xl border px-4\""
+	},
+	{
+		"file": "src/lib/site/examples/color-slider.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/examples/link.svelte",
+		"line": 5,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/sheet.svelte",
+		"line": 11,
+		"tag": "section",
+		"class": "class=\"max-w-md space-y-3 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/native-select.svelte",
+		"line": 7,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/heading.svelte",
+		"line": 5,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/markdown.svelte",
+		"line": 28,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/popover.svelte",
+		"line": 9,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/number-input.svelte",
+		"line": 7,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/select.svelte",
+		"line": 13,
+		"tag": "section",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/feedback.svelte",
+		"line": 48,
+		"tag": "div",
+		"class": "class=\"rounded-xl border bg-card p-7\""
+	},
+	{
+		"file": "src/lib/site/examples/stepped-form.svelte",
+		"line": 89,
+		"tag": "dl",
+		"class": "class=\"grid gap-3 rounded-lg bg-muted/50 p-4 text-sm\""
+	},
+	{
+		"file": "src/lib/site/examples/breadcrumb.svelte",
+		"line": 14,
+		"tag": "div",
+		"class": "class=\"space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/pdf-viewer.svelte",
+		"line": 8,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/date-input.svelte",
+		"line": 16,
+		"tag": "form",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/toggle.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/map.svelte",
+		"line": 44,
+		"tag": "div",
+		"class": "class=\"grid h-[420px] place-items-center rounded-lg border\""
+	},
+	{
+		"file": "src/lib/site/examples/tooltip.svelte",
+		"line": 8,
+		"tag": "section",
+		"class": "class=\"max-w-md space-y-3 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/button.svelte",
+		"line": 15,
+		"tag": "form",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/list.svelte",
+		"line": 5,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/slider.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/slider.svelte",
+		"line": 20,
+		"tag": "article",
+		"class": "class=\"rounded-lg bg-muted p-4\""
+	},
+	{
+		"file": "src/lib/site/examples/date-range-input.svelte",
+		"line": 25,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/switch.svelte",
+		"line": 7,
+		"tag": "section",
+		"class": "class=\"max-w-md space-y-5 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/field-status.svelte",
+		"line": 9,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/combobox.svelte",
+		"line": 21,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/collapsible.svelte",
+		"line": 14,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/alert-dialog.svelte",
+		"line": 14,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/spinner.svelte",
+		"line": 8,
+		"tag": "section",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/async-button.svelte",
+		"line": 22,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/dropdown-menu.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"flex flex-wrap items-center justify-between gap-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/input-otp.svelte",
+		"line": 11,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/metadata-list.svelte",
+		"line": 10,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/icon.svelte",
+		"line": 5,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/kbd.svelte",
+		"line": 25,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/icon-button.svelte",
+		"line": 9,
+		"tag": "section",
+		"class": "class=\"w-full max-w-2xl space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/icon-button.svelte",
+		"line": 16,
+		"tag": "div",
+		"class": "class=\"flex items-center gap-3 rounded-lg border p-3\""
+	},
+	{
+		"file": "src/lib/site/examples/alert.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/progressive-blur.svelte",
+		"line": 24,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/progressive-blur.svelte",
+		"line": 34,
+		"tag": "div",
+		"class": "class=\"flex items-center justify-between gap-3 rounded-lg bg-muted p-3\""
+	},
+	{
+		"file": "src/lib/site/examples/progressive-blur.svelte",
+		"line": 55,
+		"tag": "div",
+		"class": "class=\"relative h-36 overflow-hidden rounded-xl border bg-card shadow-xs\""
+	},
+	{
+		"file": "src/lib/site/examples/progressive-blur.svelte",
+		"line": 78,
+		"tag": "div",
+		"class": "class=\"relative h-44 overflow-hidden rounded-xl border bg-muted p-4 shadow-xs\""
+	},
+	{
+		"file": "src/lib/site/examples/progressive-blur.svelte",
+		"line": 84,
+		"tag": "div",
+		"class": "class=\"rounded-lg border bg-card p-3 shadow-sm\""
+	},
+	{
+		"file": "src/lib/site/examples/skeleton.svelte",
+		"line": 19,
+		"tag": "section",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/badge.svelte",
+		"line": 14,
+		"tag": "div",
+		"class": "class=\"divide-y rounded-xl border bg-card\""
+	},
+	{
+		"file": "src/lib/site/examples/tokenizer.svelte",
+		"line": 26,
+		"tag": "div",
+		"class": "class=\"flex w-full max-w-md flex-col gap-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/navigation-menu.svelte",
+		"line": 5,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/navigation-menu.svelte",
+		"line": 12,
+		"tag": "div",
+		"class": "class=\"flex flex-wrap items-center gap-4 rounded-lg border p-3\""
+	},
+	{
+		"file": "src/lib/site/examples/sonner.svelte",
+		"line": 7,
+		"tag": "section",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/stepper.svelte",
+		"line": 37,
+		"tag": "div",
+		"class": "class=\"rounded-lg border bg-card p-4\""
+	},
+	{
+		"file": "src/lib/site/examples/resizable.svelte",
+		"line": 15,
+		"tag": "p",
+		"class": "class=\"rounded-lg bg-muted p-3 text-sm font-medium\""
+	},
+	{
+		"file": "src/lib/site/examples/lightbox.svelte",
+		"line": 15,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/drawer.svelte",
+		"line": 18,
+		"tag": "div",
+		"class": "class=\"space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/phone-input.svelte",
+		"line": 14,
+		"tag": "div",
+		"class": "class=\"max-w-md space-y-4 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/examples/phone-input.svelte",
+		"line": 31,
+		"tag": "div",
+		"class": "class=\"rounded-lg bg-muted/50 px-3 py-2.5 text-xs\""
+	},
+	{
+		"file": "src/lib/site/examples/hover-card.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"w-full space-y-5 rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/map-examples/CustomLayerExample.svelte",
+		"line": 136,
+		"tag": "div",
+		"class": "class=\"absolute bottom-3 left-3 z-10 rounded-md border bg-background/90 px-3 py-2 text-sm font-medium backdrop-blur dark:bg-gray-900/90\""
+	},
+	{
+		"file": "src/lib/site/map-examples/AdvancedUsageExample.svelte",
+		"line": 50,
+		"tag": "div",
+		"class": "class=\"rounded-md border border-border bg-background/90 px-3 py-2 font-mono text-xs backdrop-blur\""
+	},
+	{
+		"file": "src/lib/site/map-examples/RouteProgressExample.svelte",
+		"line": 85,
+		"tag": "div",
+		"class": "class=\"absolute bottom-3 left-3 w-56 rounded-lg border border-border/50 bg-background/95 p-3 shadow-lg backdrop-blur-md\""
+	},
+	{
+		"file": "src/lib/site/map-examples/OsrmRouteExample.svelte",
+		"line": 103,
+		"tag": "div",
+		"class": "class=\"absolute top-3 left-3 w-48 space-y-0.5 rounded-lg border border-border/50 bg-background/95 p-1 shadow-lg backdrop-blur-md\""
+	},
+	{
+		"file": "src/lib/site/map-examples/LocationsExample.svelte",
+		"line": 57,
+		"tag": "div",
+		"class": "class=\"h-[420px] min-w-0 overflow-hidden rounded-lg border\""
+	},
+	{
+		"file": "src/lib/site/previews/carousel.svelte",
+		"line": 9,
+		"tag": "div",
+		"class": "class=\"flex h-32 items-center justify-center rounded-lg border bg-muted/40 text-lg font-medium\""
+	},
+	{
+		"file": "src/lib/site/previews/color-area.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/overflow-list.svelte",
+		"line": 17,
+		"tag": "div",
+		"class": "class=\"resize-x overflow-hidden rounded-lg border border-dashed p-3\""
+	},
+	{
+		"file": "src/lib/site/previews/dot-pattern.svelte",
+		"line": 6,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/dot-pattern.svelte",
+		"line": 10,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/previews/dot-pattern.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-primary/5 p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/dot-pattern.svelte",
+		"line": 19,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/previews/noise-overlay.svelte",
+		"line": 6,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/noise-overlay.svelte",
+		"line": 10,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/previews/noise-overlay.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-primary/5 p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/noise-overlay.svelte",
+		"line": 19,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/previews/aspect-ratio.svelte",
+		"line": 8,
+		"tag": "div",
+		"class": "class=\"flex h-full items-center justify-center rounded-lg bg-muted text-sm\""
+	},
+	{
+		"file": "src/lib/site/previews/aspect-ratio.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"flex h-full items-center justify-center rounded-lg bg-muted text-sm\""
+	},
+	{
+		"file": "src/lib/site/previews/scroll-area.svelte",
+		"line": 49,
+		"tag": "div",
+		"class": "class=\"flex h-28 w-36 items-center justify-center rounded-lg bg-muted text-sm\""
+	},
+	{
+		"file": "src/lib/site/previews/color-swatch-picker.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/color-swatch.svelte",
+		"line": 5,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/grid-pattern.svelte",
+		"line": 6,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/grid-pattern.svelte",
+		"line": 10,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/previews/grid-pattern.svelte",
+		"line": 15,
+		"tag": "div",
+		"class": "class=\"relative isolate flex min-h-52 items-center justify-center overflow-hidden rounded-xl border bg-primary/5 p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/grid-pattern.svelte",
+		"line": 19,
+		"tag": "div",
+		"class": "class=\"relative rounded-lg bg-card/90 p-4 text-center\""
+	},
+	{
+		"file": "src/lib/site/previews/color-field.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/form.svelte",
+		"line": 48,
+		"tag": "div",
+		"class": "class=\"h-32 w-full max-w-sm animate-pulse rounded-lg bg-muted\""
+	},
+	{
+		"file": "src/lib/site/previews/sidebar.svelte",
+		"line": 9,
+		"tag": "div",
+		"class": "class=\"h-72 w-full max-w-sm overflow-hidden rounded-xl border\""
+	},
+	{
+		"file": "src/lib/site/previews/color-slider.svelte",
+		"line": 6,
+		"tag": "section",
+		"class": "class=\"w-full max-w-sm space-y-5 rounded-xl border bg-card p-6\""
+	},
+	{
+		"file": "src/lib/site/previews/chat.svelte",
+		"line": 34,
+		"tag": "span",
+		"class": "class=\"flex size-9 items-center justify-center rounded-xl bg-muted\""
+	},
+	{
+		"file": "src/lib/site/previews/chat.svelte",
+		"line": 64,
+		"tag": "div",
+		"class": "class=\"rounded-xl bg-muted/50 p-3\""
+	},
+	{
+		"file": "src/lib/site/previews/chat.svelte",
+		"line": 70,
+		"tag": "div",
+		"class": "class=\"rounded-xl bg-muted/50 p-3\""
+	},
+	{
+		"file": "src/lib/site/previews/feedback.svelte",
+		"line": 2,
+		"tag": "section",
+		"class": "class=\"rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/previews/feedback.svelte",
+		"line": 11,
+		"tag": "code",
+		"class": "class=\"mt-4 block rounded-md bg-muted p-3 text-xs\""
+	},
+	{
+		"file": "src/lib/site/previews/feedback.svelte",
+		"line": 13,
+		"tag": "section",
+		"class": "class=\"rounded-xl border bg-card p-5\""
+	},
+	{
+		"file": "src/lib/site/previews/feedback.svelte",
+		"line": 19,
+		"tag": "p",
+		"class": "class=\"mt-4 rounded-md bg-muted p-3 text-xs\""
+	},
+	{
+		"file": "src/lib/site/previews/map.svelte",
+		"line": 6,
+		"tag": "div",
+		"class": "class=\"h-[360px] w-full overflow-hidden rounded-lg border\""
+	},
+	{
+		"file": "src/lib/site/previews/progressive-blur.svelte",
+		"line": 16,
+		"tag": "div",
+		"class": "class=\"relative h-36 overflow-hidden rounded-xl border bg-card shadow-xs\""
+	},
+	{
+		"file": "src/lib/site/previews/progressive-blur.svelte",
+		"line": 39,
+		"tag": "div",
+		"class": "class=\"relative h-44 overflow-hidden rounded-xl border bg-muted p-4 shadow-xs\""
+	},
+	{
+		"file": "src/lib/site/previews/progressive-blur.svelte",
+		"line": 45,
+		"tag": "div",
+		"class": "class=\"rounded-lg border bg-card p-3 shadow-sm\""
+	},
+	{
+		"file": "src/lib/site/guide-examples/motion-families.svelte",
+		"line": 137,
+		"tag": "p",
+		"class": "class=\"rounded-lg bg-muted p-3 text-sm\""
+	},
+	{
+		"file": "src/lib/site/guide-examples/motion-families.svelte",
+		"line": 142,
+		"tag": "p",
+		"class": "class=\"rounded-lg bg-muted p-3 text-sm\""
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-voice.svelte",
+		"line": 59,
+		"tag": "span",
+		"class": "class=\"flex size-9 items-center justify-center rounded-xl bg-muted\""
+	},
+	{
+		"file": "src/lib/site/guide-examples/motion-native.svelte",
+		"line": 27,
+		"tag": "div",
+		"class": "class=\"native-surface rounded-lg bg-muted p-5\""
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-waveform.svelte",
+		"line": 177,
+		"tag": "div",
+		"class": "class=\"overflow-hidden rounded-xl border bg-background shadow-xs\""
+	},
+	{
+		"file": "src/lib/site/guide-examples/chat-waveform.svelte",
+		"line": 252,
+		"tag": "div",
+		"class": "class=\"space-y-3 rounded-xl border p-4\""
+	},
+	{
+		"file": "src/lib/templates/email-client/tasks-screen.svelte",
+		"line": 328,
+		"tag": "p",
+		"class": "class=\"rounded-lg border border-destructive p-3 text-sm\""
+	},
+	{
+		"file": "src/lib/templates/email-client/calendar-screen.svelte",
+		"line": 382,
+		"tag": "p",
+		"class": "class=\"rounded-lg border border-destructive p-3 text-sm\""
+	},
+	{
+		"file": "src/lib/templates/email-client/email-client.svelte",
+		"line": 648,
+		"tag": "div",
+		"class": "class=\"rounded-xl border bg-muted/25 p-4\""
+	}
+]

@@ -5,8 +5,13 @@
 <script lang="ts">
 	import AvatarGroupCount from '#lib/shadcn/ui/avatar/avatar-group-count.svelte';
 	import type { ComponentProps } from 'svelte';
+	import { cn } from '#lib/utils.js';
 
-	let props: ComponentProps<typeof AvatarGroupCount> = $props();
+	let {
+		ref = $bindable(null),
+		class: className,
+		...props
+	}: ComponentProps<typeof AvatarGroupCount> = $props();
 </script>
 
-<AvatarGroupCount {...props} />
+<AvatarGroupCount bind:ref class={cn('text-foreground', className)} {...props} />

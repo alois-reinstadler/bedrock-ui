@@ -6,7 +6,7 @@
 	import SheetClose from '#lib/shadcn/ui/sheet/sheet-close.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SheetClose> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SheetClose> = $props();
 </script>
 
-<SheetClose {...props} />
+<SheetClose bind:ref {...props} />

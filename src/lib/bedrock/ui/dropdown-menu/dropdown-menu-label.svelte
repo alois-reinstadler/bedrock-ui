@@ -6,7 +6,7 @@
 	import DropdownMenuLabel from '#lib/shadcn/ui/dropdown-menu/dropdown-menu-label.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof DropdownMenuLabel> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof DropdownMenuLabel> = $props();
 </script>
 
-<DropdownMenuLabel {...props} />
+<DropdownMenuLabel bind:ref {...props} />

@@ -1,0 +1,121 @@
+{
+	"routes": {
+		"erp": {
+			"files": 124,
+			"raw": 1052908,
+			"gzip": 352422,
+			"baselineGzip": 307256,
+			"delta": 45166,
+			"ratio": 1.1469979430832922,
+			"ceiling": 349560,
+			"pass": false
+		},
+		"button": {
+			"files": 96,
+			"raw": 642480,
+			"gzip": 215356,
+			"baselineGzip": 223532,
+			"delta": -8176,
+			"ratio": 0.9634235814111626,
+			"ceiling": 265836,
+			"pass": true
+		},
+		"docs": {
+			"files": 71,
+			"raw": 512854,
+			"gzip": 174700,
+			"baselineGzip": 183146,
+			"delta": -8446,
+			"ratio": 0.9538837867056884,
+			"ceiling": 225450,
+			"pass": true
+		},
+		"motion": {
+			"files": 47,
+			"raw": 574887,
+			"gzip": 199763,
+			"baselineGzip": 180638,
+			"delta": 19125,
+			"ratio": 1.1058747328911969,
+			"ceiling": 222942,
+			"pass": true
+		},
+		"async-button": {
+			"files": 101,
+			"raw": 770525,
+			"gzip": 261569,
+			"baselineGzip": 226877,
+			"delta": 34692,
+			"ratio": 1.1529110487180279,
+			"ceiling": 269181,
+			"pass": true
+		}
+	},
+	"frames": {
+		"async": {
+			"viewport": [1280, 900],
+			"userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+			"runs": [
+				{
+					"samples": 192,
+					"p95": 16.700000000000728,
+					"maxGap": 33.30000000000291,
+					"longTasks": 0,
+					"maxLongTask": 0,
+					"totalLongTask": 0,
+					"finalText": "Save draft"
+				},
+				{
+					"samples": 193,
+					"p95": 16.700000000000728,
+					"maxGap": 16.799999999999272,
+					"longTasks": 0,
+					"maxLongTask": 0,
+					"totalLongTask": 0,
+					"finalText": "Save draft"
+				},
+				{
+					"samples": 193,
+					"p95": 16.799999999999272,
+					"maxGap": 33.29999999999927,
+					"longTasks": 0,
+					"maxLongTask": 0,
+					"totalLongTask": 0,
+					"finalText": "Save draft"
+				}
+			],
+			"pass": true
+		},
+		"avatar": {
+			"viewport": [1280, 900],
+			"userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36",
+			"runs": [
+				{
+					"samples": 192,
+					"p95": 16.799999999999272,
+					"maxGap": 16.80000000000291,
+					"longTasks": 0,
+					"maxLongTask": 0,
+					"totalLongTask": 0
+				},
+				{
+					"samples": 192,
+					"p95": 16.700000000004366,
+					"maxGap": 16.80000000000291,
+					"longTasks": 0,
+					"maxLongTask": 0,
+					"totalLongTask": 0
+				},
+				{
+					"samples": 191,
+					"p95": 16.700000000004366,
+					"maxGap": 16.80000000000291,
+					"longTasks": 0,
+					"maxLongTask": 0,
+					"totalLongTask": 0
+				}
+			],
+			"pass": true
+		}
+	}
+}

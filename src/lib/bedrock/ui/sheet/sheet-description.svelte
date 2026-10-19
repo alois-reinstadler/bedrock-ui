@@ -6,7 +6,7 @@
 	import SheetDescription from '#lib/shadcn/ui/sheet/sheet-description.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof SheetDescription> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof SheetDescription> = $props();
 </script>
 
-<SheetDescription {...props} />
+<SheetDescription bind:ref {...props} />

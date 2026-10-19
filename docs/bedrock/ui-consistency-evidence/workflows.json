@@ -1,0 +1,201 @@
+[
+	{
+		"name": "component-catalogue-empty",
+		"blocked": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText(/No components/) to be visible\u001b[22m\n"
+	},
+	{
+		"name": "stepped-form-validation-review-submit",
+		"blocked": "TimeoutError: locator.click: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Next', exact: true })\u001b[22m\n"
+	},
+	{
+		"name": "email-tasks-add-complete-empty",
+		"blocked": "TimeoutError: locator.check: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('checkbox', { name: 'Complete Local audit task', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"bits-c6\" type=\"button\" role=\"checkbox\" data-slot=\"checkbox\" aria-checked=\"false\" aria-required=\"false\" aria-readonly=\"false\" data-checkbox-root=\"\" data-state=\"unchecked\" aria-label=\"Complete Local audit task\" class=\"peer relative flex size-4 shrink-0 items-center justify-center rounded-[4px] border border-input transition-colors outline-none group-has-disabled/field:opacity-50 after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring…>…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n\u001b[2m    - click action done\u001b[22m\n\u001b[2m    - waiting for scheduled navigations to finish\u001b[22m\n\u001b[2m    - navigations have finished\u001b[22m\n"
+	},
+	{
+		"name": "email-compose-dialog",
+		"blocked": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog') to be visible\u001b[22m\n"
+	},
+	{
+		"name": "music-queue-like",
+		"blocked": "TimeoutError: locator.getAttribute: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Like current track', exact: true })\u001b[22m\n"
+	},
+	{
+		"name": "video-search-and-list",
+		"data": [
+			{
+				"q": "tears",
+				"text": "SEARCH FRAME\n\nResults for “tears”\n\n1 title\n\nSHORT FILM\nTears of Steel\n\n2012 · 12:14 · Science fiction\n\n+"
+			},
+			{
+				"q": "audit-no-match",
+				"text": "SEARCH FRAME\n\nResults for “audit-no-match”\n\n0 titles\n\nNo films found.\n\nTry a title, genre, or director."
+			},
+			{
+				"myList": "YOUR PERSONAL CINEMA\n\nMy list0\n\nThe ones you want to come back to.\n\n+\nYour next movie night starts here.\n\nAdd a film to your list and it will be waiting for you.\n\nFind a film"
+			}
+		]
+	},
+	{
+		"name": "social-local-post",
+		"data": {
+			"href": "/templates/social-network/post/local-1791151428056",
+			"opened": true,
+			"text": "Post\nMina Okafor\n@mina\n·\nnow\nLocal audit draft - browser-only fixture.\n0\n0\n0\n10:24 AM · September 22, 2026 · 0 views\nReplying publicly\n0/500\nReply"
+		}
+	},
+	{
+		"name": "feedback-query-modes",
+		"data": [
+			{
+				"template": "music-player",
+				"mode": "review",
+				"expanded": "true",
+				"dialogs": []
+			},
+			{
+				"template": "music-player",
+				"mode": "developer",
+				"expanded": "true",
+				"dialogs": []
+			},
+			{
+				"template": "music-player",
+				"mode": "off",
+				"expanded": "false",
+				"dialogs": []
+			},
+			{
+				"template": "video-library",
+				"mode": "review",
+				"expanded": "false",
+				"dialogs": []
+			},
+			{
+				"template": "video-library",
+				"mode": "developer",
+				"expanded": "true",
+				"dialogs": []
+			},
+			{
+				"template": "video-library",
+				"mode": "off",
+				"expanded": "false",
+				"dialogs": []
+			},
+			{
+				"template": "email-client",
+				"mode": "review",
+				"expanded": "true",
+				"dialogs": []
+			},
+			{
+				"template": "email-client",
+				"mode": "developer",
+				"expanded": "true",
+				"dialogs": []
+			},
+			{
+				"template": "email-client",
+				"mode": "off",
+				"expanded": "false",
+				"dialogs": []
+			},
+			{
+				"template": "social-network",
+				"mode": "review",
+				"expanded": "true",
+				"dialogs": []
+			},
+			{
+				"template": "social-network",
+				"mode": "developer",
+				"expanded": "true",
+				"dialogs": []
+			},
+			{
+				"template": "social-network",
+				"mode": "off",
+				"expanded": "false",
+				"dialogs": []
+			}
+		]
+	},
+	{
+		"name": "confirmed-contrast-and-name",
+		"data": [
+			{
+				"url": "http://127.0.0.1:4513/templates/email-client/calendar",
+				"title": "Lumen Calendar",
+				"dark": true,
+				"violations": [
+					{
+						"id": "color-contrast",
+						"nodes": [
+							{
+								"target": ["button[aria-label=\"Monday, 31 August 2026\"] > .day-number"],
+								"summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.37 (foreground color: #4e4e4e, background color: #0a0a0a, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+							}
+						]
+					}
+				]
+			},
+			{
+				"url": "http://127.0.0.1:4513/templates/video-library",
+				"title": "Frame — Films worth your time",
+				"dark": false,
+				"violations": [
+					{
+						"id": "color-contrast",
+						"nodes": [
+							{
+								"target": ["summary[aria-label=\"Your account\"] > span:nth-child(1)"],
+								"summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.66 (foreground color: #ffffff, background color: #bd725c, font size: 8.3pt (11px), font weight: bold). Expected contrast ratio of 4.5:1"
+							},
+							{
+								"target": ["#film-credits > p"],
+								"summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #797982, background color: #111113, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+							},
+							{
+								"target": ["#film-credits > span"],
+								"summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.37 (foreground color: #797982, background color: #111113, font size: 6.8pt (9px), font weight: normal). Expected contrast ratio of 4.5:1"
+							}
+						]
+					}
+				]
+			},
+			{
+				"url": "http://127.0.0.1:4513/templates/music-player",
+				"title": "Listen now — Drift",
+				"dark": false,
+				"violations": [
+					{
+						"id": "color-contrast",
+						"nodes": [
+							{
+								"target": ["input"],
+								"summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.29 (foreground color: #7a7a7a, background color: #ffffff, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+							}
+						]
+					},
+					{
+						"id": "link-name",
+						"nodes": [
+							{
+								"target": [".playing > a"],
+								"summary": "Fix all of the following:\n  Element is in tab order and does not have accessible text\n\nFix any of the following:\n  Element does not have text that is visible to screen readers\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+							}
+						]
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "sidebar-history-scroll",
+		"data": {
+			"before": 1470,
+			"after": 1470,
+			"url": "http://127.0.0.1:4513/docs/components/button"
+		}
+	}
+]

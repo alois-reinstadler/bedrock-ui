@@ -286,7 +286,7 @@
 			id={listId}
 			role="listbox"
 			data-slot="tokenizer-list"
-			class="absolute top-full left-0 z-50 mt-1 max-h-64 w-full motion-popover overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
+			class="motion-popover absolute top-full left-0 z-50 mt-1 max-h-64 w-full overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10"
 		>
 			{#if entries.length === 0}
 				<div class="px-2 py-1.5 text-sm text-muted-foreground">{labels.empty}</div>

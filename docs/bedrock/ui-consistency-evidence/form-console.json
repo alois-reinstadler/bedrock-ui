@@ -1,0 +1,224 @@
+{
+	"success": true,
+	"data": {
+		"lifecycle": {
+			"effectiveLaunch": {
+				"browserLaunched": true,
+				"engine": "chrome",
+				"launchHash": 16916701976626339271
+			},
+			"launched": false,
+			"relaunchedBrowser": false,
+			"restartedBackground": false,
+			"restoreStatus": "not_configured",
+			"reused": true,
+			"saveStatus": "not_attempted"
+		},
+		"messages": [
+			{
+				"args": [{ "type": "string", "value": "[vite] connecting..." }],
+				"text": "[vite] connecting...",
+				"type": "debug"
+			},
+			{
+				"args": [{ "type": "string", "value": "[vite] connected." }],
+				"text": "[vite] connected.",
+				"type": "debug"
+			},
+			{
+				"args": [
+					{ "type": "string", "value": "[vite]" },
+					{ "type": "string", "value": "hot updated: /src/routes/layout.css" }
+				],
+				"text": "[vite] hot updated: /src/routes/layout.css",
+				"type": "debug"
+			},
+			{
+				"args": [
+					{ "type": "string", "value": "[vite]" },
+					{ "type": "string", "value": "hot updated: /src/routes/layout.css" }
+				],
+				"text": "[vite] hot updated: /src/routes/layout.css",
+				"type": "debug"
+			},
+			{
+				"args": [
+					{
+						"type": "string",
+						"value": "Unexpected value for reload — should be one of \"\", \"true\", \"false\""
+					},
+					{
+						"className": "HTMLAnchorElement",
+						"description": "a.relative.block.py-3.text-sm.font-medium.whitespace-nowrap.text-muted-foreground.transition-colors.hover:text-foreground.focus-visible:rounded-sm.focus-visible:ring-2.focus-visible:ring-ring.focus-visible:outline-none.aria-[current=page]:text-foreground.svelte-c3zzpk",
+						"objectId": "4229871331135105749.2.1",
+						"preview": {
+							"description": "a.relative.block.py-3.text-sm.font-medium.whitespace-nowrap.text-muted-foreground.transition-colors.hover:text-foreground.focus-visible:rounded-sm.focus-visible:ring-2.focus-visible:ring-ring.focus-visible:outline-none.aria-[current=page]:text-foreground.svelte-c3zzpk",
+							"overflow": true,
+							"properties": [
+								{ "name": "__svelte_meta", "type": "object", "value": "Object" },
+								{ "name": "Symbol(attributes)", "type": "object", "value": "Object" },
+								{ "name": "download", "type": "string", "value": "" },
+								{ "name": "ping", "type": "string", "value": "" },
+								{ "name": "rel", "type": "string", "value": "" }
+							],
+							"subtype": "node",
+							"type": "object"
+						},
+						"subtype": "node",
+						"type": "object"
+					}
+				],
+				"text": "Unexpected value for reload — should be one of \"\", \"true\", \"false\" {__svelte_meta: Object, Symbol(attributes): Object, download: \"\", ping: \"\", rel: \"\", ...}",
+				"type": "error"
+			},
+			{
+				"args": [
+					{
+						"type": "string",
+						"value": "Unexpected value for reload — should be one of \"\", \"true\", \"false\""
+					},
+					{
+						"className": "HTMLAnchorElement",
+						"description": "a.relative.block.py-3.text-sm.font-medium.whitespace-nowrap.text-muted-foreground.transition-colors.hover:text-foreground.focus-visible:rounded-sm.focus-visible:ring-2.focus-visible:ring-ring.focus-visible:outline-none.aria-[current=page]:text-foreground.svelte-c3zzpk",
+						"objectId": "4229871331135105749.2.2",
+						"preview": {
+							"description": "a.relative.block.py-3.text-sm.font-medium.whitespace-nowrap.text-muted-foreground.transition-colors.hover:text-foreground.focus-visible:rounded-sm.focus-visible:ring-2.focus-visible:ring-ring.focus-visible:outline-none.aria-[current=page]:text-foreground.svelte-c3zzpk",
+							"overflow": true,
+							"properties": [
+								{ "name": "__svelte_meta", "type": "object", "value": "Object" },
+								{ "name": "Symbol(attributes)", "type": "object", "value": "Object" },
+								{ "name": "download", "type": "string", "value": "" },
+								{ "name": "ping", "type": "string", "value": "" },
+								{ "name": "rel", "type": "string", "value": "" }
+							],
+							"subtype": "node",
+							"type": "object"
+						},
+						"subtype": "node",
+						"type": "object"
+					}
+				],
+				"text": "Unexpected value for reload — should be one of \"\", \"true\", \"false\" {__svelte_meta: Object, Symbol(attributes): Object, download: \"\", ping: \"\", rel: \"\", ...}",
+				"type": "error"
+			},
+			{
+				"args": [
+					{
+						"type": "string",
+						"value": "Unexpected value for reload — should be one of \"\", \"true\", \"false\""
+					},
+					{
+						"className": "HTMLAnchorElement",
+						"description": "a.relative.block.py-3.text-sm.font-medium.whitespace-nowrap.text-muted-foreground.transition-colors.hover:text-foreground.focus-visible:rounded-sm.focus-visible:ring-2.focus-visible:ring-ring.focus-visible:outline-none.aria-[current=page]:text-foreground.svelte-c3zzpk",
+						"objectId": "4229871331135105749.2.3",
+						"preview": {
+							"description": "a.relative.block.py-3.text-sm.font-medium.whitespace-nowrap.text-muted-foreground.transition-colors.hover:text-foreground.focus-visible:rounded-sm.focus-visible:ring-2.focus-visible:ring-ring.focus-visible:outline-none.aria-[current=page]:text-foreground.svelte-c3zzpk",
+							"overflow": true,
+							"properties": [
+								{ "name": "__svelte_meta", "type": "object", "value": "Object" },
+								{ "name": "Symbol(attributes)", "type": "object", "value": "Object" },
+								{ "name": "download", "type": "string", "value": "" },
+								{ "name": "ping", "type": "string", "value": "" },
+								{ "name": "rel", "type": "string", "value": "" }
+							],
+							"subtype": "node",
+							"type": "object"
+						},
+						"subtype": "node",
+						"type": "object"
+					}
+				],
+				"text": "Unexpected value for reload — should be one of \"\", \"true\", \"false\" {__svelte_meta: Object, Symbol(attributes): Object, download: \"\", ping: \"\", rel: \"\", ...}",
+				"type": "error"
+			},
+			{
+				"args": [
+					{ "type": "string", "value": "[vite]" },
+					{ "type": "string", "value": "hot updated: /src/routes/layout.css" }
+				],
+				"text": "[vite] hot updated: /src/routes/layout.css",
+				"type": "debug"
+			},
+			{
+				"args": [
+					{ "type": "string", "value": "[vite]" },
+					{ "type": "string", "value": "hot updated: /src/routes/layout.css" }
+				],
+				"text": "[vite] hot updated: /src/routes/layout.css",
+				"type": "debug"
+			},
+			{
+				"args": [
+					{ "type": "string", "value": "[vite]" },
+					{ "type": "string", "value": "hot updated: /src/routes/layout.css" }
+				],
+				"text": "[vite] hot updated: /src/routes/layout.css",
+				"type": "debug"
+			},
+			{
+				"args": [
+					{ "type": "string", "value": "[vite]" },
+					{ "type": "string", "value": "hot updated: /src/routes/layout.css" }
+				],
+				"text": "[vite] hot updated: /src/routes/layout.css",
+				"type": "debug"
+			},
+			{
+				"args": [
+					{ "type": "string", "value": "`$app/environment` is deprecated, use `$app/env` instead" }
+				],
+				"text": "`$app/environment` is deprecated, use `$app/env` instead",
+				"type": "warning"
+			},
+			{
+				"args": [
+					{ "type": "string", "value": "The next HMR update will cause the page to reload" }
+				],
+				"text": "The next HMR update will cause the page to reload",
+				"type": "warning"
+			},
+			{
+				"args": [
+					{
+						"className": "Error",
+						"description": "Error: `$app/stores` has been removed in favour of `$app/state`. See https://svelte.dev/docs/kit/migrating-to-sveltekit-2#SvelteKit-2.12:-$app-stores-deprecated\n    at Object.removed [as subscribe] (http://127.0.0.1:4513/node_modules/.pnpm/@sveltejs+kit@3.0.0-next.25_@sveltejs+vite-plugin-svelte@7.3.0_svelte@5.57.0_@typescrip_1abe8800a574c13633d9bbb3335f4560/node_modules/@sveltejs/kit/src/runtime/app/stores.js?v=83155690:5:8)\n    at http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:1261:36\n    at untrack (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:4829:10)\n    at subscribe_to_store (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:1261:16)\n    at get$1 (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:1434:2)\n    at superForm (http://127.0.0.1:4513/node_modules/.pnpm/sveltekit-superforms@2.30.2_@sveltejs+kit@3.0.0-next.25_@sveltejs+vite-plugin-svelte@7._4447ddbba9c5c2eca52e7a9775f77ac4/node_modules/sveltekit-superforms/dist/client/superForm.js?v=83155690:139:30)\n    at http://127.0.0.1:4513/src/lib/site/examples/form.svelte:41:15\n    at untrack (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:4829:10)\n    at $effect (http://127.0.0.1:4513/node_modules/.vite-development/deps/client-IiPgMvu0.js?v=83155690:346:19)\n    at update_reaction (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:4549:16)",
+						"objectId": "4229871331135105749.2.4",
+						"preview": {
+							"description": "Error: `$app/stores` has been removed in favour of `$app/state`. See https://svelte.dev/docs/kit/migrating-to-sveltekit-2#SvelteKit-2.12:-$app-stores-deprecated\n    at Object.removed [as subscribe] (http://127.0.0.1:4513/node_modules/.pnpm/@sveltejs+kit@3.0.0-next.25_@sveltejs+vite-plugin-svelte@7.3.0_svelte@5.57.0_@typescrip_1abe8800a574c13633d9bbb3335f4560/node_modules/@sveltejs/kit/src/runtime/app/stores.js?v=83155690:5:8)\n    at http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:1261:36\n    at untrack (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:4829:10)\n    at subscribe_to_store (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:1261:16)\n    at get$1 (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:1434:2)\n    at superForm (http://127.0.0.1:4513/node_modules/.pnpm/sveltekit-superforms@2.30.2_@sveltejs+kit@3.0.0-next.25_@sveltejs+vite-plugin-svelte@7._4447ddbba9c5c2eca52e7a9775f77ac4/node_modules/sveltekit-superforms/dist/client/superForm.js?v=83155690:139:30)\n    at http://127.0.0.1:4513/src/lib/site/examples/form.svelte:41:15\n    at untrack (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:4829:10)\n    at $effect (http://127.0.0.1:4513/node_modules/.vite-development/deps/client-IiPgMvu0.js?v=83155690:346:19)\n    at update_reaction (http://127.0.0.1:4513/node_modules/.vite-development/deps/runtime-CCsu2_OT.js?v=83155690:4549:16)",
+							"overflow": false,
+							"properties": [
+								{
+									"name": "stack",
+									"type": "string",
+									"value": "Error: `$app/stores` has been removed in favour of…ment/deps/runtime-CCsu2_OT.js?v=83155690:4549:16)"
+								},
+								{
+									"name": "message",
+									"type": "string",
+									"value": "`$app/stores` has been removed in favour of `$app/…veltekit-2#SvelteKit-2.12:-$app-stores-deprecated"
+								}
+							],
+							"subtype": "error",
+							"type": "object"
+						},
+						"subtype": "error",
+						"type": "object"
+					}
+				],
+				"text": "{stack: \"Error: `$app/stores` has been removed in favour of…ment/deps/runtime-CCsu2_OT.js?v=83155690:4549:16)\", message: \"`$app/stores` has been removed in favour of `$app/…veltekit-2#SvelteKit-2.12:-$app-stores-deprecated\"}",
+				"type": "error"
+			},
+			{
+				"args": [{ "type": "string", "value": "[vite] connecting..." }],
+				"text": "[vite] connecting...",
+				"type": "debug"
+			},
+			{
+				"args": [{ "type": "string", "value": "[vite] connected." }],
+				"text": "[vite] connected.",
+				"type": "debug"
+			}
+		]
+	},
+	"error": null
+}

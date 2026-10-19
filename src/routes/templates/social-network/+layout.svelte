@@ -56,13 +56,18 @@
 			<div class="account-area">
 				<DropdownMenu.Root>
 					<DropdownMenu.Trigger>
-						{#snippet child({ props })}<button
+						{#snippet child({ props })}<Button
+								variant="ghost"
+								type="button"
 								{...props}
-								class="account-button"
+								class={[
+									'control-templates-social-network-layout h-auto whitespace-normal',
+									'account-button'
+								]}
 								aria-label="Open account menu"
 								><img class="avatar" src="/templates/social-network/mina.jpg" alt="" /><span
 									><strong>{social.profileName}</strong><small>@mina</small></span
-								><Ellipsis size={19} /></button
+								><Ellipsis size={19} /></Button
 							>{/snippet}
 					</DropdownMenu.Trigger>
 					<DropdownMenu.Content side="top" align="start" sideOffset={10} class="w-60 p-2">
@@ -139,13 +144,18 @@
 									src={`/templates/social-network/${person.avatar}.jpg`}
 									alt=""
 								/><span><strong>{person.name}</strong><small>@{person.handle}</small></span></a
-							><button
-								class="follow-button"
-								class:following={social.following.includes(person.handle)}
+							><Button
+								variant="ghost"
+								type="button"
+								class={[
+									'control-templates-social-network-layout h-auto whitespace-normal',
+									'follow-button',
+									{ following: social.following.includes(person.handle) }
+								]}
 								aria-label={`${social.following.includes(person.handle) ? 'Unfollow' : 'Follow'} ${person.name}`}
 								aria-pressed={social.following.includes(person.handle)}
 								onclick={() => social.toggle('following', person.handle)}
-								>{social.following.includes(person.handle) ? 'Following' : 'Follow'}</button
+								>{social.following.includes(person.handle) ? 'Following' : 'Follow'}</Button
 							>
 						</div>{/each}
 				</div>

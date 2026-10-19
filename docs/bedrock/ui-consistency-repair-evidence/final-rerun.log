@@ -1,0 +1,26 @@
+
+Running 18 tests using 1 worker
+
+(node:95789) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/18] src/lib/site/component-previews.e2e.ts:5:2 › progress mounts its lazy preview and example in both layouts
+[2/18] src/routes/docs/runtime-contracts.e2e.ts:18:1 › block reference tabs retain valid full navigation and history
+[3/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 390px in light
+[4/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 390px in light
+[5/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 390px in light
+[6/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 390px in light
+[7/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 390px in dark
+[8/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 390px in dark
+[9/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 390px in dark
+[10/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 390px in dark
+[11/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 1440px in light
+[12/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 1440px in light
+[13/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 1440px in light
+[14/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 1440px in light
+[15/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › email-client preserves template consistency at 1440px in dark
+[16/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › music-player preserves template consistency at 1440px in dark
+[17/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › social-network preserves template consistency at 1440px in dark
+[18/18] src/routes/templates/ui-consistency.e2e.ts:63:4 › video-library preserves template consistency at 1440px in dark
+  18 passed (39.7s)

@@ -6,7 +6,7 @@
 	import FieldLegend from '#lib/shadcn/ui/field/field-legend.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof FieldLegend> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof FieldLegend> = $props();
 </script>
 
-<FieldLegend {...props} />
+<FieldLegend bind:ref {...props} />

@@ -6,7 +6,7 @@
 	import MenubarSubTrigger from '#lib/shadcn/ui/menubar/menubar-sub-trigger.svelte';
 	import type { ComponentProps } from 'svelte';
 
-	let props: ComponentProps<typeof MenubarSubTrigger> = $props();
+	let { ref = $bindable(null), ...props }: ComponentProps<typeof MenubarSubTrigger> = $props();
 </script>
 
-<MenubarSubTrigger {...props} />
+<MenubarSubTrigger bind:ref {...props} />

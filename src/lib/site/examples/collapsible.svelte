@@ -1,4 +1,5 @@
 <script lang="ts">
+	import * as Card from '#lib/bedrock/ui/card';
 	import * as Collapsible from '#lib/bedrock/ui/collapsible';
 	import { Button } from '#lib/bedrock/ui/button';
 	let open = $state(false);
@@ -11,7 +12,7 @@
 			Keep the useful summary visible and reveal lower-priority tracking details on demand.
 		</p>
 	</header>
-	<div class="space-y-4 rounded-xl border bg-card p-5">
+	<Card.Root class="block gap-0 space-y-4 p-5">
 		<div>
 			<p class="font-medium">Order FN-2048 is on its way</p>
 			<p class="text-sm text-muted-foreground">Estimated arrival: Friday, September 18</p>
@@ -34,5 +35,5 @@
 				</ol></Collapsible.Content
 			></Collapsible.Root
 		>
-	</div>
+	</Card.Root>
 </section>
