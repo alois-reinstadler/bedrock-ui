@@ -17,7 +17,9 @@ test('native activation is exactly once for pointer, Enter and Space', async ({ 
 	await expect(button).toHaveText('Pressed 3 times');
 });
 
-test('CSS exit retains the node and reversing it preserves its state', async ({ page }) => {
+test('Native binding exit retains the node and reversing it preserves its state', async ({
+	page
+}) => {
 	const panel = page.getByTestId('bedrock-css-panel');
 	await expect(panel).toHaveCSS('opacity', '1');
 	await page.getByTestId('bedrock-native-action').click();
@@ -39,31 +41,41 @@ test('CSS exit retains the node and reversing it preserves its state', async ({ 
 	await expect(page.getByTestId('bedrock-native-action')).toHaveText('Pressed 1 times');
 });
 
-test('CSS retargeting responds to reduced-motion policy changes after mount', async ({ page }) => {
+test('Native binding retargeting responds to reduced-motion policy changes after mount', async ({
+	page
+}) => {
 	const panel = page.getByTestId('bedrock-css-panel');
 	await expect(panel).toHaveCSS('opacity', '1');
 	await page.getByTestId('bedrock-css-retarget').click();
 	await expect
-		.poll(() => panel.evaluate((node) => Number.parseFloat(getComputedStyle(node).translate) || 0))
+		.poll(() =>
+			panel.evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).m41)
+		)
 		.toBe(32);
 	await page.getByTestId('bedrock-motion-reduced').check();
-	await expect(panel).toHaveCSS('transition-property', 'none');
 	await page.getByTestId('bedrock-css-retarget').click();
 	await expect
-		.poll(() => panel.evaluate((node) => Number.parseFloat(getComputedStyle(node).translate) || 0))
+		.poll(() =>
+			panel.evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).m41)
+		)
 		.toBe(0);
 	await page.getByTestId('bedrock-css-retarget').click();
 	await expect
-		.poll(() => panel.evaluate((node) => Number.parseFloat(getComputedStyle(node).translate) || 0))
+		.poll(() =>
+			panel.evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).m41)
+		)
 		.toBe(32);
 	await page.getByTestId('bedrock-motion-reduced').uncheck();
 	await expect
-		.poll(() => panel.evaluate((node) => Number.parseFloat(getComputedStyle(node).translate) || 0))
+		.poll(() =>
+			panel.evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).m41)
+		)
 		.toBe(32);
 	await page.emulateMedia({ reducedMotion: 'reduce' });
-	await expect(panel).toHaveCSS('transition-property', 'none');
 	await expect
-		.poll(() => panel.evaluate((node) => Number.parseFloat(getComputedStyle(node).translate) || 0))
+		.poll(() =>
+			panel.evaluate((node) => new DOMMatrixReadOnly(getComputedStyle(node).transform).m41)
+		)
 		.toBe(32);
 });
 

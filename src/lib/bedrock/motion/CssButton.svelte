@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ComponentProps } from 'svelte';
-	import { createMotion, type CssMotionOptions } from 'astra-motion/css';
+	import { motion as astraMotion, type MotionOptions } from 'astra-motion/state';
 	import { Button } from '#lib/bedrock/ui/button';
 
 	let {
@@ -13,8 +13,11 @@
 			transition: { duration: 0.14 }
 		},
 		...props
-	}: ComponentProps<typeof Button> & { motion?: CssMotionOptions } = $props();
-	const binding = createMotion(() => ({ ...motion, disabled: props.disabled || motion.disabled }));
+	}: ComponentProps<typeof Button> & { motion?: MotionOptions } = $props();
+	const binding = astraMotion.bind(() => ({
+		...motion,
+		disabled: props.disabled || motion.disabled
+	}));
 </script>
 
 <Button

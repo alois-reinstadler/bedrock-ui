@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CssButton, CssPanel } from '#lib/bedrock/motion/css.js';
+	import { MotionButton, MotionPanel } from '#lib/bedrock/motion/bindings.js';
 	import { Motion, MotionConfig } from '#lib/bedrock/motion/engine.js';
 	let cssVisible = $state(true);
 	let engineVisible = $state(true);
@@ -11,7 +11,7 @@
 <svelte:head
 	><title>Opt-in motion — Bedrock</title><meta
 		name="description"
-		content="The same Astra Motion API, with opt-in CSS or spring animation in Bedrock UI."
+		content="The same Astra Motion API, with opt-in tween or spring animation in Bedrock UI."
 	/></svelte:head
 >
 
@@ -24,7 +24,7 @@
 		<p class="mb-3 text-sm text-muted-foreground">BEDROCK / MOTION</p>
 		<h1 class="mb-5 text-4xl font-semibold tracking-tight">One API. Choose the movement.</h1>
 		<p class="mb-8 max-w-2xl leading-relaxed text-muted-foreground">
-			CSS for finite feedback and simple transitions. The Motion engine for springs and richer
+			Native bindings for finite feedback and simple transitions. Spring components for richer
 			interactions. These components are explicit opt-ins; ordinary Bedrock primitives keep their
 			existing behavior.
 		</p>
@@ -33,26 +33,26 @@
 		>
 		<div class="grid gap-6 md:grid-cols-2">
 			<section class="rounded-xl border p-6">
-				<h2 class="mb-3 text-xl font-semibold">CSS backend</h2>
+				<h2 class="mb-3 text-xl font-semibold">Native bindings</h2>
 				<p class="mb-5 text-sm leading-relaxed text-muted-foreground">
 					Existing initial, animate, exit and transition options. Durations are in seconds.
 				</p>
 				<div class="mb-5 flex flex-wrap gap-2">
-					<CssButton
+					<MotionButton
 						data-testid="bedrock-css-toggle"
 						onclick={() => (cssVisible = !cssVisible)}
 						aria-controls="css-motion-panel"
-						aria-expanded={cssVisible}>Toggle CSS panel</CssButton
+						aria-expanded={cssVisible}>Toggle bound panel</MotionButton
 					>
-					<CssButton
+					<MotionButton
 						variant="outline"
 						data-testid="bedrock-css-retarget"
-						onclick={() => (move = !move)}>Retarget</CssButton
+						onclick={() => (move = !move)}>Retarget</MotionButton
 					>
 				</div>
 				<div class="min-h-36 overflow-clip">
 					{#if cssVisible}
-						<CssPanel
+						<MotionPanel
 							id="css-motion-panel"
 							data-testid="bedrock-css-panel"
 							class="rounded-lg bg-muted p-5"
@@ -65,12 +65,12 @@
 							}}
 						>
 							<p class="mb-3 font-medium">A native Bedrock surface</p>
-							<CssButton
+							<MotionButton
 								data-testid="bedrock-native-action"
 								variant="outline"
-								onclick={() => pressed++}>Pressed {pressed} times</CssButton
+								onclick={() => pressed++}>Pressed {pressed} times</MotionButton
 							>
-						</CssPanel>
+						</MotionPanel>
 					{/if}
 				</div>
 			</section>
@@ -79,12 +79,12 @@
 				<p class="mb-5 text-sm leading-relaxed text-muted-foreground">
 					Keep the engine when spring physics and interrupted velocity matter.
 				</p>
-				<CssButton
+				<MotionButton
 					data-testid="bedrock-engine-toggle"
 					class="mb-5"
 					onclick={() => (engineVisible = !engineVisible)}
 					aria-controls="spring-motion-panel"
-					aria-expanded={engineVisible}>Toggle spring panel</CssButton
+					aria-expanded={engineVisible}>Toggle spring panel</MotionButton
 				>
 				<div class="min-h-36">
 					{#if engineVisible}
@@ -106,10 +106,8 @@
 		</div>
 		<p class="mt-8 max-w-3xl text-sm leading-relaxed text-muted-foreground">
 			Native onclick owns button activation for pointer, Enter and Space. Use a separate surface
-			when another primitive owns positioning transforms. CSS deliberately rejects springs, drag,
-			keyframe arrays, dynamic variants, layout projection and per-frame callbacks. CSS-only
-			applications should import the separate css entry; this comparison page intentionally imports
-			both backends.
+			when another primitive owns positioning transforms. Both examples use Astra’s animation
+			engine. Native CSS remains available for ordinary visuals without importing these bindings.
 		</p>
 	</main>
 </MotionConfig>

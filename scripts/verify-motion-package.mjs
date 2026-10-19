@@ -63,8 +63,9 @@ console.log(
 const directory = await mkdtemp(join(tmpdir(), 'bedrock-motion-'));
 try {
 	for (const [name, module, exports, forbidMotion] of [
-		['css', 'css.ts', ['CssButton', 'CssPanel', 'createMotion'], true],
-		['config', 'config.ts', ['MotionConfig'], true],
+		['bindings', 'bindings.ts', ['MotionButton', 'MotionPanel', 'motion'], false],
+		['compatibility', 'css.ts', ['CssButton', 'CssPanel', 'createMotion'], false],
+		['config', 'config.ts', ['MotionConfig'], false],
 		['legacy', 'index.ts', ['appear', 'LayoutGroup', 'Swap'], true],
 		['engine', 'engine.ts', ['Motion', 'createMotion', 'createLayout', 'motionStore'], false],
 		['projection', 'projection.ts', ['createLayout', 'updateLayout'], false],
@@ -107,7 +108,11 @@ try {
 		);
 		if (forbidMotion)
 			assert(
-				!rendered.some((id) => /node_modules\/(?:motion|motion-dom|motion-utils)\//.test(id)),
+				!rendered.some((id) =>
+					/(?:node_modules\/(?:motion|motion-dom|motion-utils)\/|\/astra-motion[^/]*\/dist\/motion\/vendor\/)/.test(
+						id
+					)
+				),
 				`${name} unexpectedly includes Motion runtime`
 			);
 		assert(

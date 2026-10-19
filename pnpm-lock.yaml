@@ -48,8 +48,8 @@ importers:
         specifier: ^4.1.8
         version: 4.1.11(playwright@1.62.1)(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0))(vitest@4.1.11)
       astra-motion:
-        specifier: file:vendor/astra-motion-0.0.1.tgz
-        version: file:vendor/astra-motion-0.0.1.tgz(@sveltejs/kit@3.0.0-next.25(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))(typescript@6.0.3)(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))
+        specifier: file:vendor/astra-motion-0.1.0-rc.3.tgz
+        version: file:vendor/astra-motion-0.1.0-rc.3.tgz(@sveltejs/kit@3.0.0-next.25(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))(typescript@6.0.3)(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))
       bits-ui:
         specifier: ^2.19.0
         version: 2.19.0(@internationalized/date@3.12.3)(@sveltejs/kit@3.0.0-next.25(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))(typescript@6.0.3)(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))
@@ -887,9 +887,10 @@ packages:
     resolution: {integrity: sha512-Izi8RQcffqCeNVgFigKli1ssklIbpHnCYc6AknXGYoB6grJqyeby7jv12JUQgmTAnIDnbck1uxksT4dzN3PWBA==}
     engines: {node: '>=12'}
 
-  astra-motion@file:vendor/astra-motion-0.0.1.tgz:
-    resolution: {integrity: sha512-bwCeJyHnWP2S4PZaB+xX+VoKWLIPW0kATdwNBpVgzZwo9Paub2lqDkPwLzAuc02HiiuXiHQcyLMuDcI5UrkNZQ==, tarball: file:vendor/astra-motion-0.0.1.tgz}
-    version: 0.0.1
+  astra-motion@file:vendor/astra-motion-0.1.0-rc.3.tgz:
+    resolution: {integrity: sha512-hzpCxDaqml+Sh4G80WYz794bq6/Qjfku6edv9pKmY92yLKqx0aIddvViNPuxtD8YGfgs56HPYc04VmeL9bSlhg==, tarball: file:vendor/astra-motion-0.1.0-rc.3.tgz}
+    version: 0.1.0-rc.3
+    hasBin: true
     peerDependencies:
       '@sveltejs/kit': ^2.70.3
       svelte: ^5.57.0
@@ -1288,17 +1289,6 @@ packages:
       svelte: ^5.0.0
       sveltekit-superforms: ^2.19.0
 
-  framer-motion@13.2.0:
-    resolution: {integrity: sha512-9E33ebgMaO33w1nN/jEdW8z3/GO483fMi4rqbMG9rt83XgW9QLKRe4NcmJ8s+fQ3O34++UHrIQwlIWGIWTITjA==}
-    peerDependencies:
-      react: ^18.0.0 || ^19.0.0
-      react-dom: ^18.0.0 || ^19.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
-
   fsevents@2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
@@ -1627,23 +1617,6 @@ packages:
     resolution: {integrity: sha512-mUT9RRGPDYenk59qJauN1rhsIMKBmWA3xMF+uRwE8MW/tjhaDSCCARqkSuDTq8vr4/2KcAxIGVjACxTjdk5C3g==}
     peerDependencies:
       svelte: ^5.27.0
-
-  motion-dom@13.2.0:
-    resolution: {integrity: sha512-N6gdSoWRDk0Rh/fVtlqUtLs+fEN3ELFZI3cn3IQE9Mnf3E+Mh8wjO6MstzCOPFh4Yf0L1as5m2eUyYWj8ylVSQ==}
-
-  motion-utils@13.0.0:
-    resolution: {integrity: sha512-7DnN7TmbLcYXcG4RVadXIihWlyuM9afoUww8Y5Agg431kGKiuL2/OMyP4mJ5wLz+pvN3t5ySClLOaVXJ+wekRQ==}
-
-  motion@13.2.0:
-    resolution: {integrity: sha512-4Hrb5vD6HhjFstLUiCmWvtpsw+WTpP4R+QXfSDYZBz7+uxE/LrRg3aV0ReJxHrTRffHhbIE6svEqnotngXvesQ==}
-    peerDependencies:
-      react: ^18.0.0 || ^19.0.0
-      react-dom: ^18.0.0 || ^19.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
 
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
@@ -3058,16 +3031,11 @@ snapshots:
 
   assertion-error@2.0.1: {}
 
-  astra-motion@file:vendor/astra-motion-0.0.1.tgz(@sveltejs/kit@3.0.0-next.25(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))(typescript@6.0.3)(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0)):
+  astra-motion@file:vendor/astra-motion-0.1.0-rc.3.tgz(@sveltejs/kit@3.0.0-next.25(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))(typescript@6.0.3)(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0)):
     dependencies:
-      motion: 13.2.0
-      motion-dom: 13.2.0
       svelte: 5.57.0(@typescript-eslint/types@8.68.0)
     optionalDependencies:
       '@sveltejs/kit': 3.0.0-next.25(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))(typescript@6.0.3)(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0))
-    transitivePeerDependencies:
-      - react
-      - react-dom
 
   axe-core@4.13.0: {}
 
@@ -3451,12 +3419,6 @@ snapshots:
       svelte-toolbelt: 0.5.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))
       sveltekit-superforms: 2.30.2(@sveltejs/kit@3.0.0-next.25(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))(typescript@6.0.3)(vite@8.2.2(@types/node@24.13.3)(jiti@2.7.0)))(@types/json-schema@7.0.15)(svelte@5.57.0(@typescript-eslint/types@8.68.0))(typescript@6.0.3)
 
-  framer-motion@13.2.0:
-    dependencies:
-      motion-dom: 13.2.0
-      motion-utils: 13.0.0
-      tslib: 2.8.1
-
   fsevents@2.3.2:
     optional: true
 
@@ -3769,17 +3731,6 @@ snapshots:
       runed: 0.25.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))
       svelte: 5.57.0(@typescript-eslint/types@8.68.0)
       svelte-toolbelt: 0.7.1(svelte@5.57.0(@typescript-eslint/types@8.68.0))
-
-  motion-dom@13.2.0:
-    dependencies:
-      motion-utils: 13.0.0
-
-  motion-utils@13.0.0: {}
-
-  motion@13.2.0:
-    dependencies:
-      framer-motion: 13.2.0
-      tslib: 2.8.1
 
   mri@1.2.0: {}
 

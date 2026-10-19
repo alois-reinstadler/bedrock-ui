@@ -1,12 +1,11 @@
 {
 	"name": "astra-motion",
-	"version": "0.0.1",
-	"archive": "astra-motion-0.0.1.tgz",
-	"sha256": "b99f2f8d46b4e6c3c515ad97fa6b9ac730e2e556ce25b5a505b13b800dc14afe",
+	"version": "0.1.0-rc.3",
+	"archive": "astra-motion-0.1.0-rc.3.tgz",
+	"sha256": "eb65795058f3d92c51c6ece44fdd100b6aa5bf965a3053c3893db5d5d87ea571",
 	"upstream": "https://github.com/alois-reinstadler/astra-motion",
-	"baseCommit": "b5dc31e",
-	"sourceState": "Includes completed, uncommitted CSS backend and aftercare changes from the Evaluate CSS Motion Alternatives thread; baseCommit alone does not reproduce this archive.",
-	"threadId": "64e2c9f6-9d06-4f23-ab2a-8885067eb328",
-	"license": "unspecified upstream",
-	"verification": "Archive runtime files match current upstream dist; 29 TypeScript runtime sources independently transpiled to matching output."
+	"baseCommit": "2acb6b2267e7f587a3a1a17001d04313699c1711",
+	"sourceState": "Packed from clean upstream checkout using pnpm pack (including prepack).",
+	"license": "MIT",
+	"verification": "Upstream prepack runs generated-element validation, svelte-package, engine packaging and strict publint. Bedrock motion:verify checks archive and installed content and public entry bundles."
 }

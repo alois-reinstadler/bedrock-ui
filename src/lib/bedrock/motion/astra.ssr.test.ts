@@ -12,7 +12,7 @@ describe('Astra opt-in SSR contract', () => {
 		expect(body).toContain('--consumer-token: 7');
 		expect(body).toContain('padding: 13px');
 		expect(body).toMatch(/opacity:\s*0\.4/);
-		expect(body).toMatch(/translate:\s*0px 12px/);
+		expect(body).toMatch(/transform:[^";]*translateY\(12px\)/);
 	});
 
 	it('preserves native link semantics on the CSS button', () => {

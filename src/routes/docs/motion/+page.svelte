@@ -10,8 +10,8 @@
 	const imports = `// Existing Bedrock transitions and layout: milliseconds
 import { appear, reveal, LayoutGroup, Swap } from '#lib/bedrock/motion/index.js';
 
-// Finite CSS tweens and Bedrock wrappers: seconds
-import { createMotion, CssButton, CssPanel } from '#lib/bedrock/motion/css.js';
+// Native bindings and Bedrock wrappers: seconds
+import { createMotion, MotionButton, MotionPanel } from '#lib/bedrock/motion/bindings.js';
 
 // Physics, gestures and projection: seconds
 import { Motion, Presence } from '#lib/bedrock/motion/engine.js';
@@ -20,7 +20,7 @@ import { Motion, Presence } from '#lib/bedrock/motion/engine.js';
 import { createLayout } from '#lib/bedrock/motion/projection.js';
 import { motionValue } from '#lib/bedrock/motion/values.js';
 
-// Shared Astra policy without importing the engine
+// Shared Astra policy
 import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 </script>
 
@@ -87,9 +87,10 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 			Optional Astra disclosure binding
 		</h2>
 		<p class="mt-3 mb-5 text-muted-foreground">
-			CssButton preserves native button activation and disabled behavior. CssPanel owns its native
-			element and retains it through an ancestor conditional's exit transition. Keep interactive
-			content out of a departing panel, or move focus back to the trigger before closing it.
+			MotionButton preserves native button activation and disabled behavior. MotionPanel owns its
+			native element and retains it through an ancestor conditional's exit transition. Keep
+			interactive content out of a departing panel, or move focus back to the trigger before closing
+			it.
 		</p>
 		<ExampleCard
 			label="Motion disclosure example"
@@ -111,15 +112,14 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 			and always for an explicit reduce-motion setting.
 		</p>
 		<p class="mt-3 text-muted-foreground">
-			Both Astra backends consume this provider. Native Bedrock transitions continue to use their
-			existing policy; MotionConfig does not reconfigure them. Reduced motion must preserve the
-			final state, meaningful feedback, keyboard access, and focus. It is not a substitute for
+			Both Astra entry points consume this provider. Native Bedrock transitions continue to use
+			their existing policy; MotionConfig does not reconfigure them. Reduced motion must preserve
+			the final state, meaningful feedback, keyboard access, and focus. It is not a substitute for
 			testing an interaction with animation disabled.
 		</p>
 		<p class="mt-3 text-muted-foreground">
-			Keep CSS bindings on finite tweens. If an ancestor provider defines a spring transition, give
-			each CSS binding a local tween transition. Do not assume a CSS binding can execute an
-			engine-only option.
+			Astra RC3 native bindings include the animation engine. Use ordinary CSS transitions when an
+			interaction does not need Astra.
 		</p>
 	</section>
 	<section class="mt-12" aria-labelledby="boundaries-heading">
@@ -133,15 +133,9 @@ import { MotionConfig } from '#lib/bedrock/motion/config.js';`;
 				motion systems to the same transform.
 			</li>
 			<li>
-				<strong class="text-foreground">Astra CSS bindings have a finite contract.</strong> Use scalar
-				opacity, pixel position and size, scale, rotation, static variants, and hover, tap, or focus targets.
-				Springs, drag, MotionValues, projection, keyframe arrays, repeats, and per-frame callbacks require
-				the engine when using this binding API; native CSS itself supports keyframes and repeats.
-			</li>
-			<li>
-				<strong class="text-foreground">Transitions have lifecycle rules.</strong> A CSS intro snapshots
-				its trajectory. Reactive targets wait until the intro ends; imperative animate calls reject during
-				an intro or retained exit.
+				<strong class="text-foreground">Native bindings share the engine contract.</strong> Spread binding.props
+				on the element and install binding.transition as a global Svelte transition when conditional content
+				needs exit retention.
 			</li>
 			<li>
 				<strong class="text-foreground">Routes are a separate boundary.</strong> The separate prototype

@@ -1,4 +1,6 @@
-/** Explicit opt-in: importing ordinary Bedrock primitives does not import Astra. */
-export { default as CssButton } from './CssButton.svelte';
-export { default as CssPanel } from './CssPanel.svelte';
-export { createMotion, type CssMotionOptions, type CssMotionBinding } from 'astra-motion/css';
+/** @deprecated Use bindings.js. RC3 bindings include the engine, not a CSS-only backend. */
+export { MotionButton as CssButton, MotionPanel as CssPanel, createMotion } from './bindings.js';
+export type {
+	MotionOptions as CssMotionOptions,
+	MotionBinding as CssMotionBinding
+} from './bindings.js';

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { HTMLAttributes } from 'svelte/elements';
-	import { createMotion, type CssMotionOptions } from 'astra-motion/css';
+	import { motion as astraMotion, type MotionOptions } from 'astra-motion/state';
 
 	let {
 		ref = $bindable(null),
@@ -14,10 +14,10 @@
 		style,
 		...props
 	}: HTMLAttributes<HTMLDivElement> & {
-		motion?: CssMotionOptions;
+		motion?: MotionOptions;
 		ref?: HTMLDivElement | null;
 	} = $props();
-	const binding = createMotion(() => motion);
+	const binding = astraMotion.bind(() => motion);
 	const motionTransition = binding.transition;
 </script>
 
