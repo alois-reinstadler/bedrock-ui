@@ -372,6 +372,29 @@
 	}
 }
 
+/* Crossfading a backdrop-filter layer can flash as the browser composites it.
+   Transition the tint and blur themselves, reaching clear before Bits removes
+   the overlay. Keep the panel's independent opacity fade unchanged. */
+.motion-overlay[data-slot='dialog-overlay'] {
+	opacity: 1;
+	filter: none;
+	transition-property: background-color, backdrop-filter;
+
+	&:is([data-state='closed'], [data-closed]) {
+		opacity: 1;
+		background-color: transparent;
+		backdrop-filter: blur(0px);
+	}
+
+	@starting-style {
+		&:not([data-state='closed']):not([data-closed]) {
+			opacity: 1;
+			background-color: transparent;
+			backdrop-filter: blur(0px);
+		}
+	}
+}
+
 /* Only decorative SVGs move, never menu labels or hit targets. First row and
    nested submenus are excluded by the top-level content attachment. */
 @keyframes bedrock-menu-icon {

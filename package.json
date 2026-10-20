@@ -54,6 +54,7 @@
 		"eslint-plugin-svelte": "^3.19.0",
 		"formsnap": "^2.0.1",
 		"globals": "^17.6.0",
+		"horizon-layout": "1.0.4",
 		"layerchart": "^2.3.1",
 		"libphonenumber-js": "1.13.14",
 		"maplibre-gl": "6.7.0",

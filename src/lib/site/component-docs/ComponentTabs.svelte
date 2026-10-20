@@ -6,7 +6,11 @@
 	import type { ComponentDoc } from '#lib/site/registry';
 	import type { ComponentDocTab } from '#lib/site/component-guides/index.js';
 
-	let { component, active }: { component: ComponentDoc; active: ComponentDocTab } = $props();
+	let {
+		component,
+		active,
+		href
+	}: { component: ComponentDoc; active: ComponentDocTab; href: string } = $props();
 
 	const tabs: { value: ComponentDocTab; label: string }[] = [
 		{ value: 'overview', label: 'Overview' },
@@ -40,10 +44,8 @@
 		};
 	}
 
-	function href(value: ComponentDocTab) {
-		return value === 'overview'
-			? `/docs/components/${component.slug}`
-			: `/docs/components/${component.slug}?tab=${value}`;
+	function tabHref(value: ComponentDocTab) {
+		return value === 'overview' ? href : `${href}?tab=${value}`;
 	}
 </script>
 
@@ -61,7 +63,7 @@
 		{#each tabs as tab (tab.value)}
 			<li>
 				<a
-					href={href(tab.value)}
+					href={tabHref(tab.value)}
 					data-sveltekit-reload
 					aria-current={active === tab.value ? 'page' : undefined}
 					class="relative block py-3 text-sm font-medium whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none aria-[current=page]:text-foreground"

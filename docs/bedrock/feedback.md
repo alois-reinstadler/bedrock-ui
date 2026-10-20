@@ -1,16 +1,19 @@
-# Feedback
+# Page annotations
 
-Bedrock's native feedback component is implemented in `src/lib/bedrock/ui/feedback`.
+Bedrock's page annotation and review tool is implemented in `src/lib/bedrock/ui/feedback`.
 It does not fork, copy, or depend on Agentation or sv-agentation. Those products
 informed the interaction concept; the implementation and versioned data model are
 owned here.
 
 ## Current surface
 
-Import `Feedback` (or its `Root` alias) from `#lib/bedrock/ui/feedback`.
+The tool is documented under **Tools → Page annotations** at `/docs/tools/page-annotations`.
+The old `/docs/components/feedback` page forwards to this location, preserving tabs and anchors.
+
+Import `PageAnnotations` (`Feedback` and `Root` remain compatibility aliases) from `#lib/bedrock/ui/feedback`.
 Mount one instance in the application layout. It portals into the document body,
 uses a compact dark inspector surface, and never imports SvelteKit from the component library.
-The Bedrock documentation site mounts it only in development; the Feedback docs
+The Bedrock documentation site mounts it only in development; the Page annotations docs
 example mounts its own scoped instance in both development and production.
 
 - `mode`: `developer` (default) or `review`. Review mode omits automatic style
@@ -117,7 +120,7 @@ This does not guarantee anchoring through arbitrary document redesigns.
 
 ## Customer integration boundary
 
-The template gallery and Feedback example link to all four live templates with
+The template gallery and Page annotations example link to all four live templates with
 `?feedback=review` or `?feedback=developer`. Both modes are intentionally available
 in the published template showcase. The preview dock opens the panel, switches
 modes and turns feedback off; it remains usable when the dock is minimized.

@@ -14627,6 +14627,138 @@
 			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
 		}
 	],
+	"dock-layout": [
+		{
+			"name": "Root",
+			"aliases": ["DockLayout"],
+			"source": "src/lib/bedrock/ui/dock-layout/dock-layout.svelte",
+			"entries": [
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "config",
+					"kind": "bindable",
+					"type": "import(\"horizon-layout\").LayoutConfig",
+					"required": true,
+					"description": "The layout configuration. Bind this to keep it in sync with user interactions.",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "views",
+					"kind": "prop",
+					"type": "import(\"svelte/reactivity\").SvelteMap<string, import(\"horizon-layout\").View>",
+					"required": true,
+					"description": "Map from view Id to its View descriptor.",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "tabgroupControls",
+					"kind": "snippet",
+					"type": "import(\"svelte\").Snippet<[string]>[] | undefined",
+					"required": false,
+					"description": "Snippets rendered in every tab-group's toolbar (e.g. a maximise button).",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "disableResizeSplits",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"required": false,
+					"description": "Prevent the user from dragging split dividers.",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "disableDragAndDrop",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"required": false,
+					"description": "Prevent drag-and-drop tab rearrangement.",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "showSplitRatio",
+					"kind": "prop",
+					"type": "boolean | undefined",
+					"required": false,
+					"description": "Show the current split ratio as a floating label while resizing.",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "minWidthRatio",
+					"kind": "prop",
+					"type": "number | undefined",
+					"required": false,
+					"description": "Minimum allowed width as a fraction of the split container.",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "minHeightRatio",
+					"kind": "prop",
+					"type": "number | undefined",
+					"required": false,
+					"description": "Minimum allowed height as a fraction of the split container.",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "maxDepth",
+					"kind": "prop",
+					"type": "number | undefined",
+					"required": false,
+					"description": "Maximum nesting depth for splits (prevents infinite subdivision).",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "keyboardControls",
+					"kind": "prop",
+					"type": "import(\"horizon-layout\").KeyboardControls | undefined",
+					"required": false,
+					"description": "Override the default keyboard shortcuts for splits and tab groups.",
+					"source": "node_modules/horizon-layout/dist/HorizonLayout.svelte.d.ts",
+					"sourceUrl": "https://unpkg.com/horizon-layout@1.0.4/dist/HorizonLayout.svelte.d.ts"
+				},
+				{
+					"name": "label",
+					"kind": "prop",
+					"type": "string",
+					"required": true,
+					"description": "Accessible name for the workspace.",
+					"source": "src/lib/bedrock/ui/dock-layout/dock-layout.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"dock-layout\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		}
+	],
 	"dot-pattern": [
 		{
 			"name": "DotPattern",
@@ -18011,8 +18143,8 @@
 	],
 	"feedback": [
 		{
-			"name": "Feedback",
-			"aliases": ["Root"],
+			"name": "PageAnnotations",
+			"aliases": ["Feedback", "Root"],
 			"source": "src/lib/bedrock/ui/feedback/feedback.svelte",
 			"entries": [
 				{
@@ -18084,7 +18216,7 @@
 					"type": "string | undefined",
 					"default": "'Website review'",
 					"required": false,
-					"description": "Accepted by Feedback; constrained by the source TypeScript contract.",
+					"description": "Accepted by PageAnnotations; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/feedback/types.ts"
 				},
 				{
@@ -18092,7 +18224,7 @@
 					"kind": "prop",
 					"type": "string | undefined",
 					"required": false,
-					"description": "Accepted by Feedback; constrained by the source TypeScript contract.",
+					"description": "Accepted by PageAnnotations; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/feedback/types.ts"
 				},
 				{
@@ -18124,7 +18256,7 @@
 					"kind": "event",
 					"type": "((annotations: FeedbackAnnotation[]) => void) | undefined",
 					"required": false,
-					"description": "Accepted by Feedback; constrained by the source TypeScript contract.",
+					"description": "Accepted by PageAnnotations; constrained by the source TypeScript contract.",
 					"source": "src/lib/bedrock/ui/feedback/types.ts"
 				},
 				{
@@ -45343,6 +45475,180 @@
 					"description": "The children content to render within the portal.",
 					"source": "node_modules/bits-ui/dist/bits/utilities/portal/types.d.ts",
 					"sourceUrl": "https://unpkg.com/bits-ui@2.19.0/dist/bits/utilities/portal/types.d.ts"
+				}
+			],
+			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."
+		}
+	],
+	"video": [
+		{
+			"name": "Root",
+			"aliases": ["Video"],
+			"source": "src/lib/bedrock/ui/video/video.svelte",
+			"entries": [
+				{
+					"name": "style",
+					"kind": "prop",
+					"type": "string | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "class",
+					"kind": "prop",
+					"type": "import(\"svelte/elements\").ClassValue | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "ref",
+					"kind": "bindable",
+					"type": "HTMLVideoElement | null | undefined",
+					"default": "null",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "src/lib/shadcn/utils.ts"
+				},
+				{
+					"name": "crossorigin",
+					"kind": "prop",
+					"type": "\"\" | \"anonymous\" | \"use-credentials\" | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "height",
+					"kind": "prop",
+					"type": "string | number | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "src",
+					"kind": "prop",
+					"type": "string | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "width",
+					"kind": "prop",
+					"type": "string | number | null | undefined",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "playsinline",
+					"kind": "prop",
+					"type": "boolean | null | undefined",
+					"default": "true",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "controls",
+					"kind": "prop",
+					"type": "boolean | null | undefined",
+					"default": "true",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "preload",
+					"kind": "prop",
+					"type": "\"\" | \"none\" | \"auto\" | \"metadata\" | null | undefined",
+					"default": "'auto'",
+					"required": false,
+					"description": "Accepted by Root; constrained by the source TypeScript contract.",
+					"source": "node_modules/svelte/elements.d.ts",
+					"sourceUrl": "https://unpkg.com/svelte@5.57.0/elements.d.ts"
+				},
+				{
+					"name": "label",
+					"kind": "prop",
+					"type": "string",
+					"required": true,
+					"description": "Accessible name for the video and its reserved frame.",
+					"source": "src/lib/bedrock/ui/video/video.svelte"
+				},
+				{
+					"name": "aspectRatio",
+					"kind": "prop",
+					"type": "number | undefined",
+					"required": false,
+					"description": "Reserved width / height ratio. Defaults to width / height, then 16 / 9.",
+					"source": "src/lib/bedrock/ui/video/video.svelte"
+				},
+				{
+					"name": "videoClass",
+					"kind": "prop",
+					"type": "string | undefined",
+					"required": false,
+					"description": "Classes for the video itself. class and style target the frame.",
+					"source": "src/lib/bedrock/ui/video/video.svelte"
+				},
+				{
+					"name": "minimumLoadingDuration",
+					"kind": "prop",
+					"type": "number | undefined",
+					"default": "0",
+					"required": false,
+					"description": "Minimum initial skeleton duration in milliseconds. Defaults to 0.",
+					"source": "src/lib/bedrock/ui/video/video.svelte"
+				},
+				{
+					"name": "captions",
+					"kind": "prop",
+					"type": "import(\"../video-player/types\").VideoCaptionTrack[] | undefined",
+					"default": "[]",
+					"required": false,
+					"description": "Caption tracks for spoken or otherwise meaningful audio.",
+					"source": "src/lib/bedrock/ui/video/video.svelte"
+				},
+				{
+					"name": "fallback",
+					"kind": "snippet",
+					"type": "Snippet<[]> | undefined",
+					"required": false,
+					"description": "Non-interactive replacement for a missing or failed video.",
+					"source": "src/lib/bedrock/ui/video/video.svelte"
+				},
+				{
+					"name": "loadLabel",
+					"kind": "prop",
+					"type": "string | undefined",
+					"default": "'Load video'",
+					"required": false,
+					"description": "Button label when preload is deferred or the browser suspends loading.",
+					"source": "src/lib/bedrock/ui/video/video.svelte"
+				},
+				{
+					"name": "data-slot",
+					"kind": "data-attribute",
+					"type": "\"video\"",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
+				},
+				{
+					"name": "data-state",
+					"kind": "data-attribute",
+					"type": "status",
+					"description": "Rendered state or styling hook. Do not override primitive-owned state."
 				}
 			],
 			"inherited": "Native attributes, ARIA attributes and DOM handlers are inherited only where the source type includes them. Consult the linked Svelte element contract; primitive-specific properties are expanded above."

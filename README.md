@@ -58,8 +58,10 @@ files over 2 MiB. The existing `static/demo/clip.mp4` is the small fixture used 
 the VideoPlayer documentation. Playback E2E tests require access to the remote hosts and run separately with
 `pnpm test:e2e:media`. The default `pnpm test:e2e` excludes `@remote-media` tests.
 
-Animated icons are deferred on the local `parked/animated-icons` branch. The main
-site uses static icons.
+Animated icons remain deferred at local recovery tag
+`archive/2026-10-20/parked/animated-icons`. The main site uses static icons.
+See [the consolidation record](docs/bedrock/consolidation-2026-10-20.md) for branch
+disposition and dirty-worktree recovery.
 
 ## Architecture and browser tests
 

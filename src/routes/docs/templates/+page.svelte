@@ -50,15 +50,15 @@
 	>
 		<div class="max-w-2xl">
 			<p class="flex items-center gap-2 font-medium">
-				<MessageSquarePlus class="size-4" />Try Feedback on a real interface
+				<MessageSquarePlus class="size-4" />Try Page annotations on a real interface
 			</p>
 			<p class="mt-2 text-sm leading-relaxed text-muted-foreground">
 				Open a customer review or annotate as a developer. Select something on the page, leave a
 				note, and export your changes. Drafts stay in this browser.
 			</p>
 		</div>
-		<Button href="/docs/components/feedback" variant="outline" class="shrink-0"
-			>About Feedback</Button
+		<Button href="/docs/tools/page-annotations" variant="outline" class="shrink-0"
+			>About Page annotations</Button
 		>
 	</aside>
 	<p role="status" class="mt-3 text-sm text-muted-foreground">

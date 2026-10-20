@@ -1,41 +1,19 @@
 <script lang="ts">
-	import { Slider } from '#lib/bedrock/ui/slider';
-	import { IconButton } from '#lib/bedrock/ui/icon-button';
-	import { Button } from '#lib/bedrock/ui/button';
+	import MusicSidebar from './MusicSidebar.svelte';
+	import MusicTopbar from './MusicTopbar.svelte';
+	import PlayQueue from './PlayQueue.svelte';
+	import PlayerBar from './PlayerBar.svelte';
+
 	import { page } from '$app/state';
-	import { browser } from '$app/env';
+
 	import { onMount } from 'svelte';
-	import { Input } from '#lib/bedrock/ui/input';
-	import { collections, formatTime, tracks } from '#lib/templates/music-player/data.js';
+
 	import { providePlayer } from '#lib/templates/music-player/player.svelte.js';
-	import Icon from '@lucide/svelte/icons/audio-lines';
-	import Play from '@lucide/svelte/icons/play';
-	import Pause from '@lucide/svelte/icons/pause';
-	import Next from '@lucide/svelte/icons/skip-forward';
-	import Previous from '@lucide/svelte/icons/skip-back';
-	import Heart from '@lucide/svelte/icons/heart';
-	import Search from '@lucide/svelte/icons/search';
-	import Compass from '@lucide/svelte/icons/compass';
-	import Library from '@lucide/svelte/icons/library';
-	import Clock from '@lucide/svelte/icons/clock-3';
-	import Queue from '@lucide/svelte/icons/list-music';
-	import Shuffle from '@lucide/svelte/icons/shuffle';
-	import Repeat from '@lucide/svelte/icons/repeat-2';
-	import Volume from '@lucide/svelte/icons/volume-2';
-	import VolumeLow from '@lucide/svelte/icons/volume-1';
-	import VolumeMuted from '@lucide/svelte/icons/volume-x';
-	import X from '@lucide/svelte/icons/x';
-	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
-	import Mic from '@lucide/svelte/icons/mic-2';
-	import Visualizer from '@lucide/svelte/icons/orbit';
+
 	import type { Snippet } from 'svelte';
 	let { children }: { children: Snippet } = $props();
 	const player = providePlayer();
-	const VolumeIcon = $derived(
-		player.volume === 0 ? VolumeMuted : player.volume < 0.5 ? VolumeLow : Volume
-	);
 	let queueOpen = $state(false);
-	let seekPreview = $state<number | null>(null);
 	let ready = $state(false);
 	onMount(() => {
 		ready = true;
@@ -44,16 +22,6 @@
 	const listeningScreen = $derived(
 		page.url.pathname === `${base}/lyrics` || page.url.pathname === `${base}/visualizer`
 	);
-	const headerCollection = $derived(
-		collections.find((collection) => page.url.pathname === `${base}/album/${collection.id}`)
-	);
-	const navigation = [
-		{ path: '', label: 'Listen now', icon: Icon },
-		{ path: '/discover', label: 'Discover', icon: Compass },
-		{ path: '/library', label: 'Your library', icon: Library },
-		{ path: '/liked', label: 'Liked songs', icon: Heart },
-		{ path: '/recent', label: 'Recently played', icon: Clock }
-	];
 </script>
 
 <div class="drift" data-music-shell data-ready={ready}>
@@ -67,257 +35,15 @@
 		onended={() => player.ended()}
 		onerror={() => player.handleError()}
 	></audio>
-	<aside class="sidebar">
-		<a class="brand" href={base}
-			><Icon size={24} /><span>drift<span class="brand-dot">.</span></span></a
-		>
-		<nav aria-label="Music navigation">
-			{#each navigation as item (item.path)}<a
-					href={base + item.path}
-					class:active={page.url.pathname === base + item.path}
-					aria-current={page.url.pathname === base + item.path ? 'page' : undefined}
-					><item.icon size={19} /><span>{item.label}</span></a
-				>{/each}
-		</nav>
-		<div class="side-heading">YOUR COLLECTIONS <span>{collections.length}</span></div>
-		<nav class="collection-nav" aria-label="Collections">
-			{#each collections as collection (collection.id)}<a
-					href={`${base}/album/${collection.id}`}
-					class:active={page.params.slug === collection.id}
-					><img src={collection.artwork} alt="" /><span
-						><strong>{collection.title}</strong><small>{collection.genre}</small></span
-					></a
-				>{/each}
-		</nav>
-		<a class="credits-link" href={`${base}/credits`}>Music & credits ↗</a>
-		<div class="listener">
-			<span class="avatar">JD</span><span
-				><strong>Jamie Davis</strong><small>Personal library</small></span
-			>
-		</div>
-	</aside>
+	<MusicSidebar />
 	<div class="workspace">
-		<header class="topbar" class:album-topbar={!!headerCollection} data-album-topbar>
-			{#if listeningScreen}
-				<IconButton
-					icon={ArrowLeft}
-					label="Back to collection"
-					href={`${base}/album/${player.current.collection}`}
-				/>
-				<strong class="listening-title"
-					>{page.url.pathname.endsWith('/lyrics') ? 'Lyrics' : 'Visualizer'}</strong
-				>
-				<IconButton icon={Search} label="Search music" href={`${base}/discover`} />
-			{:else if headerCollection}
-				<IconButton icon={ArrowLeft} label="Back to music" href={base} />
-				<div class="album-topbar-content">
-					<div class="compact-album" data-album-compact inert aria-hidden="true">
-						<Button
-							size="icon"
-							class="compact-play rounded-full"
-							aria-label="Play collection from header"
-							onclick={() => {
-								const items = tracks.filter((track) =>
-									headerCollection?.trackIds.includes(track.id)
-								);
-								if (items.length) player.play(items[0], items);
-							}}><Play size={16} fill="currentColor" /></Button
-						>
-						<img src={headerCollection.artwork} alt="" />
-						<strong>{headerCollection.title}</strong>
-					</div>
-				</div>
-				<IconButton icon={Search} label="Search music" href={`${base}/discover`} />
-			{:else}
-				<form action={`${base}/discover`}>
-					<Search size={18} /><Input
-						name="q"
-						aria-label="Search music"
-						placeholder="Search songs, artists, genres"
-						value={browser ? (page.url.searchParams.get('q') ?? '') : ''}
-					/>
-				</form>
-				<span class="top-note">A soundtrack for your every day.</span>
-			{/if}
-		</header>
-		<main id="music-main" class:listening-screen={listeningScreen}>{@render children()}</main>
+		<MusicTopbar />
+		<main id="music-main" class={[{ 'listening-screen': listeningScreen }]}>
+			{@render children()}
+		</main>
 	</div>
-	{#if queueOpen}<aside class="queue-panel" aria-label="Play queue">
-			<div class="section-heading">
-				<h2>Up next</h2>
-				<IconButton
-					type="button"
-					icon={X}
-					label="Close queue"
-					class={['control-templates-music-player-layout', 'icon-button']}
-					onclick={() => (queueOpen = false)}
-				/>
-			</div>
-			<div class="queue-volume">
-				Volume<Slider
-					type="single"
-					min={0}
-					max={1}
-					step={0.01}
-					value={player.volume}
-					onValueChange={(value) => player.setVolume(value)}
-					aria-label="Queue volume"
-					aria-valuetext={`${Math.round(player.volume * 100)}%`}
-				/>
-			</div>
-			<p class="eyebrow">PLAYING FROM YOUR QUEUE</p>
-			{#each player.queue as id, index (`${id}-${index}`)}{@const track = tracks.find(
-					(t) => t.id === id
-				)!}<Button
-					variant="ghost"
-					type="button"
-					class={[
-						'control-templates-music-player-layout h-auto whitespace-normal',
-						'queue-track min-w-0 justify-start whitespace-normal',
-						{ current: player.current.id === id }
-					]}
-					onclick={() => player.play(track)}
-					><img src={track.artwork} alt="" /><span
-						><strong>{track.title}</strong><small>{track.artist}</small></span
-					>{#if player.current.id === id}<Icon size={18} />{/if}</Button
-				>{/each}
-		</aside>{/if}
-	<footer class="player" data-music-player>
-		<div class="playing">
-			<a
-				href={`${base}/album/${player.current.collection}`}
-				aria-label={`Open ${collections.find((collection) => collection.id === player.current.collection)?.title ?? player.current.collection} collection`}
-				><img src={player.current.artwork} alt="" /></a
-			><span><strong>{player.current.title}</strong><small>{player.current.artist}</small></span
-			><IconButton
-				type="button"
-				icon={Heart}
-				label="Like current track"
-				class={[
-					'control-templates-music-player-layout',
-					'icon-button',
-					{ selected: player.liked.includes(player.current.id) }
-				]}
-				aria-pressed={player.liked.includes(player.current.id)}
-				onclick={() => player.like(player.current.id)}
-			/>
-		</div>
-		<div class="transport">
-			<IconButton
-				type="button"
-				icon={Queue}
-				label="Open queue"
-				class={['control-templates-music-player-layout', 'mobile-queue icon-button']}
-				onclick={() => (queueOpen = !queueOpen)}
-			/>
-			<div class="transport-buttons">
-				<IconButton
-					type="button"
-					icon={Shuffle}
-					label="Shuffle"
-					class={[
-						'control-templates-music-player-layout',
-						'icon-button secondary-control',
-						{ selected: player.shuffle }
-					]}
-					aria-pressed={player.shuffle}
-					onclick={() => (player.shuffle = !player.shuffle)}
-				/><IconButton
-					type="button"
-					icon={Previous}
-					label="Previous track"
-					class={['control-templates-music-player-layout', 'icon-button']}
-					onclick={() => player.next(-1)}
-				/><Button
-					variant="ghost"
-					type="button"
-					class={['control-templates-music-player-layout h-auto whitespace-normal', 'play-button']}
-					aria-label={player.playing ? 'Pause playback' : 'Play current track'}
-					onclick={() => player.toggle()}
-					>{#if player.playing}<Pause size={19} fill="currentColor" />{:else}<Play
-							size={19}
-							fill="currentColor"
-						/>{/if}</Button
-				><IconButton
-					type="button"
-					icon={Next}
-					label="Next track"
-					class={['control-templates-music-player-layout', 'icon-button']}
-					onclick={() => player.next()}
-				/><IconButton
-					type="button"
-					icon={Repeat}
-					label="Repeat track"
-					class={[
-						'control-templates-music-player-layout',
-						'icon-button secondary-control',
-						{ selected: player.repeat }
-					]}
-					aria-pressed={player.repeat}
-					onclick={() => (player.repeat = !player.repeat)}
-				/>
-			</div>
-			<div class="timeline">
-				<time>{formatTime(player.elapsed)}</time><Slider
-					type="single"
-					min={0}
-					max={player.duration || player.current.duration}
-					step={0.1}
-					value={seekPreview ?? Math.round(player.elapsed * 10) / 10}
-					onpointerdowncapture={() => (seekPreview = Math.round(player.elapsed * 10) / 10)}
-					onpointercancel={() => (seekPreview = null)}
-					onValueChange={(value) => {
-						if (seekPreview !== null) seekPreview = value;
-					}}
-					onValueCommit={(value) => {
-						// Slider also normalizes playback updates; only a user commit may seek audio.
-						player.seek(value);
-						seekPreview = null;
-					}}
-					aria-label="Seek"
-				/><time>{formatTime(player.duration || player.current.duration)}</time>
-			</div>
-		</div>
-		<div class="player-tools">
-			<IconButton
-				icon={Mic}
-				label="Lyrics"
-				tooltip="Lyrics"
-				href={`${base}/lyrics`}
-				aria-current={page.url.pathname === `${base}/lyrics` ? 'page' : undefined}
-				class={['view-control', { selected: page.url.pathname === `${base}/lyrics` }]}
-			/>
-			<IconButton
-				icon={Visualizer}
-				label="Visualizer"
-				tooltip="Visualizer"
-				href={`${base}/visualizer`}
-				aria-current={page.url.pathname === `${base}/visualizer` ? 'page' : undefined}
-				class={['view-control', { selected: page.url.pathname === `${base}/visualizer` }]}
-			/>
-			<IconButton
-				type="button"
-				icon={Queue}
-				label="Toggle queue"
-				class={[
-					'control-templates-music-player-layout',
-					'icon-button desktop-queue',
-					{ selected: queueOpen }
-				]}
-				aria-expanded={queueOpen}
-				onclick={() => (queueOpen = !queueOpen)}
-			/><VolumeIcon size={18} aria-hidden="true" /><Slider
-				type="single"
-				min={0}
-				max={1}
-				step={0.01}
-				value={player.volume}
-				onValueChange={(value) => player.setVolume(value)}
-				aria-label="Volume"
-				aria-valuetext={`${Math.round(player.volume * 100)}%`}
-			/>
-		</div>
-	</footer>
+	{#if queueOpen}<PlayQueue onClose={() => (queueOpen = false)} />{/if}
+	<PlayerBar bind:queueOpen />
 	<p class="status" role="status">{player.message}</p>
 </div>
 
@@ -326,27 +52,7 @@
 		padding: 0;
 		overflow: hidden;
 	}
-	.listening-title {
-		flex: 1;
-		font-size: 15px;
-	}
-	:global(.view-control.selected) {
-		color: #c46b78;
-		background: var(--muted);
-	}
-	:global(.control-templates-music-player-layout.mobile-queue) {
-		display: none !important;
-	}
-	.queue-volume {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		font-size: 11px;
-		margin: 10px 0 20px;
-	}
-	.queue-volume :global([data-slot='slider']) {
-		width: 100%;
-	}
+
 	.drift {
 		--music-muted: var(--muted-foreground);
 		display: grid;
@@ -358,203 +64,14 @@
 		color: var(--foreground);
 		font-family: inherit;
 	}
-	.sidebar {
-		border-right: 1px solid var(--border);
-		padding: 28px 18px 16px;
-		display: flex;
-		flex-direction: column;
-		min-height: 0;
-		overflow: auto;
-	}
-	.brand {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		font-size: 30px;
-		font-weight: 750;
-		letter-spacing: -1.5px;
-		padding: 0 12px 30px;
-	}
-	.brand-dot {
-		color: #c46b78;
-	}
-	.brand :global(svg) {
-		color: #c46b78;
-	}
-	.sidebar nav {
-		display: grid;
-		gap: 4px;
-	}
-	.sidebar nav a {
-		display: flex;
-		align-items: center;
-		gap: 13px;
-		padding: 12px;
-		border-radius: var(--radius-lg);
-		font-size: 13px;
-		color: var(--music-muted);
-	}
-	.sidebar nav a:hover,
-	.sidebar nav a.active {
-		background: var(--muted);
-		color: var(--foreground);
-	}
-	.side-heading {
-		display: flex;
-		justify-content: space-between;
-		margin: 32px 12px 14px;
-		font-size: 9px;
-		font-weight: 700;
-		letter-spacing: 1.5px;
-		color: var(--music-muted);
-	}
-	.sidebar .collection-nav a {
-		padding: 8px;
-		gap: 11px;
-	}
-	.collection-nav img {
-		width: 38px;
-		height: 38px;
-		border-radius: 5px;
-	}
-	.collection-nav span,
-	.listener > span:last-child {
-		display: grid;
-		gap: 3px;
-	}
-	.collection-nav strong {
-		font-size: 12px;
-		font-weight: 600;
-		color: var(--foreground);
-	}
-	.collection-nav small,
-	.listener small {
-		font-size: 10px;
-		color: var(--music-muted);
-	}
-	.credits-link {
-		margin-top: auto;
-		padding: 30px 12px 20px;
-		font-size: 11px;
-		color: var(--music-muted);
-	}
-	.listener {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		padding: 14px 6px 0;
-		border-top: 1px solid var(--border);
-	}
-	.avatar {
-		display: grid;
-		place-items: center;
-		background: #cab9a3;
-		color: #30281f;
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		font-size: 11px;
-	}
-	.listener strong {
-		font-size: 12px;
-	}
+
 	.workspace {
 		min-height: 0;
 		min-width: 0;
 		display: flex;
 		flex-direction: column;
 	}
-	.topbar {
-		height: 77px;
-		flex: none;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 20px;
-		padding: 16px 36px;
-		border-bottom: 1px solid var(--border);
-	}
-	.album-topbar {
-		position: relative;
-		z-index: 4;
-		gap: 16px;
-		background: var(--background);
-	}
-	.album-topbar-content {
-		position: relative;
-		flex: 1;
-		min-width: 0;
-		height: 40px;
-	}
-	.compact-album {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		height: 40px;
-		min-width: 0;
-		opacity: var(--album-reveal, 0);
-		transform: translate3d(0, calc((1 - var(--album-reveal, 0)) * 14px), 0)
-			scale(calc(0.96 + var(--album-reveal, 0) * 0.04));
-		transform-origin: left center;
-		will-change: transform, opacity;
-	}
-	.compact-album img {
-		width: 34px;
-		height: 34px;
-		border-radius: 4px;
-		object-fit: cover;
-	}
-	.compact-album strong {
-		font-size: 18px;
-		letter-spacing: -0.4px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	@media (max-width: 680px) {
-		.album-topbar {
-			gap: 10px;
-		}
-		.compact-album {
-			gap: 9px;
-		}
-		.compact-album img {
-			display: none;
-		}
-		.compact-album strong {
-			font-size: 15px;
-		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.compact-album {
-			transform: none;
-		}
-	}
-	:global([data-bedrock-motion='reduced']) .compact-album {
-		transform: none;
-	}
 
-	.topbar form {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		color: var(--music-muted);
-		width: min(390px, 100%);
-	}
-	.topbar :global(input) {
-		padding: 10px 12px;
-		border: 0;
-		box-shadow: none;
-		width: 100%;
-		outline: none;
-		font-size: 12px;
-		background: transparent;
-	}
-	.top-note {
-		font-size: 11px;
-		color: var(--music-muted);
-		white-space: nowrap;
-	}
 	main {
 		--music-gutter: 38px;
 		--music-top-padding: 34px;
@@ -564,125 +81,7 @@
 		flex: 1;
 		min-height: 0;
 	}
-	.player {
-		grid-column: 1/-1;
-		border-top: 1px solid var(--border);
-		display: grid;
-		grid-template-columns: 1fr 1.25fr 1fr;
-		align-items: center;
-		gap: 30px;
-		padding: 12px 25px;
-		background: var(--background);
-		z-index: 5;
-	}
-	.playing {
-		display: flex;
-		align-items: center;
-		gap: 13px;
-		min-width: 0;
-	}
-	.playing img {
-		width: 50px;
-		height: 50px;
-		border-radius: 6px;
-	}
-	.playing > span {
-		display: grid;
-		gap: 4px;
-		min-width: 0;
-	}
-	.playing strong {
-		font-size: 12px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-	.playing small {
-		font-size: 10px;
-		color: var(--music-muted);
-	}
-	.transport-buttons {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 12px;
-	}
-	.timeline {
-		display: flex;
-		align-items: center;
-		gap: 10px;
-		margin-top: 8px;
-	}
-	.timeline time {
-		font-size: 9px;
-		font-variant-numeric: tabular-nums;
-		color: var(--music-muted);
-		width: 27px;
-	}
-	.timeline :global([data-slot='slider']) {
-		width: 100%;
-	}
-	.player-tools {
-		display: flex;
-		justify-content: end;
-		align-items: center;
-		gap: 6px;
-		color: var(--music-muted);
-	}
-	.player-tools :global([data-slot='slider']) {
-		max-width: 85px;
-		width: 100%;
-	}
-	:global(.control-templates-music-player-layout.play-button) {
-		border-radius: 50%;
-		background: var(--foreground);
-		color: var(--background);
-		width: 34px;
-		height: 34px;
-		display: grid;
-		place-items: center;
-	}
-	.queue-panel {
-		position: absolute;
-		right: 0;
-		top: 77px;
-		bottom: 92px;
-		width: min(330px, 100vw);
-		background: var(--background);
-		padding: 25px;
-		z-index: 4;
-		overflow: auto;
-		box-shadow: -12px 0 40px #0002;
-		border-left: 1px solid var(--border);
-	}
-	:global(.control-templates-music-player-layout.queue-track) {
-		display: flex;
-		width: 100%;
-		align-items: center;
-		gap: 12px;
-		text-align: left;
-		padding: 12px 0;
-		border-bottom: 1px solid var(--border);
-	}
-	:global(.control-templates-music-player-layout.queue-track) img {
-		width: 42px;
-		border-radius: 5px;
-	}
-	:global(.control-templates-music-player-layout.queue-track) span {
-		display: grid;
-		gap: 4px;
-		flex: 1;
-	}
-	:global(.control-templates-music-player-layout.queue-track) strong {
-		font-size: 12px;
-	}
-	:global(.control-templates-music-player-layout.queue-track) small {
-		font-size: 10px;
-		color: var(--music-muted);
-	}
-	:global(.control-templates-music-player-layout.queue-track.current) {
-		color: #c46b78;
-	}
+
 	.status {
 		position: fixed;
 		bottom: 100px;
@@ -792,28 +191,11 @@
 		.drift {
 			grid-template-columns: 185px minmax(0, 1fr);
 		}
-		.sidebar {
-			padding-inline: 10px;
-		}
-		.topbar {
-			padding-inline: 24px;
-		}
-		.top-note {
-			display: none;
-		}
+
 		main {
 			--music-gutter: 24px;
 			--music-top-padding: 26px;
 			padding: var(--music-top-padding) var(--music-gutter) 50px;
-		}
-		.player {
-			grid-template-columns: 1fr 1.2fr auto;
-			gap: 15px;
-			padding-inline: 15px;
-		}
-		.player-tools > :global([data-slot='slider']),
-		.player-tools > :global(svg) {
-			display: none;
 		}
 	}
 	@media (max-width: 680px) {
@@ -822,92 +204,13 @@
 			grid-template-rows: 1fr 123px 58px;
 			min-height: 400px;
 		}
-		.sidebar {
-			position: absolute;
-			bottom: 0;
-			left: 0;
-			right: 0;
-			height: 58px;
-			z-index: 6;
-			padding: 0;
-			background: var(--background);
-			border: 0;
-			border-top: 1px solid var(--border);
-		}
-		.sidebar nav:first-of-type {
-			display: flex;
-			justify-content: space-around;
-		}
-		.sidebar nav:first-of-type a {
-			display: grid;
-			justify-items: center;
-			gap: 4px;
-			padding: 9px 5px;
-			font-size: 8px;
-		}
-		.brand,
-		.side-heading,
-		.sidebar .collection-nav,
-		.credits-link,
-		.listener {
-			display: none;
-		}
-		.topbar {
-			height: 60px;
-			padding: 12px 20px;
-		}
+
 		main {
 			--music-gutter: 18px;
 			--music-top-padding: 24px;
 			padding: var(--music-top-padding) var(--music-gutter) 40px;
 		}
-		.player {
-			grid-row: 2;
-			grid-template-columns: 1fr auto;
-			gap: 10px;
-			padding: 10px 15px;
-		}
-		.playing img {
-			width: 40px;
-			height: 40px;
-		}
-		.playing :global(.control-templates-music-player-layout.icon-button) {
-			display: none;
-		}
-		.transport {
-			width: 154px;
-			position: relative;
-			padding-right: 26px;
-		}
-		:global(.control-templates-music-player-layout.mobile-queue) {
-			display: grid !important;
-			position: absolute;
-			right: -5px;
-			top: 3px;
-		}
-		.transport-buttons {
-			gap: 6px;
-		}
-		:global(.control-templates-music-player-layout.secondary-control),
-		.player-tools :global(.desktop-queue) {
-			display: none;
-		}
-		.player-tools {
-			display: flex;
-			grid-column: 1 / -1;
-			justify-content: center;
-			gap: 20px;
-		}
-		.timeline {
-			margin-top: 6px;
-		}
-		.timeline time {
-			display: none;
-		}
-		.queue-panel {
-			bottom: 181px;
-			top: 60px;
-		}
+
 		.status {
 			bottom: 190px;
 		}

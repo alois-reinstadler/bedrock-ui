@@ -3,7 +3,7 @@
 	import { NativeSelect } from '#lib/bedrock/ui/native-select';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
-	import { Feedback, type FeedbackMode } from '#lib/bedrock/ui/feedback';
+	import { PageAnnotations, type FeedbackMode } from '#lib/bedrock/ui/feedback';
 	import { Button } from '#lib/bedrock/ui/button';
 	import { templates } from '#lib/site/templates.js';
 	let mode = $state<FeedbackMode>('review');
@@ -20,8 +20,8 @@
 <!-- Avoid speculative route forks when the composer exposes a template link under the pointer. -->
 <section
 	class="w-full max-w-2xl space-y-5"
-	aria-label="Feedback example"
-	data-sveltekit-preload-data={open ? 'off' : undefined}
+	aria-label="Page annotations example"
+	data-sveltekit-preload-data={open ? 'false' : undefined}
 >
 	<div class="flex flex-wrap items-center justify-between gap-3" data-feedback-ignore>
 		<div>
@@ -85,7 +85,7 @@
 	</div>
 </section>
 
-<Feedback
+<PageAnnotations
 	bind:open
 	{trigger}
 	{mode}

@@ -3,6 +3,39 @@ import { createWorkspace } from './workspace.svelte.js';
 import { createMailCommands } from './mail-commands.js';
 
 describe('local mail commands', () => {
+	it('preserves unfinished composition before opening a new message', () => {
+		const workspace = createWorkspace();
+		const commands = createMailCommands(workspace, () => undefined, vi.fn());
+		commands.openCompose('reader@example.com', 'Keep my draft', 'Unfinished text');
+		commands.openCompose();
+		expect(workspace.messages[0]).toMatchObject({
+			mailbox: 'drafts',
+			to: ['reader@example.com'],
+			subject: 'Keep my draft',
+			body: ['Unfinished text']
+		});
+		expect(workspace.compose).toMatchObject({
+			open: true,
+			to: '',
+			subject: '',
+			body: '',
+			draftId: null
+		});
+	});
+	it('preserves forwarded content when Compose is invoked outside the mail screen', () => {
+		const workspace = createWorkspace();
+		const source = workspace.messages[0];
+		workspace.compose.open = true;
+		workspace.compose.mode = 'forward';
+		workspace.compose.sourceMessageId = source.id;
+		workspace.compose.body = 'Please review';
+		const commands = createMailCommands(workspace, () => undefined, vi.fn());
+		commands.openCompose();
+		expect(workspace.messages[0].body.join('\n')).toContain(source.body.join('\n'));
+		expect(workspace.messages[0].body[0]).toBe('Please review');
+		expect(workspace.compose.sourceMessageId).toBeNull();
+	});
+
 	it('restores each archived message to its original mailbox', () => {
 		const workspace = createWorkspace();
 		const messages = workspace.messages.slice(0, 2);

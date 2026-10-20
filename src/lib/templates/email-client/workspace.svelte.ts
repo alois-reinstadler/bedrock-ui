@@ -22,7 +22,8 @@ export function createWorkspace() {
 			subject: '',
 			body: '',
 			draftId: null as string | null,
-			replyId: null as string | null
+			replyId: null as string | null,
+			sourceMessageId: null as string | null
 		},
 		eventDraft: null as { subject: string; note: string } | null,
 		taskFilter: 'Today' as 'All' | 'Today' | 'Upcoming' | 'Important' | 'Completed',

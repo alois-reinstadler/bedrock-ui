@@ -39,13 +39,14 @@ export const gettingStarted: DocsNavItem[] = [
 ];
 
 export const components: ComponentDoc[] = [
-	...expansionComponents,
 	{
-		slug: 'feedback',
-		title: 'Feedback',
-		description: 'Native page annotations for developer feedback and customer website reviews.',
-		category: 'overlay'
+		slug: 'dock-layout',
+		title: 'Dock Layout',
+		description:
+			'Tabbed workspaces with draggable panels, resizable splits, and restorable layouts.',
+		category: 'layout'
 	},
+	...expansionComponents,
 	{
 		slug: 'emoji',
 		title: 'Emoji',
@@ -686,6 +687,13 @@ export const components: ComponentDoc[] = [
 		title: 'Color Picker',
 		description: 'HSV color selection with hex, RGB, and HSL entry.',
 		category: 'form'
+	},
+	{
+		slug: 'video',
+		title: 'Video',
+		description:
+			'A video with a loading skeleton, stable dimensions, native controls, and a resilient fallback.',
+		category: 'display'
 	},
 	{
 		slug: 'video-player',

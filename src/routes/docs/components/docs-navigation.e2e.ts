@@ -96,3 +96,25 @@ test.describe('component documentation navigation', () => {
 		}
 	});
 });
+
+test('sidebar categories expose every component and remain searchable alongside Tools', async ({
+	page
+}) => {
+	await page.goto('/docs/components/button');
+	const sidebar = page.locator('[data-slot="sidebar"]');
+	await expect(
+		sidebar
+			.getByRole('region', { name: 'Effects', exact: true })
+			.getByRole('link', { name: 'Progressive Blur', exact: true })
+	).toBeVisible();
+	await expect(
+		sidebar
+			.getByRole('region', { name: 'Components', exact: true })
+			.getByRole('link', { name: 'Button', exact: true })
+	).toBeVisible();
+	await expect(sidebar.getByRole('link', { name: 'Page annotations', exact: true })).toBeVisible();
+	await sidebar.getByPlaceholder('Search documentation').fill('Dates and time');
+	await expect(sidebar.getByRole('link', { name: /Date Input/ }).first()).toBeVisible();
+	await sidebar.getByPlaceholder('Search documentation').fill('annotations');
+	await expect(sidebar.getByRole('link', { name: /Page annotations/ })).toBeVisible();
+});

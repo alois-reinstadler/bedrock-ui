@@ -1,6 +1,5 @@
 import { conversationGuides } from './conversation';
 import { expansionGuides } from './expansion';
-import { feedbackGuides } from './feedback';
 import { contentGuides } from './content';
 import { mapGuides } from './map';
 import { dataGuides } from './data';
@@ -25,7 +24,6 @@ export type {
 
 export const componentGuides: ComponentGuides = {
 	...expansionGuides,
-	...feedbackGuides,
 	...conversationGuides,
 	...contentGuides,
 	...dataGuides,

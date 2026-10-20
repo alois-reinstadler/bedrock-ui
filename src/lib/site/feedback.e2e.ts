@@ -7,8 +7,8 @@ test('feedback docs support real selection, exports and persisted review on desk
 	const errors: string[] = [];
 	page.on('pageerror', (error) => errors.push(error.message));
 	await page.setViewportSize({ width: 1440, height: 1000 });
-	await page.goto('/docs/components/feedback');
-	await page.getByRole('region', { name: 'Feedback example' }).scrollIntoViewIfNeeded();
+	await page.goto('/docs/tools/page-annotations');
+	await page.getByRole('region', { name: 'Page annotations example' }).scrollIntoViewIfNeeded();
 	await page.getByRole('button', { name: 'Leave feedback', exact: true }).click();
 	await expect(page.getByRole('button', { name: 'Close feedback' })).toBeFocused();
 	await page.getByRole('button', { name: 'Select element', exact: true }).click();
@@ -59,7 +59,7 @@ test('feedback docs support real selection, exports and persisted review on desk
 });
 
 test('feedback properties document the native API', async ({ page }) => {
-	await page.goto('/docs/components/feedback?tab=properties');
+	await page.goto('/docs/tools/page-annotations?tab=properties');
 	await expect(page.getByRole('heading', { name: 'Public API', exact: true })).toBeVisible({
 		timeout: 15000
 	});
@@ -75,4 +75,32 @@ test('feedback properties document the native API', async ({ page }) => {
 			.filter({ hasText: /^storageKey$/ })
 			.first()
 	).toBeVisible();
+});
+
+test('page annotations belongs to Tools and preserves legacy documentation links', async ({
+	page
+}) => {
+	await page.goto('/docs/tools');
+	await expect(page.getByRole('heading', { name: 'Tools', exact: true })).toBeVisible();
+	await page.locator('article').getByRole('link', { name: 'Page annotations' }).click();
+	await expect(page).toHaveURL(/\/docs\/tools\/page-annotations$/);
+	await expect(page.getByRole('heading', { name: 'Page annotations', exact: true })).toBeVisible();
+	const tabs = page.getByRole('navigation', { name: 'Page annotations documentation' });
+	await tabs.getByRole('link', { name: 'Properties', exact: true }).click();
+	await expect(page).toHaveURL(/\/docs\/tools\/page-annotations\?tab=properties$/);
+	await expect(page.getByRole('heading', { name: 'Public API', exact: true })).toBeVisible();
+	await tabs.getByRole('link', { name: 'Accessibility', exact: true }).click();
+	await expect(page).toHaveURL(/\/docs\/tools\/page-annotations\?tab=accessibility$/);
+	await page.goto('/docs/components/feedback?tab=properties#api');
+	await expect(page).toHaveURL(/\/docs\/tools\/page-annotations\?tab=properties#api$/);
+	await expect(page.getByRole('heading', { name: 'Public API', exact: true })).toBeVisible();
+	await page.goto('/docs/components');
+	await expect(
+		page.locator('article').getByRole('link', { name: /Page annotations|Feedback/ })
+	).toHaveCount(0);
+	await page.getByRole('textbox', { name: 'Search documentation' }).fill('feedback');
+	await expect(page.getByRole('link', { name: /Page annotations/ })).toHaveAttribute(
+		'href',
+		'/docs/tools/page-annotations'
+	);
 });

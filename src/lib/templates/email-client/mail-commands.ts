@@ -38,7 +38,9 @@ export function createMailCommands(
 	}
 
 	function composedBody() {
-		const currentMessage = getCurrentMessage();
+		const currentMessage = workspace.compose.sourceMessageId
+			? workspace.messages.find((message) => message.id === workspace.compose.sourceMessageId)
+			: getCurrentMessage();
 		return workspace.compose.mode === 'forward' && currentMessage
 			? `${workspace.compose.body}\n\nForwarded message from ${currentMessage.from.name} <${currentMessage.from.email}>:\n${currentMessage.body.join('\n')}`
 			: workspace.compose.body;
@@ -73,6 +75,20 @@ export function createMailCommands(
 		workspace.compose.draftId = draft.id;
 		announce('Draft saved locally. Find it in Drafts.');
 	}
+	function openCompose(to = '', subject = '', body = '', replyId: string | null = null) {
+		if (workspace.compose.open) persistDraft();
+		workspace.compose = {
+			open: true,
+			mode: 'new',
+			to,
+			subject,
+			body,
+			draftId: null,
+			replyId,
+			sourceMessageId: null
+		};
+	}
+
 	function restoreArchive() {
 		for (const item of workspace.undoArchive) {
 			const message = workspace.messages.find((message) => message.id === item.id);
@@ -120,5 +136,5 @@ export function createMailCommands(
 		});
 		announce(`Demo message to ${workspace.compose.to} saved in Sent. No email was sent.`);
 	}
-	return { toggleStar, updateMessages, persistDraft, restoreArchive, sendMessage };
+	return { openCompose, toggleStar, updateMessages, persistDraft, restoreArchive, sendMessage };
 }

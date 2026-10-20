@@ -2,8 +2,8 @@ import { test, expect, type Page } from '../../../scripts/shared-browser-test';
 
 async function setup(page: Page) {
 	await page.setViewportSize({ width: 1440, height: 1100 });
-	await page.goto('/docs/components/feedback');
-	const demo = page.locator('#preview [aria-label="Feedback example"]');
+	await page.goto('/docs/tools/page-annotations');
+	const demo = page.locator('#preview [aria-label="Page annotations example"]');
 	await expect(demo).toBeVisible({ timeout: 15000 });
 	await demo.locator('[data-feedback-sample]').scrollIntoViewIfNeeded();
 	await demo.getByRole('button', { name: 'Review this sample' }).click();

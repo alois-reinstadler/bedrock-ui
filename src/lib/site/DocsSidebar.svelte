@@ -18,9 +18,16 @@
 	import { blocks } from './blocks';
 	import { shaders } from '#lib/bedrock/shaders/catalog.js';
 	import { templates } from './templates.js';
+	import { componentNavigation, componentNavigationKeywords } from './component-navigation';
 	import { components, gettingStarted } from './registry';
+	import { tools, toolHref } from './tools';
 
 	const catalogueLinks = [
+		{
+			title: 'Tools',
+			href: '/docs/tools',
+			keywords: 'annotations feedback inspection review export'
+		},
 		{ title: 'Shaders', href: '/docs/shaders', keywords: 'paper backgrounds text images effects' },
 		{ title: 'Blocks', href: '/docs/blocks', keywords: 'patterns compositions' },
 		{ title: 'Templates', href: '/docs/templates', keywords: 'full pages applications' }
@@ -31,14 +38,6 @@
 
 	let query = $state('');
 	let path = $derived(page.url.pathname);
-	let filteredComponents = $derived.by(() => {
-		const needle = query.trim().toLowerCase();
-		if (!needle) return components;
-		return components.filter(
-			(component) =>
-				component.title.toLowerCase().includes(needle) || component.slug.includes(needle)
-		);
-	});
 	let searchResults = $derived.by(() => {
 		const needle = query.trim().toLowerCase();
 		if (!needle) return [];
@@ -48,8 +47,14 @@
 			...components.map((item) => ({
 				title: item.title,
 				href: `/docs/components/${item.slug}`,
-				keywords: `${item.slug} ${item.description} ${item.category}`,
+				keywords: `${item.slug} ${item.description} ${item.category} ${componentNavigationKeywords.get(item.slug) ?? ''}`,
 				kind: 'Component'
+			})),
+			...tools.map((item) => ({
+				title: item.title,
+				href: toolHref(item),
+				keywords: `${item.keywords} ${item.description}`,
+				kind: 'Tool'
 			})),
 			...blocks.map((item) => ({
 				title: item.title,
@@ -304,23 +309,19 @@
 						</Sidebar.GroupContent>
 					</Sidebar.Group>
 					<Sidebar.Group>
-						<Sidebar.GroupLabel>Components</Sidebar.GroupLabel>
+						<Sidebar.GroupLabel>Tools</Sidebar.GroupLabel>
 						<Sidebar.GroupContent>
 							<Sidebar.Menu>
-								{#each filteredComponents as component (component.slug)}
+								{#each tools as tool (tool.slug)}
 									<Sidebar.MenuItem>
 										<Sidebar.MenuButton
 											class="relative z-10 hover:bg-transparent data-[active=false]:hover:bg-transparent data-active:bg-transparent data-active:hover:bg-transparent"
-											isActive={path === `/docs/components/${component.slug}`}
-											aria-current={path === `/docs/components/${component.slug}`
-												? 'page'
-												: undefined}
+											isActive={path === toolHref(tool)}
+											aria-current={path === toolHref(tool) ? 'page' : undefined}
 										>
 											{#snippet child({ props })}
-												<a
-													href={resolve('/docs/components/[slug]', { slug: component.slug })}
-													data-sveltekit-reload="false"
-													{...props}>{component.title}</a
+												<a href={toolHref(tool)} data-sveltekit-reload="false" {...props}
+													>{tool.title}</a
 												>
 											{/snippet}
 										</Sidebar.MenuButton>
@@ -329,6 +330,44 @@
 							</Sidebar.Menu>
 						</Sidebar.GroupContent>
 					</Sidebar.Group>
+					{#each componentNavigation as section (section.title)}
+						<section aria-label={section.title}>
+							{#if section.title === 'Components'}
+								<h2 class="px-4 pt-4 pb-1 text-sm font-semibold">Components</h2>
+							{/if}
+							{#each section.groups as group, index (group.title)}
+								{#if group.parent && group.parent !== section.groups[index - 1]?.parent}
+									<h3 class="px-4 pt-4 pb-1 text-xs font-semibold">{group.parent}</h3>
+								{/if}
+								<Sidebar.Group>
+									<Sidebar.GroupLabel>{group.title}</Sidebar.GroupLabel>
+									<Sidebar.GroupContent>
+										<Sidebar.Menu>
+											{#each group.components as component (component.slug)}
+												<Sidebar.MenuItem>
+													<Sidebar.MenuButton
+														class="relative z-10 hover:bg-transparent data-[active=false]:hover:bg-transparent data-active:bg-transparent data-active:hover:bg-transparent"
+														isActive={path === `/docs/components/${component.slug}`}
+														aria-current={path === `/docs/components/${component.slug}`
+															? 'page'
+															: undefined}
+													>
+														{#snippet child({ props })}
+															<a
+																href={resolve('/docs/components/[slug]', { slug: component.slug })}
+																data-sveltekit-reload="false"
+																{...props}>{component.title}</a
+															>
+														{/snippet}
+													</Sidebar.MenuButton>
+												</Sidebar.MenuItem>
+											{/each}
+										</Sidebar.Menu>
+									</Sidebar.GroupContent>
+								</Sidebar.Group>
+							{/each}
+						</section>
+					{/each}
 				{/if}
 			</div>
 		</ScrollArea.Root>

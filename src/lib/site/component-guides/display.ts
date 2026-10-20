@@ -51,6 +51,49 @@ export const displayGuides = {
 			}
 		]
 	},
+	video: {
+		purpose:
+			'Video reserves a stable frame, shows a Skeleton until the first video frame is ready, and softly reveals native playback controls. Missing or failed sources show a fallback.',
+		useWhen: [
+			'Show video clips with the same loading treatment as Image.',
+			'Use native playback controls, captions, or muted decorative loops in a reserved frame.'
+		],
+		avoidWhen: [
+			'Use VideoPlayer for Bedrock playback controls, keyboard shortcuts, picture in picture, and streaming adapters.',
+			'Use a native video when no loading treatment or reserved frame is needed.'
+		],
+		anatomy: [
+			{
+				name: 'Video',
+				description:
+					'Single component, also exported as Root. VideoProps combines native video attributes with a required label, caption tracks, and frame options.',
+				required: true
+			}
+		],
+		behavior: [
+			'width and height reserve the aspect ratio; aspectRatio overrides it. The default is 16 / 9. class and style target the frame; videoClass targets the native video, which uses object-contain by default.',
+			'controls and playsinline default to true, preload to auto. Autoplay is opt-in and subject to browser policy. Native attributes, events, and bind:ref target the video element.',
+			'The skeleton remains until readyState reaches HAVE_CURRENT_DATA: metadata alone is not enough, and the entire file need not download. Cached media is checked when listeners attach.',
+			'minimumLoadingDuration optionally holds the initial skeleton; it defaults to 0. The demo uses 1200 milliseconds. Later buffering and seeking keep the loaded video and its controls visible.',
+			'preload="none" or "metadata" can defer the first frame. A Load video button starts loading without forcing playback; loadLabel localizes it. The same action appears if the browser suspends initial loading.',
+			'Changing src or crossorigin resets the loading cycle and releases the old media. Stale events and reveal timers cannot settle the replacement. Calling load() through bind:ref also starts a fresh loading cycle.',
+			'The frame exposes data-state="loading", "loaded", or "error" and aria-busy. Missing and failed sources show the non-interactive fallback snippet or Video unavailable.',
+			'Provide a meaningful label and captions for speech and meaningful sounds. The skeleton is hidden from assistive technology, and invisible native controls are inert until ready. Reduced motion disables the reveal transition through the Bedrock motion policy.'
+		],
+		examplePlan: [
+			{
+				title: 'Stable video loading',
+				demonstrates:
+					'A local captioned clip with a replayable 1.2-second loading skeleton and native controls.',
+				priority: 'primary'
+			},
+			{
+				title: 'Deferred video and fallback',
+				demonstrates: 'Load-on-demand playback and a named custom fallback for missing media.',
+				priority: 'edge-case'
+			}
+		]
+	},
 	image: {
 		purpose:
 			'Image reserves a stable media frame, shows a Skeleton while the browser loads and decodes the source, and fades in the finished image. Missing or failed sources show a fallback while retaining the image’s accessible name.',

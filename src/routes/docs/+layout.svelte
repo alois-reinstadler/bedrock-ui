@@ -8,6 +8,7 @@
 	import { getShader } from '#lib/bedrock/shaders/catalog.js';
 	import { getBlock } from '#lib/site/blocks.js';
 	import { getComponent } from '#lib/site/registry';
+	import { getTool } from '#lib/site/tools.js';
 
 	type Crumb = {
 		href: string | null;
@@ -33,7 +34,8 @@
 			path === '/docs/components' ||
 			path === '/docs/blocks' ||
 			path === '/docs/templates' ||
-			path === '/docs/shaders'
+			path === '/docs/shaders' ||
+			path === '/docs/tools'
 		) {
 			const label = path.split('/').at(-1) ?? 'Docs';
 			return [
@@ -41,6 +43,13 @@
 				{ href: path, label: label[0].toUpperCase() + label.slice(1), current: true }
 			];
 		}
+		const toolMatch = path.match(/^\/docs\/tools\/([^/]+)$/);
+		if (toolMatch)
+			return [
+				{ href: '/docs', label: 'Docs', current: false },
+				{ href: '/docs/tools', label: 'Tools', current: false },
+				{ href: null, label: getTool(toolMatch[1])?.title ?? toolMatch[1], current: true }
+			];
 		const shaderMatch = path.match(/^\/docs\/shaders\/([^/]+)$/);
 		if (shaderMatch)
 			return [

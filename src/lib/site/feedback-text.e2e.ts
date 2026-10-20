@@ -2,7 +2,7 @@ import { test, expect, type Page } from '../../../scripts/shared-browser-test';
 
 async function setup(page: Page, mode = 'review') {
 	await page.setViewportSize({ width: 1440, height: 1100 });
-	await page.goto('/docs/components/feedback');
+	await page.goto('/docs/tools/page-annotations');
 	const sample = page.locator('[data-feedback-sample]');
 	await expect(sample).toBeVisible({ timeout: 15000 });
 	await sample.scrollIntoViewIfNeeded();

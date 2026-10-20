@@ -253,6 +253,26 @@ export function createComponentReference(slug: string, category: Category): Comp
 			'Skeleton and SkeletonGroup resolve to static placeholders when the OS or application requests reduced motion, including preference changes while loading. Choose variant="static" to keep placeholders still in every motion mode.'
 		];
 	}
+	if (slug === 'dock-layout') {
+		accessibility.semantics = [
+			'The wrapper is a named region. Upstream renders focusable tab strips, tabs, and sliders for split dividers.'
+		];
+		accessibility.keyboard = [
+			'Tab reaches each tab strip and divider. On a strip, arrows switch tabs, Shift + arrows reorders, Ctrl + arrows moves tabs between groups, and Alt + arrows creates a split. Home/End selects the first/last tab. On a divider, arrows resize by 1%, Shift + arrows by 10%, and Home/End reaches its limits. Escape blurs the focused strip or divider.'
+		];
+		accessibility.focus = [
+			'Focus is visibly marked on the active tab while its strip is focused, and on the divider while resizing. Keep reset and restore controls outside maximized content. Test focus after structural changes with your own snippets.'
+		];
+		accessibility.labels = [
+			'Supply a workspace label, distinct view titles, and accessible names for every custom control. Divider values are formatted as de-AT percentages.'
+		];
+		accessibility.reducedMotion = [
+			'The wrapper adds no animation or transition; dragging, tab changes, and resizing update immediately in all motion modes.'
+		];
+		accessibility.knownGaps = [
+			'horizon-layout 1.0.4 does not expose aria-selected or tab-to-panel relationships, and focuses tab strips instead of implementing the standard roving-tabindex pattern. This integration does not claim complete tabs-pattern or screen-reader conformance. Content requires JavaScript. Detached windows do not inherit root theme classes.'
+		];
+	}
 	if (slug === 'image') {
 		accessibility.keyboard = [
 			'Image is non-interactive and adds no tab stop. Place it in a labelled link or button when an action is needed.'

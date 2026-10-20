@@ -128,3 +128,38 @@ test('interruptibility, no-motion, reduced loops, and scale probes are operable'
 	await expect(performance.getByText('Max gap')).toBeVisible({ timeout: 2_000 });
 	await expect(performance.getByText('Frames')).toBeVisible();
 });
+
+test('toast and dynamic-list examples retain layout while adding and removing items', async ({
+	page
+}, testInfo) => {
+	const diagnostics = collectDiagnostics(page);
+	await page.goto('/demo/motion/concurrency');
+	await page.emulateMedia({ reducedMotion: 'reduce' });
+	const toast = page.locator('[data-testid="benchmark-toast-stack"]');
+	const list = page.locator('[data-testid="benchmark-dynamic-list"]');
+	await expect(toast.locator('article')).toHaveCount(3);
+	await toast.getByRole('button', { name: 'Toast hinzufügen', exact: true }).click();
+	await expect(toast.locator('article')).toHaveCount(4);
+	await toast.getByRole('button', { name: 'Neue Meldung 4 schließen', exact: true }).click();
+	await expect(toast.locator('article')).toHaveCount(3);
+	await list.getByRole('button', { name: 'Einfügen', exact: true }).click();
+	await expect(list.getByText('Signal 7', { exact: true })).toBeVisible();
+	await list.getByRole('button', { name: 'Signal 7 löschen', exact: true }).click();
+	await expect(list.getByText('Signal 7', { exact: true })).toHaveCount(0);
+	for (const root of [toast.locator('.toast-stack'), list.locator('.dynamic-list')]) {
+		await expect(root).toHaveCSS('display', 'grid');
+		const button = root.getByRole('button').first();
+		const box = await button.boundingBox();
+		expect(box!.width).toBeGreaterThan(24);
+		expect(box!.height).toBeGreaterThan(24);
+	}
+	await testInfo.attach('concurrency-examples', {
+		body: await page.screenshot({
+			path: testInfo.outputPath('concurrency-examples.png'),
+			fullPage: true
+		}),
+		contentType: 'image/png'
+	});
+	expect(diagnostics.errors).toEqual([]);
+	expect(diagnostics.failedRequests).toEqual([]);
+});

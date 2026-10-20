@@ -3,17 +3,24 @@ import { componentGuides } from './index';
 import { createComponentReference } from './reference';
 import { getComponentReference } from '../../server/component-reference/index';
 import { components } from '../registry';
+import { tools } from '../tools';
+
+const documentedComponents = [...components, ...tools.map((tool) => tool.component)];
+const guides = {
+	...componentGuides,
+	...Object.fromEntries(tools.map((tool) => [tool.component.slug, tool.guide]))
+};
 
 const examples = import.meta.glob('../examples/*.svelte');
 
 describe('component documentation coverage', () => {
-	it('has a substantive guide for every registered component and no stale guides', () => {
-		const registeredSlugs = components.map((component) => component.slug).sort();
-		const guideSlugs = Object.keys(componentGuides).sort();
+	it('has a substantive guide for every registered component and tool and no stale guides', () => {
+		const registeredSlugs = documentedComponents.map((component) => component.slug).sort();
+		const guideSlugs = Object.keys(guides).sort();
 
 		expect(guideSlugs).toEqual(registeredSlugs);
 		for (const slug of registeredSlugs) {
-			const guide = componentGuides[slug];
+			const guide = guides[slug];
 			expect(guide?.purpose.length, `${slug} purpose`).toBeGreaterThan(40);
 			expect(guide?.useWhen.length, `${slug} use cases`).toBeGreaterThanOrEqual(2);
 			expect(guide?.avoidWhen.length, `${slug} exclusions`).toBeGreaterThanOrEqual(2);
@@ -26,8 +33,8 @@ describe('component documentation coverage', () => {
 		}
 	});
 
-	it('has a live example module for every registered component', () => {
-		for (const component of components) {
+	it('has a live example module for every registered component and tool', () => {
+		for (const component of documentedComponents) {
 			expect(
 				Object.hasOwn(examples, `../examples/${component.slug}.svelte`),
 				`${component.slug} example`
@@ -35,8 +42,8 @@ describe('component documentation coverage', () => {
 		}
 	});
 
-	it('has properties and accessibility guidance for every registered component', () => {
-		for (const component of components) {
+	it('has properties and accessibility guidance for every registered component and tool', () => {
+		for (const component of documentedComponents) {
 			const reference = getComponentReference(component.slug, component.category);
 			expect(reference.api.length, `${component.slug} API`).toBeGreaterThan(0);
 			expect(

@@ -93,6 +93,8 @@ export const semantics: Record<string, string> = {
 	icon: 'Decorative SVGs stay out of the accessibility tree; meaningful standalone icons require an equivalent text name.',
 	'icon-button':
 		'Every icon-only button has an action-specific accessible name; tooltip text alone is not sufficient.',
+	video:
+		'The frame and native video have an accessible label. Caption tracks describe speech and meaningful sounds. The skeleton is decorative; invisible controls are inert while loading, and a named Load video button enables deferred media. Failed sources retain the frame label and show a status fallback.',
 	image:
 		'The native image exposes its required alt text. Failed or absent sources retain that name on the fallback; an empty alt marks decorative media. The loading skeleton is hidden from assistive technology.',
 	indicator:

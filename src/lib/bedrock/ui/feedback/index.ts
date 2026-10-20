@@ -1,4 +1,8 @@
-export { default as Feedback, default as Root } from './feedback.svelte';
+export {
+	default as PageAnnotations,
+	default as Feedback,
+	default as Root
+} from './feedback.svelte';
 export { feedbackMarkdown, feedbackPage, parseFeedback } from './model.js';
 export type {
 	FeedbackAnnotation,

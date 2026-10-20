@@ -473,3 +473,53 @@ test('account address fits its menu on desktop and mobile', async ({ page }) => 
 		await page.keyboard.press('Escape');
 	}
 });
+
+test('Compose preserves an unfinished draft from another workspace screen', async ({ page }) => {
+	await page.goto('/templates/email-client');
+	await expect(page.locator('.mail-app')).toHaveAttribute('data-ready', 'true');
+	const compose = page
+		.getByRole('button', { name: 'Compose', exact: false })
+		.filter({ visible: true })
+		.first();
+	await compose.click();
+	await page.getByLabel('To', { exact: true }).fill('reader@example.com');
+	await page.getByLabel('Subject', { exact: true }).fill('Preserve this unfinished draft');
+	await page.getByLabel('Message', { exact: true }).fill('The text must survive another Compose.');
+	await page
+		.getByRole('navigation', { name: 'Productivity screens' })
+		.getByRole('link', { name: 'Calendar', exact: true })
+		.click();
+	await compose.click();
+	await expect(page.getByLabel('Subject', { exact: true })).toHaveValue('');
+	await page.getByRole('button', { name: 'Cancel', exact: true }).click();
+	await page
+		.getByRole('navigation', { name: 'Mailbox', exact: true })
+		.getByRole('link', { name: 'Drafts' })
+		.click();
+	const draft = page
+		.locator('.message-summary')
+		.filter({ hasText: 'Preserve this unfinished draft' });
+	await expect(draft).toBeVisible();
+	await draft.click();
+	await expect(page.getByRole('region', { name: 'Reading pane' })).toContainText(
+		'The text must survive another Compose.'
+	);
+});
+
+test('mailbox navigation clears bulk selection before acting in another folder', async ({
+	page
+}) => {
+	await page.goto('/templates/email-client');
+	await expect(page.locator('.mail-app')).toHaveAttribute('data-ready', 'true');
+	await page.locator('.message-summary').first().hover();
+	await page.getByRole('checkbox', { name: 'Select message from June Park' }).check();
+	await expect(page.getByRole('button', { name: 'Archive selected', exact: true })).toBeVisible();
+	const mailbox = page.getByRole('navigation', { name: 'Mailbox', exact: true });
+	await mailbox.getByRole('link', { name: 'Sent' }).click();
+	await expect(page.getByRole('button', { name: 'Archive selected', exact: true })).toHaveCount(0);
+	await mailbox.getByRole('link', { name: 'Inbox' }).click();
+	await expect(
+		page.getByRole('checkbox', { name: 'Select message from June Park' })
+	).not.toBeChecked();
+	await expect(page.locator('.message-summary')).toHaveCount(5);
+});

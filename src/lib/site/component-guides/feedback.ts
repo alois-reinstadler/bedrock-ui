@@ -3,7 +3,7 @@ import type { ComponentGuides } from './types';
 export const feedbackGuides = {
 	feedback: {
 		purpose:
-			'Feedback lets developers and customer reviewers attach actionable notes to elements on a live page. Bedrock owns its implementation, annotation format and visual language.',
+			'Page annotations lets developers and customer reviewers attach actionable notes to elements on a live page. Bedrock owns its implementation, annotation format and visual language.',
 		useWhen: [
 			'Reviewing a website with element-specific changes.',
 			'Capturing structured developer feedback for a coding agent.',
@@ -15,9 +15,9 @@ export const feedbackGuides = {
 		],
 		anatomy: [
 			{
-				name: 'Feedback',
+				name: 'PageAnnotations',
 				description:
-					'A compact draggable toolbar, element picker, contextual note composer, page pins and notes preview. Root is an alias.',
+					'A compact draggable toolbar, element picker, contextual note composer, page pins and notes preview. Feedback and Root are compatibility aliases.',
 				required: true
 			}
 		],

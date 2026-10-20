@@ -1,5 +1,5 @@
 <script lang="ts">
-	import EmailClient from '#lib/templates/email-client/email-client.svelte';
+	import MailScreen from './MailScreen.svelte';
 </script>
 
-<EmailClient />
+<MailScreen />

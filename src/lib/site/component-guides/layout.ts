@@ -1,6 +1,61 @@
 import type { ComponentGuides } from './types';
 
 export const layoutGuides = {
+	'dock-layout': {
+		purpose:
+			'Dock Layout wraps horizon-layout in Bedrock surfaces, borders, typography, and focus treatments. It gives multi-panel applications a serializable workspace whose tabs can move between groups or split into new panes.',
+		useWhen: [
+			'Let people arrange reference material, an editor, and supporting panels around their current task.',
+			'Keep a user-controlled workspace layout in application state and offer save, restore, or reset actions.'
+		],
+		avoidWhen: [
+			'Use Resizable when users only need to adjust fixed panes without moving tabs.',
+			'Use Tabs or a normal document layout for simple navigation, small-screen content, or pages that must render fully without JavaScript.'
+		],
+		anatomy: [
+			{
+				name: 'DockLayout.Root',
+				required: true,
+				description:
+					'Also exported as DockLayout. Supply a label, a SvelteMap of views, and bind:config. class and other HTML attributes target the outer region; the default height is 24rem.'
+			},
+			{
+				name: 'views',
+				required: true,
+				description:
+					'A SvelteMap keyed by stable view IDs. Each View supplies a title and a content snippet, with optional tabControls snippets. Keep application data outside snippets that can unmount when switching tabs.'
+			},
+			{
+				name: 'config',
+				required: true,
+				description:
+					'LayoutConfig contains root splits or tab groups and an optional maximizedView. splitPoints are fractions, not percentages. A group has a nonempty tabs array and activeTabIndex. The wrapper preserves upstream config binding.'
+			},
+			{
+				name: 'tabgroupControls',
+				required: false,
+				description:
+					'Snippets receive the active view ID. Compose Bedrock buttons for workspace actions. Keep a restore action outside the layout when maximizing hides the tab bars.'
+			}
+		],
+		behavior: [
+			'Powered by horizon-layout 1.0.4. Install the dependency alongside this wrapper; its structural stylesheet is adapted locally under the MIT license and uses Bedrock tokens without importing the upstream palette.',
+			'Drag a tab to another strip to dock it, or to a panel edge to create a split. Resize dividers with pointer or keyboard. minWidthRatio and minHeightRatio constrain each split; maxDepth limits nesting.',
+			'Bind config to receive changes. cloneConfig makes independent snapshots. For persisted JSON, parseLayoutConfig and validateConfig are upstream helpers, not a security boundary: validate against your allowed view IDs, limits, and version before restoring.',
+			'The example saves only in memory for the current visit. Reset and restore replace config without recreating application-owned view data.',
+			'Layout content initializes in the browser. Set a useful explicit height and provide a simpler layout for narrow screens where many panes would be cramped.',
+			'Direct manipulation has no decorative transition. Colors, borders, radii, and focus indicators follow the surrounding Bedrock theme.',
+			'Upstream detached-window config is not demonstrated: it copies stylesheets but does not mirror root theme classes or application contexts. Treat popouts as an advanced upstream capability requiring separate integration and verification.'
+		],
+		examplePlan: [
+			{
+				title: 'Project workspace',
+				demonstrates:
+					'Move the brief, notes, and checklist between panes; resize, maximize, save an in-memory snapshot, restore it, and reset the workspace.',
+				priority: 'primary'
+			}
+		]
+	},
 	accordion: {
 		purpose:
 			'Accordion organizes a related set of questions or settings into independently labeled disclosure panels. It lets people scan the trigger labels first and reveal only the detail they need while preserving the relationship between each label and panel.',

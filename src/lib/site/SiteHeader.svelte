@@ -13,7 +13,8 @@
 		{ href: '/docs/components', label: 'Components' },
 		{ href: '/docs/blocks', label: 'Blocks' },
 		{ href: '/docs/shaders', label: 'Shaders' },
-		{ href: '/docs/templates', label: 'Templates' }
+		{ href: '/docs/templates', label: 'Templates' },
+		{ href: '/docs/tools', label: 'Tools' }
 	] as const;
 
 	let currentPath = $derived(page.url.pathname);

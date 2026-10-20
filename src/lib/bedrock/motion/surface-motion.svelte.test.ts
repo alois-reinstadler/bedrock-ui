@@ -48,6 +48,48 @@ describe('Bedrock surface motion', () => {
 		expect(getComputedStyle(panel).transitionDuration).toBe('0s');
 	});
 
+	it('clears the dialog backdrop blur before removal without crossfading the filtered layer', async () => {
+		const view = await render(Fixture);
+		await view.getByRole('button', { name: 'Open motion dialog' }).click();
+		const backdrop = surface('dialog-overlay');
+		const blurTransition = () =>
+			backdrop
+				.getAnimations()
+				.find(
+					(animation) =>
+						animation instanceof CSSTransition && animation.transitionProperty === 'backdrop-filter'
+				);
+		const enter = blurTransition();
+		expect(enter).toBeDefined();
+		enter!.pause();
+		enter!.currentTime = 100;
+		const blur = Number.parseFloat(getComputedStyle(backdrop).backdropFilter.slice(5));
+		expect(blur).toBeGreaterThan(0);
+		expect(blur).toBeLessThan(4);
+		expect(getComputedStyle(backdrop).opacity).toBe('1');
+		enter!.finish();
+		await expect.poll(() => backdrop.getAnimations().length).toBe(0);
+
+		flushSync(() =>
+			surface('dialog-content')
+				.querySelector<HTMLButtonElement>('[data-slot="dialog-close"]')!
+				.click()
+		);
+		await frame();
+		const exit = blurTransition();
+		expect(exit).toBeDefined();
+		const closingAnimations = backdrop.getAnimations();
+		for (const animation of closingAnimations) {
+			animation.pause();
+			animation.currentTime = 175;
+		}
+		expect(getComputedStyle(backdrop).backdropFilter).toBe('blur(0px)');
+		expect(getComputedStyle(backdrop).backgroundColor).toBe('rgba(0, 0, 0, 0)');
+		expect(getComputedStyle(backdrop).opacity).toBe('1');
+		for (const animation of closingAnimations) animation.finish();
+		await expect.poll(() => backdrop.isConnected).toBe(false);
+	});
+
 	it('keeps labels sharp and only assigns stagger to later decorative icons', async () => {
 		const view = await render(Fixture, { motion: 'stagger' });
 		await view.getByRole('button', { name: 'Open motion menu' }).click();

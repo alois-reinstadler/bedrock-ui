@@ -39,6 +39,6 @@
 	<Toaster />
 </MotionProvider>
 
-{#if FeedbackTool && !page.url.pathname.startsWith('/docs/components/feedback') && !page.url.pathname.startsWith('/templates/')}
+{#if FeedbackTool && !page.url.pathname.startsWith('/docs/components/feedback') && !page.url.pathname.startsWith('/docs/tools/page-annotations') && !page.url.pathname.startsWith('/templates/')}
 	<FeedbackTool />
 {/if}
