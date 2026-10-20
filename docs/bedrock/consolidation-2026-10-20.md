@@ -75,6 +75,7 @@ Observed checks in `/home/node/.t3/worktrees/bedrock-ui/t3-e89bc983`:
 
 - `pnpm install --frozen-lockfile`: passed.
 - `pnpm check`: zero errors and warnings.
+- `pnpm lint`: full Prettier and ESLint checks passed (exit 0).
 - Svelte analyzer: all 91 changed components have no issues or suggestions.
 - `pnpm test:unit --run --project server`: 277 tests in 53 files passed.
 - `pnpm test:unit --run --project client src/lib/bedrock/ui/video/video.svelte.test.ts src/lib/bedrock/motion/surface-motion.svelte.test.ts`: 12 tests passed.
